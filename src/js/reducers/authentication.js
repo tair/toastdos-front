@@ -12,7 +12,6 @@ const defaultState = {
 
 
 export default function handleAction(state = defaultState, action) {
-    console.log(state);
     switch (action.type) {
         case REQUEST_LOGIN:
             return Object.assign({}, state, {
