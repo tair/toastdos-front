@@ -22,7 +22,7 @@ class Home extends React.Component {
 
 
 Home.propTypes = {
-    //...
+    
 }
 
 export default Home;

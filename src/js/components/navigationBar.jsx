@@ -1,7 +1,9 @@
-"use strict"
+"use strict";
 
 import React from 'react';
 import  {Link} from 'react-router';
+
+const AUTH_URL = "https://orcid.org/oauth/authorize?client_id=APP-ITUEP986Z6KHTC7H&response_type=code&scope=/authenticate&redirect_uri=http://localhost:8080/login";
 
 class NavigationBar extends React.Component {
 
@@ -12,8 +14,10 @@ class NavigationBar extends React.Component {
                     <li>
                         <Link to="/">Home</Link>
                     </li>
+                </ul>
+                <ul className="right-nav">
                     <li>
-                        <Link to="/counter">Counter</Link>
+                        <a href={AUTH_URL}>Login</a>
                     </li>
                 </ul>
             </div>

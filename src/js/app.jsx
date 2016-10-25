@@ -1,8 +1,9 @@
-"use strict"
+"use strict";
 
 import React from 'react';
-import Counter from 'components/connectedCounter';
 import Home from 'components/connectedHome';
+import LoginView from 'components/views/loginView/loginView';
+import Authentication from 'components/authentication/connectedAuthentication';
 import NavigationFrame from 'components/NavigationFrame';
 import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router';
 
@@ -21,9 +22,11 @@ class App extends React.Component {
 			<Router history={browserHistory}>
 				<Route path="/" component={NavigationFrame}>
 					<IndexRoute component={Home} />
-			     	<Route path="counter" component={Counter}/>
-			     	
-			    </Route>
+			     	<Route component={Authentication}>
+						<Route path="test" component={Home} />
+			     	</Route>
+			     	<Route path="login" component={LoginView} />
+		     	</Route>
 			</Router>
 		)
 	}
