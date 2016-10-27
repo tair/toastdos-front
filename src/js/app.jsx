@@ -10,6 +10,7 @@ import { isAuthenticated, redirectIfLoggedIn } from './routeChecks';
 import { syncHistoryWithStore } from 'react-router-redux';
 import Store from './store';
 
+import DevTools from 'components/devTools/devTools';
 
 let history = syncHistoryWithStore(browserHistory, Store);
 
@@ -25,13 +26,19 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<Router history={history}>
-				<Route path="/" component={NavigationFrame}>
-					<IndexRoute component={Home} />
-					<Route path="test" component={Home} onEnter={isAuthenticated}/>
-			     	<Route path="login" component={LoginView} onEnter={redirectIfLoggedIn} />
-		     	</Route>
-			</Router>
+			<div>
+				{process.env.NODE_ENV === 'production' ? null : <DevTools/>}
+				<div>
+					<Router history={history}>
+						<Route path="/" component={NavigationFrame}>
+							<IndexRoute component={Home} />
+							<Route path="test" component={Home} onEnter={isAuthenticated}/>
+					     	<Route path="login" component={LoginView} onEnter={redirectIfLoggedIn}/>
+				     	</Route>
+					</Router>
+					
+				</div>
+			</div>
 		)
 	}
 

@@ -12,13 +12,17 @@ class NavigationBar extends React.Component {
             <div className="navigation-bar">
                 <ul>
                     <li>
-                        <Link to="/">Home</Link>
+                        <Link to="/">ToastDos</Link>
+                    </li>
+                    <li>
+                        <Link to="/test">TEST</Link>
                     </li>
                 </ul>
                 <ul className="right-nav">
                     <li>
                     {this.props.isAuthenticated ? (
                         <Link>Logout</Link>
+
                     ) : (
                         <a href={AUTH_URL}>Login with ORCID</a>
                     )}

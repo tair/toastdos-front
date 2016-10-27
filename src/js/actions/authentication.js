@@ -42,7 +42,8 @@ function loginFail(err) {
  */
 function loginSuccess(logindata) {
     return {
-        type: SUCCESS_LOGIN
+        type: SUCCESS_LOGIN,
+        jwt: logindata.jwt
     }
 }
 
