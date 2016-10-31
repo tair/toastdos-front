@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import DevTools from './components/devTools/devTools';

@@ -3,7 +3,7 @@
 import React from 'react';
 import  {Link} from 'react-router';
 
-const AUTH_URL = "https://orcid.org/oauth/authorize?client_id=APP-ITUEP986Z6KHTC7H&state=test&response_type=code&scope=/authenticate&redirect_uri=http://localhost:8080/login";
+const AUTH_URL = "https://sandbox.orcid.org/oauth/authorize?client_id=APP-ICY3HOEWL1KVKM3V&state=test&response_type=code&scope=/read-limited&redirect_uri=http://localhost:8080/login";
 
 class NavigationBar extends React.Component {
 
