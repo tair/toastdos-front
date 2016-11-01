@@ -1,6 +1,6 @@
 "use strict";
 
-import {REQUEST_LOGIN, SUCCESS_LOGIN, FAIL_LOGIN} from "../actions/authentication";
+import {REQUEST_LOGIN, SUCCESS_LOGIN, FAIL_LOGIN, LOGOUT} from "../actions/authentication";
 
 const defaultState = {
 	isAuthenticated: false,
@@ -29,6 +29,13 @@ export default function handleAction(state = defaultState, action) {
                 isAuthenticated: false,
                 jwt: null,
                 loginError: action.error
+            });
+        case LOGOUT:
+            return Object.assign({}, state, {
+                isFetching: false,
+                isAuthenticated: false,
+                jwt: null,
+                loginError: null
             });
         default:
             return state;

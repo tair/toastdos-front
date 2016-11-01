@@ -5,6 +5,7 @@ import { login } from "../lib/api";
 export const REQUEST_LOGIN = "REQUEST_LOGIN";
 export const SUCCESS_LOGIN = "SUCCESS_LOGIN";
 export const FAIL_LOGIN = "FAIL_LOGIN";
+export const LOGOUT = "LOGOUT";
 
 /**
  * Create a new REQUEST_LOGIN action and attempt to log in
@@ -16,7 +17,7 @@ export function requestLogin(authCode) {
         dispatch({type: REQUEST_LOGIN});
         return login(authCode, (err, data) => {
             if(err) {
-                return dispatch()
+                return dispatch(loginFail(err));
             }
             return dispatch(loginSuccess(data));
         })
@@ -41,9 +42,22 @@ function loginFail(err) {
  * @return {Object} - the action
  */
 function loginSuccess(logindata) {
+    sessionStorage.setItem('account_jwt', logindata.jwt);
     return {
         type: SUCCESS_LOGIN,
         jwt: logindata.jwt
+    }
+}
+
+/**
+ * Logout user, create LOGOUT action.
+ * @return {Object} - the action
+ */
+export function logout() {
+    // clear from sessionstorage
+    sessionStorage.removeItem('account_jwt');
+    return {
+        type: LOGOUT
     }
 }
 

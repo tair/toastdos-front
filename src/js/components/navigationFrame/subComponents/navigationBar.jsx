@@ -7,6 +7,11 @@ const AUTH_URL = "https://sandbox.orcid.org/oauth/authorize?client_id=APP-ICY3HO
 
 class NavigationBar extends React.Component {
 
+    constructor(props) {
+        super(props);
+        
+    }
+
     render() {
         return (
             <div className="navigation-bar">
@@ -21,7 +26,7 @@ class NavigationBar extends React.Component {
                 <ul className="right-nav">
                     <li>
                     {this.props.isAuthenticated ? (
-                        <Link>Logout</Link>
+                        <Link to="/" onClick={this.props.onLogoutClick} >Logout</Link>
 
                     ) : (
                         <a href={AUTH_URL}>Login with ORCID</a>
@@ -35,7 +40,8 @@ class NavigationBar extends React.Component {
 }
 
 NavigationBar.propTypes = {
-    isAuthenticated: React.PropTypes.bool
+    isAuthenticated: React.PropTypes.bool,
+    onLogoutClick: React.PropTypes.func
 }
 
 export default NavigationBar;

@@ -28,7 +28,8 @@ class NavigationFrame extends React.Component {
 
 
 NavigationFrame.propTypes = {
-    isAuthenticated: React.PropTypes.bool
+    isAuthenticated: React.PropTypes.bool,
+    onLogoutClick: React.PropTypes.func
 }
 
 export default NavigationFrame;
