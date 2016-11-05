@@ -2,8 +2,9 @@
 
 import React from 'react';
 import  {Link} from 'react-router';
+import orcidInfo from 'resources/orcid_app_info';
 
-const AUTH_URL = "https://sandbox.orcid.org/oauth/authorize?client_id=APP-ICY3HOEWL1KVKM3V&state=test&response_type=code&scope=/read-limited&redirect_uri=http://localhost:8080/login";
+const AUTH_URL = orcidInfo.authUrl;
 
 class NavigationBar extends React.Component {
 
