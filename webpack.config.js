@@ -35,6 +35,10 @@ module.exports = {
 			{ 
 				test: /\.(png|jpg)$/,
 				loader: 'url-loader?limit=8192'
+			},
+			{ 
+				test: /\.(json)$/,
+				loader: 'json-loader'
 			}
 		]
 	},
@@ -53,15 +57,16 @@ module.exports = {
 	    }),
 	    new webpack.DefinePlugin({
 			"process.env": {
-				NODE_ENV: process.env.NODE_ENV
+				NODE_ENV: JSON.stringify(process.env.NODE_ENV)
 			}
 		}),
 		new ExtractTextPlugin("[name].css")
 	],
 	resolve: {
-		extensions: ["", ".js", ".jsx"],
+		extensions: ["", ".js", ".jsx", ".json"],
 		alias: {
-			"components": path.resolve(__dirname, "./src/js/components")
+			"components": path.resolve(__dirname, "./src/js/components"),
+			"resources": path.resolve(__dirname, "./resources")
 		}
 	}
 }

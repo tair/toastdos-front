@@ -15,12 +15,16 @@ body {}
 
 .navigation-bar {
     display: block;
+    background-color: #007AFF;
+    padding: 0 50px;
+
     & ul {
-        display: block;
+        width: 50%;
+        display: inline-block;
         padding: 0;
         margin: 0;
         list-style:none;
-        background-color: #007AFF;
+        
         & li {
             display: inline-block;
             & a {
@@ -29,7 +33,7 @@ body {}
                 height: 100%;
                 padding: 15px 10px;
                 text-decoration: none;
-                width: 70px;
+                // width: 70px;
                 text-align: center;
                 &:active {
                     color: #FFFFFF;
@@ -40,61 +44,17 @@ body {}
             }
         }
     }
-}
 
-.counter-container {
-    width: 250px;
-    border: solid 1px #2B2B2B;
-    border-radius: 15px;
-}
-
-.counter-btn {
-    background-color: #34AADC;
-    border: none;
-    display: inline-block;
-    height: 60px;
-    font-size: 30px;
-    color: #FFFFFF;
-    &:active {
-        background-color: #5856D6;
-    }
-    
-    &.counter-plus-btn {
-        width: 50%;
-        border-top-left-radius: 15px;
-    }
-
-    &.counter-sub-btn {
-        width: 50%;
-        border-top-right-radius: 15px;
-        border-left: solid 1px #2B2B2B;
-    }
-
-    &.counter-reset-btn {
-        display: block;
-        width: 100%;
-        border-top: solid 1px #2B2B2B;
-        border-bottom: solid 1px #2B2B2B;
+    ul.right-nav {
+        float: right;
+        text-align: right;
+        & li {
+            float: right;
+            text-align: right;
+        }
     }
 }
 
-.counter-display {
-    background-color: #2B2B2B;
-    border-bottom-right-radius: 15px;
-    border-bottom-left-radius: 15px;
-
-    & .counter-display-title {
-        text-align: center;
-        color: #F7F7F7;
-        padding: 12px;
-    }
-
-    & .counter-display-value {
-        text-align: center;
-        font-size: 3em;
-        color: #F7F7F7;
-    }
-}
 
 
 
