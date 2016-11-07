@@ -6,9 +6,6 @@ import Authentication from './authentication';
 const ConnectedAuthentication = connect(
     state => ({
         isAuthenticated: state.authentication.isAuthenticated
-    }),
-    dispatch => ({
-
     })
 )(Authentication);
 

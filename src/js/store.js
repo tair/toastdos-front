@@ -1,5 +1,5 @@
 "use strict";
-
+/* global process */
 import { createStore, applyMiddleware, compose } from 'redux';
 import DevTools from './components/devTools/devTools';
 
@@ -22,7 +22,7 @@ if(jwt) {
     initialState.authentication = {
         isAuthenticated: true,
         jwt: jwt,
-    }
+    };
 }
 
 let store = createStore(

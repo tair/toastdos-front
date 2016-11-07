@@ -39,7 +39,7 @@ class LoginView extends React.Component {
                     <h1>PLS Authenticate</h1>
                 </div>
             )
-        )
+        );
     }
 }
 
@@ -47,7 +47,7 @@ LoginView.propTypes = {
     attemptLogin: React.PropTypes.func,
     isAuthenticating: React.PropTypes.bool,
     isAutheticated: React.PropTypes.bool
-}
+};
 
 
 export default LoginView;

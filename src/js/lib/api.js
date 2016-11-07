@@ -1,6 +1,5 @@
 "use strict";
 
-import jwtDecode from 'jwt-decode';
 import request from 'browser-request';
 
 const BASE_URL = "http://localhost:3000";

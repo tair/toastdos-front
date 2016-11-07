@@ -1,6 +1,6 @@
 "use strict";
 
-import React, {PropTypes} from 'react';
+import React from 'react';
 import NavigationBar from './subComponents/navigationBar';
 
 class NavigationFrame extends React.Component {
@@ -9,7 +9,7 @@ class NavigationFrame extends React.Component {
         
         this.state = {
             // set initial state
-        }
+        };
     }
 
     render() {
@@ -22,7 +22,7 @@ class NavigationFrame extends React.Component {
                     {this.props.children}
                 </div>
             </div>  
-        )
+        );
     }
 }
 
@@ -30,6 +30,6 @@ class NavigationFrame extends React.Component {
 NavigationFrame.propTypes = {
     isAuthenticated: React.PropTypes.bool,
     onLogoutClick: React.PropTypes.func
-}
+};
 
 export default NavigationFrame;

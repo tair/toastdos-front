@@ -12,7 +12,7 @@ export const LOGOUT = "LOGOUT";
  * @param  {String} authCode - the auth code given bcak by orcID oAuth
  */
 export function requestLogin(authCode) {
-	return dispatch => {
+    return dispatch => {
         // call async login function...
         dispatch({type: REQUEST_LOGIN});
         return login(authCode, (err, data) => {
@@ -20,8 +20,8 @@ export function requestLogin(authCode) {
                 return dispatch(loginFail(err));
             }
             return dispatch(loginSuccess(data));
-        })
-    }
+        });
+    };
 }
 
 /**
@@ -33,7 +33,7 @@ function loginFail(err) {
     return {
         type: FAIL_LOGIN,
         error: err
-    }
+    };
 }
 
 /**
@@ -46,7 +46,7 @@ function loginSuccess(logindata) {
     return {
         type: SUCCESS_LOGIN,
         jwt: logindata.jwt
-    }
+    };
 }
 
 /**
@@ -58,6 +58,5 @@ export function logout() {
     sessionStorage.removeItem('account_jwt');
     return {
         type: LOGOUT
-    }
+    };
 }
-

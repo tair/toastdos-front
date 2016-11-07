@@ -1,6 +1,6 @@
-"use strict"
+"use strict";
 
-import React, {PropTypes} from 'react';
+import React from 'react';
 
 class Home extends React.Component {
     constructor(props) {
@@ -8,7 +8,7 @@ class Home extends React.Component {
         
         this.state = {
             // set initial state
-        }
+        };
     }
 
     render() {
@@ -23,7 +23,7 @@ class Home extends React.Component {
 
 Home.propTypes = {
     
-}
+};
 
 export default Home;
 

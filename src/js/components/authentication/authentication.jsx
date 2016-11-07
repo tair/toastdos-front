@@ -15,14 +15,13 @@ class Authentication extends React.Component {
             </div>
         ) : (
             <Login/>
-        )
+        );
     }
 }
 
 Authentication.propTypes = {
     isAuthenticated: React.PropTypes.bool
-}
+};
 
 
 export default Authentication;
-

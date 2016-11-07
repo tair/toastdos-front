@@ -1,15 +1,15 @@
-"use strict"
+"use strict";
 
 import {connect} from 'react-redux';
 import Home from './home';
 
 const ConnectedHome = connect(
-    state => ({
-        //...
-    }),
-    dispatch => ({
+    // state => ({
+    //     //...
+    // }),
+    // dispatch => ({
 
-    })
+    // })
 )(Home);
 
 export default ConnectedHome;

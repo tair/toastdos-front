@@ -36,13 +36,13 @@ class NavigationBar extends React.Component {
                     </li>
                 </ul>
             </div>
-        )
+        );
     }
 }
 
 NavigationBar.propTypes = {
     isAuthenticated: React.PropTypes.bool,
     onLogoutClick: React.PropTypes.func
-}
+};
 
 export default NavigationBar;
