@@ -25,15 +25,23 @@ class NavigationBar extends React.Component {
                     </li>
                 </ul>
                 <ul className="right-nav">
-                    <li>
+                    
                     {this.props.isAuthenticated ? (
-                        <Link to="/" onClick={this.props.onLogoutClick} >Logout</Link>
-
+                        <div> 
+                            <li>
+                                <Link to="/" onClick={this.props.onLogoutClick} >Logout</Link>
+                            </li>
+                            <li>
+                                <Link>{this.props.userName}</Link>
+                            </li>
+                        </div>
                     ) : (
-                        <a href={AUTH_URL}>Login with ORCID</a>
+                        <li>
+                            <a href={AUTH_URL}>Login with ORCID</a>
+                        </li>
                     )}
                         
-                    </li>
+                    
                 </ul>
             </div>
         );
@@ -42,7 +50,8 @@ class NavigationBar extends React.Component {
 
 NavigationBar.propTypes = {
     isAuthenticated: React.PropTypes.bool,
-    onLogoutClick: React.PropTypes.func
+    onLogoutClick: React.PropTypes.func,
+    userName: React.PropTypes.string
 };
 
 export default NavigationBar;
