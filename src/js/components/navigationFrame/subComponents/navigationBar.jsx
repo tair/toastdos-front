@@ -3,6 +3,7 @@
 import React from 'react';
 import  {Link} from 'react-router';
 import orcidInfo from 'resources/orcid_app_info';
+import UserProfilePanel from '../../userProfilePanel/connectedUserProfilePanel';
 
 const AUTH_URL = orcidInfo.authUrl;
 
@@ -10,7 +11,24 @@ class NavigationBar extends React.Component {
 
     constructor(props) {
         super(props);
-        
+        this.state = {
+            showProfile: false
+        };
+
+        this.onProfileClick = this.onProfileClick.bind(this);
+        this.dismissProfile = this.dismissProfile.bind(this);
+    }
+
+    onProfileClick() {
+        this.setState({
+            showProfile: !this.state.showProfile
+        });
+    }
+
+    dismissProfile() {
+        this.setState({
+            showProfile: false
+        });
     }
 
     render() {
@@ -27,12 +45,14 @@ class NavigationBar extends React.Component {
                 <ul className="right-nav">
                     
                     {this.props.isAuthenticated ? (
-                        <div> 
+                        <div>
                             <li>
-                                <Link to="/" onClick={this.props.onLogoutClick} >Logout</Link>
-                            </li>
-                            <li>
-                                <Link>{this.props.userName}</Link>
+                                <span onClick={this.onProfileClick}>{this.props.userName}</span>
+                                {this.state.showProfile ? (
+                                    <div style={{position: 'relative'}}>
+                                        <UserProfilePanel componentShouldDismiss={this.dismissProfile} />
+                                    </div>
+                                ) : null}
                             </li>
                         </div>
                     ) : (
@@ -50,7 +70,6 @@ class NavigationBar extends React.Component {
 
 NavigationBar.propTypes = {
     isAuthenticated: React.PropTypes.bool,
-    onLogoutClick: React.PropTypes.func,
     userName: React.PropTypes.string
 };
 
