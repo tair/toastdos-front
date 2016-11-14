@@ -56,13 +56,16 @@ class UserProfilePanel extends React.Component {
         return (
             <div style={containerStyle} onMouseDown={this.handleMouseDown}>
                 <div>
-                    <div>My Name</div>
+                    <div>{this.props.name}</div>
                 </div>
                 <div>
-                    <div>012-345-6789</div>
+                    <div>{this.props.orcid}</div>
                 </div>
                 <div>
-                    <div>None</div>
+                    <div>{this.props.email ?
+                            (this.props.email) :
+                            (<em>No Email</em>)
+                        }</div>
                 </div>
                 <div>
                     <Link to="/" onClick={this.props.onLogoutClick}>Logout</Link>

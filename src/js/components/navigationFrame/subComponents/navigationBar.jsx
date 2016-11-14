@@ -32,6 +32,7 @@ class NavigationBar extends React.Component {
     }
 
     render() {
+
         return (
             <div className="navigation-bar">
                 <ul>
