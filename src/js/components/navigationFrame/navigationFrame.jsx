@@ -3,6 +3,17 @@
 import React from 'react';
 import NavigationBar from './subComponents/navigationBar';
 
+let links = [
+    {
+        to: '/',
+        name: 'ToastDos'
+    },
+    {
+        to: '/test',
+        name: 'TEST'
+    }
+];
+
 class NavigationFrame extends React.Component {
     constructor(props) {
         super(props);
@@ -17,6 +28,7 @@ class NavigationFrame extends React.Component {
             <div>
                 <NavigationBar
                     {...this.props}
+                    links={links}
                 />
                 <div>
                     {this.props.children}
