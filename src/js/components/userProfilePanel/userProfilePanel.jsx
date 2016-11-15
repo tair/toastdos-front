@@ -47,28 +47,52 @@ class UserProfilePanel extends React.Component {
         let containerStyle = {
             position: "absolute",
             display: "block",
-            width: "200px",
+            minWidth: "200px",
             backgroundColor: "#428cf4",
             zIndex: 1,
-            right: 0
+            right: 0,
+            textAlign: 'left',
+            color: "#FFFFFF"
+        };
+
+        let profileDataStyle = {
+            padding: "7px"
+        };
+
+        let logoutButtonContainerStyle = {
+            width: "100%",
+            height: "50px",
+            borderTop: "solid 1px #FFFFFF"
+        };
+
+        let logoutButtonStyle = {
+            padding: "15px 10px",
+            textDecoration: "none",
+            display: "block",
+            textAlign: "center"
+        };
+
+        let profileDataLabelStyle = {
+            fontSize: '0.7em'
         };
 
         return (
             <div style={containerStyle} onMouseDown={this.handleMouseDown}>
-                <div>
-                    <div>{this.props.name}</div>
-                </div>
-                <div>
+                <div style={profileDataStyle}>
+                    <div style={profileDataLabelStyle}>ORCID:</div>
                     <div>{this.props.orcid}</div>
                 </div>
-                <div>
-                    <div>{this.props.email ?
+                <div style={profileDataStyle}>
+                    <div style={profileDataLabelStyle}>EMAIL:</div>
+                    <div>
+                        {this.props.email ?
                             (this.props.email) :
                             (<em>No Email</em>)
-                        }</div>
+                        }
+                    </div>
                 </div>
-                <div>
-                    <Link to="/" onClick={this.props.onLogoutClick}>Logout</Link>
+                <div style={logoutButtonContainerStyle}>
+                    <Link style={logoutButtonStyle} to="/" onClick={this.props.onLogoutClick}>Logout</Link>
                 </div>
             </div>
         );
