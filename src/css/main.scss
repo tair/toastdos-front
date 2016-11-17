@@ -31,10 +31,8 @@ body {
                 color: #FFFFFF;
                 &:hover {
                     background-color: #1a88ff;
-                    // -webkit-box-shadow: inset 0px -1px 0px 0px #FFFFFF;
-                    // -moz-box-shadow: inset 0px -1px 0px 0px #FFFFFF;
-                    // box-shadow: inset 0px -1px 0px 0px #FFFFFF;
                 }
+
                 &:active {
                     -webkit-box-shadow: inset 0px 0px 12px -7px rgba(0,0,0,0.8);
                     -moz-box-shadow: inset 0px 0px 12px -7px rgba(0,0,0,0.8);

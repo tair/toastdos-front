@@ -75,11 +75,15 @@ class EditableLabel extends React.Component {
         const spanStyle = {
             lineHeight: "normal",
             overflowY: "visible",
-            verticalAlign: "middle"
+            verticalAlign: "middle",
+            maxWidth: "calc(100% - 25px)",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "inline-block"
         };
 
         const inputStyle = {
-            width: "100%",
+            width: "calc(100% - 25px)",
             padding: "0",
             margin: "0",
             border: "none",
@@ -89,6 +93,12 @@ class EditableLabel extends React.Component {
             verticalAlign: "middle",
             fontSize: "inherit",
             fontFamily: "inherit"
+        };
+
+        const edutGlyphStyle = {
+            marginLeft: "5px",
+            cursor: 'pointer',
+            verticalAlign: "bottom"
         };
 
         let label = (<span style={spanStyle}>{this.state.value}</span>);
@@ -121,6 +131,9 @@ class EditableLabel extends React.Component {
                 onClick={this.handleClick}
             >
                 {label}
+                {this.state.editing ? null : (
+                    <i style={edutGlyphStyle} className="fa fa-pencil"></i>
+                )}
             </div>
         );
     }
