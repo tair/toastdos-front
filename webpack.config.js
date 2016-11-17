@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const webpack               = require('webpack');
 const path                  = require("path");
@@ -57,7 +57,8 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             "process.env": {
-                NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+                NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+                USE_MOCK_API: JSON.stringify(process.env.USE_MOCK_API)
             }
         }),
         new ExtractTextPlugin("[name].css")
