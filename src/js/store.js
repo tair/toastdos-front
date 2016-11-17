@@ -1,11 +1,14 @@
 "use strict";
 /* global process */
 import { createStore, applyMiddleware, compose } from 'redux';
-import DevTools from './components/devTools/devTools';
 
 import thunk from 'redux-thunk';
-
 import reducer from './reducers';
+
+let DevTools = null;
+if(process.env.NODE_ENV !== 'production') {
+    DevTools = require('components/devTools/devTools');
+}
 
 let enhancements = [ applyMiddleware(thunk) ];
 process.env.NODE_ENV === 'production' ? null : enhancements.push(DevTools.instrument());
