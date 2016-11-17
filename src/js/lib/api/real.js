@@ -1,8 +1,9 @@
 "use strict";
 
 import request from 'browser-request';
+import config from '../../../../config';
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = config.apiBase;
 
 export function login(orcidCode, callback) {
     return request({
