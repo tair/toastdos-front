@@ -10,10 +10,8 @@ import { isAuthenticated, redirectIfLoggedIn } from './routeChecks';
 import { syncHistoryWithStore } from 'react-router-redux';
 import Store from './store';
 
-let DevTools = null;
-if(process.env.NODE_ENV !== 'production') {
-    DevTools = require('components/devTools/devTools');
-}
+let DevTools = (process.env.NODE_ENV !== 'production') ? 
+require('components/devTools/devTools').default : f => f;
 
 let history = syncHistoryWithStore(browserHistory, Store);
 
