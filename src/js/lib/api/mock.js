@@ -3,22 +3,18 @@
 //run this in terminal... USE_MOCK_API=true npm start
 //check index.js (this is why this command works)
 
-var userJSONObj={
-    	"user_name": "John Doe",
-		"user_orcid_id": "1234-5678-9876-4321",
-		"email":"JoDo@do.com",
-		"roles" : [
-		    {
-		        "curator":"true"
-		    },
-		    {
-		        "researcher":"null" 
-		    },
-		    {
-		    	"viewer":"null" 
-		    }
-		]
-    };
+const userJSONObj={
+        "user_name": "John Doe",
+        "user_orcid_id": "1234-5678-9876-4321",
+        "email":"JoDo@do.com",
+        //user have no roles if this list is empty
+        "roles" : [
+            {
+            "id": "1",
+            "name": "Curator"
+            }
+        ]
+};
 
 export function login(orcidCode, callback) {
     return callback(null, {
