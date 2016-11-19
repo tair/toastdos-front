@@ -2,6 +2,10 @@
 /*global process*/
 
 import React from 'react';
+import {connect} from 'react-redux';
+
+import {initialize} from './actions/authentication';
+
 import Home from 'components/connectedHome';
 import LoginView from 'components/views/loginView/connectedLoginView';
 import NavigationFrame from 'components/navigationFrame/connectedNavigationFrame';
@@ -24,11 +28,21 @@ class App extends React.Component {
         };
     }
 
+    componentDidMount() {
+        // initialze application
+        this.props.initialize();
+    }
+
 
     render() {
-        return (
-            <div>
-                {process.env.NODE_ENV === 'production' ? null : <DevTools/>}
+
+        
+        let appContent = (<div>App</div>);
+
+        if(this.props.initializing) {
+            appContent = (<div>Loading...</div>);
+        } else {
+            appContent = (
                 <div>
                     <Router history={history}>
                         <Route path="/" component={NavigationFrame}>
@@ -37,8 +51,13 @@ class App extends React.Component {
                             <Route path="login" component={LoginView} onEnter={redirectIfLoggedIn}/>
                         </Route>
                     </Router>
-                    
                 </div>
+            );
+        }
+        return (
+            <div>
+                {process.env.NODE_ENV === 'production' ? null : <DevTools/>}
+                {appContent}
             </div>
         );
     }
@@ -46,5 +65,23 @@ class App extends React.Component {
 
 }
 
+App.propTypes = {
+    initialize: React.PropTypes.func,
+    initializing: React.PropTypes.bool
+};
 
-export default App;
+App.defaultProps = {
+    initialize: () => {},
+    initializing: false
+};
+
+const AppContainer = connect(
+    state => ({
+        initializing: (state.authentication.initializing || state.userInfo.initializing)
+    }),
+    dispatch => ({
+        initialize: () => dispatch(initialize())
+    })
+)(App);
+
+export default AppContainer;

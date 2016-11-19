@@ -33,6 +33,12 @@ body {
                     background-color: #1a88ff;
                 }
 
+                &.active {
+                    -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.39);
+                    -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.39);
+                    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.39);
+                }
+
                 &:active {
                     -webkit-box-shadow: inset 0px 0px 12px -7px rgba(0,0,0,0.8);
                     -moz-box-shadow: inset 0px 0px 12px -7px rgba(0,0,0,0.8);

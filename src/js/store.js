@@ -18,14 +18,14 @@ const enhancer = compose(
 
 let initialState = {};
 
-var jwt = sessionStorage.getItem('account_jwt');
+// var jwt = sessionStorage.getItem('account_jwt');
 
-if(jwt) {
-    initialState.authentication = {
-        isAuthenticated: true,
-        jwt: jwt,
-    };
-}
+// if(jwt) {
+//     initialState.authentication = {
+//         isAuthenticated: true,
+//         jwt: jwt,
+//     };
+// }
 
 let store = createStore(
     reducer,

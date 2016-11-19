@@ -24,6 +24,7 @@ import App from './js/app';
 
 let app_props = {
 	// set app props
+    
 };
 
 ReactDOM.render(

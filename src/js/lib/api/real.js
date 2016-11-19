@@ -23,11 +23,14 @@ export function login(orcidCode, callback) {
     });
 }
 
-export function getUserInfo(id, callback) {
+export function getUserInfo(id, jwt, callback) {
     return request({
         method: 'GET',
         url: `${BASE_URL}/api/user/${id}`,
-        json: true
+        json: true,
+        auth: {
+            bearer: jwt
+        }
     }, (err, resp, body) => {
         if(err) {
             return callback(err);
