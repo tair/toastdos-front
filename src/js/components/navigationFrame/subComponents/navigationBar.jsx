@@ -87,7 +87,7 @@ class NavigationBar extends React.Component {
                                     style={navigationLinkStyle}
                                     onClick={this.onProfileClick}
                                 >
-                                    {this.props.userName}
+                                    {this.props.userName} &#x25BE;
                                 </button>
                                 {this.state.showProfile ? (
                                     <div style={{position: 'relative'}}>

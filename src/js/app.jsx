@@ -3,15 +3,18 @@
 
 import React from 'react';
 import {connect} from 'react-redux';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 
 import {initialize} from './actions/authentication';
 
 import Home from 'components/connectedHome';
 import LoginView from 'components/views/loginView/connectedLoginView';
 import NavigationFrame from 'components/navigationFrame/connectedNavigationFrame';
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import DnaLoader from './components/loaders/DnaLoader';
+
 import { isAuthenticated, redirectIfLoggedIn } from './routeChecks';
-import { syncHistoryWithStore } from 'react-router-redux';
+
 import Store from './store';
 
 let DevTools = (process.env.NODE_ENV !== 'production') ? 
@@ -40,7 +43,7 @@ class App extends React.Component {
         let appContent = (<div>App</div>);
 
         if(this.props.initializing) {
-            appContent = (<div>Loading...</div>);
+            appContent = (<DnaLoader />);
         } else {
             appContent = (
                 <div>

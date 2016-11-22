@@ -13,6 +13,6 @@ export function redirectIfLoggedIn(nextState, replace) {
     let state = Store.getState();
     
     if(state.authentication.isAuthenticated) {
-        replace('/home');
+        replace('/');
     }
 }

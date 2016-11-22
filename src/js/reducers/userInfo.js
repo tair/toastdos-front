@@ -3,7 +3,8 @@
 import {
     REQUEST_USER_INFO,
     SUCCESS_USER_INFO,
-    FAIL_USER_INFO
+    FAIL_USER_INFO,
+    UPDATE_USER_INFO
 } from "../actions/userInfo";
 
 import {
@@ -13,7 +14,9 @@ import {
 
 const defaultState = {
     isFetching: false,
-    userInfo: null,
+    user_name: null,
+    user_orcid_id: null,
+    user_email: null,
     fetchError: null,
     initializing: true
 };
@@ -23,12 +26,19 @@ export default function handleAction(state = defaultState, action) {
     switch (action.type) {
     case REQUEST_USER_INFO:
         return Object.assign({}, state, {
+            isFetching: true,
+            initializing: true
+        });
+    case UPDATE_USER_INFO:
+        return Object.assign({}, state, {
             isFetching: true
         });
     case SUCCESS_USER_INFO:
         return Object.assign({}, state, {
             isFetching: false,
-            userInfo: action.userInfo,
+            user_name: action.userInfo.user_name,
+            user_orcid_id: action.userInfo.user_orcid_id,
+            user_email: action.userInfo.email,
             initializing: false
         });
     case FAIL_USER_INFO:
@@ -38,7 +48,7 @@ export default function handleAction(state = defaultState, action) {
         });
     case LOGOUT:
         return Object.assign({}, state, {
-            userInfo: null
+            user_name: null
         });
     case NO_TOKEN_LOADED:
         return Object.assign({}, state, {

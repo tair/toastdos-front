@@ -23,20 +23,23 @@ export default function handleAction(state = defaultState, action) {
     switch (action.type) {
     case REQUEST_LOGIN:
         return Object.assign({}, state, {
-            isFetching: true
+            isFetching: true,
+            initializing: true
         });
     case SUCCESS_LOGIN:
         return Object.assign({}, state, {
             isFetching: false,
             isAuthenticated: true,
-            jwt: action.jwt
+            jwt: action.jwt,
+            initializing: false
         });
     case FAIL_LOGIN:
         return Object.assign({}, state, {
             isFetching: false,
             isAuthenticated: false,
             jwt: null,
-            loginError: action.error
+            loginError: action.error,
+            initializing: false
         });
     case LOGOUT:
         return Object.assign({}, state, {

@@ -3,8 +3,9 @@
 import { getUserInfo } from '../lib/api';
 
 export const REQUEST_USER_INFO = "REQUEST_USER_INFO";
+export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
 export const SUCCESS_USER_INFO = "SUCCESS_USER_INFO";
-export const FAIL_USER_INFO = "REQUEST_USER_INFO";
+export const FAIL_USER_INFO = "FAIL_USER_INFO";
 
 /**
  * Create a new REQUEST_USER_INFO action
@@ -14,6 +15,23 @@ export function requestUserInfo(user_id) {
     return (dispatch, getState) => {
         let state = getState();
         dispatch({type: REQUEST_USER_INFO});
+        return getUserInfo(user_id, state.authentication.jwt, (err, data) => {
+            if(err) {
+                return dispatch(userInfoFail(err));
+            }
+            return dispatch(userInfoSuccess(data));
+        });
+    };
+}
+
+/**
+ * Create a new UPDATE_USER_INFO action
+ * @param  {Integer} user_id - the ID of the user being reqested.
+ */
+export function updateUserInfo(user_id) {
+    return (dispatch, getState) => {
+        let state = getState();
+        dispatch({type: UPDATE_USER_INFO});
         return getUserInfo(user_id, state.authentication.jwt, (err, data) => {
             if(err) {
                 return dispatch(userInfoFail(err));

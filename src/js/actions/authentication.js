@@ -48,9 +48,15 @@ function loginFail(err) {
  */
 function loginSuccess(logindata) {
     sessionStorage.setItem('account_jwt', logindata.jwt);
-    return {
-        type: SUCCESS_LOGIN,
-        jwt: logindata.jwt
+    let decoded = jwtDecode(logindata.jwt);
+
+    return dispatch => {
+        dispatch({
+            type: SUCCESS_LOGIN,
+            jwt: logindata.jwt
+        });
+        
+        return dispatch(requestUserInfo(decoded.user_id));
     };
 }
 

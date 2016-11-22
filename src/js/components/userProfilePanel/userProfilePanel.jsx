@@ -101,18 +101,13 @@ class UserProfilePanel extends React.Component {
                     <div style={profileDataStyle}>
                         <div style={profileDataLabelStyle}>EMAIL:</div>
                         <div>
-                            {this.props.email ?
-                                (this.props.email) :
-                                (
-                                    <EditableLabel
-                                        placeholder="Add Email..."
-                                        value={this.props.email}
-                                        className="email-label"
-                                        editingClassName="email-label-editing"
-                                        inputType="email"
-                                    />
-                                )
-                            }
+                            <EditableLabel
+                                placeholder="Add Email..."
+                                value={this.props.email}
+                                className="email-label"
+                                editingClassName="email-label-editing"
+                                inputType="email"
+                            />
                         </div>
                     </div>
                 </div>
