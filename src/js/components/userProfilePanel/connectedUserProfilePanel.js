@@ -3,6 +3,7 @@
 import {connect} from 'react-redux';
 import UserProfilePanel from './userProfilePanel';
 import { logout } from '../../actions/authentication';
+import { requestUpdateUserInfo } from '../../actions/userInfo';
 // import jwtdecode from 'jwt-decode';
 
 const ConnectedUserProfilePanel = connect(
@@ -12,7 +13,8 @@ const ConnectedUserProfilePanel = connect(
         email: state.userInfo.user_email
     }),
     dispatch => ({
-        onLogoutClick: () => dispatch(logout())
+        onLogoutClick: () => dispatch(logout()),
+        onEmailChange: email => dispatch(requestUpdateUserInfo({email: email}))
     })
 )(UserProfilePanel);
 

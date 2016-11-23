@@ -5,7 +5,8 @@
 
 const LATENCY = 2000;
 
-const userJSONObj = {
+// object representing currently lgged in user's data
+let userJSONObj = {
     user_name: "John Doe",
     user_orcid_id: "1234-5678-9876-4321",
     email:"JoDo@do.com",
@@ -18,18 +19,42 @@ const userJSONObj = {
     ]
 };
 
-
+/**
+ * Mock a login request
+ * @param  {String}   orcidCode - the ORCID auth code
+ * @param  {Function} callback  - callback after request
+ * @return {[type]}             [description]
+ */
 export function login(orcidCode, callback) {
     return setTimeout(() => {
-        callback(null, {
+        return callback(null, {
             jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlcl9pZCI6NSwidXNlcl9uYW1lIjoiSm9obiBEb2UiLCJ1c2VyX29yY2lkX2lkIjoiMTIzNC01Njc4LTk4NzYtNDMyMSJ9.N2irm4JuggkMRLQRQIt9TMKKNq99AcTU8x1SBlid-nk"
         });
     }, LATENCY);
 }
 
-//make JSON object
+/**
+ * Mock request for user info. 
+ * Returns the mock user object above.
+ * @param  {int}   id       - the id of the user
+ * @param  {String}   jwt      - the JWT
+ * @param  {Function} callback - the callback
+ */
 export function getUserInfo(id, jwt, callback) {
     return setTimeout(() => {
-        callback(null, userJSONObj);
+        return callback(null, userJSONObj);
     }, LATENCY);
+}
+
+/**
+ * Mock request for updating user info
+ * @param  {Object}   newUserInfo - the user info to change
+ * @param  {String}   jwt         - the JWT
+ * @param  {Function} callback    - the calllback
+ */
+export function updateUserInfo(id, newUserInfo, jwt, callback) {
+    return setTimeout(() => {
+        userJSONObj = Object.assign({}, userJSONObj, newUserInfo);
+        return callback(null, userJSONObj);
+    });
 }

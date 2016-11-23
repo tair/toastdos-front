@@ -107,6 +107,7 @@ class UserProfilePanel extends React.Component {
                                 className="email-label"
                                 editingClassName="email-label-editing"
                                 inputType="email"
+                                onSubmit={this.props.onEmailChange}
                             />
                         </div>
                     </div>

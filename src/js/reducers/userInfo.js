@@ -4,7 +4,10 @@ import {
     REQUEST_USER_INFO,
     SUCCESS_USER_INFO,
     FAIL_USER_INFO,
-    UPDATE_USER_INFO
+    REFRESH_USER_INFO,
+    REQUEST_UPDATE_USER_INFO,
+    SUCCESS_UPDATE_USER_INFO,
+    FAIL_UPDATE_USER_INFO
 } from "../actions/userInfo";
 
 import {
@@ -18,7 +21,9 @@ const defaultState = {
     user_orcid_id: null,
     user_email: null,
     fetchError: null,
-    initializing: true
+    initializing: true,
+    attemptingUpdate: false,
+    updateError: null
 };
 
 
@@ -29,7 +34,7 @@ export default function handleAction(state = defaultState, action) {
             isFetching: true,
             initializing: true
         });
-    case UPDATE_USER_INFO:
+    case REFRESH_USER_INFO:
         return Object.assign({}, state, {
             isFetching: true
         });
@@ -45,6 +50,22 @@ export default function handleAction(state = defaultState, action) {
         return Object.assign({}, state, {
             isFetching: false,
             fetchError: action.error
+        });
+    case REQUEST_UPDATE_USER_INFO:
+        return Object.assign({}, state, {
+            attemptingUpdate: true
+        });
+    case SUCCESS_UPDATE_USER_INFO:
+        return Object.assign({}, state, {
+            attemptingUpdate: false,
+            user_name: action.userInfo.user_name,
+            user_orcid_id: action.userInfo.user_orcid_id,
+            user_email: action.userInfo.email
+        });
+    case FAIL_UPDATE_USER_INFO:
+        return Object.assign({}, state, {
+            attemptingUpdate: false,
+            updateError: action.error
         });
     case LOGOUT:
         return Object.assign({}, state, {
