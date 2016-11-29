@@ -11,7 +11,7 @@ import {initialize} from './actions/authentication';
 import Home from 'components/connectedHome';
 import LoginView from 'components/views/loginView/connectedLoginView';
 import NavigationFrame from 'components/navigationFrame/connectedNavigationFrame';
-import DnaLoader from './components/loaders/DnaLoader';
+import DnaLoader from './components/loaders/dnaLoader';
 
 import { isAuthenticated, redirectIfLoggedIn } from './routeChecks';
 
