@@ -2,15 +2,24 @@
 /*global process*/
 
 import React from 'react';
+import {connect} from 'react-redux';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
+
+import {initialize} from './actions/authentication';
+
 import Home from 'components/connectedHome';
 import LoginView from 'components/views/loginView/connectedLoginView';
 import NavigationFrame from 'components/navigationFrame/connectedNavigationFrame';
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import DefaultLoadingAnimation from './components/loadingAnimations/defaultLoadingAnimation';
+
 import { isAuthenticated, redirectIfLoggedIn } from './routeChecks';
-import { syncHistoryWithStore } from 'react-router-redux';
+
 import Store from './store';
 
-import DevTools from 'components/devTools/devTools';
+// Only load the dev tools in development
+let DevTools = (process.env.NODE_ENV === 'development') ? 
+require('components/devTools/devTools').default : f => f;
 
 let history = syncHistoryWithStore(browserHistory, Store);
 
@@ -23,11 +32,21 @@ class App extends React.Component {
         };
     }
 
+    componentDidMount() {
+        // initialze application
+        this.props.initialize();
+    }
+
 
     render() {
-        return (
-            <div>
-                {process.env.NODE_ENV === 'production' ? null : <DevTools/>}
+
+        
+        let appContent = (<div>App</div>);
+
+        if(this.props.initializing) {
+            appContent = (<DefaultLoadingAnimation />);
+        } else {
+            appContent = (
                 <div>
                     <Router history={history}>
                         <Route path="/" component={NavigationFrame}>
@@ -36,8 +55,13 @@ class App extends React.Component {
                             <Route path="login" component={LoginView} onEnter={redirectIfLoggedIn}/>
                         </Route>
                     </Router>
-                    
                 </div>
+            );
+        }
+        return (
+            <div>
+                {process.env.NODE_ENV === 'production' ? null : <DevTools/>}
+                {appContent}
             </div>
         );
     }
@@ -45,5 +69,23 @@ class App extends React.Component {
 
 }
 
+App.propTypes = {
+    initialize: React.PropTypes.func,
+    initializing: React.PropTypes.bool
+};
 
-export default App;
+App.defaultProps = {
+    initialize: () => {},
+    initializing: false
+};
+
+const AppContainer = connect(
+    state => ({
+        initializing: (state.authentication.initializing || state.userInfo.initializing)
+    }),
+    dispatch => ({
+        initialize: () => dispatch(initialize())
+    })
+)(App);
+
+export default AppContainer;

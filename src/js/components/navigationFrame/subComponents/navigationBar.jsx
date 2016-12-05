@@ -83,15 +83,18 @@ class NavigationBar extends React.Component {
                     {this.props.isAuthenticated ? (
                         <div>
                             <li style={{display: 'inline-block'}}>
-                                <span
+                                <button
                                     style={navigationLinkStyle}
                                     onClick={this.onProfileClick}
                                 >
-                                    {this.props.userName}
-                                </span>
+                                    {this.props.userName} &#x25BE;
+                                </button>
                                 {this.state.showProfile ? (
                                     <div style={{position: 'relative'}}>
-                                        <UserProfilePanel componentShouldDismiss={this.dismissProfile} />
+                                        <UserProfilePanel
+                                            componentShouldDismiss={this.dismissProfile}
+                                            className="profile-panel"
+                                        />
                                     </div>
                                 ) : null}
                             </li>

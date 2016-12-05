@@ -1,29 +1,23 @@
 "use strict";
 /* global process */
 import { createStore, applyMiddleware, compose } from 'redux';
-import DevTools from './components/devTools/devTools';
 
 import thunk from 'redux-thunk';
-
 import reducer from './reducers';
 
+// Only load the dev tools in development
+let DevTools = (process.env.NODE_ENV === 'development') ? 
+require('components/devTools/devTools').default : f => f;
+
 let enhancements = [ applyMiddleware(thunk) ];
-process.env.NODE_ENV === 'production' ? null : enhancements.push(DevTools.instrument());
+(process.env.NODE_ENV === 'development') ?
+enhancements.push(DevTools.instrument()) : null;
 
 const enhancer = compose(
   ...enhancements
 );
 
 let initialState = {};
-
-var jwt = sessionStorage.getItem('account_jwt');
-
-if(jwt) {
-    initialState.authentication = {
-        isAuthenticated: true,
-        jwt: jwt,
-    };
-}
 
 let store = createStore(
     reducer,

@@ -1,6 +1,11 @@
 "use strict";
 
 import { login } from "../lib/api";
+import { requestUserInfo } from './userInfo';
+import jwtDecode from 'jwt-decode';
+
+export const TOKEN_LOADED = "TOKEN_LOADED";
+export const NO_TOKEN_LOADED = "NO_TOKEN_LOADED";
 
 export const REQUEST_LOGIN = "REQUEST_LOGIN";
 export const SUCCESS_LOGIN = "SUCCESS_LOGIN";
@@ -43,9 +48,15 @@ function loginFail(err) {
  */
 function loginSuccess(logindata) {
     sessionStorage.setItem('account_jwt', logindata.jwt);
-    return {
-        type: SUCCESS_LOGIN,
-        jwt: logindata.jwt
+    let decoded = jwtDecode(logindata.jwt);
+
+    return dispatch => {
+        dispatch({
+            type: SUCCESS_LOGIN,
+            jwt: logindata.jwt
+        });
+        
+        return dispatch(requestUserInfo(decoded.user_id));
     };
 }
 
@@ -58,5 +69,26 @@ export function logout() {
     sessionStorage.removeItem('account_jwt');
     return {
         type: LOGOUT
+    };
+}
+
+/**
+ * Action creator to perform initialization tasks
+ */
+export function initialize() {
+    return dispatch => {
+        let jwt = sessionStorage.getItem('account_jwt');
+        if(jwt) {
+            dispatch({
+                type: TOKEN_LOADED,
+                jwt: jwt
+            });
+            let decoded = jwtDecode(jwt);
+            return dispatch(requestUserInfo(decoded.user_id));
+        }
+
+        return dispatch({
+            type: NO_TOKEN_LOADED
+        });
     };
 }

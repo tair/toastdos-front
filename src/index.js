@@ -9,6 +9,7 @@
 // import styles
 import 'normalize.css';
 import './css/main.scss';
+import 'font-awesome/css/font-awesome.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -23,6 +24,7 @@ import App from './js/app';
 
 let app_props = {
 	// set app props
+    
 };
 
 ReactDOM.render(
