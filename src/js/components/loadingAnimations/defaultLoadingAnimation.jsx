@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-class DnaLoader extends React.Component {
+class DefaultLoadingAnimation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -38,4 +38,4 @@ class DnaLoader extends React.Component {
     }
 }
 
-export default DnaLoader;
+export default DefaultLoadingAnimation;

@@ -11,13 +11,14 @@ import {initialize} from './actions/authentication';
 import Home from 'components/connectedHome';
 import LoginView from 'components/views/loginView/connectedLoginView';
 import NavigationFrame from 'components/navigationFrame/connectedNavigationFrame';
-import DnaLoader from './components/loaders/dnaLoader';
+import DefaultLoadingAnimation from './components/loadingAnimations/defaultLoadingAnimation';
 
 import { isAuthenticated, redirectIfLoggedIn } from './routeChecks';
 
 import Store from './store';
 
-let DevTools = (process.env.NODE_ENV !== 'production') ? 
+// Only load the dev tools in development
+let DevTools = (process.env.NODE_ENV === 'development') ? 
 require('components/devTools/devTools').default : f => f;
 
 let history = syncHistoryWithStore(browserHistory, Store);
@@ -43,7 +44,7 @@ class App extends React.Component {
         let appContent = (<div>App</div>);
 
         if(this.props.initializing) {
-            appContent = (<DnaLoader />);
+            appContent = (<DefaultLoadingAnimation />);
         } else {
             appContent = (
                 <div>

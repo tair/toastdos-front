@@ -5,12 +5,13 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducer from './reducers';
 
-let DevTools = (process.env.NODE_ENV !== 'production') ? 
+// Only load the dev tools in development
+let DevTools = (process.env.NODE_ENV === 'development') ? 
 require('components/devTools/devTools').default : f => f;
 
 let enhancements = [ applyMiddleware(thunk) ];
-process.env.NODE_ENV === 'production' ? f => f :
-enhancements.push(DevTools.instrument());
+(process.env.NODE_ENV === 'development') ?
+enhancements.push(DevTools.instrument()) : null;
 
 const enhancer = compose(
   ...enhancements

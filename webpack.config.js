@@ -1,4 +1,5 @@
 "use strict";
+/* global process */
 
 const webpack               = require('webpack');
 const path                  = require("path");
@@ -43,21 +44,13 @@ module.exports = {
         ]
     },
     plugins: [
-        // new webpack.optimize.UglifyJsPlugin({
-        //  compress: {
-        //      warnings: false,
-        //  },
-        //  output: {
-        //      comments: false
-        //  }
-        // }),
         new HtmlWebpackPlugin({
             template: './src/index.ejs',
             inject: false
         }),
         new webpack.DefinePlugin({
             "process.env": {
-                NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+                NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : "development"),
                 USE_MOCK_API: JSON.stringify(process.env.USE_MOCK_API)
             }
         }),
@@ -71,3 +64,16 @@ module.exports = {
         }
     }
 };
+
+if(process.env.NODE_ENV === 'production') {
+    module.exports.plugins.push(
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false,
+            },
+            output: {
+                comments: false
+            }
+        })
+    );
+}

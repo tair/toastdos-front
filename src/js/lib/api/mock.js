@@ -3,7 +3,7 @@
 //run this in terminal... USE_MOCK_API=true npm start
 //check index.js (this is why this command works)
 
-const LATENCY = 2000;
+const LATENCY = 500;
 
 // object representing currently lgged in user's data
 let userJSONObj = {
