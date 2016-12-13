@@ -9,8 +9,8 @@ let links = [
         name: 'ToastDos'
     },
     {
-        to: '/test',
-        name: 'TEST'
+        to: '/submission',
+        name: 'Submission'
     }
 ];
 

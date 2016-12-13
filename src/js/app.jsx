@@ -10,6 +10,7 @@ import {initialize} from './actions/authentication';
 
 import Home from 'components/connectedHome';
 import LoginView from 'components/views/loginView/connectedLoginView';
+import submissionView from 'components/views/submissionView/connectedSubmissionView';
 import NavigationFrame from 'components/navigationFrame/connectedNavigationFrame';
 import DefaultLoadingAnimation from './components/loadingAnimations/defaultLoadingAnimation';
 
@@ -51,7 +52,7 @@ class App extends React.Component {
                     <Router history={history}>
                         <Route path="/" component={NavigationFrame}>
                             <IndexRoute component={Home} />
-                            <Route path="test" component={Home} onEnter={isAuthenticated}/>
+                            <Route path="submission" component={submissionView} onEnter={isAuthenticated}/>
                             <Route path="login" component={LoginView} onEnter={redirectIfLoggedIn}/>
                         </Route>
                     </Router>
