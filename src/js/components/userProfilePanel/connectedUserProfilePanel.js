@@ -14,7 +14,7 @@ const ConnectedUserProfilePanel = connect(
     }),
     dispatch => ({
         onLogoutClick: () => dispatch(logout()),
-        onEmailChange: email => dispatch(requestUpdateUserInfo({email: email}))
+        onEmailChange: email => dispatch(requestUpdateUserInfo({email_address: email}))
     })
 )(UserProfilePanel);
 
