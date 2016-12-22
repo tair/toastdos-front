@@ -7,9 +7,10 @@ const LATENCY = 500;
 
 // object representing currently lgged in user's data
 let userJSONObj = {
-    user_name: "John Doe",
-    user_orcid_id: "1234-5678-9876-4321",
-    email:"JoDo@do.com",
+    id: 3,
+    name: "John Doe",
+    orcid_id: "1234-5678-9876-4321",
+    email_address:"JoDo@do.com",
     //user have no roles if this list is empty
     roles: [
         {

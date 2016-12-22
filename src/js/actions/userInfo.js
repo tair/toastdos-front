@@ -97,7 +97,11 @@ export function requestUpdateUserInfo(newUserInfo) {
         let user_id = jwtDecode(state.authentication.jwt).user_id;
         dispatch({
             type: REQUEST_UPDATE_USER_INFO,
-            userInfo: newUserInfo
+            userInfo: {
+                name: newUserInfo.user_name,
+                orcid_id: newUserInfo.user_orcid_id,
+                email_address: newUserInfo.user_email
+            }
         });
         return updateUserInfo(user_id, newUserInfo, state.authentication.jwt, (err, data) => {
             if(err) {

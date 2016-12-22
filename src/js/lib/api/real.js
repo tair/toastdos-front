@@ -26,7 +26,7 @@ export function login(orcidCode, callback) {
 export function getUserInfo(id, jwt, callback) {
     return request({
         method: 'GET',
-        url: `${BASE_URL}/api/user/${id}`,
+        url: `${BASE_URL}/api/user/${id}?withRelated=roles`,
         json: true,
         headers: {
             'Authorization': `Bearer ${jwt}`

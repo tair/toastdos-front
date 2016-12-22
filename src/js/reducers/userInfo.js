@@ -41,9 +41,9 @@ export default function handleAction(state = defaultState, action) {
     case SUCCESS_USER_INFO:
         return Object.assign({}, state, {
             isFetching: false,
-            user_name: action.userInfo.user_name,
-            user_orcid_id: action.userInfo.user_orcid_id,
-            user_email: action.userInfo.email,
+            user_name: action.userInfo.name,
+            user_orcid_id: action.userInfo.orcid_id,
+            user_email: action.userInfo.email_address,
             initializing: false
         });
     case FAIL_USER_INFO:
@@ -58,9 +58,9 @@ export default function handleAction(state = defaultState, action) {
     case SUCCESS_UPDATE_USER_INFO:
         return Object.assign({}, state, {
             attemptingUpdate: false,
-            user_name: action.userInfo.user_name,
-            user_orcid_id: action.userInfo.user_orcid_id,
-            user_email: action.userInfo.email
+            user_name: action.userInfo.name,
+            user_orcid_id: action.userInfo.orcid_id,
+            user_email: action.userInfo.email_address
         });
     case FAIL_UPDATE_USER_INFO:
         return Object.assign({}, state, {
