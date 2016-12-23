@@ -34,5 +34,8 @@
         ],
         "react/jsx-uses-vars": "error",
         "react/jsx-uses-react": "error"
+    },
+    "globals": {
+        "__dirname": false
     }
 }

@@ -6,21 +6,20 @@ import {connect} from 'react-redux';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
-import {initialize} from './actions/authentication';
+import homeModule from 'modules/home';
+import authenticationModule from 'modules/authentication';
+import submissionModule from 'modules/submission';
+import navigationModule from 'modules/navigation';
 
-import Home from 'components/connectedHome';
-import LoginView from 'components/views/loginView/connectedLoginView';
-import submissionView from 'components/views/submissionView/connectedSubmissionView';
-import NavigationFrame from 'components/navigationFrame/connectedNavigationFrame';
-import DefaultLoadingAnimation from './components/loadingAnimations/defaultLoadingAnimation';
+import DefaultLoadingAnimation from 'lib/components/loadingAnimations/defaultLoadingAnimation';
 
-import { isAuthenticated, redirectIfLoggedIn } from './routeChecks';
+import { isAuthenticated, redirectIfLoggedIn } from 'lib/routeChecks';
 
 import Store from './store';
 
 // Only load the dev tools in development
 let DevTools = (process.env.NODE_ENV === 'development') ? 
-require('components/devTools/devTools').default : f => f;
+require('lib/components/devTools').default : f => f;
 
 let history = syncHistoryWithStore(browserHistory, Store);
 
@@ -50,10 +49,23 @@ class App extends React.Component {
             appContent = (
                 <div>
                     <Router history={history}>
-                        <Route path="/" component={NavigationFrame}>
-                            <IndexRoute component={Home} />
-                            <Route path="submission" component={submissionView} onEnter={isAuthenticated}/>
-                            <Route path="login" component={LoginView} onEnter={redirectIfLoggedIn}/>
+                        <Route
+                            path="/"
+                            component={navigationModule.components.NavigationFrame}
+                        >
+                            <IndexRoute
+                                component={homeModule.components.HomeView}
+                            />
+                            <Route
+                                path="submission"
+                                component={submissionModule.components.SubmissionView}
+                                onEnter={isAuthenticated}
+                            />
+                            <Route
+                                path="login"
+                                component={authenticationModule.components.LoginView}
+                                onEnter={redirectIfLoggedIn}
+                            />
                         </Route>
                     </Router>
                 </div>
@@ -85,7 +97,7 @@ const AppContainer = connect(
         initializing: (state.authentication.initializing || state.userInfo.initializing)
     }),
     dispatch => ({
-        initialize: () => dispatch(initialize())
+        initialize: () => dispatch(authenticationModule.actions.initialize())
     })
 )(App);
 
