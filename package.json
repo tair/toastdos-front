@@ -42,6 +42,7 @@
     "eslint": "^3.9.1",
     "eslint-plugin-react": "^6.6.0",
     "redux-devtools": "^3.3.1",
+    "redux-devtools-diff-monitor": "^5.0.5",
     "redux-devtools-dock-monitor": "^1.1.1",
     "redux-devtools-log-monitor": "^1.1.0",
     "redux-slider-monitor": "^1.0.7",

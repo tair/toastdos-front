@@ -1,19 +1,19 @@
 "use strict";
 
 import {
-    ACTION_NAME
+    PUBLICATION_ID_CHANGED
 } from "./actionTypes";
 
 const defaultState = {
-    exampleState: 0
+    publicationIdValue: ""
 };
 
 
 export default function (state = defaultState, action) {
     switch (action.type) {
-    case ACTION_NAME:
+    case PUBLICATION_ID_CHANGED:
         return Object.assign({}, state, {
-            exampleState: state.exampleState + 1
+            publicationIdValue: action.value
         });
     default:
         return state;

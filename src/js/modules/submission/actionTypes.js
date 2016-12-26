@@ -1,3 +1,3 @@
 "use strict";
 
-export const ACTION_NAME = "submission/ACTION_NAME";
+export const PUBLICATION_ID_CHANGED = "submission/PUBLICATION_ID_CHANGED";

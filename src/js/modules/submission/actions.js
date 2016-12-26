@@ -2,8 +2,9 @@
 
 import * as actions from './actionTypes';
 
-export function actionName() {
+export function changePublicationId(value) {
     return {
-        type: actions.ACTION_NAME
+        type: actions.PUBLICATION_ID_CHANGED,
+        value: value
     };
 }
