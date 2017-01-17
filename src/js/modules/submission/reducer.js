@@ -27,7 +27,8 @@ export default function (state = defaultState, action) {
             finalizedLocusName: "",
             finalizedGeneSynmbol: "",
             finalizedFullName: "",
-            finalized: false
+            finalized: false,
+            validating: false
         };
 
         newState.geneOrder.push(action.localId);
@@ -41,6 +42,37 @@ export default function (state = defaultState, action) {
 
         delete newState.geneIndex[action.localId];
         // newState.gene.splice(action.index, 1);
+
+        return Object.assign({}, state, newState);
+    case actions.ATTEMPT_VALIDATE_GENE:
+        // todo
+        newState = {
+            geneIndex: Object.assign({}, state.geneIndex),
+        };
+
+        newState.geneIndex[action.localId].validating = true;
+        return Object.assign({}, state, newState);
+    case actions.VALIDATE_GENE_RESULT:
+        // todo 
+        newState = {
+            geneIndex: Object.assign({}, state.geneIndex),
+        };
+
+        newState.geneIndex[action.localId].validating = false;
+        newState.geneIndex[action.localId].finalized = true;
+
+        newState.geneIndex[action.localId].finalizedLocusName = action.geneData.locusName;
+        newState.geneIndex[action.localId].finalizedGeneSynmbol = action.geneData.geneSymbol;
+        newState.geneIndex[action.localId].finalizedFullName = action.geneData.fullName;
+        
+
+        return Object.assign({}, state, newState);
+    case actions.EDIT_GENE_DATA:
+        newState = {
+            geneIndex: Object.assign({}, state.geneIndex)
+        };
+
+        newState.geneIndex[action.localId].finalized = false;
 
         return Object.assign({}, state, newState);
     default:

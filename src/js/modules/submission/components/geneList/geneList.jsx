@@ -17,7 +17,13 @@ class GeneList extends React.Component {
                 key={`gene_${geneData.localId}`}
                 title={`Gene ${index + 1}`}
                 onRemoveClick={() => this.props.removeGene(geneId)}
-                submitGeneData={() => {}}
+                validateGeneData={this.props.validateGeneData.bind(this, geneId)}
+                onEditClick={this.props.editGeneData.bind(this, geneId)}
+                validating={geneData.validating}
+                locusName={geneData.finalizedLocusName}
+                geneSymbol={geneData.finalizedGeneSynmbol}
+                fullName={geneData.finalizedFullName}
+                finalized={geneData.finalized}
             />
         );
     }
@@ -47,13 +53,17 @@ GeneList.propTypes = {
     ),
     onGeneAddClick: React.PropTypes.func,
     removeGene: React.PropTypes.func,
+    validateGeneData: React.PropTypes.func,
+    editGeneData: React.PropTypes.func
 };
 
 GeneList.defaultProps = {
     geneIndex: {},
     geneOrder: [],
     onGeneAddClick: () => {},
-    removeGene: () => {}
+    removeGene: () => {},
+    validateGeneData: () => {},
+    editGeneData: () => {}
 };
 
 

@@ -3,7 +3,12 @@
 import { connect } from 'react-redux';
 
 import GeneList from './geneList';
-import { addNewGene, removeGene } from '../../actions';
+import {
+        addNewGene,
+        removeGene,
+        attemptValidateGene,
+        editGeneData
+    } from '../../actions';
 import generateId from "lib/idGenerator";
 
 const ConnectedGeneList = connect(
@@ -13,7 +18,9 @@ const ConnectedGeneList = connect(
     }),
     dispatch => ({
         onGeneAddClick: () => dispatch(addNewGene(generateId())),
-        removeGene: i => dispatch(removeGene(i))
+        removeGene: i => dispatch(removeGene(i)),
+        validateGeneData: (localId, geneData) => dispatch(attemptValidateGene(localId, geneData)),
+        editGeneData: localId => dispatch(editGeneData(localId))
     })
 )(GeneList);
 

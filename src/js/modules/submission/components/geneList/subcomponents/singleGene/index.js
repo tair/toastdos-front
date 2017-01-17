@@ -20,6 +20,16 @@ class SingleGeneContainer extends React.Component {
         this.handleFullNameChange = this.handleFullNameChange.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.finalized) {
+            this.setState({
+                locusNameValue: nextProps.locusName,
+                geneSymbolValue: nextProps.geneSymbol,
+                fullNameValue: nextProps.fullName
+            });
+        }
+    }
+
     /**
      * Event handler for changing the value of the LocusName field
      * @param  {Event} event - the onChange event
@@ -53,8 +63,13 @@ class SingleGeneContainer extends React.Component {
     attemptToFinalize() {
         // local validation
         // submit to backend
-        
-        console.log("Attempting to finalize!");
+        if(this.state.locusNameValue) {
+            this.props.validateGeneData({
+                locusName: this.state.locusNameValue,
+                geneSymbol: this.state.geneSymbolValue,
+                fullName: this.state.fullNameValue 
+            });
+        }
     }
 
     handleKeyPress(event) {
@@ -74,7 +89,10 @@ class SingleGeneContainer extends React.Component {
             onBlur: this.attemptToFinalize,
             onKeyDown: this.handleKeyPress,
             onRemoveClick: this.props.onRemoveClick,
-            title: this.props.title
+            onEditClick: this.props.onEditClick,
+            title: this.props.title,
+            validating: this.props.validating,
+            finalized: this.props.finalized
         });
     }
 }
@@ -85,7 +103,10 @@ SingleGeneContainer.propTypes = {
     geneSymbol: React.PropTypes.string,
     fullName: React.PropTypes.string,
     onRemoveClick: React.PropTypes.func,
+    onEditClick: React.PropTypes.func,
     validateGeneData: React.PropTypes.func,
+    validating: React.PropTypes.bool,
+    finalized: React.PropTypes.bool
 };
 
 SingleGeneContainer.defaultProps = {
@@ -94,7 +115,10 @@ SingleGeneContainer.defaultProps = {
     geneSymbol: "",
     fullName: "",
     onRemoveClick: () => {},
+    onEditClick: () => {},
     validateGeneData: () => {},
+    validating: false,
+    finalized: false
 };
 
 export default SingleGeneContainer;

@@ -24,7 +24,6 @@ let userJSONObj = {
  * Mock a login request
  * @param  {String}   orcidCode - the ORCID auth code
  * @param  {Function} callback  - callback after request
- * @return {[type]}             [description]
  */
 export function login(orcidCode, callback) {
     return setTimeout(() => {
@@ -57,5 +56,28 @@ export function updateUserInfo(id, newUserInfo, jwt, callback) {
     return setTimeout(() => {
         userJSONObj = Object.assign({}, userJSONObj, newUserInfo);
         return callback(null, userJSONObj);
-    });
+    }, LATENCY);
+}
+
+const mockGeneData = {
+    myGene1: {
+        name: "myGene1",
+        id: 4
+    }
+};
+
+/**
+ * Get a single gene by it's name
+ * @param  {String}   name     - the name of the gene
+ * @param  {Function} callback - the callback
+ */
+export function getGeneByFullName(name, callback) {
+    return setTimeout(() => {
+        if(name in mockGeneData) {
+            return callback(null, mockGeneData[name]);
+        }
+
+        return callback({error: "TooManyGenes"});
+
+    }, LATENCY);
 }
