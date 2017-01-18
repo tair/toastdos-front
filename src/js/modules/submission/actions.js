@@ -63,3 +63,19 @@ export function editGeneData(localId) {
         localId: localId
     };
 }
+
+export function addNewAnnotation(localId) {
+    return {
+        type: actions.ADD_NEW_ANNOTATION,
+        localId: localId
+    };
+}
+
+export function changeAnnotationType(localId, newType) {
+    return {
+        type: actions.CHANGE_ANNOTATION_TYPE,
+        localId: localId,
+        newAnnotationType: newType
+    };
+}
+

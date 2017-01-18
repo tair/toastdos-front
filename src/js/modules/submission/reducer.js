@@ -1,11 +1,14 @@
 "use strict";
 
 import * as actions from "./actionTypes";
+import {annotationTypes} from './constants';
 
 const defaultState = {
     publicationIdValue: "",
     geneIndex: {},
-    geneOrder: []
+    geneOrder: [],
+    annotationIndex: {},
+    annotationOrder: []
 };
 
 
@@ -73,6 +76,27 @@ export default function (state = defaultState, action) {
         };
 
         newState.geneIndex[action.localId].finalized = false;
+
+        return Object.assign({}, state, newState);
+    case actions.ADD_NEW_ANNOTATION:
+        newState = {
+            annotationIndex: Object.assign({}, state.annotationIndex),
+            annotationOrder: state.annotationOrder.slice()
+        };
+
+        newState.annotationIndex[action.localId] = {
+            localId: action.localId,
+            annotationType: annotationTypes.TEMPORAL_EXPRESSION
+        };
+
+        newState.annotationOrder.push(action.localId);
+
+        return Object.assign({}, state, newState);
+    case actions.CHANGE_ANNOTATION_TYPE:
+        newState = {
+            annotationIndex: Object.assign({}, state.annotationIndex)
+        };
+        newState.annotationIndex[action.localId].annotationType = action.newAnnotationType;
 
         return Object.assign({}, state, newState);
     default:
