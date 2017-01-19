@@ -2,6 +2,12 @@
 
 export const name = "submission";
 
+export const annotationFormats = {
+    COMMENT: "COMMENT",
+    GENE_TERM: "GENE_TERM",
+    GENE_GENE: "GENE_GENE"
+};
+
 export const annotationTypes = {
     MOLECULAR_FUNCTION: "MOLECULAR_FUNCTION",
     BIOLOGICAL_PROCESS: "BIOLOGICAL_PROCESS",
@@ -15,35 +21,35 @@ export const annotationTypes = {
 export const annotationTypeData = {
     [annotationTypes.MOLECULAR_FUNCTION]: {
         name: "Molecular Function",
-        format: "GENE_TERM",
+        format: annotationFormats.GENE_TERM,
         keywordScope: "molecular_function"
     },
     [annotationTypes.BIOLOGICAL_PROCESS]: {
         name: "Biological Process",
-        format: "GENE_TERM",
+        format: annotationFormats.GENE_TERM,
         keywordScope: "biological_process"
     },
     [annotationTypes.SUBCELLULAR_LOCATION]: {
         name: "Subcellular Location",
-        format: "GENE_TERM",
+        format: annotationFormats.GENE_TERM,
         keywordScope: "cellular_component"
     },
     [annotationTypes.ANATOMICAL_LOCATION]: {
         name: "Anatomical Location",
-        format: "GENE_TERM",
+        format: annotationFormats.GENE_TERM,
         keywordScope: "plant_anatomy"
     },
     [annotationTypes.TEMPORAL_EXPRESSION]: {
         name: "Temporal Expression",
-        format: "GENE_TERM",
+        format: annotationFormats.GENE_TERM,
         keywordScope: "plant_structure_development_stage"
     },
     [annotationTypes.PROTEIN_INTERACTION]: {
         name: "Protein Interaction",
-        format: "GENE_GENE"
+        format: annotationFormats.GENE_GENE
     },
     [annotationTypes.COMMENT]: {
         name: "Comment",
-        format: "COMMENT"
+        format: annotationFormats.COMMENT
     }
-}
+};

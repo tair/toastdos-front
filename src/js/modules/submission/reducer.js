@@ -92,6 +92,17 @@ export default function (state = defaultState, action) {
         newState.annotationOrder.push(action.localId);
 
         return Object.assign({}, state, newState);
+
+    case actions.REMOVE_ANNOTATION:
+        newState = {
+            annotationIndex: Object.assign({}, state.annotationIndex),
+            annotationOrder: state.annotationOrder.filter(e => e !== action.localId)
+        };
+
+        delete newState.annotationIndex[action.localId];
+
+        return Object.assign({}, state, newState);
+
     case actions.CHANGE_ANNOTATION_TYPE:
         newState = {
             annotationIndex: Object.assign({}, state.annotationIndex)

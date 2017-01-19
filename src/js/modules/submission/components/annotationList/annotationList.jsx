@@ -19,6 +19,7 @@ class AnnotationList extends React.Component {
                 title={`Annotation ${index + 1}`}
                 annotationType={currAnnotation.annotationType}
                 onTypeChange={this.props.handleAnnotationTypeChange.bind(this, annotationId)}
+                onDeleteClick={this.props.removeAnnotation.bind(this, annotationId)}
             />
         );
     }
@@ -50,7 +51,8 @@ AnnotationList.propTypes = {
         ])
     ),
     onAnnotationAddClick: React.PropTypes.func,
-    handleAnnotationTypeChange: React.PropTypes.func
+    handleAnnotationTypeChange: React.PropTypes.func,
+    removeAnnotation: React.PropTypes.func
 };
 
 AnnotationList.defaultProps = {

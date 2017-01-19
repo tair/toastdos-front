@@ -36,7 +36,7 @@ export function attemptValidateGene(localId, geneData) {
         // todo the async operation
         return setTimeout(() => {
             return dispatch(validateGeneResult(localId, true, geneData));
-        }, 2000);
+        }, 500);
     };
 }
 
@@ -67,6 +67,13 @@ export function editGeneData(localId) {
 export function addNewAnnotation(localId) {
     return {
         type: actions.ADD_NEW_ANNOTATION,
+        localId: localId
+    };
+}
+
+export function removeAnnotation(localId) {
+    return {
+        type: actions.REMOVE_ANNOTATION,
         localId: localId
     };
 }

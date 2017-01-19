@@ -6,7 +6,8 @@ import generateId from 'lib/idGenerator';
 import AnnotationList from './annotationList';
 import {
         addNewAnnotation,
-        changeAnnotationType
+        changeAnnotationType,
+        removeAnnotation
     } from '../../actions';
 
 const ConnectedAnnotationList = connect(
@@ -16,7 +17,8 @@ const ConnectedAnnotationList = connect(
     }),
     dispatch => ({
         onAnnotationAddClick: () => dispatch(addNewAnnotation(generateId())),
-        handleAnnotationTypeChange: (localId, annotationType) => dispatch(changeAnnotationType(localId, annotationType))
+        handleAnnotationTypeChange: (localId, annotationType) => dispatch(changeAnnotationType(localId, annotationType)),
+        removeAnnotation: localId => dispatch(removeAnnotation(localId))
     })
 )(AnnotationList);
 

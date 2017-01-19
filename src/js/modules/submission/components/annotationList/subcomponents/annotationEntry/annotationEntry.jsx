@@ -4,8 +4,13 @@ import React from 'react';
 
 import {
         annotationTypes,
-        annotationTypeData
+        annotationTypeData,
+        annotationFormats
     } from "../../../../constants";
+
+import CommentFormat from '../annotationFormats/comment';
+import GeneTermFormat from '../annotationFormats/geneTerm';
+import GeneGeneFormat from '../annotationFormats/geneGene';
 
 class AnnotationEntry extends React.Component {
     constructor(props) {
@@ -13,6 +18,7 @@ class AnnotationEntry extends React.Component {
 
         this.generateTypeOption = this.generateTypeOption.bind(this);
         this.handleTypeChange = this.handleTypeChange.bind(this);
+        this.renderAnnotationFormat = this.renderAnnotationFormat.bind(this);
     }
 
     generateTypeOption(typeId) {
@@ -32,6 +38,24 @@ class AnnotationEntry extends React.Component {
         this.props.onTypeChange(event.target.value);
     }
 
+    renderAnnotationFormat() {
+        let annotationData = annotationTypeData[this.props.annotationType];
+        switch(annotationData.format) {
+        case annotationFormats.COMMENT:
+            return (<CommentFormat/>);
+        case annotationFormats.GENE_TERM:
+            return (<GeneTermFormat />);
+        case annotationFormats.GENE_GENE:
+            return (<GeneGeneFormat />);
+        default:
+            return (
+                <span>
+                    Unrecongnized Format
+                </span>
+            );
+        }
+    }
+
     render() {
         return (
             <div>
@@ -47,7 +71,14 @@ class AnnotationEntry extends React.Component {
                     </select>
                 </div>
                 <div>
-                    <button>Remove Annotation</button>
+                    {this.renderAnnotationFormat()}
+                </div>
+                <div>
+                    <button
+                        onClick={this.props.onDeleteClick}
+                    >
+                        Remove Annotation
+                    </button>
                 </div>
             </div>
         );
@@ -57,7 +88,8 @@ class AnnotationEntry extends React.Component {
 AnnotationEntry.propTypes = {
     annotationType: React.PropTypes.oneOf(Object.keys(annotationTypes)),
     title: React.PropTypes.string,
-    onTypeChange: React.PropTypes.func
+    onTypeChange: React.PropTypes.func,
+    onDeleteClick: React.PropTypes.func
 };
 
 export default AnnotationEntry;
