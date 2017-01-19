@@ -2,13 +2,13 @@
 
 import { connect } from 'react-redux';
 
-import GeneGene from './geneGene';
+import GenePicker from './genePicker';
 
-const ConnectedGeneGene = connect(
+const ConnectedGenePicker = connect(
     state => ({
         geneIndex: state.submission.geneIndex,
         geneOrder: state.submission.geneOrder
     })
-)(GeneGene);
+)(GenePicker);
 
-export default ConnectedGeneGene;
+export default ConnectedGenePicker;

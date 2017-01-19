@@ -12,6 +12,10 @@ import CommentFormat from '../annotationFormats/comment';
 import GeneTermFormat from '../annotationFormats/geneTerm';
 import GeneGeneFormat from '../annotationFormats/geneGene';
 
+const containerStyle = {
+    margin: "5px"
+};
+
 class AnnotationEntry extends React.Component {
     constructor(props) {
         super(props);
@@ -42,11 +46,23 @@ class AnnotationEntry extends React.Component {
         let annotationData = annotationTypeData[this.props.annotationType];
         switch(annotationData.format) {
         case annotationFormats.COMMENT:
-            return (<CommentFormat/>);
+            return (
+                <CommentFormat
+                    annotationData={this.props.annotationData}
+                />
+            );
         case annotationFormats.GENE_TERM:
-            return (<GeneTermFormat />);
+            return (
+                <GeneTermFormat
+                    annotationData={this.props.annotationData}
+                />
+            );
         case annotationFormats.GENE_GENE:
-            return (<GeneGeneFormat />);
+            return (
+                <GeneGeneFormat
+                    annotationData={this.props.annotationData}
+                />
+            );
         default:
             return (
                 <span>
@@ -58,7 +74,7 @@ class AnnotationEntry extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={containerStyle}>
                 <h4>{this.props.title}</h4>
                 <div>
                     <select
@@ -89,7 +105,8 @@ AnnotationEntry.propTypes = {
     annotationType: React.PropTypes.oneOf(Object.keys(annotationTypes)),
     title: React.PropTypes.string,
     onTypeChange: React.PropTypes.func,
-    onDeleteClick: React.PropTypes.func
+    onDeleteClick: React.PropTypes.func,
+    annotationData: React.PropTypes.object
 };
 
 export default AnnotationEntry;

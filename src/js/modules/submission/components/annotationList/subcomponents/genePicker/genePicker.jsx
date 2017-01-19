@@ -2,15 +2,10 @@
 
 import React from 'react';
 
-const inputContainerStyle = {
-    display: "inline-block",
-    padding: "10px"
-};
-
-class GeneTerm extends React.Component {
+class GenePicker extends React.Component {
     constructor(props) {
         super(props);
-
+        
         this.generateGeneOption = this.generateGeneOption.bind(this);
     }
 
@@ -28,30 +23,30 @@ class GeneTerm extends React.Component {
 
     render() {
         return (
-            <div>
-                <div style={inputContainerStyle}>
-                    <h5>Gene</h5>
-                    <select>
-                        {
-                            this.props.geneOrder.filter(
-                                geneId => this.props.geneIndex[geneId].finalized
-                            ).map(this.generateGeneOption)
-                        }
-                    </select>
-                </div>
-            </div>
+            <select>
+                {
+                    this.props.geneOrder.filter(
+                        geneId => this.props.geneIndex[geneId].finalized
+                    ).map(this.generateGeneOption)
+                }
+            </select>
         );
     }
 }
 
-GeneTerm.propTypes = {
+GenePicker.propTypes = {
     geneIndex: React.PropTypes.object,
     geneOrder: React.PropTypes.arrayOf(
         React.PropTypes.oneOfType([
             React.PropTypes.number,
             React.PropTypes.string
         ])
-    )
+    ),
+    onChange: React.PropTypes.func
 };
 
-export default GeneTerm;
+GenePicker.defaultProps = {
+    onChange: () => {}
+};
+
+export default GenePicker;
