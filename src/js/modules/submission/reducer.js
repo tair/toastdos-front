@@ -10,10 +10,11 @@ import {
 const defaultState = {
     publicationIdValue: "",
     geneIndex: {},
-    //todo remove test gene
     geneOrder: [],
     annotationIndex: {},
-    annotationOrder: []
+    annotationOrder: [],
+    submitting: false,
+    submitted: false
 };
 
 
@@ -154,6 +155,32 @@ export default function (state = defaultState, action) {
 
         return Object.assign({}, state, newState);
 
+    case actions.ATTEMPT_SUBMIT:
+        return Object.assign({}, state, {
+            submitting: true
+        });
+    case actions.SUBMIT_RESULT:
+        //todo
+        return Object.assign({}, state, {
+            submitting: false,
+            submitted: true
+        });
+    case actions.SUBMIT_FAIL:
+        //todo
+        return Object.assign({}, state, {
+            submitting: false,
+            submitted: false
+        });
+    case actions.RESET_SUBMISSION:
+        return Object.assign({}, state, {
+            publicationIdValue: "",
+            geneIndex: {},
+            geneOrder: [],
+            annotationIndex: {},
+            annotationOrder: [],
+            submitting: false,
+            submitted: false
+        });
     default:
         return state;
     }

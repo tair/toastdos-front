@@ -94,3 +94,33 @@ export function updateAnnotationData(localId, data) {
     };
 }
 
+function submitResult(result) {
+    return {
+        type: actions.SUBMIT_RESULT
+    };
+}
+
+export function submitSubmission() {
+    return (dispatch, getState) => {
+
+        const currState = getState().submission;
+
+        //todo build JSON for submission request
+
+        dispatch({
+            type: actions.ATTEMPT_SUBMIT
+        });
+
+        // todo the async operation
+        return setTimeout(() => {
+            return dispatch(submitResult({}));
+        }, 500);
+    };
+}
+
+export function resetSubmission() {
+    return {
+        type: actions.RESET_SUBMISSION
+    };
+}
+
