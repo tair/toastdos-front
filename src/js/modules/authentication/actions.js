@@ -47,7 +47,7 @@ function loginSuccess(logindata) {
         sessionStorage.setItem('account_jwt', logindata.jwt);
     }
     catch (e) {
-    	console.error();
+    	console.error(new Error('Auth token is not written to sessionStorage'));
     }
 
     let decoded = jwtDecode(logindata.jwt);
