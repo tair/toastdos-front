@@ -47,6 +47,7 @@ function loginSuccess(logindata) {
         sessionStorage.setItem('account_jwt', logindata.jwt);
     }
     catch (e) {
+    	console.error();
     }
 
     let decoded = jwtDecode(logindata.jwt);
