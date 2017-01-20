@@ -7,7 +7,8 @@ import AnnotationList from './annotationList';
 import {
         addNewAnnotation,
         changeAnnotationType,
-        removeAnnotation
+        removeAnnotation,
+        updateAnnotationData
     } from '../../actions';
 
 const ConnectedAnnotationList = connect(
@@ -18,7 +19,8 @@ const ConnectedAnnotationList = connect(
     dispatch => ({
         onAnnotationAddClick: () => dispatch(addNewAnnotation(generateId())),
         handleAnnotationTypeChange: (localId, annotationType) => dispatch(changeAnnotationType(localId, annotationType)),
-        removeAnnotation: localId => dispatch(removeAnnotation(localId))
+        removeAnnotation: localId => dispatch(removeAnnotation(localId)),
+        updateAnnotationData: (localId, data) => dispatch(updateAnnotationData(localId, data))
     })
 )(AnnotationList);
 

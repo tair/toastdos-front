@@ -1,11 +1,16 @@
 "use strict";
 
 import * as actions from "./actionTypes";
-import {annotationTypes} from './constants';
+import { 
+        annotationTypes,
+        annotationTypeData,
+        annotationFormats 
+    } from './constants';
 
 const defaultState = {
     publicationIdValue: "",
     geneIndex: {},
+    //todo remove test gene
     geneOrder: [],
     annotationIndex: {},
     annotationOrder: []
@@ -86,9 +91,15 @@ export default function (state = defaultState, action) {
 
         newState.annotationIndex[action.localId] = {
             localId: action.localId,
-            annotationType: annotationTypes.TEMPORAL_EXPRESSION
+            annotationType: annotationTypes.MOLECULAR_FUNCTION,
+            data: {
+                geneLocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
+                keywordId: "",
+                methodId: ""
+            }
         };
 
+        
         newState.annotationOrder.push(action.localId);
 
         return Object.assign({}, state, newState);
@@ -109,7 +120,40 @@ export default function (state = defaultState, action) {
         };
         newState.annotationIndex[action.localId].annotationType = action.newAnnotationType;
 
+        switch(annotationTypeData[action.newAnnotationType].format) {
+        case annotationFormats.GENE_TERM:
+            newState.annotationIndex[action.localId].data = {
+                geneLocalId: ((state.geneOrder.length > 0) ? state.geneOrder[0] : null),
+                keywordId: "",
+                methodId: ""
+            };
+            break;
+        case annotationFormats.GENE_GENE:
+            newState.annotationIndex[action.localId].data = {
+                gene1LocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
+                gene2LocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
+                methodId: ""
+            };
+            break;
+        default:
+            newState.annotationIndex[action.localId].data = {
+                geneLocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
+                comment: ""
+            };
+        }
+
         return Object.assign({}, state, newState);
+
+    case actions.UPDATE_ANNOTATION_DATA:
+        newState = {
+            annotationIndex: Object.assign({}, state.annotationIndex),
+            annotationOrder: state.annotationOrder.slice()
+        };
+
+        newState.annotationIndex[action.localId].data = action.data;
+
+        return Object.assign({}, state, newState);
+
     default:
         return state;
     }

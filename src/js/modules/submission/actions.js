@@ -86,3 +86,11 @@ export function changeAnnotationType(localId, newType) {
     };
 }
 
+export function updateAnnotationData(localId, data) {
+    return {
+        type: actions.UPDATE_ANNOTATION_DATA,
+        localId: localId,
+        data: data
+    };
+}
+

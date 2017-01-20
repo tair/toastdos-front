@@ -49,18 +49,21 @@ class AnnotationEntry extends React.Component {
             return (
                 <CommentFormat
                     annotationData={this.props.annotationData}
+                    onDataChange={this.props.onDataUpdate}
                 />
             );
         case annotationFormats.GENE_TERM:
             return (
                 <GeneTermFormat
                     annotationData={this.props.annotationData}
+                    onDataChange={this.props.onDataUpdate}
                 />
             );
         case annotationFormats.GENE_GENE:
             return (
                 <GeneGeneFormat
                     annotationData={this.props.annotationData}
+                    onDataChange={this.props.onDataUpdate}
                 />
             );
         default:
@@ -106,7 +109,15 @@ AnnotationEntry.propTypes = {
     title: React.PropTypes.string,
     onTypeChange: React.PropTypes.func,
     onDeleteClick: React.PropTypes.func,
-    annotationData: React.PropTypes.object
+    annotationData: React.PropTypes.object,
+    onDataUpdate: React.PropTypes.func
 };
+
+AnnotationEntry.defaultProps = {
+    onTypeChange: () => {},
+    onDeleteClick: () => {},
+    onDataUpdate: () => {}
+};
+
 
 export default AnnotationEntry;

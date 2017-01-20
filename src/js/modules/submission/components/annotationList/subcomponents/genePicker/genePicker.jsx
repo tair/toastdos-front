@@ -7,6 +7,7 @@ class GenePicker extends React.Component {
         super(props);
         
         this.generateGeneOption = this.generateGeneOption.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     generateGeneOption(geneId) {
@@ -21,9 +22,16 @@ class GenePicker extends React.Component {
         );
     }
 
+    handleChange(event) {
+        this.props.onChange(event.target.value);
+    }
+
     render() {
         return (
-            <select>
+            <select
+                onChange={this.handleChange}
+                value={this.props.value}
+            >
                 {
                     this.props.geneOrder.filter(
                         geneId => this.props.geneIndex[geneId].finalized
@@ -42,11 +50,13 @@ GenePicker.propTypes = {
             React.PropTypes.string
         ])
     ),
-    onChange: React.PropTypes.func
+    onChange: React.PropTypes.func,
+    value: React.PropTypes.string
 };
 
 GenePicker.defaultProps = {
-    onChange: () => {}
+    onChange: () => {},
+    value: ""
 };
 
 export default GenePicker;

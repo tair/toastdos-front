@@ -21,15 +21,37 @@ class GeneGene extends React.Component {
             <div>
                 <div style={inputContainerStyle}>
                     <h5>Gene 1</h5>
-                    <GenePicker />
+                    <GenePicker
+                        onChange={value => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                gene1LocalId: value
+                            })
+                        )}
+                        value={this.props.annotationData.data.gene1LocalId}
+                    />
                 </div>
                 <div style={inputContainerStyle}>
                     <h5>Gene 2</h5>
-                    <GenePicker />
+                    <GenePicker
+                        onChange={value => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                gene2LocalId: value
+                            })
+                        )}
+                        value={this.props.annotationData.data.gene2LocalId}
+                    />
                 </div>
                 <div style={inputContainerStyle}>
                     <h5>Method</h5>
-                    <input type="text"/>
+                    <input
+                        type="text"
+                        onChange={event => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                methodId: event.target.value
+                            })
+                        )}
+                        value={this.props.annotationData.data.methodId}
+                    />
                 </div>
                 
             </div>
@@ -38,7 +60,8 @@ class GeneGene extends React.Component {
 }
 
 GeneGene.propTypes = {
-    annotationData: React.PropTypes.object
+    annotationData: React.PropTypes.object,
+    onDataChange: React.PropTypes.func
 };
 
 export default GeneGene;
