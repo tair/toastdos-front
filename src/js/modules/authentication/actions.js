@@ -42,7 +42,15 @@ function loginFail(err) {
  * @return {Object} - the action
  */
 function loginSuccess(logindata) {
-    sessionStorage.setItem('account_jwt', logindata.jwt);
+    try
+    {
+        sessionStorage.setItem('account_jwt', logindata.jwt);
+    }
+    catch (e)
+    {
+        console.error("Authentication token isn't written to sessionStorage")
+    }
+    
     let decoded = jwtDecode(logindata.jwt);
 
     return dispatch => {
