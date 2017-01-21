@@ -2,10 +2,19 @@
 
 // Global styles
 
+
+$bgColor: #A2D67E;
+$fgColor: #DFEDD5;
+$empTextColor: #474747;
+
+$fgColorActive: #FFFFFF;
+$fgColorActive2: #EDEDED;
+
 html {}
 
 body {
-    background-color: #0CAFE8;
+    background-color: $bgColor;
+    color: $empTextColor;
 }
 
 
@@ -15,21 +24,21 @@ body {
 }
 
 .navigation-bar {
-    background-color: #007AFF;
-    -webkit-box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.75);
+    background-color: $fgColor;
+    -webkit-box-shadow: 0px 1px 10px -4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 1px 10px -4px rgba(0,0,0,0.75);
+    box-shadow: 0px 1px 10px -4px rgba(0,0,0,0.75);
     & ul {
         & li {
             & span {
-                color: #FFFFFF;
+                color: $empTextColor;
             }
 
             & a, button {
                 transition: background-color 0.2s;
-                color: #FFFFFF;
+                color: $empTextColor;
                 &:hover {
-                    background-color: #1a88ff;
+                    background-color: $fgColorActive;
                 }
 
                 &.active {
@@ -42,13 +51,13 @@ body {
                     -webkit-box-shadow: inset 0px 0px 12px -7px rgba(0,0,0,0.8);
                     -moz-box-shadow: inset 0px 0px 12px -7px rgba(0,0,0,0.8);
                     box-shadow: inset 0px 0px 12px -7px rgba(0,0,0,0.8);
-                    background-color: #006fe6;
+                    background-color: $fgColorActive2;
                 }
 
             }
 
             & button {
-                background-color: #007AFF;
+                background-color: $fgColor;
                 display: inline-block;
                 border: none;
                 outline: none;
@@ -59,18 +68,18 @@ body {
 
 .email-label {
     & input {
-        color: #FFFFFF;
+        color: $empTextColor;
     }
     &.email-label-editing {
-        -webkit-box-shadow: -7px 8px 0px -7px #FFFFFF;
-        -moz-box-shadow: -7px 8px 0px -7px #FFFFFF;
-        box-shadow: -7px 8px 0px -7px #FFFFFF;
+        -webkit-box-shadow: -7px 8px 0px -7px $empTextColor;
+        -moz-box-shadow: -7px 8px 0px -7px $empTextColor;
+        box-shadow: -7px 8px 0px -7px $empTextColor;
     }
 }
 
 .profile-panel {
-    background-color: #007AFF;
-    color: #FFFFFF;
+    background-color: $fgColor;
+    color: $empTextColor;
     -webkit-box-shadow: 0px 4px 9px -3px rgba(0,0,0,0.8);
     -moz-box-shadow: 0px 4px 9px -3px rgba(0,0,0,0.8);
     box-shadow: 0px 4px 9px -3px rgba(0,0,0,0.8);
