@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import CustomSelect from 'lib/components/customSelect';
+
 class GenePicker extends React.Component {
     constructor(props) {
         super(props);
@@ -28,7 +30,7 @@ class GenePicker extends React.Component {
 
     render() {
         return (
-            <select
+            <CustomSelect
                 onChange={this.handleChange}
                 value={this.props.value}
             >
@@ -37,7 +39,7 @@ class GenePicker extends React.Component {
                         geneId => this.props.geneIndex[geneId].finalized
                     ).map(this.generateGeneOption)
                 }
-            </select>
+            </CustomSelect>
         );
     }
 }

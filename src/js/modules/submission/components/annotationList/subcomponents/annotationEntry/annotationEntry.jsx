@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import CustomSelect from 'lib/components/customSelect';
+
 import {
         annotationTypes,
         annotationTypeData,
@@ -80,14 +82,13 @@ class AnnotationEntry extends React.Component {
             <div style={containerStyle}>
                 <h4>{this.props.title}</h4>
                 <div>
-                    <select
+                    <CustomSelect
                         name="Annotation Type"
-                        id="annotation_type"
                         onChange={this.handleTypeChange}
                         value={this.props.annotationType}
                     >
                         {Object.keys(annotationTypes).map(this.generateTypeOption)}
-                    </select>
+                    </CustomSelect>
                 </div>
                 <div>
                     {this.renderAnnotationFormat()}
