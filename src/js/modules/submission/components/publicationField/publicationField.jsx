@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import CustomTextInput from "lib/components/customTextInput";
+
 const containerStyle = {
     width: "100%",
 };
@@ -15,9 +17,6 @@ class PublicationField extends React.Component {
 
     render() {
         let inputStyle = {
-            width: "45%",
-            display: "inline-block",
-            fontSize: "1.8em"
         };
 
         return (
@@ -26,10 +25,9 @@ class PublicationField extends React.Component {
             >
                 <h2>Publication</h2>
                 <h4>PubMed ID or DOI</h4>
-                <input
+                <CustomTextInput
                     value={this.props.publicationIdValue}
                     style={inputStyle}
-                    type="text"
                     placeholder="e.g 21051552 or 10.1104/pp.110.166546"
                     onChange={this.props.onChange}
                 />

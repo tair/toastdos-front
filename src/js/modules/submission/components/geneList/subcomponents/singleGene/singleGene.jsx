@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import CustomTextInput from "lib/components/customTextInput";
 
 const containerStyle = {
     padding: "5px"
@@ -9,10 +10,6 @@ const containerStyle = {
 const inputContainerStyle = {
     display: "inline-block",
     padding: "10px"
-};
-
-const inputStyle = {
-
 };
 
 const headingStyle = {
@@ -62,37 +59,31 @@ class SingleGene extends React.Component {
     render() {
 
         const locusNameInput = (
-            <input
-                style={inputStyle}
-                type="text"
+            <CustomTextInput
                 value={this.props.locusNameValue}
                 onChange={this.props.onLocusNameChange}
-                ref={ref => (this.locusNameField = ref)}
+                inputRef={ref => (this.locusNameField = ref)}
+                onKeyDown={this.props.onKeyDown}
+                onBlur={this.handleFieldBlur}
+                disabled={this.props.validating}
+                placeholder="e.g. AT2G23380"
+            />);
+
+        const geneSymbolInput = (
+            <CustomTextInput
+                value={this.props.geneSymbolValue}
+                onChange={this.props.onGeneSymbolChange}
+                inputRef={ref => (this.geneSymbolField = ref)}
                 onKeyDown={this.props.onKeyDown}
                 onBlur={this.handleFieldBlur}
                 disabled={this.props.validating}
             />);
 
-        const geneSymbolInput = (
-                <input
-                    style={inputStyle}
-                    type="text"
-                    value={this.props.geneSymbolValue}
-                    onChange={this.props.onGeneSymbolChange}
-                    ref={ref => (this.geneSymbolField = ref)}
-                    onKeyDown={this.props.onKeyDown}
-                    onBlur={this.handleFieldBlur}
-                    disabled={this.props.validating}
-                />
-            );
-
         const fullNameInput = (
-            <input
-                style={inputStyle}
-                type="text"
+            <CustomTextInput
                 value={this.props.fullNameValue}
                 onChange={this.props.onFullNameChange}
-                ref={ref => (this.fullNameField = ref)}
+                inputRef={ref => (this.fullNameField = ref)}
                 onKeyDown={this.props.onKeyDown}
                 onBlur={this.handleFieldBlur}
                 disabled={this.props.validating}

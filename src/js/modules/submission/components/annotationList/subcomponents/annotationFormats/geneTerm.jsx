@@ -4,6 +4,7 @@ import React from 'react';
 
 import GenePicker from '../genePicker';
 import { annotationTypeData } from "../../../../constants";
+import CustomTextInput from 'lib/components/customTextInput';
 
 const inputContainerStyle = {
     display: "inline-block",
@@ -32,26 +33,26 @@ class GeneTerm extends React.Component {
                 </div>
                 <div style={inputContainerStyle}>
                     <h5>{typeData.name}</h5>
-                    <input
-                        type="text"
+                    <CustomTextInput
                         onChange={event => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
                                 keywordId: event.target.value
                             })
                         )}
+                        placeholder="Start Typing..."
                         value={this.props.annotationData.data.keywordId}
                     />
                 </div>
                 <div style={inputContainerStyle}>
                     <h5>Method</h5>
-                    <input
-                        type="text"
+                    <CustomTextInput
                         onChange={event => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
                                 methodId: event.target.value
                             })
                         )}
                         value={this.props.annotationData.data.methodId}
+                        placeholder="e.g. Enzyme Assay"
                     />
                 </div>
             </div>

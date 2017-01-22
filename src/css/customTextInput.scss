@@ -1,9 +1,7 @@
 @import "globals";
 
-$arrowColor: #D1D1D1;
-$arrowColorFocused: #BABABA;
 
-select {
+input[type=text] {
     -webkit-appearance: none;
     border: none;
     border-radius: 0;
@@ -12,9 +10,8 @@ select {
     outline: none;
 }
 
-.custom-select {
+.custom-text-input {
     display: inline-block;
-    height: 34px;
     background-color: $fgColorActive2;
     border-radius: 3px;
     position: relative;
@@ -33,31 +30,13 @@ select {
         transition: opacity $focusTransitionTimeSlow ease-in-out;
     }
 
-    & .arrow {
-        position: relative;
-        width: 20px;
-        display: inline-block;
-        padding: 5px 0;
-        font-size: 0.7em;
-        text-align: center;
-        background-color: $arrowColorFocused;
-        color: $fgColorActive;
-        z-index: 100;
-        margin-right: 5px;
-        border-radius: 2px;
-        bottom: 3px;
-        // transition: background-color $focusTransitionTime ease-in-out;
-    }
-
-    & select {
+    & input[type=text] {
         position: relative;
         z-index: 200;
         display: inline-block;
         height: 100%;
         background: none;
         padding: 5px;
-        padding-right: 40px;
-        margin-right: -35px;
         font-size: 1.1em;
         color: $empTextColor;
     }
@@ -68,7 +47,7 @@ select {
             opacity: 1;
         }
         & .arrow {
-            // background-color: $arrowColorFocused;
+            background-color: $arrowColorFocused;
         }
     }
 
