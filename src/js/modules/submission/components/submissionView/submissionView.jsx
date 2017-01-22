@@ -50,6 +50,7 @@ class SubmissionView extends React.Component {
                 <span>Submitted!</span> 
             </div>  
             <button
+                className="btn btn-primary"
                 onClick={this.props.resetSubmission}
             >
                 Back
@@ -63,14 +64,20 @@ class SubmissionView extends React.Component {
                     (this.props.submitted ? submittedPanel : null)
                 }
                 <h1>New Annotation Submission</h1>
-                <button onClick={this.props.resetSubmission}>Reset Form</button>
+                <button
+                    className="btn btn-secondary"
+                    onClick={this.props.resetSubmission}
+                >
+                    Reset Form
+                </button>
                 <PublicationField />
                 <GeneList />
                 <AnnotationList />
                 <button
+                    className="btn btn-primary btn-lg"
                     onClick={this.props.submit}
                 >
-                    Submit New Annotations
+                    Review and Submit
                 </button>
             </div>
         );

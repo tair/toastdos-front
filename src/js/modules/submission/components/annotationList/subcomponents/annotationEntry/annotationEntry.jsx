@@ -95,6 +95,7 @@ class AnnotationEntry extends React.Component {
                 </div>
                 <div>
                     <button
+                        className="btn btn-secondary"
                         onClick={this.props.onDeleteClick}
                     >
                         Remove Annotation

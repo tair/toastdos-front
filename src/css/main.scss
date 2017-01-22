@@ -2,13 +2,14 @@
 // Global styles
 
 @import "globals"; // import global vars
-
+@import "buttons";
 
 html {}
 
 body {
     background-color: $bgColor;
     color: $empTextColor;
+    // -webkit-font-smoothing: antialiased
 }
 
 

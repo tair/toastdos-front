@@ -1,7 +1,7 @@
 @import "globals";
 
-$arrowColor: #D1D1D1;
-$arrowColorFocused: #BABABA;
+$arrowColor: $accentColor;
+$arrowColorFocused: $accentColorActive;
 
 select {
     -webkit-appearance: none;

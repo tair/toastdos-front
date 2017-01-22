@@ -34,6 +34,7 @@ class AnnotationList extends React.Component {
                     {this.props.annotationOrder.map(this.generateAnnotationEntry)}
                 </div>
                 <button
+                    className="btn btn-secondary"
                     onClick={this.props.onAnnotationAddClick}
                 >
                     Add Annotation

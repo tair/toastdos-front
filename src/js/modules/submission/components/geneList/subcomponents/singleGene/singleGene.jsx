@@ -77,6 +77,7 @@ class SingleGene extends React.Component {
                 onKeyDown={this.props.onKeyDown}
                 onBlur={this.handleFieldBlur}
                 disabled={this.props.validating}
+                placeholder="e.g. CLF"
             />);
 
         const fullNameInput = (
@@ -87,6 +88,7 @@ class SingleGene extends React.Component {
                 onKeyDown={this.props.onKeyDown}
                 onBlur={this.handleFieldBlur}
                 disabled={this.props.validating}
+                placeholder="e.g. CURLY LEAF"
             />
         );
 
@@ -139,7 +141,10 @@ class SingleGene extends React.Component {
                    </span> 
                 </div>) : null}
                 <div>
-                    <button onClick={this.props.onRemoveClick}>
+                    <button
+                        className="btn btn-secondary"
+                        onClick={this.props.onRemoveClick}
+                    >
                         Remove Gene
                     </button>
                     {this.props.validating ? (<span>Validating...</span>) : null}

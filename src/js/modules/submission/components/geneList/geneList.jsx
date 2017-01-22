@@ -37,6 +37,7 @@ class GeneList extends React.Component {
                     
                 </div>
                 <button
+                    className="btn btn-secondary"
                     onClick={this.props.onGeneAddClick}
                 >
                     Add Gene
