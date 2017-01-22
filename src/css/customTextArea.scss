@@ -1,19 +1,19 @@
 @import "globals";
 
 
-input[type=text] {
+textarea {
     -webkit-appearance: none;
     border: none;
     border-radius: 0;
-    background: none;
     background-color: #FFFFFF;
     outline: none;
 }
 
-.custom-text-input {
+.custom-text-area {
     display: inline-block;
     background-color: $fgColorActive2;
     border-radius: 3px;
+    padding: 3px;
     position: relative;
     transition: background-color $focusTransitionTime ease-in-out;
     &::after {
@@ -30,15 +30,18 @@ input[type=text] {
         transition: opacity $focusTransitionTimeSlow ease-in-out;
     }
 
-    & input[type=text] {
+    & textarea {
         position: relative;
         z-index: 200;
         display: inline-block;
         height: 100%;
+        width: 100%;
         background: none;
         padding: 5px;
         font-size: 1.1em;
         color: $empTextColor;
+        resize: none;
+        box-sizing: border-box;
     }
 
     &.focused {
@@ -49,3 +52,8 @@ input[type=text] {
     }
 
 }
+
+
+// .custom-text-area {
+
+// }

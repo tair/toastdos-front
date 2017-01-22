@@ -1,6 +1,7 @@
 "use strict";
 
 import React from "react";
+import 'css/customSelect.scss';
 
 class CustomSelect extends React.Component {
     constructor(props) {
@@ -42,6 +43,7 @@ class CustomSelect extends React.Component {
                     onChange={this.props.onChange}
                     onFocus={this.handleFocus}
                     onBlur={this.handleBlur}
+                    value={this.props.value}
                 >
                     {this.props.children}
                 </select>

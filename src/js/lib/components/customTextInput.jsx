@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import 'css/customTextInput.scss';
 
 class CustomTextInput extends React.Component {
     constructor(props) {

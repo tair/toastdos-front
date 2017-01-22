@@ -1,10 +1,7 @@
 // Main.css
-
 // Global styles
 
-@import "customSelect";
-@import "customTextInput";
-@import "globals";
+@import "globals"; // import global vars
 
 
 html {}
@@ -87,4 +84,8 @@ input:focus, input {
     outline: none;
 }
 
+.comment-text-area {
+    height: 200px;
+    width: 500px;
+}
 

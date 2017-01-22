@@ -53,7 +53,10 @@ GenePicker.propTypes = {
         ])
     ),
     onChange: React.PropTypes.func,
-    value: React.PropTypes.string
+    value: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.number
+    ])
 };
 
 GenePicker.defaultProps = {
