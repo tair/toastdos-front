@@ -8,11 +8,13 @@ class CustomSelect extends React.Component {
         super(props);
         
         this.state = {
-            focused: false
+            focused: false,
+            value: props.value
         };
 
         this.handleFocus = this.handleFocus.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     handleFocus() {
@@ -27,6 +29,16 @@ class CustomSelect extends React.Component {
         });
     }
 
+    handleChange(event) {
+        this.setState({value: event.target.value});
+        this.props.onChange(event);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({value: nextProps.value});
+    }
+
+
     render() {
 
         let classes = ["custom-select"];
@@ -40,10 +52,10 @@ class CustomSelect extends React.Component {
                 <select
                     name={this.props.name}
                     id={this.props.id}
-                    onChange={this.props.onChange}
+                    onChange={this.handleChange}
                     onFocus={this.handleFocus}
                     onBlur={this.handleBlur}
-                    value={this.props.value}
+                    value={this.state.value}
                 >
                     {this.props.children}
                 </select>

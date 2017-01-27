@@ -9,8 +9,17 @@ import {
 
 const defaultState = {
     publicationIdValue: "",
-    geneIndex: {},
-    geneOrder: [],
+    geneIndex: {
+        "init": {
+            localId: "init",
+            finalizedLocusName: "",
+            finalizedGeneSynmbol: "",
+            finalizedFullName: "",
+            finalized: false,
+            validating: false
+        }
+    },
+    geneOrder: ["init"],
     annotationIndex: {},
     annotationOrder: [],
     submitting: false,

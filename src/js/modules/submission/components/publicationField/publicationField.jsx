@@ -4,10 +4,6 @@ import React from 'react';
 
 import CustomTextInput from "lib/components/customTextInput";
 
-const containerStyle = {
-    width: "100%",
-};
-
 
 class PublicationField extends React.Component {
 
@@ -20,11 +16,9 @@ class PublicationField extends React.Component {
         };
 
         return (
-            <div
-                style={containerStyle}
-            >
+            <div className="publication-field">
                 <h2>Publication</h2>
-                <h4>PubMed ID or DOI</h4>
+                <h4>PubMed ID or Digital Object Identifier (DOI)</h4>
                 <CustomTextInput
                     value={this.props.publicationIdValue}
                     style={inputStyle}

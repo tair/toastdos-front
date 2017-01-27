@@ -30,8 +30,8 @@ class GeneList extends React.Component {
 
     render() {
         return (
-            <div>
-                <div>
+            <div className="gene-list-container">
+                <div className="gene-list">
                     <h2>Genes</h2>
                     {this.props.geneOrder.map(this.generateGene)}
                     

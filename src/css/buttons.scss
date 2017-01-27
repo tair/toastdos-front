@@ -10,26 +10,30 @@
     color: $empTextColor;
     background-color: $fgColor;
     cursor: pointer;
-    // border-radius: 3px;
-    &:hover {
+    border-radius: 3px;
+    &:hover:enabled {
         background-color: $fgColorActive;
     }
-    &:active {
+    &:active:enabled {
         -webkit-box-shadow: inset 0px 0px 12px -7px rgba(0,0,0,0.8);
         -moz-box-shadow: inset 0px 0px 12px -7px rgba(0,0,0,0.8);
         box-shadow: inset 0px 0px 12px -7px rgba(0,0,0,0.8);
         background-color: $fgColorActive2;
     }
+    &:disabled {
+        cursor: default;
+        color: $empTextColorLight;
+    }
 
     &.btn-primary {
-        &:hover {
+        &:hover:enabled {
             background-color: $primaryColorActive;
         }
         background-color: $primaryColor;
     }
 
     &.btn-secondary {
-        &:hover {
+        &:hover:enabled {
             background-color: $accentColorActive;
         }
         background-color: $accentColor;

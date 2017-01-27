@@ -14,10 +14,6 @@ import CommentFormat from '../annotationFormats/comment';
 import GeneTermFormat from '../annotationFormats/geneTerm';
 import GeneGeneFormat from '../annotationFormats/geneGene';
 
-const containerStyle = {
-    margin: "5px"
-};
-
 class AnnotationEntry extends React.Component {
     constructor(props) {
         super(props);
@@ -79,7 +75,7 @@ class AnnotationEntry extends React.Component {
 
     render() {
         return (
-            <div style={containerStyle}>
+            <div className="annotation-entry">
                 <h4>{this.props.title}</h4>
                 <div>
                     <CustomSelect
