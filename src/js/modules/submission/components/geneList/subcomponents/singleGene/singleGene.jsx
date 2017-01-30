@@ -3,25 +3,6 @@
 import React from 'react';
 import CustomTextInput from "lib/components/customTextInput";
 
-// const containerStyle = {
-//     padding: "5px"
-// };
-
-// const inputContainerStyle = {
-//     display: "inline-block",
-//     padding: "10px"
-// };
-
-// const headingStyle = {
-//     margin: 0,
-//     marginBottom: "5px"
-// };
-
-// const fieldHeadingStyle = {
-//     margin: 0,
-//     marginBottom: "5px"
-// };
-
 
 class SingleGene extends React.Component {
     constructor(props) {
