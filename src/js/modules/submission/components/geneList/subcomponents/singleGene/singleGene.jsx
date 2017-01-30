@@ -1,29 +1,7 @@
 "use strict";
 
 import React from 'react';
-
-const containerStyle = {
-    padding: "5px"
-};
-
-const inputContainerStyle = {
-    display: "inline-block",
-    padding: "10px"
-};
-
-const inputStyle = {
-
-};
-
-const headingStyle = {
-    margin: 0,
-    marginBottom: "5px"
-};
-
-const fieldHeadingStyle = {
-    margin: 0,
-    marginBottom: "5px"
-};
+import CustomTextInput from "lib/components/customTextInput";
 
 
 class SingleGene extends React.Component {
@@ -62,93 +40,103 @@ class SingleGene extends React.Component {
     render() {
 
         const locusNameInput = (
-            <input
-                style={inputStyle}
-                type="text"
+            <CustomTextInput
                 value={this.props.locusNameValue}
                 onChange={this.props.onLocusNameChange}
-                ref={ref => (this.locusNameField = ref)}
+                inputRef={ref => (this.locusNameField = ref)}
                 onKeyDown={this.props.onKeyDown}
                 onBlur={this.handleFieldBlur}
                 disabled={this.props.validating}
+                placeholder="e.g. AT2G23380"
             />);
 
         const geneSymbolInput = (
-                <input
-                    style={inputStyle}
-                    type="text"
-                    value={this.props.geneSymbolValue}
-                    onChange={this.props.onGeneSymbolChange}
-                    ref={ref => (this.geneSymbolField = ref)}
-                    onKeyDown={this.props.onKeyDown}
-                    onBlur={this.handleFieldBlur}
-                    disabled={this.props.validating}
-                />
-            );
-
-        const fullNameInput = (
-            <input
-                style={inputStyle}
-                type="text"
-                value={this.props.fullNameValue}
-                onChange={this.props.onFullNameChange}
-                ref={ref => (this.fullNameField = ref)}
+            <CustomTextInput
+                value={this.props.geneSymbolValue}
+                onChange={this.props.onGeneSymbolChange}
+                inputRef={ref => (this.geneSymbolField = ref)}
                 onKeyDown={this.props.onKeyDown}
                 onBlur={this.handleFieldBlur}
                 disabled={this.props.validating}
+                placeholder="e.g. CLF"
+            />);
+
+        const fullNameInput = (
+            <CustomTextInput
+                value={this.props.fullNameValue}
+                onChange={this.props.onFullNameChange}
+                inputRef={ref => (this.fullNameField = ref)}
+                onKeyDown={this.props.onKeyDown}
+                onBlur={this.handleFieldBlur}
+                disabled={this.props.validating}
+                placeholder="e.g. CURLY LEAF"
             />
         );
 
 
         return (
-            <div style={containerStyle}>
-                <h4 style={headingStyle}>
+            <div className="single-gene">
+                <h4>
                     {this.props.title}
                 </h4>
-                <div style={inputContainerStyle}>
-                    <h5 style={fieldHeadingStyle}>
-                        Locus Name
-                    </h5>
-                    {this.props.finalized ? 
-                        (
-                            <span>{this.props.locusNameValue}</span>
-                        ) 
-                    : locusNameInput}
+                <div className="input-group">
+                    <div className="input-container">
+                        <h5>
+                            Locus Name
+                        </h5>
+                        {this.props.finalized ? 
+                            (
+                                <span>
+                                    {this.props.locusNameValue ?
+                                        this.props.locusNameValue : (<em className="light-text">None</em>)}
+                                </span>
+                            ) 
+                        : locusNameInput}
+                    </div>
+                    <div className="input-container">
+                        <h5>
+                            Gene Symbol
+                        </h5>
+                        {this.props.finalized ? 
+                            (
+                                <span>
+                                    {this.props.geneSymbolValue ?
+                                        this.props.geneSymbolValue : (<em className="light-text">None</em>)}
+                                </span>
+                            ) 
+                        : geneSymbolInput}
+                    </div>
+                    <div className="input-container">
+                        <h5>
+                            Full Gene Name
+                        </h5>
+                        {this.props.finalized ? 
+                            (
+                                <span>
+                                    {this.props.fullNameValue ?
+                                        this.props.fullNameValue : (<em className="light-text">None</em>)}
+                                </span>
+                            ) 
+                        : fullNameInput}
+                    </div>
+                    {this.props.finalized ?
+                    (<div className="edit-button-container">
+                        <span
+                            className="fa fa-pencil"
+                            style={{
+                                fontSize: "1.3em",
+                                cursor: "pointer"
+                            }}
+                            onClick={this.props.onEditClick}
+                        >
+                       </span> 
+                    </div>) : null}
                 </div>
-                <div style={inputContainerStyle}>
-                    <h5 style={fieldHeadingStyle}>
-                        Gene Symbol
-                    </h5>
-                    {this.props.finalized ? 
-                        (
-                            <span>{this.props.geneSymbolValue}</span>
-                        ) 
-                    : geneSymbolInput}
-                </div>
-                <div style={inputContainerStyle}>
-                    <h5 style={fieldHeadingStyle}>
-                        Full Gene Name
-                    </h5>
-                    {this.props.finalized ? 
-                        (
-                            <span>{this.props.fullNameValue}</span>
-                        ) 
-                    : fullNameInput}
-                </div>
-                {this.props.finalized ?
-                (<div style={inputContainerStyle}>
-                    <span
-                        className="fa fa-pencil"
-                        style={{
-                            fontSize: "1.3em",
-                            cursor: "pointer"
-                        }}
-                        onClick={this.props.onEditClick}
-                    >
-                   </span> 
-                </div>) : null}
                 <div>
-                    <button onClick={this.props.onRemoveClick}>
+                    <button
+                        className="btn btn-secondary"
+                        onClick={this.props.onRemoveClick}
+                    >
                         Remove Gene
                     </button>
                     {this.props.validating ? (<span>Validating...</span>) : null}

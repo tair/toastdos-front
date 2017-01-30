@@ -28,13 +28,15 @@ class AnnotationList extends React.Component {
 
     render() {
         return (
-            <div>
-                <div>
-                    <h2>Annotations</h2>
+            <div classNane="annotation-list-container">
+                <h2>Annotations</h2>
+                <div className="annotation-list">
                     {this.props.annotationOrder.map(this.generateAnnotationEntry)}
                 </div>
                 <button
+                    className="btn btn-secondary"
                     onClick={this.props.onAnnotationAddClick}
+                    disabled={!this.props.hasGenes}
                 >
                     Add Annotation
                 </button>
@@ -54,13 +56,15 @@ AnnotationList.propTypes = {
     ),
     onAnnotationAddClick: React.PropTypes.func,
     handleAnnotationTypeChange: React.PropTypes.func,
-    removeAnnotation: React.PropTypes.func
+    removeAnnotation: React.PropTypes.func,
+    hasGenes: React.PropTypes.bool
 };
 
 AnnotationList.defaultProps = {
     onAnnotationAddClick: () => {},
     annotationIndex: {},
-    annotationOrder: []
+    annotationOrder: [],
+    hasGenes: false
 };
 
 export default AnnotationList;

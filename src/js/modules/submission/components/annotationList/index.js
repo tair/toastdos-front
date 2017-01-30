@@ -11,10 +11,15 @@ import {
         updateAnnotationData
     } from '../../actions';
 
+import {
+        hasValidGenes
+    } from '../../selectors';
+
 const ConnectedAnnotationList = connect(
     state => ({
         annotationIndex: state.submission.annotationIndex,
-        annotationOrder: state.submission.annotationOrder
+        annotationOrder: state.submission.annotationOrder,
+        hasGenes: hasValidGenes(state)
     }),
     dispatch => ({
         onAnnotationAddClick: () => dispatch(addNewAnnotation(generateId())),

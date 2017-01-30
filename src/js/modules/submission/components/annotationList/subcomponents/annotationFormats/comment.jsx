@@ -3,6 +3,7 @@
 import React from 'react';
 
 import GenePicker from '../genePicker';
+import CustomTextArea from 'lib/components/customTextArea';
 
 class Comment extends React.Component {
     constructor(props) {
@@ -26,7 +27,7 @@ class Comment extends React.Component {
                 </div>
                 <div>
                     <h5>Comment</h5>
-                    <textarea
+                    <CustomTextArea
                         name="comment"
                         onChange={event => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
@@ -34,8 +35,10 @@ class Comment extends React.Component {
                             })
                         )}
                         value={this.props.annotationData.data.comment}
+                        placeholder="Type your comment..."
+                        className="comment-text-area"
                     >
-                    </textarea>
+                    </CustomTextArea>
                 </div>
             </div>
         );

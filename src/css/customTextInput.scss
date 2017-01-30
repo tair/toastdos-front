@@ -1,0 +1,52 @@
+@import "globals";
+
+
+input[type=text] {
+    -webkit-appearance: none;
+    border: none;
+    border-radius: 0;
+    background: none;
+    outline: none;
+}
+
+.custom-text-input {
+    display: inline-block;
+    background-color: $fgColorActive2;
+    border-radius: 3px;
+    position: relative;
+    transition: background-color $focusTransitionTime ease-in-out;
+    box-sizing: border-box;
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        -webkit-box-shadow: 0px 0px 11px -4px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 0px 11px -4px rgba(0,0,0,0.75);
+        box-shadow: 0px 0px 11px -4px rgba(0,0,0,0.75);
+        transition: opacity $focusTransitionTimeSlow ease-in-out;
+    }
+
+    & input[type=text] {
+        position: relative;
+        z-index: 200;
+        display: inline-block;
+        height: 100%;
+        background: none;
+        padding: 5px;
+        font-size: 1.1em;
+        color: $empTextColor;
+        box-sizing: border-box;
+    }
+
+    &.focused {
+        background-color: $fgColorActive;
+        &::after {
+            opacity: 1;
+        }
+    }
+
+}

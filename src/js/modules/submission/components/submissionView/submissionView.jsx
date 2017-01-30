@@ -5,9 +5,7 @@ import PublicationField from '../publicationField';
 import GeneList from '../geneList';
 import AnnotationList from '../annotationList';
 
-const containerStyle = {
-    padding: "17px"
-};
+import 'css/submissionView.scss';
 
 class SubmissionView extends React.Component {
     constructor(props) {
@@ -50,6 +48,7 @@ class SubmissionView extends React.Component {
                 <span>Submitted!</span> 
             </div>  
             <button
+                className="btn btn-primary"
                 onClick={this.props.resetSubmission}
             >
                 Back
@@ -58,20 +57,37 @@ class SubmissionView extends React.Component {
         );
 
         return (
-            <div style={containerStyle}>
-                {this.props.submitting ? submittingPanel :
-                    (this.props.submitted ? submittedPanel : null)
-                }
-                <h1>New Annotation Submission</h1>
-                <button onClick={this.props.resetSubmission}>Reset Form</button>
-                <PublicationField />
-                <GeneList />
-                <AnnotationList />
-                <button
-                    onClick={this.props.submit}
-                >
-                    Submit New Annotations
-                </button>
+            <div
+                className="submission-view-container"
+            >
+                <div className="submission-view">
+                    {this.props.submitting ? submittingPanel :
+                        (this.props.submitted ? submittedPanel : null)
+                    }
+                    <h1>New Annotation Submission</h1>
+                    <div className="submission-navigator-container">
+                        <div className="submission-navigator">
+                            {/* todo submission navigator wlil go here */}
+                        </div>
+                    </div>
+                    <div className="submission-form-container">
+                        <button
+                            className="btn btn-secondary"
+                            onClick={this.props.resetSubmission}
+                        >
+                            Reset Form
+                        </button>
+                        <PublicationField />
+                        <GeneList />
+                        <AnnotationList />
+                        <button
+                            className="btn btn-primary btn-lg"
+                            onClick={this.props.submit}
+                        >
+                            Review and Submit
+                        </button>
+                    </div>
+                </div>
             </div>
         );
     }
