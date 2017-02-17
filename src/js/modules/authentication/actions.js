@@ -82,12 +82,18 @@ export function initialize() {
     return dispatch => {
         let jwt = sessionStorage.getItem('account_jwt');
         if(jwt) {
-            dispatch({
-                type: actions.TOKEN_LOADED,
-                jwt: jwt
-            });
+            
             let decoded = jwtDecode(jwt);
-            return dispatch(userInfoModule.actions.requestUserInfo(decoded.user_id));
+            const expired = decoded.exp <= Math.floor(Date.now() / 1000);
+            if(!expired) {
+                dispatch({
+                    type: actions.TOKEN_LOADED,
+                    jwt: jwt
+                });
+                return dispatch(userInfoModule.actions.requestUserInfo(decoded.user_id));
+            }
+            // clear from sessionstorage
+            sessionStorage.removeItem('account_jwt');
         }
 
         return dispatch({
