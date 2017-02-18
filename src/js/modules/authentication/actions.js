@@ -4,9 +4,9 @@ import jwtDecode from 'jwt-decode';
 
 import { login } from "lib/api";
 import * as actions from './actionTypes';
-// todo fix reference
-// import { requestUserInfo } from './userInfo';
 import userInfoModule from 'modules/userInfo';
+
+
 /**
  * Create a new REQUEST_LOGIN action and attempt to log in
  * @param  {String} authCode - the auth code given bcak by orcID oAuth
@@ -48,7 +48,7 @@ function loginSuccess(logindata) {
     }
     catch (e)
     {
-        console.error("Authentication token isn't written to sessionStorage")
+        console.error("Authentication token isn't written to sessionStorage");
     }
     
     let decoded = jwtDecode(logindata.jwt);

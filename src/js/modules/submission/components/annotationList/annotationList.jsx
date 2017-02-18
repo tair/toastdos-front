@@ -28,7 +28,7 @@ class AnnotationList extends React.Component {
 
     render() {
         return (
-            <div classNane="annotation-list-container">
+            <div className="annotation-list-container">
                 <h2>Annotations</h2>
                 <div className="annotation-list">
                     {this.props.annotationOrder.map(this.generateAnnotationEntry)}
