@@ -1,11 +1,13 @@
 "use strict";
 
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { AuthenticationModiule } from 'modules/authetnication';
 import Authentication from './authentication';
 
 const ConnectedAuthentication = connect(
-    state => ({
-        isAuthenticated: state.authentication.isAuthenticated
+    createStructuredSelector({
+        isAuthenticated: AuthenticationModiule.selectors.isAuthenticated
     })
 )(Authentication);
 

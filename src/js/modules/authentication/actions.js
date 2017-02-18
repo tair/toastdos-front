@@ -70,6 +70,8 @@ function loginSuccess(logindata) {
 export function logout() {
     // clear from sessionstorage
     sessionStorage.removeItem('account_jwt');
+    // refresh the page to clear possible sensitive state data
+    location.reload();
     return {
         type: actions.LOGOUT
     };
