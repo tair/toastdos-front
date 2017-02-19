@@ -2,13 +2,12 @@
 
 import { connect } from 'react-redux';
 import NavigationFrame from './navigationFrame';
+import AuthenticationModule from 'modules/authentication';
 
 const ConnectedNavigationFrame = connect(
     state => ({
-        isAuthenticated: state.authentication.isAuthenticated,
-        userName: state.authentication.isAuthenticated ? 
-            state.userInfo.user_name : 
-            null
+        isAuthenticated: AuthenticationModule.selectors.isAuthenticated(state),
+        userName: state.userInfo.user_name
     })
 )(NavigationFrame);
 

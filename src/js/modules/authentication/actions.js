@@ -4,9 +4,9 @@ import jwtDecode from 'jwt-decode';
 
 import { login } from "lib/api";
 import * as actions from './actionTypes';
-// todo fix reference
-// import { requestUserInfo } from './userInfo';
 import userInfoModule from 'modules/userInfo';
+
+
 /**
  * Create a new REQUEST_LOGIN action and attempt to log in
  * @param  {String} authCode - the auth code given bcak by orcID oAuth
@@ -48,7 +48,7 @@ function loginSuccess(logindata) {
     }
     catch (e)
     {
-        console.error("Authentication token isn't written to sessionStorage")
+        console.error("Authentication token isn't written to sessionStorage");
     }
     
     let decoded = jwtDecode(logindata.jwt);
@@ -70,6 +70,8 @@ function loginSuccess(logindata) {
 export function logout() {
     // clear from sessionstorage
     sessionStorage.removeItem('account_jwt');
+    // refresh the page to clear possible sensitive state data
+    location.reload();
     return {
         type: actions.LOGOUT
     };
@@ -82,12 +84,18 @@ export function initialize() {
     return dispatch => {
         let jwt = sessionStorage.getItem('account_jwt');
         if(jwt) {
-            dispatch({
-                type: actions.TOKEN_LOADED,
-                jwt: jwt
-            });
+            
             let decoded = jwtDecode(jwt);
-            return dispatch(userInfoModule.actions.requestUserInfo(decoded.user_id));
+            const expired = decoded.exp <= Math.floor(Date.now() / 1000);
+            if(!expired) {
+                dispatch({
+                    type: actions.TOKEN_LOADED,
+                    jwt: jwt
+                });
+                return dispatch(userInfoModule.actions.requestUserInfo(decoded.user_id));
+            }
+            // clear from sessionstorage
+            sessionStorage.removeItem('account_jwt');
         }
 
         return dispatch({

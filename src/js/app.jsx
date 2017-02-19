@@ -48,6 +48,7 @@ class App extends React.Component {
         } else {
             appContent = (
                 <div>
+                    <authenticationModule.components.TokenWatchdog />
                     <Router history={history}>
                         <Route
                             path="/"

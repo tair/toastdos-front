@@ -3,7 +3,6 @@
 import * as actionTypes from './actionTypes';
 
 const defaultState = {
-    isAuthenticated: false,
     isFetching: false,
     jwt: null,
     loginError: null,

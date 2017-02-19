@@ -2,13 +2,15 @@
 
 import { connect } from 'react-redux';
 import LoginView from './loginView';
+import { createStructuredSelector } from 'reselect';
 
 import { requestLogin } from '../../actions';
+import { isAuthenticated, isAuthenticating } from '../../selectors';
 
 const ConnectedLoginView = connect(
-    state => ({
-        isAuthenticated: state.authentication.isAuthenticated,
-        isAuthenticating: state.authentication.isFetching
+    createStructuredSelector({
+        isAuthenticated: isAuthenticated,
+        isAuthenticating: isAuthenticating
     }),
     dispatch => ({
         attemptLogin: authCode => dispatch(requestLogin(authCode))
