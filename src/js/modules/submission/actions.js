@@ -1,6 +1,8 @@
 "use strict";
 
 import * as actions from './actionTypes';
+import { validateGene } from 'lib/api';
+import AuthModule from 'modules/authentication';
 
 export function changePublicationId(value) {
     return {
@@ -25,31 +27,41 @@ export function removeGene(localId) {
 
 export function attemptValidateGene(localId, geneData) {
     return (dispatch, getState) => {
-
-        const currState = getState().submission;
+        const currState = getState();
+        const token = AuthModule.selectors.jwtSelector(currState);
 
         dispatch({
             type: actions.ATTEMPT_VALIDATE_GENE,
             localId: localId
         });
 
+        // console.log(geneData)
+        validateGene(geneData.locusName, token, (err, data) => {
+            if(err) {
+                if(err.error === 'NOT_FOUND') {
+                    return dispatch(validateGeneFail(localId, "Gene Not Found"));
+                }
+                return dispatch(validateGeneFail(localId, "Error Validating Gene"));
+            }
+            return dispatch(validateGeneSuccess(localId, geneData));
+        });
+
         // todo the async operation
-        return setTimeout(() => {
-            return dispatch(validateGeneResult(localId, true, geneData));
-        }, 500);
+        // return setTimeout(() => {
+        //     return dispatch(validateGeneResult(localId, false, geneData));
+        // }, 500);
     };
 }
 
-export function validateGeneResult(localId, result, geneData) {
+function validateGeneSuccess(localId, geneData) {
     return {
-        type: actions.VALIDATE_GENE_RESULT,
+        type: actions.VALIDATE_GENE_SUCCESS,
         localId: localId,
-        result: result,
         geneData: geneData
     };
 }
 
-export function validateGeneFail(localId, error) {
+function validateGeneFail(localId, error) {
     return {
         type: actions.VALIDATE_GENE_FAIL,
         localId: localId,

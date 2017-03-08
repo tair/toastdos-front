@@ -9,9 +9,9 @@ When you first clone the repo you will need to do `npm install` to install the d
 
 To start the development server run `npm start`.
 
-The development client expects there to be a backend server running locally in port 3000. If you want, you can run the client with mock API calls by setting the USE_MOCK_API environment variable to true.
+The development client expects there to be a backend server running locally in port 3000. If you want, you can run the client with mock API calls by setting the MOCK_API environment variable to true.
 
-`USE_MOCK_API=true npm start`
+`MOCK_API=true npm start`
 
 Project Structure
 ----

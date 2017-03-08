@@ -60,7 +60,7 @@ export function updateUserInfo(id, newUserInfo, jwt, callback) {
 }
 
 const mockGeneData = {
-    myGene1: {
+    MYGENE1: {
         name: "myGene1",
         id: 4
     }
@@ -71,13 +71,13 @@ const mockGeneData = {
  * @param  {String}   name     - the name of the gene
  * @param  {Function} callback - the callback
  */
-export function getGeneByFullName(name, callback) {
+export function validateGene(locusName, jwt, callback) {
     return setTimeout(() => {
-        if(name in mockGeneData) {
+        if(locusName in mockGeneData) {
             return callback(null, mockGeneData[name]);
         }
 
-        return callback({error: "TooManyGenes"});
+        return callback({error: "NOT_FOUND"});
 
     }, LATENCY);
 }

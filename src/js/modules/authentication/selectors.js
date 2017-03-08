@@ -3,7 +3,7 @@ import { name } from './constants';
 import jwtDecode from 'jwt-decode';
 
 
-const jwtSelector = state => state[name].jwt ? jwtDecode(state[name].jwt) : null;
+export const jwtSelector = state => state[name].jwt ? jwtDecode(state[name].jwt) : null;
 const nowDateSelector = () => Date.now();
 export const isAuthenticating = state => state[name].isFetching;
 

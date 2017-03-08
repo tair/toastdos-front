@@ -13,10 +13,11 @@ const defaultState = {
         "init": {
             localId: "init",
             finalizedLocusName: "",
-            finalizedGeneSynmbol: "",
+            finalizedGeneSymbol: "",
             finalizedFullName: "",
             finalized: false,
-            validating: false
+            validating: false,
+            validationError: ""
         }
     },
     geneOrder: ["init"],
@@ -43,10 +44,11 @@ export default function (state = defaultState, action) {
         newState.geneIndex[action.localId] = {
             localId: action.localId,
             finalizedLocusName: "",
-            finalizedGeneSynmbol: "",
+            finalizedGeneSymbol: "",
             finalizedFullName: "",
             finalized: false,
-            validating: false
+            validating: false,
+            validationError: ""
         };
 
         newState.geneOrder.push(action.localId);
@@ -67,24 +69,36 @@ export default function (state = defaultState, action) {
         newState = {
             geneIndex: Object.assign({}, state.geneIndex),
         };
-
+        newState.geneIndex[action.localId].validationError = '';
         newState.geneIndex[action.localId].validating = true;
         return Object.assign({}, state, newState);
-    case actions.VALIDATE_GENE_RESULT:
-        // todo 
+    case actions.VALIDATE_GENE_SUCCESS:
         newState = {
             geneIndex: Object.assign({}, state.geneIndex),
         };
 
-        newState.geneIndex[action.localId].validating = false;
         newState.geneIndex[action.localId].finalized = true;
+        newState.geneIndex[action.localId].validationError = '';
 
         newState.geneIndex[action.localId].finalizedLocusName = action.geneData.locusName;
-        newState.geneIndex[action.localId].finalizedGeneSynmbol = action.geneData.geneSymbol;
+        newState.geneIndex[action.localId].finalizedGeneSymbol = action.geneData.geneSymbol;
         newState.geneIndex[action.localId].finalizedFullName = action.geneData.fullName;
+        newState.geneIndex[action.localId].validating = false;
         
 
         return Object.assign({}, state, newState);
+    case actions.VALIDATE_GENE_FAIL:
+        newState = {
+            geneIndex: Object.assign({}, state.geneIndex),
+        };
+
+        newState.geneIndex[action.localId].validationError = action.error;
+
+        newState.geneIndex[action.localId].validating = false;
+        
+
+        return Object.assign({}, state, newState);
+    
     case actions.EDIT_GENE_DATA:
         newState = {
             geneIndex: Object.assign({}, state.geneIndex)

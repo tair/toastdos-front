@@ -74,3 +74,25 @@ export function updateUserInfo(id, newUserInfo, jwt, callback) {
 }
 
 
+export function validateGene(locusName, jwt, callback) {
+    return request({
+        method: 'GET',
+        url: `${BASE_URL}/api/gene/verify/${encodeURIComponent(locusName)}`,
+        json: true,
+        headers: {
+            'Authorization': `Bearer ${jwt}`
+        }
+    }, (err, resp, body) => {
+        if(resp.status === 404) {
+            return callback({error: "NOT_FOUND"});
+        }
+        if(err) {
+            return callback(err);
+        }
+        if(resp.status === 500) {
+            return callback(body);
+        }
+        return callback(null, body);
+    });
+}
+

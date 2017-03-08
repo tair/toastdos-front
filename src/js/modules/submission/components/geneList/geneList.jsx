@@ -21,9 +21,10 @@ class GeneList extends React.Component {
                 onEditClick={this.props.editGeneData.bind(this, geneId)}
                 validating={geneData.validating}
                 locusName={geneData.finalizedLocusName}
-                geneSymbol={geneData.finalizedGeneSynmbol}
+                geneSymbol={geneData.finalizedGeneSymbol}
                 fullName={geneData.finalizedFullName}
                 finalized={geneData.finalized}
+                validationError={geneData.validationError}
             />
         );
     }
