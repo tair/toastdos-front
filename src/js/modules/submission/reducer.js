@@ -77,13 +77,25 @@ export default function (state = defaultState, action) {
             geneIndex: Object.assign({}, state.geneIndex),
         };
 
+        // make sure we didn't add gene already
+        newState.geneIndex[action.localId].validating = false;
+        
+        for(var gi in state.geneIndex) {
+            if(gi === action.localId) continue;
+            if(state.geneIndex[gi].finalizedLocusName === action.geneData.locusName) {
+                newState.geneIndex[action.localId].finalized = false;
+                newState.geneIndex[action.localId].validationError = 'Gene already added';
+
+                return Object.assign({}, state, newState);
+            }
+        }
+
         newState.geneIndex[action.localId].finalized = true;
         newState.geneIndex[action.localId].validationError = '';
 
         newState.geneIndex[action.localId].finalizedLocusName = action.geneData.locusName;
         newState.geneIndex[action.localId].finalizedGeneSymbol = action.geneData.geneSymbol;
         newState.geneIndex[action.localId].finalizedFullName = action.geneData.fullName;
-        newState.geneIndex[action.localId].validating = false;
         
 
         return Object.assign({}, state, newState);
