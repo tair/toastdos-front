@@ -73,11 +73,16 @@ export function updateUserInfo(id, newUserInfo, jwt, callback) {
     });
 }
 
-
-export function validateGene(locusName, jwt, callback) {
+/**
+ * Request for validating a gene name
+ * @param  {String}   name - the gene name
+ * @param  {String}   jwt - auth token
+ * @param  {Function} callback  - the callback
+ */
+export function validateGene(name, jwt, callback) {
     return request({
         method: 'GET',
-        url: `${BASE_URL}/api/gene/verify/${encodeURIComponent(locusName)}`,
+        url: `${BASE_URL}/api/gene/verify/${encodeURIComponent(name)}`,
         json: true,
         headers: {
             'Authorization': `Bearer ${jwt}`
