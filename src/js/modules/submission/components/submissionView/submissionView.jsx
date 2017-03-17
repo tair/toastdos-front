@@ -56,10 +56,21 @@ class SubmissionView extends React.Component {
             </div>
         );
 
+
+        const errorMessage = (
+            <div className="error-box-container">
+                <div className="error-box">
+                    <strong>Submission Error: </strong>
+                    <span>{this.props.errorMessage}</span>
+                </div>
+            </div>
+        );
+
         return (
             <div
                 className="submission-view-container"
             >
+                {this.props.errorMessage ? errorMessage : null}
                 <div className="submission-view">
                     {this.props.submitting ? submittingPanel :
                         (this.props.submitted ? submittedPanel : null)
@@ -83,6 +94,7 @@ class SubmissionView extends React.Component {
                         <button
                             className="btn btn-primary btn-lg"
                             onClick={this.props.submit}
+                            disabled={!this.props.canSubmit}
                         >
                             Review and Submit
                         </button>
@@ -97,7 +109,9 @@ SubmissionView.propTypes = {
     submit: React.PropTypes.func,
     resetSubmission: React.PropTypes.func,
     submitting: React.PropTypes.bool,
-    submitted: React.PropTypes.bool
+    submitted: React.PropTypes.bool,
+    canSubmit: React.PropTypes.bool,
+    errorMessage: React.PropTypes.string,
 };
 
 SubmissionView.defaultProps = {

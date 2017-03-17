@@ -1,19 +1,24 @@
 "use strict";
 
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import SubmissionView from './submissionView';
+
+import { canSubmit } from '../../selectors';
 import {
-        submitSubmission,
+        attemptSubmit,
         resetSubmission
     } from '../../actions';
 
 const ConnectedSubmissionView = connect(
-    state => ({
-        submitting: state.submission.submitting,
-        submitted: state.submission.submitted
+    createStructuredSelector({
+        submitting: s => s.submission.submitting,
+        submitted: s => s.submission.submitted,
+        canSubmit,
+        errorMessage: s => `${s.submission.submissionError}`,
     }),
     dispatch => ({
-        submit: () => dispatch(submitSubmission()),
+        submit: () => dispatch(attemptSubmit()),
         resetSubmission: () => dispatch(resetSubmission())
     })
 )(SubmissionView);

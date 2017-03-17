@@ -34,15 +34,22 @@ class GeneList extends React.Component {
             <div className="gene-list-container">
                 <div className="gene-list">
                     <h2>Genes</h2>
+                    <button
+                        className="btn btn-secondary"
+                        onClick={this.props.onGeneAddClick}
+                    >
+                        Add Gene
+                    </button>
+                    {(this.props.geneOrder.length <= 0) ? 
+                       (
+                        <span className="empty-message">
+                            No Genes                       
+                        </span>
+                       ) : null
+                    }
                     {this.props.geneOrder.map(this.generateGene)}
                     
                 </div>
-                <button
-                    className="btn btn-secondary"
-                    onClick={this.props.onGeneAddClick}
-                >
-                    Add Gene
-                </button>
             </div>
         );
     }

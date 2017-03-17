@@ -24,7 +24,8 @@ const defaultState = {
     annotationIndex: {},
     annotationOrder: [],
     submitting: false,
-    submitted: false
+    submitted: false,
+    submissionError: ""
 };
 
 
@@ -154,10 +155,10 @@ export default function (state = defaultState, action) {
         newState = {
             annotationIndex: Object.assign({}, state.annotationIndex)
         };
-        newState.annotationIndex[action.localId].annotationType = action.newAnnotationType;
 
         switch(annotationTypeData[action.newAnnotationType].format) {
         case annotationFormats.GENE_TERM:
+            newState.annotationIndex[action.localId].annotationType = action.newAnnotationType;
             newState.annotationIndex[action.localId].data = {
                 geneLocalId: ((state.geneOrder.length > 0) ? state.geneOrder[0] : null),
                 keywordId: "",
@@ -165,17 +166,20 @@ export default function (state = defaultState, action) {
             };
             break;
         case annotationFormats.GENE_GENE:
+            newState.annotationIndex[action.localId].annotationType = action.newAnnotationType;
             newState.annotationIndex[action.localId].data = {
                 gene1LocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
                 gene2LocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
                 methodId: ""
             };
             break;
-        default:
+        case annotationFormats.COMMENT:
+            newState.annotationIndex[action.localId].annotationType = action.newAnnotationType;
             newState.annotationIndex[action.localId].data = {
                 geneLocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
                 comment: ""
             };
+            break;
         }
 
         return Object.assign({}, state, newState);
@@ -194,7 +198,7 @@ export default function (state = defaultState, action) {
         return Object.assign({}, state, {
             submitting: true
         });
-    case actions.SUBMIT_RESULT:
+    case actions.SUBMIT_SUCCESS:
         //todo
         return Object.assign({}, state, {
             submitting: false,
@@ -204,7 +208,8 @@ export default function (state = defaultState, action) {
         //todo
         return Object.assign({}, state, {
             submitting: false,
-            submitted: false
+            submitted: false,
+            submissionError: action.error
         });
     case actions.RESET_SUBMISSION:
         return Object.assign({}, state, {

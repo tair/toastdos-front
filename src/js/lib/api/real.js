@@ -8,6 +8,7 @@ const BASE_URL = config.apiBase;
 export function login(orcidCode, callback) {
     return request({
         method: 'POST',
+        timeout: 15000,
         url: `${BASE_URL}/api/login`,
         json: {
             code: orcidCode
@@ -26,6 +27,7 @@ export function login(orcidCode, callback) {
 export function getUserInfo(id, jwt, callback) {
     return request({
         method: 'GET',
+        timeout: 15000,
         url: `${BASE_URL}/api/user/${id}?withRelated=roles`,
         json: true,
         headers: {
@@ -54,6 +56,7 @@ export function getUserInfo(id, jwt, callback) {
 export function updateUserInfo(id, newUserInfo, jwt, callback) {
     return request({
         method: 'PUT',
+        timeout: 15000,
         url: `${BASE_URL}/api/user/${id}`,
         json: newUserInfo,
         headers: {
@@ -82,6 +85,7 @@ export function updateUserInfo(id, newUserInfo, jwt, callback) {
 export function validateGene(name, jwt, callback) {
     return request({
         method: 'GET',
+        timeout: 15000,
         url: `${BASE_URL}/api/gene/verify/${encodeURIComponent(name)}`,
         json: true,
         headers: {
@@ -100,4 +104,28 @@ export function validateGene(name, jwt, callback) {
         return callback(null, body);
     });
 }
+
+export function submitSubmission(submissionData, jwt, callback) {
+    // console.log(submissionData);
+    return request({
+        method: 'POST',
+        timeout: 15000,
+        url: `${BASE_URL}/api/submission`,
+        json: submissionData,
+        headers: {
+            'Authorization': `Bearer ${jwt}`
+        }
+    }, (err, resp, body) => {
+        console.log(body)
+        if(err) {
+            console.log(err);
+            return callback(err);
+        }
+        if(resp.status >= 300) {
+            return callback(body);
+        }
+        return callback(null, body);
+    });
+}
+
 

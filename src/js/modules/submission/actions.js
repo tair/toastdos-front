@@ -1,8 +1,12 @@
 "use strict";
 
 import * as actions from './actionTypes';
-import { validateGene } from 'lib/api';
 import AuthModule from 'modules/authentication';
+import {
+    validateGene,
+    submitSubmission
+} from 'lib/api';
+import { submissionBodySelector } from './selectors';
 
 export function changePublicationId(value) {
     return {
@@ -28,7 +32,7 @@ export function removeGene(localId) {
 export function attemptValidateGene(localId, geneData) {
     return (dispatch, getState) => {
         const currState = getState();
-        const token = AuthModule.selectors.jwtSelector(currState);
+        const token = AuthModule.selectors.rawJwtSelector(currState);
 
         dispatch({
             type: actions.ATTEMPT_VALIDATE_GENE,
@@ -43,14 +47,8 @@ export function attemptValidateGene(localId, geneData) {
                 }
                 return dispatch(validateGeneFail(localId, "Error Validating Gene"));
             }
-            console.log(data);
             return dispatch(validateGeneSuccess(localId, geneData));
         });
-
-        // todo the async operation
-        // return setTimeout(() => {
-        //     return dispatch(validateGeneResult(localId, false, geneData));
-        // }, 500);
     };
 }
 
@@ -107,27 +105,40 @@ export function updateAnnotationData(localId, data) {
     };
 }
 
-function submitResult(result) {
+function submitSuccess(response) {
     return {
-        type: actions.SUBMIT_RESULT
+        type: actions.SUBMIT_SUCCESS,
+        data: response
     };
 }
 
-export function submitSubmission() {
+function submitFail(error) {
+    // console.log(error);
+    return {
+        type: actions.SUBMIT_FAIL,
+        error
+    };
+}
+
+export function attemptSubmit() {
     return (dispatch, getState) => {
 
-        const currState = getState().submission;
+        const currState = getState();
 
         //todo build JSON for submission request
+        const submissionBody = submissionBodySelector(currState);
 
         dispatch({
             type: actions.ATTEMPT_SUBMIT
         });
 
-        // todo the async operation
-        return setTimeout(() => {
-            return dispatch(submitResult({}));
-        }, 500);
+        const token = AuthModule.selectors.rawJwtSelector(currState);
+        submitSubmission(submissionBody, token, (err, data) => {
+            if(err) {
+                return dispatch(submitFail(err));
+            }
+            return dispatch(submitSuccess(data));
+        });
     };
 }
 

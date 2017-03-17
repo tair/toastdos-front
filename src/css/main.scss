@@ -106,3 +106,19 @@ input:focus, input {
 .light-text {
     color: $empTextColorLight;
 }
+
+.error-box-container {
+    width: 100%;
+    padding: 30px;
+    padding-top: 10px;
+    box-sizing: border-box;
+}
+
+.error-box {
+    background-color: #FCC4C4;
+    padding: 15px 25px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 15px;
+    border: 1px solid #ff6363;
+}
