@@ -47,6 +47,7 @@ export function attemptValidateGene(localId, geneData) {
                 }
                 return dispatch(validateGeneFail(localId, "Error Validating Gene"));
             }
+            console.log(data);
             return dispatch(validateGeneSuccess(localId, geneData));
         });
     };
