@@ -120,8 +120,8 @@ export default function (state = defaultState, action) {
             annotationType: annotationTypes.MOLECULAR_FUNCTION,
             data: {
                 geneLocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
-                keywordId: "",
-                methodId: ""
+                keywordName: "",
+                methodName: ""
             }
         };
 
@@ -150,8 +150,8 @@ export default function (state = defaultState, action) {
             newState.annotationIndex[action.localId].annotationType = action.newAnnotationType;
             newState.annotationIndex[action.localId].data = {
                 geneLocalId: ((state.geneOrder.length > 0) ? state.geneOrder[0] : null),
-                keywordId: "",
-                methodId: ""
+                keywordName: "",
+                methodName: ""
             };
             break;
         case annotationFormats.GENE_GENE:
@@ -159,7 +159,7 @@ export default function (state = defaultState, action) {
             newState.annotationIndex[action.localId].data = {
                 gene1LocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
                 gene2LocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
-                methodId: ""
+                methodName: ""
             };
             break;
         case annotationFormats.COMMENT:

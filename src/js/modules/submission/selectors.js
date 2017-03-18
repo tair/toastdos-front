@@ -80,10 +80,24 @@ export function submissionBodySelector(state) {
             };
             break;
         case annotationFormats.GENE_TERM:
-            annotation.data = {};
+            annotation.data = {
+                locusName: geneIndex[a.data.geneLocalId].finalizedLocusName,
+                method: {
+                    name: a.data.methodName
+                },
+                keyword: {
+                    name: a.data.keywordName
+                }
+            };
             break;
         case annotationFormats.GENE_GENE:
-            annotation.data = {};
+            annotation.data = {
+                locusName: geneIndex[a.data.gene1LocalId].finalizedLocusName,
+                locusName2: geneIndex[a.data.gene2LocalId].finalizedLocusName,
+                method: {
+                    name: a.data.methodName
+                }
+            };
             break;
         }
 

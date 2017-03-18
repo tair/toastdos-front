@@ -36,11 +36,11 @@ class GeneTerm extends React.Component {
                     <CustomTextInput
                         onChange={event => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
-                                keywordId: event.target.value
+                                keywordName: event.target.value
                             })
                         )}
                         placeholder="Start Typing..."
-                        value={this.props.annotationData.data.keywordId}
+                        value={this.props.annotationData.data.keywordName}
                     />
                 </div>
                 <div style={inputContainerStyle}>
@@ -48,10 +48,10 @@ class GeneTerm extends React.Component {
                     <CustomTextInput
                         onChange={event => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
-                                methodId: event.target.value
+                                methodName: event.target.value
                             })
                         )}
-                        value={this.props.annotationData.data.methodId}
+                        value={this.props.annotationData.data.methodName}
                         placeholder="e.g. Enzyme Assay"
                     />
                 </div>

@@ -47,10 +47,10 @@ class GeneGene extends React.Component {
                     <CustomTextInput
                         onChange={event => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
-                                methodId: event.target.value
+                                methodName: event.target.value
                             })
                         )}
-                        value={this.props.annotationData.data.methodId}
+                        value={this.props.annotationData.data.methodName}
                         placeholder="e.g. Enzyme Assay"
                     />
                 </div>
