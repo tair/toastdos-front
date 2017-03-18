@@ -78,18 +78,7 @@ export default function (state = defaultState, action) {
             geneIndex: Object.assign({}, state.geneIndex),
         };
 
-        // make sure we didn't add gene already
         newState.geneIndex[action.localId].validating = false;
-        
-        for(var gi in state.geneIndex) {
-            if(gi === action.localId) continue;
-            if(state.geneIndex[gi].finalizedLocusName === action.geneData.locusName) {
-                newState.geneIndex[action.localId].finalized = false;
-                newState.geneIndex[action.localId].validationError = 'Gene already added';
-
-                return Object.assign({}, state, newState);
-            }
-        }
 
         newState.geneIndex[action.localId].finalized = true;
         newState.geneIndex[action.localId].validationError = '';
@@ -219,7 +208,8 @@ export default function (state = defaultState, action) {
             annotationIndex: {},
             annotationOrder: [],
             submitting: false,
-            submitted: false
+            submitted: false,
+            submissionError: ""
         });
     default:
         return state;

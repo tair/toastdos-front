@@ -1,11 +1,12 @@
 "use strict";
 
-import * as actions from './actionTypes';
 import AuthModule from 'modules/authentication';
 import {
     validateGene,
     submitSubmission
 } from 'lib/api';
+import * as actions from './actionTypes';
+import { name } from './constants';
 import { submissionBodySelector } from './selectors';
 
 export function changePublicationId(value) {
@@ -39,6 +40,19 @@ export function attemptValidateGene(localId, geneData) {
             localId: localId
         });
 
+        // make sure we didn't add gene already
+        // newState.geneIndex[action.localId].validating = false;
+        // console.log(state.geneIndex);
+        // console.log(action.localId);
+        for(var gi in currState[name].geneIndex) {
+            // console.log(gi)
+            if(`${gi}` === `${localId}`) continue;
+            if(currState[name].geneIndex[gi].finalizedLocusName === geneData.locusName) {
+                return dispatch(validateGeneFail(localId, 'Gene already added'));
+            }
+        }
+
+
         // console.log(geneData)
         validateGene(geneData.locusName, token, (err, data) => {
             if(err) {
@@ -47,7 +61,6 @@ export function attemptValidateGene(localId, geneData) {
                 }
                 return dispatch(validateGeneFail(localId, "Error Validating Gene"));
             }
-            console.log(data);
             return dispatch(validateGeneSuccess(localId, geneData));
         });
     };
