@@ -18,7 +18,7 @@ class SubmissionView extends React.Component {
             <div style={{
                 top: 0,
                 left: 0,
-                position: "absolute",
+                position: "fixed",
                 zIndex: 1000,
                 width: "100%",
                 height: "100%",
@@ -35,7 +35,7 @@ class SubmissionView extends React.Component {
             <div style={{
                 top: 0,
                 left: 0,
-                position: "absolute",
+                position: "fixed",
                 zIndex: 1000,
                 width: "100%",
                 height: "100%",
@@ -92,11 +92,11 @@ class SubmissionView extends React.Component {
                         <GeneList />
                         <AnnotationList />
                         <button
-                            className="btn btn-primary btn-lg"
+                            className="btn btn-primary btn-lg btn-submit"
                             onClick={this.props.submit}
                             disabled={!this.props.canSubmit}
                         >
-                            Review and Submit
+                            Submit Annotations
                         </button>
                     </div>
                 </div>

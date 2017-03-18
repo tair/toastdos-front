@@ -3,6 +3,11 @@
 .submission-view-container {
     padding-top: 20px;
     padding-bottom: 20px;
+
+    .btn-submit {
+        display: block;
+        width: 100%;
+    }
 }
 
 .submission-view {
@@ -113,10 +118,12 @@
         margin-right: 7px;
     }
     & .annotation-list {
-        margin-top: 12px;
+        margin-bottom: 16px;
         & .annotation-entry {
-            
+
         }
     }
+
+
 }
 

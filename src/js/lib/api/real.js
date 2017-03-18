@@ -111,14 +111,14 @@ export function submitSubmission(submissionData, jwt, callback) {
         method: 'POST',
         timeout: 15000,
         url: `${BASE_URL}/api/submission`,
-        json: submissionData,
+        // json: submissionData,
+        body: JSON.stringify(submissionData),
         headers: {
-            'Authorization': `Bearer ${jwt}`
+            'Authorization': `Bearer ${jwt}`,
+            'Content-type': `application/json`
         }
     }, (err, resp, body) => {
-        console.log(body)
         if(err) {
-            console.log(err);
             return callback(err);
         }
         if(resp.status >= 300) {
