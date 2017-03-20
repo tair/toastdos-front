@@ -1,0 +1,97 @@
+import React from 'react';
+
+class SuggestionList extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.makeListBody = this.makeListBody.bind(this);
+        this.generateListElement = this.generateListElement.bind(this);
+        this.listItemClick = this.listItemClick.bind(this);
+        this.listItemHover = this.listItemHover.bind(this);
+    }
+
+    listItemClick(id) {
+        this.props.onItemSelect(id);
+    }
+
+    listItemHover(id, index) {
+        this.props.onItemHover(id, index);
+    }
+
+    generateListElement(suggestionId, index) {
+        return (
+            <li
+                key={`suggestion-${suggestionId}`}
+                className={this.props.hoveredSuggestionId === suggestionId ? "selected" : ""}
+                onClick={() => this.listItemClick(suggestionId)}
+                onMouseOver={() => this.listItemHover(suggestionId, index)}
+            >
+                {this.props.suggestionIndex[suggestionId]}
+            </li>
+        );
+    }
+
+    makeListBody() {
+        if (this.props.fetching) {
+            return (<span>Fetching...</span>);
+        } else if(this.props.inputLength < this.props.minSuggestLength) {
+            return (<span>Type more for suggestions...</span>);
+        } else if(this.props.suggestionOrder.length < 1) {
+            return (<span>No Results</span>);
+        } else {
+            return (
+                <div>
+                    <ul>
+                        {this.props.suggestionOrder.map(this.generateListElement)}
+                    </ul>
+                </div>
+            );
+        }
+    }
+
+    handleMouseDown(event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+
+    render() {
+
+
+
+        return (
+            <div
+                className={this.props.className}
+                onMouseDown={this.handleMouseDown}
+            >
+                {this.makeListBody()}
+            </div>
+        );
+    }
+}
+
+SuggestionList.propTypes = {
+    suggestionOrder: React.PropTypes.arrayOf(React.PropTypes.string),
+    suggestionIndex: React.PropTypes.object,
+    hoveredSuggestionId: React.PropTypes.string,
+    fetching: React.PropTypes.bool,
+    inputLength: React.PropTypes.number,
+    minSuggestLength: React.PropTypes.number,
+    onItemSelect: React.PropTypes.func,
+    onItemHover: React.PropTypes.func,
+    className: React.PropTypes.string
+};
+
+SuggestionList.defaultPropa = {
+    suggestionOrder: [],
+    suggestionIndex: {},
+    hoveredSuggestionId: null,
+    fetching: false,
+    inputLength: 0,
+    minSuggestLength: 0,
+    onItemSelect: () => {},
+    onItemHover: () => {},
+    className: "",
+
+};
+
+export default SuggestionList;

@@ -31,8 +31,7 @@ class CustomTextInput extends React.Component {
     }
 
     render() {
-
-        let classes = ["custom-text-input"];
+        let classes = [this.props.className];
 
         if(this.state.focused) {
             classes.push('focused');
@@ -51,6 +50,7 @@ class CustomTextInput extends React.Component {
                     disabled={this.props.disabled}
                     ref={this.props.inputRef}
                 />
+                {this.props.children}
             </div>
         );
     }
@@ -69,6 +69,7 @@ CustomTextInput.propTypes = {
     onBlur: React.PropTypes.func,
     onFocus: React.PropTypes.func,
     onKeyDown: React.PropTypes.func,
+    className: React.PropTypes.string
 
 };
 
@@ -80,7 +81,8 @@ CustomTextInput.defaultProps = {
     onBlur: () => {},
     onFocus: () => {},
     onKeyDown: () => {},
-    inputRef: () => {}
+    inputRef: () => {},
+    className: "custom-text-input"
 };
 
 export default CustomTextInput;

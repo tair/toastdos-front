@@ -4,7 +4,7 @@ import React from 'react';
 
 import GenePicker from '../genePicker';
 import { annotationTypeData } from "../../../../constants";
-import CustomTextInput from 'lib/components/customTextInput';
+import SmartTextInput from 'lib/components/smartTextInput';
 
 const inputContainerStyle = {
     display: "inline-block",
@@ -18,6 +18,13 @@ class GeneTerm extends React.Component {
 
     render() {
         let typeData = annotationTypeData[this.props.annotationData.annotationType];
+
+        const methodSuggestions = {
+            1: "Suggestion 1",
+            2: "Suggestion 2",
+            "Three": "Suggestion 3",
+            "Five": "Thisisareallyongsuggestiontha will overflow"
+        };
         return (
             <div>
                 <div style={inputContainerStyle}>
@@ -33,10 +40,16 @@ class GeneTerm extends React.Component {
                 </div>
                 <div style={inputContainerStyle}>
                     <h5>{typeData.name}</h5>
-                    <CustomTextInput
-                        onChange={event => this.props.onDataChange(
+                    <SmartTextInput
+                        onChange={value => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
-                                keywordName: event.target.value
+                                keywordName: value
+                            })
+                        )}
+                        onSelect={(id, value) => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                keywordName: value,
+                                keywordId: id
                             })
                         )}
                         placeholder="Start Typing..."
@@ -45,14 +58,22 @@ class GeneTerm extends React.Component {
                 </div>
                 <div style={inputContainerStyle}>
                     <h5>Method</h5>
-                    <CustomTextInput
-                        onChange={event => this.props.onDataChange(
+                    <SmartTextInput
+                        onChange={value => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
-                                methodName: event.target.value
+                                methodName: value
+                            })
+                        )}
+                        onSelect={(id, value) => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                methodName: value,
+                                methodId: id
                             })
                         )}
                         value={this.props.annotationData.data.methodName}
                         placeholder="e.g. Enzyme Assay"
+                        suggestionIndex={methodSuggestions}
+                        suggestionOrder={Object.keys(methodSuggestions)}
                     />
                 </div>
             </div>

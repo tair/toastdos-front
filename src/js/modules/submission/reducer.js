@@ -9,13 +9,17 @@ import {
 
 const defaultState = {
     publicationIdValue: "",
-    geneIndex: {
+    geneIndex: {    //todo get rid of test gene
         "init": {
             localId: "init",
-            finalizedLocusName: "",
-            finalizedGeneSymbol: "",
-            finalizedFullName: "",
-            finalized: false,
+            // finalizedLocusName: "",
+            finalizedLocusName: "P55370",
+            // finalizedGeneSymbol: "",
+            finalizedGeneSymbol: "TST",
+            // finalizedFullName: "",
+            finalizedFullName: "Test",
+            // finalized: false,
+            finalized: true,
             validating: false,
             validationError: ""
         }
