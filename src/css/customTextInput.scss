@@ -67,6 +67,7 @@ input[type=text] {
             cursor: pointer;
             &.selected {
                 background-color: $bgColor;
+                color: $fgColorActive2;
             }
         }
     }
