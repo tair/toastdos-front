@@ -57,8 +57,6 @@ class SuggestionList extends React.Component {
 
     componentDidUpdate() {
         if (this.hoveredRef && this.listContainer) {
-            console.log(this.listContainer.scrollTop + this.listContainer.clientHeight);
-            console.log(this.hoveredRef.offsetTop + this.hoveredRef.clientHeight);
             if(
                 (this.hoveredRef.offsetTop + this.hoveredRef.clientHeight) > (this.listContainer.scrollTop + this.listContainer.clientHeight)
             ) {
