@@ -21,6 +21,7 @@ class SmartTextInput extends React.Component {
         this.handleSuggestionSelect = this.handleSuggestionSelect.bind(this);
         this.handleSuggestionHover = this.handleSuggestionHover.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -42,7 +43,9 @@ class SmartTextInput extends React.Component {
     handleInputChange(event) {
         this.setState({
             value: event.target.value,
-            showSuggestions: true
+            showSuggestions: true,
+            hoveredItemId: null,
+            hoveredItemIndex: null
         });
         this.props.onChange(event.target.value);
     }
@@ -89,9 +92,51 @@ class SmartTextInput extends React.Component {
         }
     }
 
+    handleKeyDown(event) {
+        // 40 - down
+        // 38 - up
+        // 13 - enter
+        if((!this.state.showSuggestions) || (this.props.suggestionOrder.length <= 0)) {
+            if(event.keyCode === 40) {
+                this.setState({
+                    showSuggestions: true
+                });
+            }
+            return; // do nothing
+        }
+        let newState = {};
+        switch(event.keyCode) {
+        case 40:
+            newState.hoveredItemIndex = (
+                this.state.hoveredItemIndex != null ? (
+                    (this.state.hoveredItemIndex + 1) < this.props.suggestionOrder.length  ?
+                    (this.state.hoveredItemIndex + 1) : this.state.hoveredItemIndex
+                ) : 0
+            );
+
+            newState.hoveredItemId = this.props.suggestionOrder[newState.hoveredItemIndex];
+            break;
+        case 38:
+            newState.hoveredItemIndex = (
+                this.state.hoveredItemIndex != null ? (
+                    (this.state.hoveredItemIndex - 1) >= 0  ?
+                    (this.state.hoveredItemIndex - 1) : this.state.hoveredItemIndex
+                ) : 0
+            );
+
+            newState.hoveredItemId = this.props.suggestionOrder[newState.hoveredItemIndex];
+            break;
+        case 13:
+            this.handleSuggestionSelect(this.state.hoveredItemId);
+            return;
+        }
+
+        this.setState(newState);
+    }
+
     render() {
         return (
-            <span onMouseDown={this.handleClick}>
+            <span onMouseDown={this.handleClick} onKeyDown={this.handleKeyDown}>
                 <CustomTextInput
                     onChange={this.handleInputChange}
                     value={this.state.value}

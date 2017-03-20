@@ -25,6 +25,7 @@ class SuggestionList extends React.Component {
                 className={this.props.hoveredSuggestionId === suggestionId ? "selected" : ""}
                 onClick={() => this.listItemClick(suggestionId)}
                 onMouseOver={() => this.listItemHover(suggestionId, index)}
+                ref={r => (this.props.hoveredSuggestionId === suggestionId) ? (this.hoveredRef = r) : null}
             >
                 {this.props.suggestionIndex[suggestionId]}
             </li>
@@ -54,6 +55,12 @@ class SuggestionList extends React.Component {
         event.preventDefault();
     }
 
+    componentDidUpdate() {
+        if (this.hoveredRef && this.listContainer) {
+            this.listContainer.scrollTop = this.hoveredRef.offsetTop;
+        }
+    }
+
     render() {
 
 
@@ -61,6 +68,7 @@ class SuggestionList extends React.Component {
         return (
             <div
                 className={this.props.className}
+                ref={r => this.listContainer = r}
                 onMouseDown={this.handleMouseDown}
             >
                 {this.makeListBody()}
