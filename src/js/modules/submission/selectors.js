@@ -7,6 +7,22 @@ import {
 } from './constants';
 import { createSelector } from 'reselect';
 
+export const fetchingSuggestionsSelector = state => state[name].searchingKeywords;
+
+const keywordSearchResults = state => state[name].keywordSearchResults;
+export const keywordSearchIndexSelector = createSelector(
+    keywordSearchResults,
+    results => results.reduce((acc, cur) => {
+        acc[cur.id] = cur.name;
+        return acc;
+    }, {})
+);
+
+export const keywordSearchOrderSelector = createSelector(
+    keywordSearchResults,
+    results => results.map(v => v.id)
+);
+
 export function hasValidGenes(state) {
     let geneIndex = state.submission.geneIndex;
     let geneOrder = state.submission.geneOrder;
@@ -82,21 +98,15 @@ export function submissionBodySelector(state) {
         case annotationFormats.GENE_TERM:
             annotation.data = {
                 locusName: geneIndex[a.data.geneLocalId].finalizedLocusName,
-                method: {
-                    name: a.data.methodName
-                },
-                keyword: {
-                    name: a.data.keywordName
-                }
+                method: (a.data.methodId !== null ? {id: a.data.methodId} : {name: a.data.methodName}),
+                keyword: (a.data.keywordId !== null ? {id: a.data.keywordId} : {name: a.data.keywordName})
             };
             break;
         case annotationFormats.GENE_GENE:
             annotation.data = {
                 locusName: geneIndex[a.data.gene1LocalId].finalizedLocusName,
                 locusName2: geneIndex[a.data.gene2LocalId].finalizedLocusName,
-                method: {
-                    name: a.data.methodName
-                }
+                method: (a.data.methodId !== null ? {id: a.data.methodId} : {name: a.data.methodName})
             };
             break;
         }

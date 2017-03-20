@@ -3,7 +3,8 @@
 import AuthModule from 'modules/authentication';
 import {
     validateGene,
-    submitSubmission
+    submitSubmission,
+    searchKeywords
 } from 'lib/api';
 import * as actions from './actionTypes';
 import { name } from './constants';
@@ -139,7 +140,6 @@ export function attemptSubmit() {
 
         const currState = getState();
 
-        //todo build JSON for submission request
         const submissionBody = submissionBodySelector(currState);
 
         dispatch({
@@ -161,4 +161,45 @@ export function resetSubmission() {
         type: actions.RESET_SUBMISSION
     };
 }
+
+function keywordSearchSuccess(results) {
+    return {
+        type: actions.KEYWORD_SEARCH_SUCCESS,
+        results
+    };
+}
+
+function keywordSearchFail(error) {
+    console.error(error);
+    return {
+        type: actions.KEYWORD_SEARCH_FAIL,
+        error
+    };
+}
+
+export function attemptKeywordSearch(searchTerm, keywordScope) {
+    return (dispatch, getState) => {
+
+        const currState = getState();
+
+        dispatch({
+            type: actions.ATTEMPT_KEYWORD_SEARCH
+        });
+
+        const token = AuthModule.selectors.rawJwtSelector(currState);
+        searchKeywords(searchTerm, keywordScope, token, (err, data) => {
+            if(err) {
+                return dispatch(keywordSearchFail(err));
+            }
+            return dispatch(keywordSearchSuccess(data));
+        });
+    };
+}
+
+export function clearKeywordSearch() {
+    return {
+        type: actions.CLEAR_KEYWORD_SEARCH
+    };
+}
+
 

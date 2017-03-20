@@ -4,7 +4,7 @@ import React from 'react';
 
 import GenePicker from '../genePicker';
 import { annotationTypeData } from "../../../../constants";
-import SmartTextInput from 'lib/components/smartTextInput';
+import KeywordTextInput from '../../../keywordTextInput';
 
 const inputContainerStyle = {
     display: "inline-block",
@@ -19,12 +19,6 @@ class GeneTerm extends React.Component {
     render() {
         let typeData = annotationTypeData[this.props.annotationData.annotationType];
 
-        const methodSuggestions = {
-            1: "Suggestion 1",
-            2: "Suggestion 2",
-            "Three": "Suggestion 3",
-            "Five": "Thisisareallyongsuggestiontha will overflow"
-        };
         return (
             <div>
                 <div style={inputContainerStyle}>
@@ -40,10 +34,11 @@ class GeneTerm extends React.Component {
                 </div>
                 <div style={inputContainerStyle}>
                     <h5>{typeData.name}</h5>
-                    <SmartTextInput
+                    <KeywordTextInput
                         onChange={value => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
-                                keywordName: value
+                                keywordName: value,
+                                keywordId: null
                             })
                         )}
                         onSelect={(id, value) => this.props.onDataChange(
@@ -54,14 +49,16 @@ class GeneTerm extends React.Component {
                         )}
                         placeholder="Start Typing..."
                         value={this.props.annotationData.data.keywordName}
+                        searchScope={typeData.keywordScope}
                     />
                 </div>
                 <div style={inputContainerStyle}>
                     <h5>Method</h5>
-                    <SmartTextInput
+                    <KeywordTextInput
                         onChange={value => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
-                                methodName: value
+                                methodName: value,
+                                methodId: null
                             })
                         )}
                         onSelect={(id, value) => this.props.onDataChange(
@@ -70,10 +67,9 @@ class GeneTerm extends React.Component {
                                 methodId: id
                             })
                         )}
-                        value={this.props.annotationData.data.methodName}
                         placeholder="e.g. Enzyme Assay"
-                        suggestionIndex={methodSuggestions}
-                        suggestionOrder={Object.keys(methodSuggestions)}
+                        value={this.props.annotationData.data.methodName}
+                        searchScope="eco"
                     />
                 </div>
             </div>

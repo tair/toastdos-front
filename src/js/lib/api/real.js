@@ -128,4 +128,27 @@ export function submitSubmission(submissionData, jwt, callback) {
     });
 }
 
+export function searchKeywords(searchTerm, keywordScope, jwt, callback) {
+    return request({
+        method: 'GET',
+        timeout: 15000,
+        url: `${BASE_URL}/api/keyword/search`,
+        qs: {
+            substring: searchTerm,
+            keyword_scope: keywordScope
+        },
+        json: true,
+        headers: {
+            'Authorization': `Bearer ${jwt}`
+        }
+    }, (err, resp, body) => {
+        if(err) {
+            return callback(err);
+        }
+        if(resp.status >= 300) {
+            return callback(body);
+        }
+        return callback(null, body);
+    });
+}
 

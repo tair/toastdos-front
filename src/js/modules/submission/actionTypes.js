@@ -15,3 +15,8 @@ export const ATTEMPT_SUBMIT = "submission/ATTEMPT_SUBMIT";
 export const SUBMIT_SUCCESS = "submission/SUBMIT_SUCCESS";
 export const SUBMIT_FAIL = "submission/SUBMIT_FAIL";
 export const RESET_SUBMISSION = "submission/RESET_SUBMISSION";
+export const ATTEMPT_KEYWORD_SEARCH = "submission/ATTEMPT_KEYWORD_SEARCH";
+export const KEYWORD_SEARCH_SUCCESS = "submission/KEYWORD_SEARCH_SUCCESS";
+export const KEYWORD_SEARCH_FAIL = "submission/KEYWORD_SEARCH_FAIL";
+export const CLEAR_KEYWORD_SEARCH = "submission/CLEAR_KEYWORD_SEARCH";
+

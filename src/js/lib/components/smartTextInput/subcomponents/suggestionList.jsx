@@ -32,7 +32,7 @@ class SuggestionList extends React.Component {
     }
 
     makeListBody() {
-        if (this.props.fetching) {
+        if (this.props.fetching && this.props.suggestionOrder.length === 0) {
             return (<span>Fetching...</span>);
         } else if(this.props.inputLength < this.props.minSuggestLength) {
             return (<span>Type more for suggestions...</span>);
@@ -70,9 +70,12 @@ class SuggestionList extends React.Component {
 }
 
 SuggestionList.propTypes = {
-    suggestionOrder: React.PropTypes.arrayOf(React.PropTypes.string),
+    suggestionOrder: React.PropTypes.array,
     suggestionIndex: React.PropTypes.object,
-    hoveredSuggestionId: React.PropTypes.string,
+    hoveredSuggestionId: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.number
+    ]),
     fetching: React.PropTypes.bool,
     inputLength: React.PropTypes.number,
     minSuggestLength: React.PropTypes.number,

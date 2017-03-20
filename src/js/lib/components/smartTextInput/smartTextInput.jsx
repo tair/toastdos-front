@@ -128,11 +128,12 @@ SmartTextInput.propTypes = {
     suggestionLimit: React.PropTypes.number,
     fetchingSuggestions: React.PropTypes.bool,
     suggestionIndex: React.PropTypes.object,
-    suggestionOrder: React.PropTypes.arrayOf(
-        React.PropTypes.string
-    ),
+    suggestionOrder: React.PropTypes.array,
     value: React.PropTypes.string,
-    valueId: React.PropTypes.string,
+    valueId: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.number
+    ]),
     placeholder: React.PropTypes.string,
     minSuggestLength: React.PropTypes.number,
     onChange: React.PropTypes.func,

@@ -3,7 +3,7 @@
 import React from 'react';
 
 import GenePicker from '../genePicker';
-import CustomTextInput from "lib/components/customTextInput";
+import KeywordTextInput from '../../../keywordTextInput';
 
 const inputContainerStyle = {
     display: "inline-block",
@@ -44,14 +44,22 @@ class GeneGene extends React.Component {
                 </div>
                 <div style={inputContainerStyle}>
                     <h5>Method</h5>
-                    <CustomTextInput
-                        onChange={event => this.props.onDataChange(
+                    <KeywordTextInput
+                        onChange={value => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
-                                methodName: event.target.value
+                                methodName: value,
+                                methodId: null
                             })
                         )}
-                        value={this.props.annotationData.data.methodName}
+                        onSelect={(id, value) => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                methodName: value,
+                                methodId: id
+                            })
+                        )}
                         placeholder="e.g. Enzyme Assay"
+                        value={this.props.annotationData.data.methodName}
+                        searchScope="eco"
                     />
                 </div>
                 

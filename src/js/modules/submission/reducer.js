@@ -9,17 +9,13 @@ import {
 
 const defaultState = {
     publicationIdValue: "",
-    geneIndex: {    //todo get rid of test gene
+    geneIndex: {
         "init": {
             localId: "init",
-            // finalizedLocusName: "",
-            finalizedLocusName: "P55370",
-            // finalizedGeneSymbol: "",
-            finalizedGeneSymbol: "TST",
-            // finalizedFullName: "",
-            finalizedFullName: "Test",
-            // finalized: false,
-            finalized: true,
+            finalizedLocusName: "",
+            finalizedGeneSymbol: "",
+            finalizedFullName: "",
+            finalized: false,
             validating: false,
             validationError: ""
         }
@@ -29,7 +25,9 @@ const defaultState = {
     annotationOrder: [],
     submitting: false,
     submitted: false,
-    submissionError: ""
+    submissionError: "",
+    keywordSearchResults: [],
+    searchingKeywords: false
 };
 
 
@@ -70,7 +68,6 @@ export default function (state = defaultState, action) {
 
         return Object.assign({}, state, newState);
     case actions.ATTEMPT_VALIDATE_GENE:
-        // todo
         newState = {
             geneIndex: Object.assign({}, state.geneIndex),
         };
@@ -125,7 +122,9 @@ export default function (state = defaultState, action) {
             data: {
                 geneLocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
                 keywordName: "",
-                methodName: ""
+                keywordId: null,
+                methodName: "",
+                methodId: null
             }
         };
 
@@ -155,7 +154,9 @@ export default function (state = defaultState, action) {
             newState.annotationIndex[action.localId].data = {
                 geneLocalId: ((state.geneOrder.length > 0) ? state.geneOrder[0] : null),
                 keywordName: "",
-                methodName: ""
+                keywordId: null,
+                methodName: "",
+                methodId: null
             };
             break;
         case annotationFormats.GENE_GENE:
@@ -163,7 +164,8 @@ export default function (state = defaultState, action) {
             newState.annotationIndex[action.localId].data = {
                 gene1LocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
                 gene2LocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
-                methodName: ""
+                methodName: "",
+                methodId: null
             };
             break;
         case annotationFormats.COMMENT:
@@ -192,13 +194,11 @@ export default function (state = defaultState, action) {
             submitting: true
         });
     case actions.SUBMIT_SUCCESS:
-        //todo
         return Object.assign({}, state, {
             submitting: false,
             submitted: true
         });
     case actions.SUBMIT_FAIL:
-        //todo
         return Object.assign({}, state, {
             submitting: false,
             submitted: false,
@@ -214,6 +214,25 @@ export default function (state = defaultState, action) {
             submitting: false,
             submitted: false,
             submissionError: ""
+        });
+    case actions.ATTEMPT_KEYWORD_SEARCH:
+        return Object.assign({}, state, {
+            searchingKeywords: true
+        });
+    case actions.KEYWORD_SEARCH_SUCCESS:
+        return Object.assign({}, state, {
+            searchingKeywords: false,
+            keywordSearchResults: action.results
+        });
+    case actions.KEYWORD_SEARCH_FAIL:
+        return Object.assign({}, state, {
+            searchingKeywords: false,
+            keywordSearchResults: []
+        });
+    case actions.CLEAR_KEYWORD_SEARCH:
+        return Object.assign({}, state, {
+            searchingKeywords: false,
+            keywordSearchResults: []
         });
     default:
         return state;
