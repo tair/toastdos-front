@@ -49,6 +49,7 @@ class CustomTextInput extends React.Component {
                     onKeyDown={this.props.onKeyDown}
                     disabled={this.props.disabled}
                     ref={this.props.inputRef}
+                    spellCheck={this.props.spellCheck}
                 />
                 {this.props.children}
             </div>
@@ -69,7 +70,8 @@ CustomTextInput.propTypes = {
     onBlur: React.PropTypes.func,
     onFocus: React.PropTypes.func,
     onKeyDown: React.PropTypes.func,
-    className: React.PropTypes.string
+    className: React.PropTypes.string,
+    spellCheck: React.PropTypes.bool
 
 };
 
@@ -82,7 +84,7 @@ CustomTextInput.defaultProps = {
     onFocus: () => {},
     onKeyDown: () => {},
     inputRef: () => {},
-    className: "custom-text-input"
+    className: "custom-text-input",
 };
 
 export default CustomTextInput;

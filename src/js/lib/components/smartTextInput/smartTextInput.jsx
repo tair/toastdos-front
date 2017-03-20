@@ -99,11 +99,12 @@ class SmartTextInput extends React.Component {
                     onFocus={this.handleFocus}
                     onBlur={this.handleBlur}
                     inputRef={r => this.inputRef = r}
+                    spellCheck={false}
                 />
                 {
                     (this.state.focused && this.state.showSuggestions) ?
                     (
-                        <div style={{position: "relative", zIndex: 200}}>
+                        <div style={{position: "relative", zIndex: 500}}>
                             <SuggestionList
                                 suggestionOrder={this.props.suggestionOrder}
                                 suggestionIndex={this.props.suggestionIndex}
