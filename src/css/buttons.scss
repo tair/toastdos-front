@@ -26,10 +26,10 @@
     }
 
     &.btn-primary {
-        &:hover:enabled {
-            background-color: $primaryColorActive;
+        &:hover:enabled, &:active {
+            background-color: $primaryColor;
         }
-        background-color: $primaryColor;
+        background-color: darken($primaryColor, 15);
     }
 
     &.btn-secondary {
