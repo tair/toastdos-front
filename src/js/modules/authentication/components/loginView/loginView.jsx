@@ -36,7 +36,7 @@ class LoginView extends React.Component {
                 </div>
             ) : (
                 <div>
-                    <h1>PLS Authenticate</h1>
+                    <h1>Not Authenticated</h1>
                 </div>
             )
         );
