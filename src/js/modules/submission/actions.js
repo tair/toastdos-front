@@ -1,6 +1,14 @@
 "use strict";
 
+import AuthModule from 'modules/authentication';
+import {
+    validateGene,
+    submitSubmission,
+    searchKeywords
+} from 'lib/api';
 import * as actions from './actionTypes';
+import { name } from './constants';
+import { submissionBodySelector } from './selectors';
 
 export function changePublicationId(value) {
     return {
@@ -25,31 +33,49 @@ export function removeGene(localId) {
 
 export function attemptValidateGene(localId, geneData) {
     return (dispatch, getState) => {
-
-        const currState = getState().submission;
+        const currState = getState();
+        const token = AuthModule.selectors.rawJwtSelector(currState);
 
         dispatch({
             type: actions.ATTEMPT_VALIDATE_GENE,
             localId: localId
         });
 
-        // todo the async operation
-        return setTimeout(() => {
-            return dispatch(validateGeneResult(localId, true, geneData));
-        }, 500);
+        // make sure we didn't add gene already
+        // newState.geneIndex[action.localId].validating = false;
+        // console.log(state.geneIndex);
+        // console.log(action.localId);
+        for(var gi in currState[name].geneIndex) {
+            // console.log(gi)
+            if(`${gi}` === `${localId}`) continue;
+            if(currState[name].geneIndex[gi].finalizedLocusName === geneData.locusName) {
+                return dispatch(validateGeneFail(localId, 'Gene already added'));
+            }
+        }
+
+
+        // console.log(geneData)
+        validateGene(geneData.locusName, token, (err, data) => {
+            if(err) {
+                if(err.error === 'NOT_FOUND') {
+                    return dispatch(validateGeneFail(localId, "Gene Not Found"));
+                }
+                return dispatch(validateGeneFail(localId, "Error Validating Gene"));
+            }
+            return dispatch(validateGeneSuccess(localId, geneData));
+        });
     };
 }
 
-export function validateGeneResult(localId, result, geneData) {
+function validateGeneSuccess(localId, geneData) {
     return {
-        type: actions.VALIDATE_GENE_RESULT,
+        type: actions.VALIDATE_GENE_SUCCESS,
         localId: localId,
-        result: result,
         geneData: geneData
     };
 }
 
-export function validateGeneFail(localId, error) {
+function validateGeneFail(localId, error) {
     return {
         type: actions.VALIDATE_GENE_FAIL,
         localId: localId,
@@ -94,27 +120,39 @@ export function updateAnnotationData(localId, data) {
     };
 }
 
-function submitResult(result) {
+function submitSuccess(response) {
     return {
-        type: actions.SUBMIT_RESULT
+        type: actions.SUBMIT_SUCCESS,
+        data: response
     };
 }
 
-export function submitSubmission() {
+function submitFail(error) {
+    // console.log(error);
+    return {
+        type: actions.SUBMIT_FAIL,
+        error
+    };
+}
+
+export function attemptSubmit() {
     return (dispatch, getState) => {
 
-        const currState = getState().submission;
+        const currState = getState();
 
-        //todo build JSON for submission request
+        const submissionBody = submissionBodySelector(currState);
 
         dispatch({
             type: actions.ATTEMPT_SUBMIT
         });
 
-        // todo the async operation
-        return setTimeout(() => {
-            return dispatch(submitResult({}));
-        }, 500);
+        const token = AuthModule.selectors.rawJwtSelector(currState);
+        submitSubmission(submissionBody, token, (err, data) => {
+            if(err) {
+                return dispatch(submitFail(err));
+            }
+            return dispatch(submitSuccess(data));
+        });
     };
 }
 
@@ -123,4 +161,45 @@ export function resetSubmission() {
         type: actions.RESET_SUBMISSION
     };
 }
+
+function keywordSearchSuccess(results) {
+    return {
+        type: actions.KEYWORD_SEARCH_SUCCESS,
+        results
+    };
+}
+
+function keywordSearchFail(error) {
+    console.error(error);
+    return {
+        type: actions.KEYWORD_SEARCH_FAIL,
+        error
+    };
+}
+
+export function attemptKeywordSearch(searchTerm, keywordScope) {
+    return (dispatch, getState) => {
+
+        const currState = getState();
+
+        dispatch({
+            type: actions.ATTEMPT_KEYWORD_SEARCH
+        });
+
+        const token = AuthModule.selectors.rawJwtSelector(currState);
+        searchKeywords(searchTerm, keywordScope, token, (err, data) => {
+            if(err) {
+                return dispatch(keywordSearchFail(err));
+            }
+            return dispatch(keywordSearchSuccess(data));
+        });
+    };
+}
+
+export function clearKeywordSearch() {
+    return {
+        type: actions.CLEAR_KEYWORD_SEARCH
+    };
+}
+
 

@@ -4,7 +4,7 @@ import React from 'react';
 
 import GenePicker from '../genePicker';
 import { annotationTypeData } from "../../../../constants";
-import CustomTextInput from 'lib/components/customTextInput';
+import KeywordTextInput from '../../../keywordTextInput';
 
 const inputContainerStyle = {
     display: "inline-block",
@@ -18,6 +18,7 @@ class GeneTerm extends React.Component {
 
     render() {
         let typeData = annotationTypeData[this.props.annotationData.annotationType];
+
         return (
             <div>
                 <div style={inputContainerStyle}>
@@ -33,26 +34,42 @@ class GeneTerm extends React.Component {
                 </div>
                 <div style={inputContainerStyle}>
                     <h5>{typeData.name}</h5>
-                    <CustomTextInput
-                        onChange={event => this.props.onDataChange(
+                    <KeywordTextInput
+                        onChange={value => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
-                                keywordId: event.target.value
+                                keywordName: value,
+                                keywordId: null
+                            })
+                        )}
+                        onSelect={(id, value) => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                keywordName: value,
+                                keywordId: id
                             })
                         )}
                         placeholder="Start Typing..."
-                        value={this.props.annotationData.data.keywordId}
+                        value={this.props.annotationData.data.keywordName}
+                        searchScope={typeData.keywordScope}
                     />
                 </div>
                 <div style={inputContainerStyle}>
                     <h5>Method</h5>
-                    <CustomTextInput
-                        onChange={event => this.props.onDataChange(
+                    <KeywordTextInput
+                        onChange={value => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
-                                methodId: event.target.value
+                                methodName: value,
+                                methodId: null
                             })
                         )}
-                        value={this.props.annotationData.data.methodId}
+                        onSelect={(id, value) => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                methodName: value,
+                                methodId: id
+                            })
+                        )}
                         placeholder="e.g. Enzyme Assay"
+                        value={this.props.annotationData.data.methodName}
+                        searchScope="eco"
                     />
                 </div>
             </div>

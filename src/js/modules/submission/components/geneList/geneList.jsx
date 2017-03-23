@@ -21,9 +21,10 @@ class GeneList extends React.Component {
                 onEditClick={this.props.editGeneData.bind(this, geneId)}
                 validating={geneData.validating}
                 locusName={geneData.finalizedLocusName}
-                geneSymbol={geneData.finalizedGeneSynmbol}
+                geneSymbol={geneData.finalizedGeneSymbol}
                 fullName={geneData.finalizedFullName}
                 finalized={geneData.finalized}
+                validationError={geneData.validationError}
             />
         );
     }
@@ -33,15 +34,22 @@ class GeneList extends React.Component {
             <div className="gene-list-container">
                 <div className="gene-list">
                     <h2>Genes</h2>
+                    <button
+                        className="btn btn-secondary"
+                        onClick={this.props.onGeneAddClick}
+                    >
+                        Add Gene
+                    </button>
+                    {(this.props.geneOrder.length <= 0) ? 
+                       (
+                        <span className="empty-message">
+                            No Genes                       
+                        </span>
+                       ) : null
+                    }
                     {this.props.geneOrder.map(this.generateGene)}
                     
                 </div>
-                <button
-                    className="btn btn-secondary"
-                    onClick={this.props.onGeneAddClick}
-                >
-                    Add Gene
-                </button>
             </div>
         );
     }

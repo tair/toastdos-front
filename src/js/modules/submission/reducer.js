@@ -13,17 +13,21 @@ const defaultState = {
         "init": {
             localId: "init",
             finalizedLocusName: "",
-            finalizedGeneSynmbol: "",
+            finalizedGeneSymbol: "",
             finalizedFullName: "",
             finalized: false,
-            validating: false
+            validating: false,
+            validationError: ""
         }
     },
     geneOrder: ["init"],
     annotationIndex: {},
     annotationOrder: [],
     submitting: false,
-    submitted: false
+    submitted: false,
+    submissionError: "",
+    keywordSearchResults: [],
+    searchingKeywords: false
 };
 
 
@@ -43,10 +47,11 @@ export default function (state = defaultState, action) {
         newState.geneIndex[action.localId] = {
             localId: action.localId,
             finalizedLocusName: "",
-            finalizedGeneSynmbol: "",
+            finalizedGeneSymbol: "",
             finalizedFullName: "",
             finalized: false,
-            validating: false
+            validating: false,
+            validationError: ""
         };
 
         newState.geneOrder.push(action.localId);
@@ -63,28 +68,40 @@ export default function (state = defaultState, action) {
 
         return Object.assign({}, state, newState);
     case actions.ATTEMPT_VALIDATE_GENE:
-        // todo
         newState = {
             geneIndex: Object.assign({}, state.geneIndex),
         };
-
+        newState.geneIndex[action.localId].validationError = '';
         newState.geneIndex[action.localId].validating = true;
         return Object.assign({}, state, newState);
-    case actions.VALIDATE_GENE_RESULT:
-        // todo 
+    case actions.VALIDATE_GENE_SUCCESS:
         newState = {
             geneIndex: Object.assign({}, state.geneIndex),
         };
 
         newState.geneIndex[action.localId].validating = false;
+
         newState.geneIndex[action.localId].finalized = true;
+        newState.geneIndex[action.localId].validationError = '';
 
         newState.geneIndex[action.localId].finalizedLocusName = action.geneData.locusName;
-        newState.geneIndex[action.localId].finalizedGeneSynmbol = action.geneData.geneSymbol;
+        newState.geneIndex[action.localId].finalizedGeneSymbol = action.geneData.geneSymbol;
         newState.geneIndex[action.localId].finalizedFullName = action.geneData.fullName;
         
 
         return Object.assign({}, state, newState);
+    case actions.VALIDATE_GENE_FAIL:
+        newState = {
+            geneIndex: Object.assign({}, state.geneIndex),
+        };
+
+        newState.geneIndex[action.localId].validationError = action.error;
+
+        newState.geneIndex[action.localId].validating = false;
+        
+
+        return Object.assign({}, state, newState);
+    
     case actions.EDIT_GENE_DATA:
         newState = {
             geneIndex: Object.assign({}, state.geneIndex)
@@ -104,8 +121,10 @@ export default function (state = defaultState, action) {
             annotationType: annotationTypes.MOLECULAR_FUNCTION,
             data: {
                 geneLocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
-                keywordId: "",
-                methodId: ""
+                keywordName: "",
+                keywordId: null,
+                methodName: "",
+                methodId: null
             }
         };
 
@@ -128,28 +147,34 @@ export default function (state = defaultState, action) {
         newState = {
             annotationIndex: Object.assign({}, state.annotationIndex)
         };
-        newState.annotationIndex[action.localId].annotationType = action.newAnnotationType;
 
         switch(annotationTypeData[action.newAnnotationType].format) {
         case annotationFormats.GENE_TERM:
+            newState.annotationIndex[action.localId].annotationType = action.newAnnotationType;
             newState.annotationIndex[action.localId].data = {
                 geneLocalId: ((state.geneOrder.length > 0) ? state.geneOrder[0] : null),
-                keywordId: "",
-                methodId: ""
+                keywordName: "",
+                keywordId: null,
+                methodName: "",
+                methodId: null
             };
             break;
         case annotationFormats.GENE_GENE:
+            newState.annotationIndex[action.localId].annotationType = action.newAnnotationType;
             newState.annotationIndex[action.localId].data = {
                 gene1LocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
                 gene2LocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
-                methodId: ""
+                methodName: "",
+                methodId: null
             };
             break;
-        default:
+        case annotationFormats.COMMENT:
+            newState.annotationIndex[action.localId].annotationType = action.newAnnotationType;
             newState.annotationIndex[action.localId].data = {
                 geneLocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
                 comment: ""
             };
+            break;
         }
 
         return Object.assign({}, state, newState);
@@ -168,17 +193,16 @@ export default function (state = defaultState, action) {
         return Object.assign({}, state, {
             submitting: true
         });
-    case actions.SUBMIT_RESULT:
-        //todo
+    case actions.SUBMIT_SUCCESS:
         return Object.assign({}, state, {
             submitting: false,
             submitted: true
         });
     case actions.SUBMIT_FAIL:
-        //todo
         return Object.assign({}, state, {
             submitting: false,
-            submitted: false
+            submitted: false,
+            submissionError: action.error
         });
     case actions.RESET_SUBMISSION:
         return Object.assign({}, state, {
@@ -188,7 +212,27 @@ export default function (state = defaultState, action) {
             annotationIndex: {},
             annotationOrder: [],
             submitting: false,
-            submitted: false
+            submitted: false,
+            submissionError: ""
+        });
+    case actions.ATTEMPT_KEYWORD_SEARCH:
+        return Object.assign({}, state, {
+            searchingKeywords: true
+        });
+    case actions.KEYWORD_SEARCH_SUCCESS:
+        return Object.assign({}, state, {
+            searchingKeywords: false,
+            keywordSearchResults: action.results
+        });
+    case actions.KEYWORD_SEARCH_FAIL:
+        return Object.assign({}, state, {
+            searchingKeywords: false,
+            keywordSearchResults: []
+        });
+    case actions.CLEAR_KEYWORD_SEARCH:
+        return Object.assign({}, state, {
+            searchingKeywords: false,
+            keywordSearchResults: []
         });
     default:
         return state;

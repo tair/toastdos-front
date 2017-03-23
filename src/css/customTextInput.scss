@@ -50,3 +50,36 @@ input[type=text] {
     }
 
 }
+
+.smart-text-input-suggestions {
+    position: absolute;
+    background-color: #FFFFFF;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: scroll;
+    & ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        & > li {
+            padding: 7px 5px;
+            word-break: break-all;
+            cursor: pointer;
+            &.selected {
+                background-color: $bgColor;
+                color: $fgColorActive2;
+            }
+        }
+    }
+
+    & span {
+        font-weight: 300;
+        font-size: 1.1em;
+        text-align: center;
+        width: 100%;
+        margin: 0 auto;
+        display: inline-block;
+        padding: 12px 0px;
+    }
+
+}

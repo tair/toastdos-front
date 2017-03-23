@@ -3,6 +3,11 @@
 .submission-view-container {
     padding-top: 20px;
     padding-bottom: 20px;
+
+    .btn-submit {
+        display: block;
+        width: 100%;
+    }
 }
 
 .submission-view {
@@ -42,6 +47,19 @@
         font-weight: 400;
     }
 
+    .empty-message {
+        width: 100%;
+        text-align: center;
+        font-weight: 300;
+        font-size: 1.4em;
+        display: block;
+        padding: 20px 0px;
+        background-color:  #f2f2f2;
+        border: 1px dashed #adadad;
+        margin-top: 10px;
+        border-radius: 10px;
+    }
+
 }
 
 .submission-view .publication-field {
@@ -54,8 +72,12 @@
 }
 
 .submission-view .gene-list-container {
+    padding-bottom: 10px;
     & .gene-list {
-
+        & > h2 {
+            display: inline;
+            margin-right: 7px;
+        }
     }
     & .edit-button-container {
         display: inline-block;
@@ -91,10 +113,17 @@
 }
 
 .submission-view .annotation-list-container {
+    & > h2 {
+        display: inline;
+        margin-right: 7px;
+    }
     & .annotation-list {
+        margin-bottom: 16px;
         & .annotation-entry {
-            
+
         }
     }
+
+
 }
 

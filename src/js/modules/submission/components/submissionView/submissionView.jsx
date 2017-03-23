@@ -18,7 +18,7 @@ class SubmissionView extends React.Component {
             <div style={{
                 top: 0,
                 left: 0,
-                position: "absolute",
+                position: "fixed",
                 zIndex: 1000,
                 width: "100%",
                 height: "100%",
@@ -35,7 +35,7 @@ class SubmissionView extends React.Component {
             <div style={{
                 top: 0,
                 left: 0,
-                position: "absolute",
+                position: "fixed",
                 zIndex: 1000,
                 width: "100%",
                 height: "100%",
@@ -56,10 +56,21 @@ class SubmissionView extends React.Component {
             </div>
         );
 
+
+        const errorMessage = (
+            <div className="error-box-container">
+                <div className="error-box">
+                    <strong>Submission Error: </strong>
+                    <span>{this.props.errorMessage}</span>
+                </div>
+            </div>
+        );
+
         return (
             <div
                 className="submission-view-container"
             >
+                {this.props.errorMessage ? errorMessage : null}
                 <div className="submission-view">
                     {this.props.submitting ? submittingPanel :
                         (this.props.submitted ? submittedPanel : null)
@@ -81,10 +92,11 @@ class SubmissionView extends React.Component {
                         <GeneList />
                         <AnnotationList />
                         <button
-                            className="btn btn-primary btn-lg"
+                            className="btn btn-primary btn-lg btn-submit"
                             onClick={this.props.submit}
+                            disabled={!this.props.canSubmit}
                         >
-                            Review and Submit
+                            Submit Annotations
                         </button>
                     </div>
                 </div>
@@ -97,7 +109,9 @@ SubmissionView.propTypes = {
     submit: React.PropTypes.func,
     resetSubmission: React.PropTypes.func,
     submitting: React.PropTypes.bool,
-    submitted: React.PropTypes.bool
+    submitted: React.PropTypes.bool,
+    canSubmit: React.PropTypes.bool,
+    errorMessage: React.PropTypes.string,
 };
 
 SubmissionView.defaultProps = {

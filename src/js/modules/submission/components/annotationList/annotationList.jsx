@@ -30,9 +30,6 @@ class AnnotationList extends React.Component {
         return (
             <div className="annotation-list-container">
                 <h2>Annotations</h2>
-                <div className="annotation-list">
-                    {this.props.annotationOrder.map(this.generateAnnotationEntry)}
-                </div>
                 <button
                     className="btn btn-secondary"
                     onClick={this.props.onAnnotationAddClick}
@@ -40,6 +37,16 @@ class AnnotationList extends React.Component {
                 >
                     Add Annotation
                 </button>
+                {(this.props.annotationOrder.length <= 0) ? 
+                   (
+                    <span className="empty-message">
+                        No Annotations                       
+                    </span>
+                   ) : null
+                }
+                <div className="annotation-list">
+                    {this.props.annotationOrder.map(this.generateAnnotationEntry)}
+                </div>
             </div>
         );
     }

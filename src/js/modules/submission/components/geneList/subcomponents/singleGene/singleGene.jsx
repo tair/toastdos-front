@@ -140,6 +140,8 @@ class SingleGene extends React.Component {
                         Remove Gene
                     </button>
                     {this.props.validating ? (<span>Validating...</span>) : null}
+                    {this.props.validationError ? 
+                        (<span>{this.props.validationError}</span>) : null}
                 </div>
             </div>
         );
@@ -159,6 +161,7 @@ SingleGene.propTypes = {
     onEditClick: React.PropTypes.func,
     title: React.PropTypes.string,
     validating: React.PropTypes.bool,
+    validationError: React.PropTypes.string,
     finalized: React.PropTypes.bool
 };
 
@@ -175,6 +178,7 @@ SingleGene.defaultProps = {
     onEditClick: () => {},
     title: "",
     validating: false,
+    validationError: "",
     finalized: false
 };
 

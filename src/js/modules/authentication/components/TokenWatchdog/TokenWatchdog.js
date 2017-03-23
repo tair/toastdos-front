@@ -12,11 +12,9 @@ class TokenWatchdog extends React.Component {
     }
 
     handleTokenChange(expirationTime) {
-      console.log(expirationTime);
         this.state.expTimeout ? clearTimeout(this.state.expTimeout) : null;
         if(expirationTime) {
             const expiryDiff = this.props.expirationTime - Math.floor(Date.now() / 1000);
-            console.log(expiryDiff);
             const expTimeout = setTimeout(this.props.logout, expiryDiff * 1000);
             this.setState({
                 expTimeout: expTimeout
@@ -25,7 +23,6 @@ class TokenWatchdog extends React.Component {
     }
 
     componentWillMount() {
-        console.log(this.props);
         if(this.props.expirationTime) {
             this.handleTokenChange(this.props.expirationTime);
         }
