@@ -15,7 +15,7 @@ class CustomTextInput extends React.Component {
         this.handleBlur = this.handleBlur.bind(this);
     }
 
-    handleFocus() {
+    handleFocus(event) {
         this.setState({
             focused: true
         });
