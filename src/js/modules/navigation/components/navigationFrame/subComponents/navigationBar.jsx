@@ -14,7 +14,7 @@ const navigationBarStyle = {
 
 const navigationListStyle = {
     width: "50%",
-    display: "inline-block",
+    display: "inline",
     padding: 0,
     margin: 0,
     listStyle: "none"
@@ -81,26 +81,24 @@ class NavigationBar extends React.Component {
                 <ul style={Object.assign({}, navigationListStyle, rightNavListStyle)}>
                     
                     {this.props.isAuthenticated ? (
-                        <div>
-                            <li style={{display: 'inline-block'}}>
-                                <button
-                                    style={navigationLinkStyle}
-                                    onClick={this.onProfileClick}
-                                >
-                                    {this.props.userName} &#x25BE;
-                                </button>
-                                {this.state.showProfile ? (
-                                    <div style={{position: 'relative'}}>
-                                        <userInfoModule.components.UserProfilePanel
-                                            componentShouldDismiss={this.dismissProfile}
-                                            className="profile-panel"
-                                        />
-                                    </div>
-                                ) : null}
-                            </li>
-                        </div>
+                        <li style={{display: 'inline', float: 'right'}}>
+                            <button
+                                style={navigationLinkStyle}
+                                onClick={this.onProfileClick}
+                            >
+                                {this.props.userName} &#x25BE;
+                            </button>
+                            {this.state.showProfile ? (
+                                <div style={{position: 'relative'}}>
+                                    <userInfoModule.components.UserProfilePanel
+                                        componentShouldDismiss={this.dismissProfile}
+                                        className="profile-panel"
+                                    />
+                                </div>
+                            ) : null}
+                        </li>
                     ) : (
-                        <li style={{display: 'inline-block'}}>
+                        <li style={{display: 'inline-block', float: 'right'}}>
                             <a style={navigationLinkStyle} href={AUTH_URL}>Login with ORCID</a>
                         </li>
                     )}
