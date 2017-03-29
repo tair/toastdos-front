@@ -10,6 +10,7 @@ import homeModule from 'modules/home';
 import authenticationModule from 'modules/authentication';
 import submissionModule from 'modules/submission';
 import navigationModule from 'modules/navigation';
+import curationModule from 'modules/curation';
 
 import DefaultLoadingAnimation from 'lib/components/loadingAnimations/defaultLoadingAnimation';
 
@@ -66,6 +67,11 @@ class App extends React.Component {
                                 path="login"
                                 component={authenticationModule.components.LoginView}
                                 onEnter={redirectIfLoggedIn}
+                            />
+                            <Route
+                                path="curation"
+                                component={curationModule.components.CurationOverviewView}
+                                onEnter={isAuthenticated}
                             />
                         </Route>
                     </Router>
