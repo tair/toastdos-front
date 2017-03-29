@@ -11,6 +11,10 @@ let links = [
     {
         to: '/submission',
         name: 'Submission'
+    },
+    {
+        to: '/curation',
+        name: 'Curation'
     }
 ];
 
