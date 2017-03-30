@@ -1,5 +1,7 @@
 import React from 'react';
 
+import "css/curationView.scss";
+
 class CurationOverviewView extends React.Component {
     constructor(props) {
         super(props);
@@ -11,7 +13,16 @@ class CurationOverviewView extends React.Component {
 
     render() {
         return (
-            <div>Curation Overview</div>
+            <div className="curation-view-container">
+              <div className="curation-view">
+                <div className="curation-filter-container">
+                    Curation Filter
+                </div>
+                <div className="curation-table-container">
+                    Curation List
+                </div>
+              </div>
+            </div>
         );
     }
 }

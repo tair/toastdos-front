@@ -1,0 +1,18 @@
+@import 'globals';
+
+.curation-view-container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.curation-view {
+  background-color: $fgColor;
+  max-width: 90%;
+  min-width: 600px;
+  margin: 0 auto;
+  -webkit-box-shadow: 0px 0px 5px -1px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 5px -1px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 5px -1px rgba(0,0,0,0.75);
+  padding: 10px;
+  box-sizing: border-box;
+}
