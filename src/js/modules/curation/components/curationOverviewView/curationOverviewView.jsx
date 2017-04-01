@@ -1,6 +1,9 @@
 import React from 'react';
-
 import "css/curationView.scss";
+
+import SearchFilter from './subcomponents/searchFilter';
+
+
 
 class CurationOverviewView extends React.Component {
     constructor(props) {
@@ -15,8 +18,10 @@ class CurationOverviewView extends React.Component {
         return (
             <div className="curation-view-container">
               <div className="curation-view">
+                <h1>Submission Curation</h1>
                 <div className="curation-filter-container">
-                    Curation Filter
+                    <h2>Filter</h2>
+                    <SearchFilter />
                 </div>
                 <div className="curation-table-container">
                     Curation List
