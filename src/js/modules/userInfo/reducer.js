@@ -9,6 +9,7 @@ const defaultState = {
     user_name: null,
     user_orcid_id: null,
     user_email: null,
+    user_roles: [],
     fetchError: null,
     initializing: true,
     attemptingUpdate: false,
@@ -33,7 +34,8 @@ export default function handleAction(state = defaultState, action) {
             user_name: action.userInfo.name,
             user_orcid_id: action.userInfo.orcid_id,
             user_email: action.userInfo.email_address,
-            initializing: false
+            initializing: false,
+            user_roles: action.userInfo.roles.map(r => r.name)
         });
     case actionTypes.FAIL_USER_INFO:
         return Object.assign({}, state, {
