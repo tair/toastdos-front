@@ -2,6 +2,7 @@ import React from 'react';
 import "css/curationView.scss";
 
 import SearchFilter from './subcomponents/searchFilter';
+import SubmissionTable from './subcomponents/submissionTable';
 
 
 
@@ -14,6 +15,10 @@ class CurationOverviewView extends React.Component {
         };
     }
 
+    componentWillMount() {
+        this.props.loadSubmissions();
+    }
+
     render() {
         return (
             <div className="curation-view-container">
@@ -24,12 +29,26 @@ class CurationOverviewView extends React.Component {
                     <SearchFilter />
                 </div>
                 <div className="curation-table-container">
-                    Curation List
+                    <h2>Curation List</h2>
+                    <SubmissionTable
+                        loading={this.props.loading}
+                        submissions={this.props.submissions}
+                    />
                 </div>
               </div>
             </div>
         );
     }
 }
+
+CurationOverviewView.propTypes = {
+    loading: React.PropTypes.bool.isRequired,
+    loadSubmissions: React.PropTypes.func,
+    submissions: React.PropTypes.arrayOf(React.PropTypes.object)
+};
+
+CurationOverviewView.defaultProps = {
+    loadSubmissions: () => {}
+};
 
 export default CurationOverviewView;

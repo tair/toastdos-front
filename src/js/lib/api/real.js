@@ -152,3 +152,24 @@ export function searchKeywords(searchTerm, keywordScope, jwt, callback) {
     });
 }
 
+export function listSubmissions(page, limit, jwt, callback) {
+
+    return request({
+        method: 'GET',
+        timeout: 15000,
+        url: `${BASE_URL}/api/submission/list`,
+        json: true,
+        headers: {
+            'Authorization': `Bearer ${jwt}`
+        }
+    }, (err, res, body) => {
+        if(err) {
+            return callback(err);
+        }
+        if(res.status < 200 || res.status >= 300) {
+            return callback(err);
+        }
+        return callback(null, body);
+    });
+}
+

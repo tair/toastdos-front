@@ -13,6 +13,7 @@ import navigationModule from 'modules/navigation';
 import curationModule from 'modules/curation';
 
 import { isAuthenticated, redirectIfLoggedIn } from 'lib/routeChecks';
+import DefaultLoadingAnimation from 'lib/components/loadingAnimations/defaultLoadingAnimation';
 
 import Store from './store';
 
@@ -38,36 +39,40 @@ class App extends React.Component {
 
 
     render() {
+        const routerComponent = (
+            <Router history={history}>
+                <Route
+                    path="login"
+                    component={authenticationModule.components.LoginView}
+                    onEnter={redirectIfLoggedIn}
+                />
+                <Route
+                    path="/"
+                    component={navigationModule.components.NavigationFrame}
+                >
+                    <IndexRoute
+                        component={homeModule.components.HomeView}
+                    />
+                    <Route
+                        path="submission"
+                        component={submissionModule.components.SubmissionView}
+                        onEnter={isAuthenticated}
+                    />
+                    <Route
+                        path="curation"
+                        component={curationModule.components.CurationOverviewView}
+                        onEnter={isAuthenticated}
+                    />
+                </Route>
+            </Router>
+        );
+
         return (
             <div>
                 {process.env.NODE_ENV === 'production' ? null : <DevTools/>}
                 <div>
                     <authenticationModule.components.TokenWatchdog />
-                    <Router history={history}>
-                        <Route
-                            path="login"
-                            component={authenticationModule.components.LoginView}
-                            onEnter={redirectIfLoggedIn}
-                        />
-                        <Route
-                            path="/"
-                            component={navigationModule.components.NavigationFrame}
-                        >
-                            <IndexRoute
-                                component={homeModule.components.HomeView}
-                            />
-                            <Route
-                                path="submission"
-                                component={submissionModule.components.SubmissionView}
-                                onEnter={isAuthenticated}
-                            />
-                            <Route
-                                path="curation"
-                                component={curationModule.components.CurationOverviewView}
-                                onEnter={isAuthenticated}
-                            />
-                        </Route>
-                    </Router>
+                    {this.props.initializing ? (<DefaultLoadingAnimation />) : routerComponent}
                 </div>
             </div>
         );
@@ -78,14 +83,18 @@ class App extends React.Component {
 
 App.propTypes = {
     initialize: React.PropTypes.func,
+    initializing: React.PropTypes.bool
 };
 
 App.defaultProps = {
-    initialize: () => {}
+    initialize: () => {},
+    initializing: false
 };
 
 const AppContainer = connect(
-    state => ({}),
+    state => ({
+        initializing: (state.authentication.initializing || state.userInfo.initializing)
+    }),
     dispatch => ({
         initialize: () => dispatch(authenticationModule.actions.initialize())
     })

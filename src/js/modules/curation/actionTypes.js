@@ -1,3 +1,3 @@
-"use strict";
-
-export const ACTION_NAME = "curation/ACTION_NAME";
+export const REQUEST_SUBMISSION_LIST = "curation/REQUEST_SUBMISSION_LIST";
+export const FAIL_SUBMISSION_LIST = "curation/FAIL_SUBMISSION_LIST";
+export const SUCCESS_SUBMISSION_LIST = "curation/SUCCESS_SUBMISSION_LIST";
