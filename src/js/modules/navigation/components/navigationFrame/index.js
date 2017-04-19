@@ -7,7 +7,8 @@ import AuthenticationModule from 'modules/authentication';
 const ConnectedNavigationFrame = connect(
     state => ({
         isAuthenticated: AuthenticationModule.selectors.isAuthenticated(state),
-        userName: state.userInfo.user_name
+        userName: state.userInfo.user_name,
+        initializing: state.authentication.initializing,
     })
 )(NavigationFrame);
 

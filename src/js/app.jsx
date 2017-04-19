@@ -12,8 +12,6 @@ import submissionModule from 'modules/submission';
 import navigationModule from 'modules/navigation';
 import curationModule from 'modules/curation';
 
-import DefaultLoadingAnimation from 'lib/components/loadingAnimations/defaultLoadingAnimation';
-
 import { isAuthenticated, redirectIfLoggedIn } from 'lib/routeChecks';
 
 import Store from './store';
@@ -40,17 +38,17 @@ class App extends React.Component {
 
 
     render() {
-
-        
-        let appContent = (<div>App</div>);
-
-        if(this.props.initializing) {
-            appContent = (<DefaultLoadingAnimation />);
-        } else {
-            appContent = (
+        return (
+            <div>
+                {process.env.NODE_ENV === 'production' ? null : <DevTools/>}
                 <div>
                     <authenticationModule.components.TokenWatchdog />
                     <Router history={history}>
+                        <Route
+                            path="login"
+                            component={authenticationModule.components.LoginView}
+                            onEnter={redirectIfLoggedIn}
+                        />
                         <Route
                             path="/"
                             component={navigationModule.components.NavigationFrame}
@@ -64,11 +62,6 @@ class App extends React.Component {
                                 onEnter={isAuthenticated}
                             />
                             <Route
-                                path="login"
-                                component={authenticationModule.components.LoginView}
-                                onEnter={redirectIfLoggedIn}
-                            />
-                            <Route
                                 path="curation"
                                 component={curationModule.components.CurationOverviewView}
                                 onEnter={isAuthenticated}
@@ -76,12 +69,6 @@ class App extends React.Component {
                         </Route>
                     </Router>
                 </div>
-            );
-        }
-        return (
-            <div>
-                {process.env.NODE_ENV === 'production' ? null : <DevTools/>}
-                {appContent}
             </div>
         );
     }
@@ -91,18 +78,14 @@ class App extends React.Component {
 
 App.propTypes = {
     initialize: React.PropTypes.func,
-    initializing: React.PropTypes.bool
 };
 
 App.defaultProps = {
-    initialize: () => {},
-    initializing: false
+    initialize: () => {}
 };
 
 const AppContainer = connect(
-    state => ({
-        initializing: (state.authentication.initializing || state.userInfo.initializing)
-    }),
+    state => ({}),
     dispatch => ({
         initialize: () => dispatch(authenticationModule.actions.initialize())
     })

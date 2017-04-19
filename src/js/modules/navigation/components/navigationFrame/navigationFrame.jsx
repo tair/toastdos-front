@@ -2,6 +2,7 @@
 
 import React from 'react';
 import NavigationBar from './subComponents/navigationBar';
+import DefaultLoadingAnimation from 'lib/components/loadingAnimations/defaultLoadingAnimation';
 
 let links = [
     {
@@ -28,6 +29,9 @@ class NavigationFrame extends React.Component {
     }
 
     render() {
+        if(this.props.initializing) {
+            return(<DefaultLoadingAnimation />);
+        }
         return (
             <div>
                 <NavigationBar
