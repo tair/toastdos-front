@@ -16,7 +16,7 @@ export default function handleAction(state = defaultState, action) {
     case actionTypes.REQUEST_LOGIN:
         return Object.assign({}, state, {
             isFetching: true,
-            initializing: true
+            initializing: false
         });
     case actionTypes.SUCCESS_LOGIN:
         return Object.assign({}, state, {

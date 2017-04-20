@@ -24,10 +24,6 @@ class CurationOverviewView extends React.Component {
             <div className="curation-view-container">
               <div className="curation-view">
                 <h1>Submission Curation</h1>
-                <div className="curation-filter-container">
-                    <h2>Filter</h2>
-                    <SearchFilter />
-                </div>
                 <div className="curation-table-container">
                     <h2>Curation List</h2>
                     <SubmissionTable
