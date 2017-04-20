@@ -3,20 +3,7 @@
 import React from 'react';
 import NavigationBar from './subComponents/navigationBar';
 
-let links = [
-    {
-        to: '/',
-        name: 'ToastDos'
-    },
-    {
-        to: '/submission',
-        name: 'Submission'
-    },
-    {
-        to: '/curation',
-        name: 'Curation'
-    }
-];
+
 
 class NavigationFrame extends React.Component {
     constructor(props) {
@@ -28,6 +15,26 @@ class NavigationFrame extends React.Component {
     }
 
     render() {
+
+        let links = [
+            {
+                to: '/',
+                name: 'ToastDos',
+                show: () => true
+                
+            },
+            {
+                to: '/submission',
+                name: 'Submission',
+                show: () => this.props.userRoles.includes('Researcher')
+            },
+            {
+                to: '/curation',
+                name: 'Curation',
+                show: () => this.props.userRoles.includes('Curator')
+            }
+        ];
+
         return (
             <div>
                 <NavigationBar
@@ -46,7 +53,8 @@ class NavigationFrame extends React.Component {
 NavigationFrame.propTypes = {
     isAuthenticated: React.PropTypes.bool,
     onLogoutClick: React.PropTypes.func,
-    userName: React.PropTypes.string
+    userName: React.PropTypes.string,
+    userRoles: React.PropTypes.arrayOf(React.PropTypes.string),
 };
 
 export default NavigationFrame;

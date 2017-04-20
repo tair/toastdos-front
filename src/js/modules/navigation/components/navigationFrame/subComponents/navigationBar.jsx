@@ -76,7 +76,7 @@ class NavigationBar extends React.Component {
         return (
             <div className="navigation-bar" style={navigationBarStyle}>
                 <ul style={navigationListStyle}>
-                    {this.props.links.map(this.createNavigationLink)}
+                    {this.props.links.filter(l => l.show()).map(this.createNavigationLink)}
                 </ul>
                 <ul style={Object.assign({}, navigationListStyle, rightNavListStyle)}>
                     

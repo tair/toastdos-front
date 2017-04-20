@@ -8,6 +8,7 @@ const ConnectedNavigationFrame = connect(
     state => ({
         isAuthenticated: AuthenticationModule.selectors.isAuthenticated(state),
         userName: state.userInfo.user_name,
+        userRoles: state.userInfo.user_roles,
         initializing: state.authentication.initializing,
     })
 )(NavigationFrame);
