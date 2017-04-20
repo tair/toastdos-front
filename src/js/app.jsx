@@ -59,6 +59,11 @@ class App extends React.Component {
                         onEnter={isAuthenticated}
                     />
                     <Route
+                        path="curation/detail/:submissionId"
+                        component={curationModule.components.CurationDetailView}
+                        onEnter={isAuthenticated}
+                    />
+                    <Route
                         path="curation"
                         component={curationModule.components.CurationOverviewView}
                         onEnter={isAuthenticated}

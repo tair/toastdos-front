@@ -29,6 +29,7 @@ class CurationOverviewView extends React.Component {
                     <SubmissionTable
                         loading={this.props.loading}
                         submissions={this.props.submissions}
+                        loadSubmissions={this.props.loadSubmissions}
                     />
                 </div>
               </div>

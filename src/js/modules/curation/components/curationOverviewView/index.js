@@ -16,7 +16,7 @@ const ConnectedCurationOverviewView = connect(
         submissions: submissionList,
     }),
     dispatch => ({
-        loadSubmissions: () => dispatch(requestSubmissionList()),
+        loadSubmissions: (page, pageSize) => dispatch(requestSubmissionList(page, pageSize)),
     })
 )(CurationOverviewView);
 
