@@ -4,6 +4,9 @@ const defaultState = {
     loadingSubmissionList: false,
     submissionList: [],
     submissionListLoadError: null,
+    pageSize: 0,
+    totalPages:0,
+    currPage: 0,
 };
 
 
@@ -17,7 +20,7 @@ export default function (state = defaultState, action) {
     case actions.SUCCESS_SUBMISSION_LIST:
         return Object.assign({}, state, {
             loadingSubmissionList: false,
-            submissionList: action.submissions,
+            submissionList: action.submissions.submissions,
             submissionListLoadError: null,
         });
     case actions.FAIL_SUBMISSION_LIST:
