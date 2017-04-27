@@ -15,10 +15,6 @@ class CurationOverviewView extends React.Component {
         };
     }
 
-    componentWillMount() {
-        this.props.loadSubmissions();
-    }
-
     render() {
         return (
             <div className="curation-view-container">
@@ -30,6 +26,9 @@ class CurationOverviewView extends React.Component {
                         loading={this.props.loading}
                         submissions={this.props.submissions}
                         loadSubmissions={this.props.loadSubmissions}
+                        totalPages={this.props.totalPages}
+                        pageSize={this.props.pageSize}
+                        currentPage={this.props.currPage}
                     />
                 </div>
               </div>
@@ -41,7 +40,10 @@ class CurationOverviewView extends React.Component {
 CurationOverviewView.propTypes = {
     loading: React.PropTypes.bool.isRequired,
     loadSubmissions: React.PropTypes.func,
-    submissions: React.PropTypes.arrayOf(React.PropTypes.object)
+    submissions: React.PropTypes.arrayOf(React.PropTypes.object),
+    totaPages: React.PropTypes.number,
+    pageSize: React.PropTypes.number,
+    currPage: React.PropTypes.number
 };
 
 CurationOverviewView.defaultProps = {

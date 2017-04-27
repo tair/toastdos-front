@@ -3,7 +3,10 @@ import CurationOverviewView from './curationOverviewView';
 import { createStructuredSelector } from 'reselect';
 import {
   loadingSubmissionList,
-  submissionList
+  submissionList,
+  totalPages,
+  pageSize,
+  currPage
 } from '../../selectors';
 
 import {
@@ -14,6 +17,9 @@ const ConnectedCurationOverviewView = connect(
     createStructuredSelector({
         loading: loadingSubmissionList,
         submissions: submissionList,
+        totalPages,
+        pageSize,
+        currPage
     }),
     dispatch => ({
         loadSubmissions: (page, pageSize) => dispatch(requestSubmissionList(page, pageSize)),

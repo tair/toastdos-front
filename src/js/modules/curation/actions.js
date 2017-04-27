@@ -16,7 +16,7 @@ function successSubmissionList(submissions) {
     };
 }
 
-export function requestSubmissionList() {
+export function requestSubmissionList(page = 1, limit = 20) {
     return (dispatch, getState) => {
 
         const state = getState();
@@ -26,7 +26,7 @@ export function requestSubmissionList() {
             type: actions.REQUEST_SUBMISSION_LIST,
         });
 
-        return api.listSubmissions(null, 200, jwt, (err, data) => {
+        return api.listSubmissions(page, limit, jwt, (err, data) => {
             if(err) {
                 return dispatch(failSubmissionList(err));
             }

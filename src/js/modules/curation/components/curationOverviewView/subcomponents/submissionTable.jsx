@@ -38,16 +38,16 @@ const tableColumns = [
 class SubmissionTable extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            pageSize: 10
-        };
 
         this.handleTableChange = this.handleTableChange.bind(this);
     }
 
+    componentWillMount() {
+        this.props.loadSubmissions(1, 10);
+    }
+
     handleTableChange(state, instance) {
-        console.log(state);
-        this.props.loadSubmissions();
+        this.props.loadSubmissions(state.page + 1, state.pageSize);
     }
 
     render() {
@@ -58,8 +58,10 @@ class SubmissionTable extends React.Component {
                 loading={this.props.loading}
                 defaultPageSize={10}
                 manual={true}
-                pages={10}
+                pages={this.props.totalPages}
                 onChange={this.handleTableChange}
+                sorting={[]}
+                // page={this.props.currentPage}
                 // showFilters={true}
             />
         );
@@ -70,6 +72,10 @@ SubmissionTable.propTypes = {
     submissions: React.PropTypes.arrayOf(React.PropTypes.object),
     loading: React.PropTypes.bool.isRequired,
     loadSubmissions: React.PropTypes.func,
+    // todo handle pagination
+    totalPages: React.PropTypes.number,
+    pageSize: React.PropTypes.number,
+    currentPage: React.PropTypes.number,
 };
 
 SubmissionTable.defaultProps = {

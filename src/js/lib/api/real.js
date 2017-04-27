@@ -153,7 +153,6 @@ export function searchKeywords(searchTerm, keywordScope, jwt, callback) {
 }
 
 export function listSubmissions(page, limit, jwt, callback) {
-
     return request({
         method: 'GET',
         timeout: 15000,
@@ -161,6 +160,10 @@ export function listSubmissions(page, limit, jwt, callback) {
         json: true,
         headers: {
             'Authorization': `Bearer ${jwt}`
+        },
+        qs: {
+            page,
+            limit
         }
     }, (err, res, body) => {
         if(err) {
