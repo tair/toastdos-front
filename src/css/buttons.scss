@@ -11,23 +11,32 @@
     background-color: $fgColor;
     cursor: pointer;
     border-radius: 3px;
-    &:hover:enabled {
+    &:hover {
         background-color: $fgColorActive;
     }
-    &:active:enabled {
+    &:active {
         -webkit-box-shadow: inset 0px 0px 12px -7px rgba(0,0,0,0.8);
         -moz-box-shadow: inset 0px 0px 12px -7px rgba(0,0,0,0.8);
         box-shadow: inset 0px 0px 12px -7px rgba(0,0,0,0.8);
         background-color: $fgColorActive2;
+        &:disabled {
+            background-color: $fgColor;
+        }
     }
     &:disabled {
         cursor: default;
         color: $empTextColorLight;
+        &:hover {
+
+        }
     }
 
     &.btn-primary {
-        &:hover:enabled, &:active {
+        &:hover, &:active {
             background-color: $primaryColor;
+        }
+        &:disabled {
+            background-color: darken($primaryColor, 15);    
         }
         background-color: darken($primaryColor, 15);
     }
