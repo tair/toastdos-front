@@ -23,6 +23,10 @@ class HomeView extends React.Component {
         return (
             <div className="home">
                 <div className="banner-image" style={bannerStyle}>
+                    <div className="banner-content">
+                        <h1>ToastDos</h1>
+                        <h3>TAIR's NEW Online Annotation Submission Tool</h3>
+                    </div>
                 </div>
                 <div className="info-panel-group">
                     <div className="panel-container">
@@ -30,7 +34,7 @@ class HomeView extends React.Component {
                             <div className="panel-content">
                                 <img
                                     src={phoenixLogo}
-                                    alt="phoeniz bioinformatics logo"
+                                    alt="phoenix bioinformatics logo"
                                     style={{height: '118px'}}
                                 />
                                 <p>

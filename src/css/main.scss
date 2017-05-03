@@ -7,6 +7,7 @@
 html {}
 
 body {
+    font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     // padding-top: 48px;
     // box-sizing: border-box;
     background-color: $bgColor;
@@ -125,6 +126,7 @@ input:focus, input {
 
 .home {
     .banner-image {
+        vertical-align: top;
         height: 350px;
         background-size: cover;
         background-position: center;
@@ -132,6 +134,26 @@ input:focus, input {
         -moz-box-shadow: inset 0px -100px 57px -111px rgba(0,0,0,0.75);
         box-shadow: inset 0px -100px 57px -111px rgba(0,0,0,0.75);
         box-sizing: border-box;
+        border-bottom: solid 5px darken($fgColor, 20%);
+    }
+    .banner-content {
+        color: #FFFFFF;
+        display: inline-block;
+        vertical-align: top;
+        width: 300px;
+        height: calc(100% - 5px);
+        padding: 24px;
+        padding-left: 52px;
+        box-sizing: border-box;
+        font-size: 1.5em;
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 7px;
+            font-weight: 200;
+        }
+        h3 {
+            font-weight: 300;
+        }
     }
     .info-panel-group {
         max-width: 900px;
@@ -169,6 +191,7 @@ input:focus, input {
                 left: 0;
                 display: inline-block;
                 box-sizing: border-box;
+                color: #ffffff;
             }
             &.github {
                 img {
