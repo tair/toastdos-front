@@ -142,17 +142,22 @@ input:focus, input {
         vertical-align: top;
         width: 300px;
         height: calc(100% - 5px);
-        padding: 24px;
+        padding-top: 24px;
         padding-left: 52px;
         box-sizing: border-box;
         font-size: 1.5em;
         h1 {
             font-size: 2.5em;
-            margin-bottom: 7px;
-            font-weight: 200;
+            margin-top: 18px;
+            margin-bottom: 18px;
+            // margin-bottom: 7px;
+            font-weight: 300;
         }
         h3 {
-            font-weight: 300;
+            font-weight: 200;
+            strong {
+                font-weight: 700;
+            }
         }
     }
     .info-panel-group {

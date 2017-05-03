@@ -24,8 +24,14 @@ class HomeView extends React.Component {
             <div className="home">
                 <div className="banner-image" style={bannerStyle}>
                     <div className="banner-content">
-                        <h1>ToastDos</h1>
-                        <h3>TAIR's NEW Online Annotation Submission Tool</h3>
+                        <h1>GOAT</h1>
+                        <hr/>
+                        <h3>
+                            <strong>G</strong>enetic<br/>
+                            <strong>O</strong>nline<br/>
+                            <strong>A</strong>nnotation<br/>
+                            <strong>T</strong>ool<br/>
+                        </h3>
                     </div>
                 </div>
                 <div className="info-panel-group">
@@ -38,7 +44,7 @@ class HomeView extends React.Component {
                                     style={{height: '118px'}}
                                 />
                                 <p>
-                                    ToastDos is a service from Phoenix Bioinformatics.
+                                    GOAT is a service from Phoenix Bioinformatics.
                                     Visit our website to learn more about us.
                                     <br/>
                                 </p>
@@ -62,7 +68,7 @@ class HomeView extends React.Component {
                                     style={{height: '100px'}}
                                 />
                                 <p>
-                                    ToastDos is open source! Contribute to this and other Tair projects on our GitHub page!
+                                    GOAT is open source! Contribute to this and other Tair projects on our GitHub page!
                                 </p>
                                 <a
                                     className="btn btn-primary"
