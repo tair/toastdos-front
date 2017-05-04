@@ -6,7 +6,7 @@ import NavigationBar from './subComponents/navigationBar';
 let links = [
     {
         to: '/',
-        name: 'ToastDos'
+        name: 'GOAT'
     },
     {
         to: '/submission',

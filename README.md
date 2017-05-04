@@ -1,5 +1,5 @@
 # toastdos-front
-The front end system for the ToastDos community annotation tool
+The front end system for the GOAT community annotation tool
 
 Usage
 ----
