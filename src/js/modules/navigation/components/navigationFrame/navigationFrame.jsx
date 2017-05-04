@@ -4,6 +4,16 @@ import React from 'react';
 import NavigationBar from './subComponents/navigationBar';
 
 
+let links = [
+    {
+        to: '/',
+        name: 'GOAT'
+    },
+    {
+        to: '/submission',
+        name: 'Submission'
+    }
+];
 
 class NavigationFrame extends React.Component {
     constructor(props) {
