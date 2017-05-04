@@ -12,7 +12,6 @@ const tableColumns = [
         id: 'pending',
         header: 'Pending',
         accessor: p => (p.pending > 0 ? 'Pending' : 'Reviewed'),
-        sortable: false,
     },
     {
         id: 'annotations',
