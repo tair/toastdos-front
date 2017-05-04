@@ -11,9 +11,11 @@ const tableColumns = [
     {
         id: 'pending',
         header: 'Pending',
-        accessor: p => (p.pending > 0 ? 'Pending' : 'Reviewed')
+        accessor: p => (p.pending > 0 ? 'Pending' : 'Reviewed'),
+        sortable: false,
     },
     {
+        id: 'annotations',
         header: '# Annotations',
         accessor: 'total'
     },
@@ -30,7 +32,8 @@ const tableColumns = [
         header: 'View Details',
         accessor: p => (
             <Link to={`/curation/detail/${p.id}`}>Details</Link>
-        )
+        ),
+        sortable: false, 
     }
 ];
 
@@ -40,14 +43,27 @@ class SubmissionTable extends React.Component {
         super(props);
 
         this.handleTableChange = this.handleTableChange.bind(this);
+
+        this.state = {
+            tableSort: [{id: 'date', desc: true}]
+        };
     }
 
     componentWillMount() {
         this.props.loadSubmissions(1, 10);
     }
 
-    handleTableChange(state, instance) {
-        this.props.loadSubmissions(state.page + 1, state.pageSize);
+    handleTableChange(state, instance) {        
+        this.props.loadSubmissions(
+            state.page + 1,
+            state.pageSize,
+            state.sorting[0].id,
+            state.sorting[0].desc ? 'desc' : 'asc'
+        );
+
+        this.setState({
+            tableSort: state.sorting
+        });
     }
 
     render() {
@@ -60,7 +76,7 @@ class SubmissionTable extends React.Component {
                 manual={true}
                 pages={this.props.totalPages}
                 onChange={this.handleTableChange}
-                sorting={[]}
+                defaultSorting={this.state.tableSort}
                 // page={this.props.currentPage}
                 // showFilters={true}
             />

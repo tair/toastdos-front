@@ -152,7 +152,7 @@ export function searchKeywords(searchTerm, keywordScope, jwt, callback) {
     });
 }
 
-export function listSubmissions(page, limit, jwt, callback) {
+export function listSubmissions(page, limit, sortBy, sortDir, jwt, callback) {
     return request({
         method: 'GET',
         timeout: 15000,
@@ -163,7 +163,9 @@ export function listSubmissions(page, limit, jwt, callback) {
         },
         qs: {
             page,
-            limit
+            limit,
+            sort_by: sortBy,
+            sort_dir: sortDir,
         }
     }, (err, res, body) => {
         if(err) {
