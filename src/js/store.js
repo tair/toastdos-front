@@ -10,6 +10,7 @@ import home from 'modules/home';
 import navigation from 'modules/navigation';
 import submission from 'modules/submission';
 import userInfo from 'modules/userInfo';
+import curation from 'modules/curation';
 
 let reducer = combineReducers({
     [home.constants.name]: home.reducer,
@@ -17,6 +18,7 @@ let reducer = combineReducers({
     [navigation.constants.name]: navigation.reducer,
     [submission.constants.name]: submission.reducer,
     [userInfo.constants.name]: userInfo.reducer,
+    [curation.constants.name]: curation.reducer,
     routing: routerReducer
 });
 

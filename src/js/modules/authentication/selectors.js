@@ -7,7 +7,7 @@ export const rawJwtSelector = state => state[name].jwt ? state[name].jwt : null;
 export const jwtSelector = state => state[name].jwt ? jwtDecode(state[name].jwt) : null;
 const nowDateSelector = () => Date.now();
 export const isAuthenticating = state => state[name].isFetching;
-
+export const loginError = state => state[name].loginError;
 export const jwtExpiration = createSelector(
   jwtSelector,
   jwt => jwt ? jwt.exp : null

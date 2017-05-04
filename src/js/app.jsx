@@ -10,10 +10,10 @@ import homeModule from 'modules/home';
 import authenticationModule from 'modules/authentication';
 import submissionModule from 'modules/submission';
 import navigationModule from 'modules/navigation';
-
-import DefaultLoadingAnimation from 'lib/components/loadingAnimations/defaultLoadingAnimation';
+import curationModule from 'modules/curation';
 
 import { isAuthenticated, redirectIfLoggedIn } from 'lib/routeChecks';
+import DefaultLoadingAnimation from 'lib/components/loadingAnimations/defaultLoadingAnimation';
 
 import Store from './store';
 
@@ -39,43 +39,46 @@ class App extends React.Component {
 
 
     render() {
+        const routerComponent = (
+            <Router history={history}>
+                <Route
+                    path="login"
+                    component={authenticationModule.components.LoginView}
+                    onEnter={redirectIfLoggedIn}
+                />
+                <Route
+                    path="/"
+                    component={navigationModule.components.NavigationFrame}
+                >
+                    <IndexRoute
+                        component={homeModule.components.HomeView}
+                    />
+                    <Route
+                        path="submission"
+                        component={submissionModule.components.SubmissionView}
+                        onEnter={isAuthenticated}
+                    />
+                    <Route
+                        path="curation/detail/:submissionId"
+                        component={curationModule.components.CurationDetailView}
+                        onEnter={isAuthenticated}
+                    />
+                    <Route
+                        path="curation"
+                        component={curationModule.components.CurationOverviewView}
+                        onEnter={isAuthenticated}
+                    />
+                </Route>
+            </Router>
+        );
 
-        
-        let appContent = (<div>App</div>);
-
-        if(this.props.initializing) {
-            appContent = (<DefaultLoadingAnimation />);
-        } else {
-            appContent = (
-                <div>
-                    <authenticationModule.components.TokenWatchdog />
-                    <Router history={history}>
-                        <Route
-                            path="/"
-                            component={navigationModule.components.NavigationFrame}
-                        >
-                            <IndexRoute
-                                component={homeModule.components.HomeView}
-                            />
-                            <Route
-                                path="submission"
-                                component={submissionModule.components.SubmissionView}
-                                onEnter={isAuthenticated}
-                            />
-                            <Route
-                                path="login"
-                                component={authenticationModule.components.LoginView}
-                                onEnter={redirectIfLoggedIn}
-                            />
-                        </Route>
-                    </Router>
-                </div>
-            );
-        }
         return (
             <div>
                 {process.env.NODE_ENV === 'production' ? null : <DevTools/>}
-                {appContent}
+                <div>
+                    <authenticationModule.components.TokenWatchdog />
+                    {this.props.initializing ? (<DefaultLoadingAnimation />) : routerComponent}
+                </div>
             </div>
         );
     }

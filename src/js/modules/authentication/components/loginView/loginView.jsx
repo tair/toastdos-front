@@ -9,9 +9,12 @@ class LoginView extends React.Component {
     }
 
     componentDidMount() {
-       // ... 
-        if(this.props.location.query.code) {
+        if(!this.props.isAuthenticating && this.props.location.query.code && !this.props.loginError) {
             this.props.attemptLogin(this.props.location.query.code);
+        }
+
+        if(!this.props.location.query.code) {
+            browserHistory.push("/");
         }
     }
 
@@ -46,7 +49,8 @@ class LoginView extends React.Component {
 LoginView.propTypes = {
     attemptLogin: React.PropTypes.func,
     isAuthenticating: React.PropTypes.bool,
-    isAutheticated: React.PropTypes.bool
+    isAutheticated: React.PropTypes.bool,
+    loginError: React.PropTypes.object,
 };
 
 

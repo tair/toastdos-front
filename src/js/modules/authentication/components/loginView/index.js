@@ -5,12 +5,13 @@ import LoginView from './loginView';
 import { createStructuredSelector } from 'reselect';
 
 import { requestLogin } from '../../actions';
-import { isAuthenticated, isAuthenticating } from '../../selectors';
+import { isAuthenticated, isAuthenticating, loginError } from '../../selectors';
 
 const ConnectedLoginView = connect(
     createStructuredSelector({
         isAuthenticated: isAuthenticated,
-        isAuthenticating: isAuthenticating
+        isAuthenticating: isAuthenticating,
+        loginError,
     }),
     dispatch => ({
         attemptLogin: authCode => dispatch(requestLogin(authCode))
