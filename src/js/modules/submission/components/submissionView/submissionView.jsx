@@ -15,44 +15,24 @@ class SubmissionView extends React.Component {
     render() {
 
         const submittingPanel = (
-            <div style={{
-                top: 0,
-                left: 0,
-                position: "fixed",
-                zIndex: 1000,
-                width: "100%",
-                height: "100%",
-                margin: "0 auto",
-                textAlign: "center",
-                fontSize: "2.2em",
-                backgroundColor: "#ffffff"
-            }}>
-               <span>Submitting...</span> 
+            <div className="submit-panel">
+                <div className="submit-content">
+                   <span>Submitting...</span> 
+                </div>
             </div>
         );
 
         const submittedPanel = (
-            <div style={{
-                top: 0,
-                left: 0,
-                position: "fixed",
-                zIndex: 1000,
-                width: "100%",
-                height: "100%",
-                margin: "0 auto",
-                textAlign: "center",
-                fontSize: "2.2em",
-                backgroundColor: "#ffffff"
-            }}>
-            <div>
-                <span>Submitted!</span> 
-            </div>  
-            <button
-                className="btn btn-primary"
-                onClick={this.props.resetSubmission}
-            >
-                Back
-            </button>
+            <div className="submit-panel">
+                <div className="submit-content">
+                    <span>Submitted!</span> 
+                    <button
+                        className="btn btn-primary"
+                        onClick={this.props.resetSubmission}
+                    >
+                    Back
+                    </button>
+                </div>
             </div>
         );
 
