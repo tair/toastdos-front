@@ -56,6 +56,7 @@ class AnnotationEntry extends React.Component {
                     annotationData={this.props.annotationData}
                     onDataChange={this.props.onDataUpdate}
                     onEvidenceWithAddClick={this.props.onEvidenceWithAddClick}
+                    validateEvidenceWith={this.props.validateEvidenceWith}
                 />
             );
         case annotationFormats.GENE_GENE:
@@ -110,14 +111,16 @@ AnnotationEntry.propTypes = {
     onDeleteClick: React.PropTypes.func,
     annotationData: React.PropTypes.object,
     onDataUpdate: React.PropTypes.func,
-    onEvidenceWithAddClick: React.PropTypes.func
+    onEvidenceWithAddClick: React.PropTypes.func,
+    validateEvidenceWith: React.PropTypes.func,
 };
 
 AnnotationEntry.defaultProps = {
     onTypeChange: () => {},
     onDeleteClick: () => {},
     onDataUpdate: () => {},
-    onEvidenceWithAddClick: () => {}
+    onEvidenceWithAddClick: () => {},
+    validateEvidenceWith: () => {},
 };
 
 

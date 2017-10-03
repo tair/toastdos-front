@@ -19,8 +19,26 @@ class GeneTerm extends React.Component {
         this.generateEvidenceWith = this.generateEvidenceWith.bind(this);
     }
 
+    getEWColor(finalized, isValid) {
+        if (finalized) {
+            return isValid? "green": "red";
+        } else {
+            return "black";
+        }
+    }
+
+    getEWStatus(finalized, isValid) {
+        let className = "fa fa-fw ";
+        if (finalized) {
+            return className +  (isValid? "fa-check": "fa-exclamation-circle");
+        } else {
+            return className + "fa-chain";
+        }
+    }
+
     generateEvidenceWith(evidenceWithId) {
         const currentEvidenceWith = this.props.annotationData.data.evidenceWithIndex[evidenceWithId];
+        // TODO: Clean up this code and move into its own component.
         return (
             <div style={inputContainerStyle} key={`evidence_with_${evidenceWithId}`}>    
                 <CustomTextInput
@@ -32,12 +50,17 @@ class GeneTerm extends React.Component {
                                     ...this.props.annotationData.data.evidenceWithIndex,
                                     [evidenceWithId]: {
                                         ...currentEvidenceWith,
+                                        finalized: false,
                                         locusName: event.target.value
                                     }
                                 }
                             })
                         }
+                    onBlur={() => {this.props.validateEvidenceWith(evidenceWithId);}}
+                    style={{marginRight: 10}}
                 />
+                <div className={this.getEWStatus(currentEvidenceWith.finalized, currentEvidenceWith.isValid)}
+                    style={{color: this.getEWColor(currentEvidenceWith.finalized, currentEvidenceWith.isValid)}} />
             </div>
         );
     }
@@ -117,13 +140,15 @@ class GeneTerm extends React.Component {
 
 GeneTerm.propTypes = {
     annotationData: React.PropTypes.object,
+    validateEvidenceWith: React.PropTypes.func,
     onEvidenceWithAddClick: React.PropTypes.func,
     onDataChange: React.PropTypes.func
 };
 
 GeneTerm.defaultProps = {
     onDataChange: () => {},
-    onEvidenceWithAddClick: () => {}
+    onEvidenceWithAddClick: () => {},
+    validateEvidenceWith: () => {}
 };
 
 export default GeneTerm;

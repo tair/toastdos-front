@@ -128,6 +128,7 @@ export default function (state = defaultState, action) {
                 evidenceWithIndex: {
                     "init": {
                         finalized: false,
+                        isValid: false,
                         locusName: ""
                     }
                 },
@@ -254,11 +255,54 @@ export default function (state = defaultState, action) {
                             ...annotation.data.evidenceWithIndex,
                             [action.newEvidenceWithId]: {
                                 finalized: false,
+                                isValid: false,
                                 locusName: ""
                             }
                         },
                         evidenceWithOrder: annotation.data.evidenceWithOrder
                             .concat(action.newEvidenceWithId)
+                    }
+                }
+            }
+        };
+    case actions.VALIDATE_EVIDENCE_WITH_SUCCESS:
+        let annotationSuccess = state.annotationIndex[action.annotationId];
+        return {
+            ...state,
+            annotationIndex: {
+                [action.annotationId]: {
+                    ...annotationSuccess,
+                    data: {
+                        ...annotationSuccess.data,
+                        evidenceWithIndex: {
+                            ...annotationSuccess.data.evidenceWithIndex,
+                            [action.evidenceWithId]: {
+                                ...annotationSuccess.data.evidenceWithIndex[action.evidenceWithId],
+                                finalized: true,
+                                isValid: true,
+                            }
+                        }
+                    }
+                }
+            }
+        };
+    case actions.VALIDATE_EVIDENCE_WITH_FAIL:
+        let annotationFail = state.annotationIndex[action.annotationId];
+        return {
+            ...state,
+            annotationIndex: {
+                [action.annotationId]: {
+                    ...annotationFail,
+                    data: {
+                        ...annotationFail.data,
+                        evidenceWithIndex: {
+                            ...annotationFail.data.evidenceWithIndex,
+                            [action.evidenceWithId]: {
+                                ...annotationFail.data.evidenceWithIndex[action.evidenceWithId],
+                                finalized: true,
+                                isValid: false,
+                            }
+                        }
                     }
                 }
             }
