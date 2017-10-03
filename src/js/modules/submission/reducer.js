@@ -125,6 +125,7 @@ export default function (state = defaultState, action) {
                 keywordId: null,
                 methodName: "",
                 methodId: null,
+                methodEvidenceCode: null,
                 evidenceWithIndex: {
                     "init": {
                         finalized: false,
@@ -164,7 +165,8 @@ export default function (state = defaultState, action) {
                 keywordName: "",
                 keywordId: null,
                 methodName: "",
-                methodId: null
+                methodId: null,
+                methodEvidenceCode: null
             };
             break;
         case annotationFormats.GENE_GENE:
@@ -173,7 +175,8 @@ export default function (state = defaultState, action) {
                 gene1LocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
                 gene2LocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
                 methodName: "",
-                methodId: null
+                methodId: null,
+                methodEvidenceCode: null
             };
             break;
         case annotationFormats.COMMENT:

@@ -13,7 +13,17 @@ const keywordSearchResults = state => state[name].keywordSearchResults;
 export const keywordSearchIndexSelector = createSelector(
     keywordSearchResults,
     results => results.reduce((acc, cur) => {
-        acc[cur.id] = cur.name;
+        let value;
+        console.log(cur);
+        if (cur.hasOwnProperty('evidence_code')) {
+            value = {
+                name: cur.name,
+                evidence_code: cur.evidence_code
+            };
+        } else {
+            value = cur.name;
+        }
+        acc[cur.id] = value;
         return acc;
     }, {})
 );

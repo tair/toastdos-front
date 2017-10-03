@@ -48,13 +48,15 @@ class GeneGene extends React.Component {
                         onChange={value => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
                                 methodName: value,
-                                methodId: null
+                                methodId: null,
+                                methodEvidenceCode: null,
                             })
                         )}
                         onSelect={(id, value) => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
-                                methodName: value,
-                                methodId: id
+                                methodName: value.name,
+                                methodId: id,
+                                methodEvidenceCode: null,
                             })
                         )}
                         placeholder="e.g. Enzyme Assay"

@@ -107,23 +107,26 @@ class GeneTerm extends React.Component {
                         <KeywordTextInput
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
-                                    methodName: value,
-                                    methodId: null
+                                    methodName: typeof value == 'object'? value.name : value,
+                                    methodId: null,
+                                    methodEvidenceCode: null,
                                 })
                             )}
-                            onSelect={(id, value) => this.props.onDataChange(
+                            onSelect={(id, value) => {console.log(value); this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
-                                    methodName: value,
-                                    methodId: id
+                                    methodName: value.name,
+                                    methodId: id,
+                                    methodEvidenceCode: value.evidence_code
                                 })
-                            )}
+                            )}}
                             placeholder="e.g. Enzyme Assay"
                             value={this.props.annotationData.data.methodName}
                             searchScope="eco"
                         />
                     </div>
                 </div>
-                <div>
+                {(this.props.annotationData.data.methodEvidenceCode === 'IGI' || this.props.annotationData.data.methodEvidenceCode === 'IPI')?(
+                    <div>
                     <h5>Evidence With</h5>
                     {this.props.annotationData.data.evidenceWithOrder.map(this.generateEvidenceWith)}
                     <button
@@ -133,6 +136,7 @@ class GeneTerm extends React.Component {
                         <span className="fa fa-plus"></span>
                     </button>
                 </div>
+                ):(<span />)}
             </div>
         );
     }
