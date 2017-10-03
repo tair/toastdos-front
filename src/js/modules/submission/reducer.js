@@ -124,7 +124,14 @@ export default function (state = defaultState, action) {
                 keywordName: "",
                 keywordId: null,
                 methodName: "",
-                methodId: null
+                methodId: null,
+                evidenceWithIndex: {
+                    "init": {
+                        finalized: false,
+                        locusName: ""
+                    }
+                },
+                evidenceWithOrder: ["init"]
             }
         };
 
