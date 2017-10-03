@@ -22,6 +22,7 @@ class AnnotationList extends React.Component {
                 onDeleteClick={this.props.removeAnnotation.bind(this, annotationId)}
                 annotationData={this.props.annotationIndex[annotationId]}
                 onDataUpdate={this.props.updateAnnotationData.bind(this, annotationId)}
+                onEvidenceWithAddClick={this.props.addEvidenceWith.bind(this, annotationId)}
             />
         );
     }

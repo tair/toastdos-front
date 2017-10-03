@@ -29,6 +29,7 @@ class GeneTerm extends React.Component {
                     onChange={event => this.props.onDataChange({
                                 ...this.props.annotationData.data,
                                 evidenceWithIndex: {
+                                    ...this.props.annotationData.data.evidenceWithIndex,
                                     [evidenceWithId]: {
                                         ...currentEvidenceWith,
                                         locusName: event.target.value
@@ -102,6 +103,12 @@ class GeneTerm extends React.Component {
                 <div>
                     <h5>Evidence With</h5>
                     {this.props.annotationData.data.evidenceWithOrder.map(this.generateEvidenceWith)}
+                    <button
+                        className="btn btn-secondary"
+                        onClick={this.props.onEvidenceWithAddClick}
+                    >
+                        <span className="fa fa-plus"></span>
+                    </button>
                 </div>
             </div>
         );
@@ -110,11 +117,13 @@ class GeneTerm extends React.Component {
 
 GeneTerm.propTypes = {
     annotationData: React.PropTypes.object,
+    onEvidenceWithAddClick: React.PropTypes.func,
     onDataChange: React.PropTypes.func
 };
 
-GeneTerm.propTypes = {
-    onDataChange: () => {}
+GeneTerm.defaultProps = {
+    onDataChange: () => {},
+    onEvidenceWithAddClick: () => {}
 };
 
 export default GeneTerm;

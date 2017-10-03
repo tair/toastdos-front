@@ -241,6 +241,28 @@ export default function (state = defaultState, action) {
             searchingKeywords: false,
             keywordSearchResults: []
         });
+    case actions.ADD_EVIDENCE_WITH:
+        let annotation = state.annotationIndex[action.annotationId];
+        return {
+            ...state,
+            annotationIndex: {
+                [action.annotationId]: {
+                    ...annotation,
+                    data: {
+                        ...annotation.data,
+                        evidenceWithIndex: {
+                            ...annotation.data.evidenceWithIndex,
+                            [action.newEvidenceWithId]: {
+                                finalized: false,
+                                locusName: ""
+                            }
+                        },
+                        evidenceWithOrder: annotation.data.evidenceWithOrder
+                            .concat(action.newEvidenceWithId)
+                    }
+                }
+            }
+        };
     default:
         return state;
     }

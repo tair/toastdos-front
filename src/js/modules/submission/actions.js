@@ -120,6 +120,14 @@ export function updateAnnotationData(localId, data) {
     };
 }
 
+export function addEvidenceWith(annotationId, newEvidenceWithId) {
+    return {
+        type: actions.ADD_EVIDENCE_WITH,
+        annotationId,
+        newEvidenceWithId
+    };
+}
+
 function submitSuccess(response) {
     return {
         type: actions.SUBMIT_SUCCESS,

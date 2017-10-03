@@ -19,4 +19,5 @@ export const ATTEMPT_KEYWORD_SEARCH = "submission/ATTEMPT_KEYWORD_SEARCH";
 export const KEYWORD_SEARCH_SUCCESS = "submission/KEYWORD_SEARCH_SUCCESS";
 export const KEYWORD_SEARCH_FAIL = "submission/KEYWORD_SEARCH_FAIL";
 export const CLEAR_KEYWORD_SEARCH = "submission/CLEAR_KEYWORD_SEARCH";
+export const ADD_EVIDENCE_WITH = "submission/ADD_EVIDENCE_WITH";
 
