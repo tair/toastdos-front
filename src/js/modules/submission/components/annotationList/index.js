@@ -8,7 +8,9 @@ import {
         addNewAnnotation,
         changeAnnotationType,
         removeAnnotation,
-        updateAnnotationData
+        updateAnnotationData,
+        addEvidenceWith,
+        validateEvidenceWith
     } from '../../actions';
 
 import {
@@ -25,7 +27,9 @@ const ConnectedAnnotationList = connect(
         onAnnotationAddClick: () => dispatch(addNewAnnotation(generateId())),
         handleAnnotationTypeChange: (localId, annotationType) => dispatch(changeAnnotationType(localId, annotationType)),
         removeAnnotation: localId => dispatch(removeAnnotation(localId)),
-        updateAnnotationData: (localId, data) => dispatch(updateAnnotationData(localId, data))
+        updateAnnotationData: (localId, data) => dispatch(updateAnnotationData(localId, data)),
+        addEvidenceWith: annotationId => dispatch(addEvidenceWith(annotationId, generateId())),
+        validateEvidenceWith: (annotationId, evidenceWithId) => dispatch(validateEvidenceWith(annotationId, evidenceWithId))
     })
 )(AnnotationList);
 

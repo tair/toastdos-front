@@ -83,6 +83,38 @@ function validateGeneFail(localId, error) {
     };
 }
 
+export function validateEvidenceWith(annotationId, evidenceWithId) {
+    return (dispatch, getState) => {
+        const currState = getState();
+        const token = AuthModule.selectors.rawJwtSelector(currState);
+        const evidenceWith = currState.submission.annotationIndex[annotationId].data
+            .evidenceWithIndex[evidenceWithId];
+
+        validateGene(evidenceWith.locusName, token, (err, data) => {
+            if(err) {
+                return dispatch(validateEvidenceWithFail(annotationId, evidenceWithId));
+            }
+            return dispatch(validateEvidenceWithSuccess(annotationId, evidenceWithId));
+        });
+    };
+}
+
+function validateEvidenceWithFail(annotationId, evidenceWithId) {
+    return {
+        type: actions.VALIDATE_EVIDENCE_WITH_FAIL,
+        annotationId,
+        evidenceWithId
+    };
+}
+
+function validateEvidenceWithSuccess(annotationId, evidenceWithId) {
+    return {
+        type: actions.VALIDATE_EVIDENCE_WITH_SUCCESS,
+        annotationId,
+        evidenceWithId
+    };
+}
+
 export function editGeneData(localId) {
     return {
         type: actions.EDIT_GENE_DATA,
@@ -117,6 +149,14 @@ export function updateAnnotationData(localId, data) {
         type: actions.UPDATE_ANNOTATION_DATA,
         localId: localId,
         data: data
+    };
+}
+
+export function addEvidenceWith(annotationId, newEvidenceWithId) {
+    return {
+        type: actions.ADD_EVIDENCE_WITH,
+        annotationId,
+        newEvidenceWithId
     };
 }
 

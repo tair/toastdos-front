@@ -27,7 +27,9 @@ class SuggestionList extends React.Component {
                 onMouseOver={() => this.listItemHover(suggestionId, index)}
                 ref={r => (this.props.hoveredSuggestionId === suggestionId) ? (this.hoveredRef = r) : null}
             >
-                {this.props.suggestionIndex[suggestionId]}
+                {typeof this.props.suggestionIndex[suggestionId] == 'object'? 
+                    this.props.suggestionIndex[suggestionId].name :
+                    this.props.suggestionIndex[suggestionId]}
             </li>
         );
     }

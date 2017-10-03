@@ -124,7 +124,16 @@ export default function (state = defaultState, action) {
                 keywordName: "",
                 keywordId: null,
                 methodName: "",
-                methodId: null
+                methodId: null,
+                methodEvidenceCode: null,
+                evidenceWithIndex: {
+                    "init": {
+                        finalized: false,
+                        isValid: false,
+                        locusName: ""
+                    }
+                },
+                evidenceWithOrder: ["init"]
             }
         };
 
@@ -156,7 +165,8 @@ export default function (state = defaultState, action) {
                 keywordName: "",
                 keywordId: null,
                 methodName: "",
-                methodId: null
+                methodId: null,
+                methodEvidenceCode: null
             };
             break;
         case annotationFormats.GENE_GENE:
@@ -165,7 +175,8 @@ export default function (state = defaultState, action) {
                 gene1LocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
                 gene2LocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
                 methodName: "",
-                methodId: null
+                methodId: null,
+                methodEvidenceCode: null
             };
             break;
         case annotationFormats.COMMENT:
@@ -234,6 +245,71 @@ export default function (state = defaultState, action) {
             searchingKeywords: false,
             keywordSearchResults: []
         });
+    case actions.ADD_EVIDENCE_WITH:
+        let annotation = state.annotationIndex[action.annotationId];
+        return {
+            ...state,
+            annotationIndex: {
+                [action.annotationId]: {
+                    ...annotation,
+                    data: {
+                        ...annotation.data,
+                        evidenceWithIndex: {
+                            ...annotation.data.evidenceWithIndex,
+                            [action.newEvidenceWithId]: {
+                                finalized: false,
+                                isValid: false,
+                                locusName: ""
+                            }
+                        },
+                        evidenceWithOrder: annotation.data.evidenceWithOrder
+                            .concat(action.newEvidenceWithId)
+                    }
+                }
+            }
+        };
+    case actions.VALIDATE_EVIDENCE_WITH_SUCCESS:
+        let annotationSuccess = state.annotationIndex[action.annotationId];
+        return {
+            ...state,
+            annotationIndex: {
+                [action.annotationId]: {
+                    ...annotationSuccess,
+                    data: {
+                        ...annotationSuccess.data,
+                        evidenceWithIndex: {
+                            ...annotationSuccess.data.evidenceWithIndex,
+                            [action.evidenceWithId]: {
+                                ...annotationSuccess.data.evidenceWithIndex[action.evidenceWithId],
+                                finalized: true,
+                                isValid: true,
+                            }
+                        }
+                    }
+                }
+            }
+        };
+    case actions.VALIDATE_EVIDENCE_WITH_FAIL:
+        let annotationFail = state.annotationIndex[action.annotationId];
+        return {
+            ...state,
+            annotationIndex: {
+                [action.annotationId]: {
+                    ...annotationFail,
+                    data: {
+                        ...annotationFail.data,
+                        evidenceWithIndex: {
+                            ...annotationFail.data.evidenceWithIndex,
+                            [action.evidenceWithId]: {
+                                ...annotationFail.data.evidenceWithIndex[action.evidenceWithId],
+                                finalized: true,
+                                isValid: false,
+                            }
+                        }
+                    }
+                }
+            }
+        };
     default:
         return state;
     }
