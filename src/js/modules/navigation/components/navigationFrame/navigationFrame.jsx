@@ -18,12 +18,6 @@ class NavigationFrame extends React.Component {
 
         let links = [
             {
-                to: '/',
-                name: 'GOAT',
-                show: () => true
-                
-            },
-            {
                 to: '/submission',
                 name: 'Submission',
                 show: () => this.props.userRoles.includes('Researcher')
