@@ -22,65 +22,65 @@ class HomeView extends React.Component {
 
         return (
             <div className="home">
-                <div className="banner-image" style={bannerStyle}>
-                    <div className="banner-content">
-                        <h1>GOAT</h1>
-                        <hr/>
-                        <h3>
-                            <strong>G</strong>enetic<br/>
-                            <strong>O</strong>nline<br/>
-                            <strong>A</strong>nnotation<br/>
-                            <strong>T</strong>ool<br/>
-                        </h3>
+                <div className="row banner-image" style={bannerStyle}>
+                    <div className="col align-self-center">
+                        <h3 className="goat-text text-light text-center align-self-center">&mdash; the &mdash;</h3>
+                        <h1 className="goat-text text-light text-center align-self-center">
+                            Genetic Online Annotation Tool
+                        </h1>
                     </div>
                 </div>
-                <div className="info-panel-group">
-                    <div className="panel-container">
-                        <div className="panel">
-                            <div className="panel-content">
-                                <img
-                                    src={phoenixLogo}
-                                    alt="phoenix bioinformatics logo"
-                                    style={{height: '118px'}}
-                                />
-                                <p>
-                                    GOAT is a service from Phoenix Bioinformatics.
-                                    Visit our website to learn more about us.
-                                    <br/>
-                                </p>
-                                <a
-                                    className="btn btn-primary"
-                                    href="http://phoenixbioinformatics.org"
-                                    target="_blank"
-                                >
-                                    Visit Us
-                                </a>
-
+                <br/>
+                <div className="container">
+                    <div className="row">
+                        <div className="panel-container col-sm">
+                            <div className="card text-center bg-light">
+                                <div classname="card-header">
+                                    <img className="img-card-top"
+                                        src={phoenixLogo}
+                                        alt="phoenix bioinformatics logo"
+                                        style={{height: '100px'}}
+                                    />
+                                </div>
+                                <div className="card-body">
+                                    <p className="card-text">
+                                        GOAT is a service from Phoenix Bioinformatics.
+                                        Visit our website to learn more about us.
+                                    </p>
+                                    <a
+                                        className="btn btn-success"
+                                        href="http://phoenixbioinformatics.org"
+                                        target="_blank"
+                                    >
+                                        Visit Us
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="panel-container col-sm">
+                            <div className="card text-center bg-light">
+                                <div classname="card-header">
+                                    <img className="img-card-top"
+                                        src={githubLogo}
+                                        alt="github-logo"
+                                        style={{height: '100px'}}
+                                    />
+                                </div>
+                                <div className="card-body">
+                                    <p className="card-text">
+                                        GOAT is open source! Contribute to this and other Tair projects on our GitHub page!
+                                    </p>
+                                    <a
+                                        className="btn btn-success"
+                                        href="https://github.com/tair"
+                                        target="_blank"
+                                    >
+                                        Check Out Our GitHub
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className="panel-container">
-                        <div className="panel github">
-                            <div className="panel-content">
-                                <img
-                                    src={githubLogo}
-                                    alt="github-logo"
-                                    style={{height: '100px'}}
-                                />
-                                <p>
-                                    GOAT is open source! Contribute to this and other Tair projects on our GitHub page!
-                                </p>
-                                <a
-                                    className="btn btn-primary"
-                                    href="https://github.com/tair"
-                                    target="_blank"
-                                >
-                                    Check Out Our GitHub
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>  
         );
