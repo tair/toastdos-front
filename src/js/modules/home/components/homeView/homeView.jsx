@@ -4,6 +4,9 @@ import React from 'react';
 import atImg from 'img/at.jpg';
 import phoenixLogo from 'img/phoenixLogo.png';
 import githubLogo from 'img/githubLogo.png';
+import {Card, CardImg, CardText, CardHeader,
+    CardBody, CardTitle, CardSubtitle, Button,
+    Container, Row, Col} from 'reactstrap';
 
 class HomeView extends React.Component {
     constructor(props) {
@@ -22,66 +25,65 @@ class HomeView extends React.Component {
 
         return (
             <div className="home">
-                <div className="row banner-image" style={bannerStyle}>
-                    <div className="col align-self-center">
+                <Row className="banner-image" style={bannerStyle}>
+                    <Col className="align-self-center">
                         <h3 className="goat-text text-light text-center align-self-center">&mdash; the &mdash;</h3>
                         <h1 className="goat-text text-light text-center align-self-center">
                             Genetic Online Annotation Tool
                         </h1>
-                    </div>
-                </div>
+                    </Col>
+                </Row>
                 <br/>
-                <div className="container">
-                    <div className="row">
-                        <div className="panel-container col-sm">
-                            <div className="card text-center bg-light">
-                                <div classname="card-header">
-                                    <img className="img-card-top"
-                                        src={phoenixLogo}
+                <Container>
+                    <Row>
+                        <Col className="panel-container">
+                            <Card className="text-center bg-light">
+                                <CardHeader className="bg-light">
+                                    <CardImg top src={phoenixLogo}
                                         alt="phoenix bioinformatics logo"
-                                        style={{height: '100px'}}
+                                        height='120px'
+                                        style={{width:'auto'}}
                                     />
-                                </div>
-                                <div className="card-body">
-                                    <p className="card-text">
+                                </CardHeader>
+                                <CardBody>
+                                    <CardText>
                                         GOAT is a service from Phoenix Bioinformatics.
                                         Visit our website to learn more about us.
-                                    </p>
-                                    <a
-                                        className="btn btn-success"
+                                    </CardText>
+                                    <Button color='success'
                                         href="http://phoenixbioinformatics.org"
                                         target="_blank"
                                     >
                                         Visit Us
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="panel-container col-sm">
-                            <div className="card text-center bg-light">
-                                <div classname="card-header">
-                                    <img className="img-card-top"
-                                        src={githubLogo}
+                                    </Button>
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col>
+                            <Card className="text-center bg-light">
+                                <CardHeader className="bg-light">
+                                    <CardImg top src={githubLogo}
                                         alt="github-logo"
-                                        style={{height: '100px'}}
+                                        height='120px'
+                                        style={{width:'auto'}}
                                     />
-                                </div>
-                                <div className="card-body">
-                                    <p className="card-text">
+                                </CardHeader>
+                                <CardBody>
+                                    <CardText>
                                         GOAT is open source! Contribute to this and other Tair projects on our GitHub page!
-                                    </p>
-                                    <a
-                                        className="btn btn-success"
+                                    </CardText>
+                                    <Button
+                                        color="success"
                                         href="https://github.com/tair"
                                         target="_blank"
                                     >
                                         Check Out Our GitHub
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                    </Button>
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
             </div>  
         );
     }

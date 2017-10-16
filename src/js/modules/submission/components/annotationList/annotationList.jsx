@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import { Button } from 'reactstrap';
 
 import AnnotationEntry from './subcomponents/annotationEntry';
 
@@ -31,14 +32,13 @@ class AnnotationList extends React.Component {
     render() {
         return (
             <div className="annotation-list-container">
-                <h2>Annotations</h2>
-                <button
-                    className="btn btn-secondary"
-                    onClick={this.props.onAnnotationAddClick}
-                    disabled={!this.props.hasGenes}
-                >
-                    Add Annotation
-                </button>
+                <h2>Annotations <Button color="success" size="sm"
+                        onClick={this.props.onAnnotationAddClick}
+                        disabled={!this.props.hasGenes}
+                    >
+                        <span className="fa fa-plus" title="Add Annotation"></span>
+                    </Button>
+                </h2>
                 {(this.props.annotationOrder.length <= 0) ? 
                    (
                     <span className="empty-message">

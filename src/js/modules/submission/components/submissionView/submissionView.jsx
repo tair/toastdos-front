@@ -4,6 +4,9 @@ import React from 'react';
 import PublicationField from '../publicationField';
 import GeneList from '../geneList';
 import AnnotationList from '../annotationList';
+import {Card, CardImg, CardText, CardHeader,
+    CardBody, CardTitle, CardSubtitle, Button,
+    Container, Row, Col} from 'reactstrap';
 
 import 'css/submissionView.scss';
 
@@ -26,12 +29,11 @@ class SubmissionView extends React.Component {
             <div className="submit-panel">
                 <div className="submit-content">
                     <span>Submitted!</span> 
-                    <button
-                        className="btn btn-primary"
+                    <Button color="primary"
                         onClick={this.props.resetSubmission}
                     >
                     Back
-                    </button>
+                    </Button>
                 </div>
             </div>
         );
@@ -47,40 +49,45 @@ class SubmissionView extends React.Component {
         );
 
         return (
-            <div
-                className="submission-view-container"
-            >
-                {this.props.errorMessage ? errorMessage : null}
-                <div className="submission-view">
-                    {this.props.submitting ? submittingPanel :
-                        (this.props.submitted ? submittedPanel : null)
-                    }
-                    <h1>New Annotation Submission</h1>
-                    <div className="submission-navigator-container">
-                        <div className="submission-navigator">
-                            {/* todo submission navigator wlil go here */}
-                        </div>
-                    </div>
-                    <div className="submission-form-container">
-                        <button
-                            className="btn btn-secondary"
-                            onClick={this.props.resetSubmission}
-                        >
-                            Reset Form
-                        </button>
-                        <PublicationField />
-                        <GeneList />
-                        <AnnotationList />
-                        <button
-                            className="btn btn-primary btn-lg btn-submit"
-                            onClick={this.props.submit}
-                            disabled={!this.props.canSubmit}
-                        >
-                            Submit Annotations
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <Row className="justify-content-md-center">
+                <Col
+                    className="col-md-8 col-offset-4 submission-view-container"
+                >
+                    {this.props.errorMessage ? errorMessage : null}
+                    <Card className="submission-view">
+                        {this.props.submitting ? submittingPanel :
+                            (this.props.submitted ? submittedPanel : null)
+                        }
+
+                        <CardHeader>
+                            <h1>New Annotation Submission</h1>
+                        </CardHeader>
+                        <CardBody className="submission-form-container">
+                            <PublicationField/>
+                            <GeneList/>
+                            <AnnotationList/>
+                            <Row>
+                                <Col>
+                                    <Button color="danger"
+                                        onClick={this.props.resetSubmission}
+                                    >
+                                        Reset Form
+                                    </Button>
+                                </Col>
+                                <Col>
+                                    <Button color="success" size="lg"
+                                        className="btn-submit"
+                                        onClick={this.props.submit}
+                                        disabled={!this.props.canSubmit}
+                                    >
+                                        Submit Annotations
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
         );
     }
 }

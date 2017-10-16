@@ -2,6 +2,7 @@
 
 import React from 'react';
 import CustomTextInput from "lib/components/customTextInput";
+import { Button, ButtonGroup } from 'reactstrap';
 
 
 class SingleGene extends React.Component {
@@ -119,26 +120,28 @@ class SingleGene extends React.Component {
                             ) 
                         : fullNameInput}
                     </div>
-                    {this.props.finalized ?
-                    (<div className="edit-button-container">
-                        <span
-                            className="fa fa-pencil"
-                            style={{
-                                fontSize: "1.3em",
-                                cursor: "pointer"
-                            }}
-                            onClick={this.props.onEditClick}
+                    <ButtonGroup>
+                        {this.props.finalized ?
+                        (<Button color="warning" size="sm"
+                            className="edit-button-container">
+                            <span
+                                className="fa fa-pencil"
+                                style={{
+                                    fontSize: "1.3em",
+                                    cursor: "pointer"
+                                }}
+                                onClick={this.props.onEditClick}
+                            >
+                        </span>
+                        </Button>) : null}
+                        <Button color="danger" size="sm"
+                            onClick={this.props.onRemoveClick}
                         >
-                       </span> 
-                    </div>) : null}
+                            <span className="fa fa-close" title="Remove Gene"></span>
+                        </Button>
+                    </ButtonGroup>
                 </div>
                 <div>
-                    <button
-                        className="btn btn-secondary"
-                        onClick={this.props.onRemoveClick}
-                    >
-                        Remove Gene
-                    </button>
                     {this.props.validating ? (<span>Validating...</span>) : null}
                     {this.props.validationError ? 
                         (<span>{this.props.validationError}</span>) : null}

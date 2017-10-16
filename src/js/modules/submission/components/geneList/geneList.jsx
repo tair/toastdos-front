@@ -2,6 +2,7 @@
 
 import React from 'react';
 import SingleGene from './subcomponents/singleGene';
+import { Button } from 'reactstrap';
 
 class GeneList extends React.Component {
     constructor(props) {
@@ -33,13 +34,12 @@ class GeneList extends React.Component {
         return (
             <div className="gene-list-container">
                 <div className="gene-list">
-                    <h2>Genes</h2>
-                    <button
-                        className="btn btn-secondary"
-                        onClick={this.props.onGeneAddClick}
-                    >
-                        Add Gene
-                    </button>
+                    <h2>Genes <Button color="success" size="sm"
+                            onClick={this.props.onGeneAddClick}
+                        >
+                            <span className="fa fa-plus" title="Add Gene"></span>
+                        </Button>
+                    </h2>
                     {(this.props.geneOrder.length <= 0) ? 
                        (
                         <span className="empty-message">
@@ -48,7 +48,6 @@ class GeneList extends React.Component {
                        ) : null
                     }
                     {this.props.geneOrder.map(this.generateGene)}
-                    
                 </div>
             </div>
         );

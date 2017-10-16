@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import { Button } from 'reactstrap';
 
 import CustomSelect from 'lib/components/customSelect';
 
@@ -90,14 +91,11 @@ class AnnotationEntry extends React.Component {
                 </div>
                 <div>
                     {this.renderAnnotationFormat()}
-                </div>
-                <div>
-                    <button
-                        className="btn btn-secondary"
+                    <Button color="danger" size="sm"
                         onClick={this.props.onDeleteClick}
                     >
-                        Remove Annotation
-                    </button>
+                        <span className="fa fa-close" title="Remove Annotation"></span>
+                    </Button>
                 </div>
             </div>
         );
