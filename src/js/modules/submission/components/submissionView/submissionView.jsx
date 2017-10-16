@@ -6,7 +6,8 @@ import GeneList from '../geneList';
 import AnnotationList from '../annotationList';
 import {Card, CardImg, CardText, CardHeader,
     CardBody, CardTitle, CardSubtitle, Button,
-    Container, Row, Col} from 'reactstrap';
+    ListGroup, ListGroupItem, ListGroupItemHeading,
+    ListGroupItemText, Container, Row, Col} from 'reactstrap';
 
 import 'css/submissionView.scss';
 
@@ -62,29 +63,37 @@ class SubmissionView extends React.Component {
                         <CardHeader>
                             <h1>New Annotation Submission</h1>
                         </CardHeader>
-                        <CardBody className="submission-form-container">
-                            <PublicationField/>
-                            <GeneList/>
-                            <AnnotationList/>
-                            <Row>
-                                <Col>
-                                    <Button color="danger"
-                                        onClick={this.props.resetSubmission}
-                                    >
-                                        Reset Form
-                                    </Button>
-                                </Col>
-                                <Col>
-                                    <Button color="success" size="lg"
-                                        className="btn-submit"
-                                        onClick={this.props.submit}
-                                        disabled={!this.props.canSubmit}
-                                    >
-                                        Submit Annotations
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </CardBody>
+                        <ListGroup className="submission-form-container">
+                            <ListGroupItem>
+                                <PublicationField/>
+                            </ListGroupItem>
+                            <ListGroupItem>
+                                <GeneList/>
+                            </ListGroupItem>
+                            <ListGroupItem>
+                                <AnnotationList/>
+                            </ListGroupItem>
+                            <ListGroupItem>
+                                <Row>
+                                    <Col>
+                                        <Button color="danger"
+                                            onClick={this.props.resetSubmission}
+                                        >
+                                            Reset Form
+                                        </Button>
+                                    </Col>
+                                    <Col className="text-right">
+                                        <Button color="success"// size="lg"
+                                            className="btn-submit"
+                                            onClick={this.props.submit}
+                                            disabled={!this.props.canSubmit}
+                                        >
+                                            Submit Annotations
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </ListGroupItem>
+                        </ListGroup>
                     </Card>
                 </Col>
             </Row>

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import CustomTextInput from "lib/components/customTextInput";
-import { Button, ButtonGroup } from 'reactstrap';
+import { Button, ButtonGroup, Col, Row } from 'reactstrap';
 
 
 class SingleGene extends React.Component {
@@ -80,8 +80,8 @@ class SingleGene extends React.Component {
                 <h4>
                     {this.props.title}
                 </h4>
-                <div className="input-group">
-                    <div className="input-container">
+                <Row className="input-group">
+                    <Col className="input-container">
                         <h5>
                             Locus Name
                         </h5>
@@ -93,8 +93,8 @@ class SingleGene extends React.Component {
                                 </span>
                             ) 
                         : locusNameInput}
-                    </div>
-                    <div className="input-container">
+                    </Col>
+                    <Col className="input-container">
                         <h5>
                             Gene Symbol
                         </h5>
@@ -106,8 +106,8 @@ class SingleGene extends React.Component {
                                 </span>
                             ) 
                         : geneSymbolInput}
-                    </div>
-                    <div className="input-container">
+                    </Col>
+                    <Col className="input-container">
                         <h5>
                             Full Gene Name
                         </h5>
@@ -119,7 +119,7 @@ class SingleGene extends React.Component {
                                 </span>
                             ) 
                         : fullNameInput}
-                    </div>
+                    </Col>
                     <ButtonGroup>
                         {this.props.finalized ?
                         (<Button color="warning" size="sm"
@@ -140,7 +140,7 @@ class SingleGene extends React.Component {
                             <span className="fa fa-close" title="Remove Gene"></span>
                         </Button>
                     </ButtonGroup>
-                </div>
+                </Row>
                 <div>
                     {this.props.validating ? (<span>Validating...</span>) : null}
                     {this.props.validationError ? 
