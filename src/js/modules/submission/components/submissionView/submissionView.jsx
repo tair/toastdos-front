@@ -70,21 +70,21 @@ class SubmissionView extends React.Component {
                             </Row>
                             <Row>
                                 <Col>
-                                    <Button color="warning" size="lg"
+                                    <Button color="warning"
                                         className="btn-submit"
                                         onClick={this.props.edit}
                                         disabled={!this.props.canSubmit}
                                     >
-                                        Make Changes
+                                        <span className="fa fa-chevron-left"></span> Make Changes
                                     </Button>
                                 </Col>
-                                <Col>
-                                    <Button color="success" size="lg"
+                                <Col className="text-right">
+                                    <Button color="success"
                                         className="btn-submit"
                                         onClick={this.props.submit}
                                         disabled={!this.props.canSubmit}
                                     >
-                                        Submit Annotations
+                                        <span className="fa fa-save"></span> Submit Annotations
                                     </Button>
                                 </Col>
                             </Row>
@@ -114,7 +114,7 @@ class SubmissionView extends React.Component {
                                             onClick={this.props.preview}
                                             disabled={!this.props.canSubmit}
                                         >
-                                            Submit Annotations
+                                            Review Submission <span className="fa fa-chevron-right"></span>
                                         </Button>
                                     </Col>
                                 </Row>
