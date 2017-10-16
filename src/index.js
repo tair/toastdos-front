@@ -8,7 +8,6 @@
 
 // import styles
 import 'font-awesome/css/font-awesome.css';
-import 'bootstrap/scss/bootstrap.scss';
 import './css/main.scss';
 
 
