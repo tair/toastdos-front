@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-import { Button } from 'reactstrap';
+import { Card, CardHeader, CardBody, Button } from 'reactstrap';
 
 import CustomSelect from 'lib/components/customSelect';
 
@@ -78,9 +78,11 @@ class AnnotationEntry extends React.Component {
 
     render() {
         return (
-            <div className="annotation-entry">
+            <Card className="annotation-entry">
+                <CardHeader>
                 <h4>{this.props.title}</h4>
-                <div>
+                </CardHeader>
+                <CardBody>
                     <CustomSelect
                         name="Annotation Type"
                         onChange={this.handleTypeChange}
@@ -88,16 +90,14 @@ class AnnotationEntry extends React.Component {
                     >
                         {Object.keys(annotationTypes).map(this.generateTypeOption)}
                     </CustomSelect>
-                </div>
-                <div>
                     {this.renderAnnotationFormat()}
                     <Button color="danger" size="sm"
                         onClick={this.props.onDeleteClick}
                     >
                         <span className="fa fa-close" title="Remove Annotation"></span>
                     </Button>
-                </div>
-            </div>
+                </CardBody>
+            </Card>
         );
     }
  }
