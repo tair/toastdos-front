@@ -242,4 +242,14 @@ export function clearKeywordSearch() {
     };
 }
 
+export function preview() {
+    return {
+        type: actions.PREVIEW,
+    };
+}
 
+export function edit() {
+    return {
+        type: actions.EDIT,
+    };
+}

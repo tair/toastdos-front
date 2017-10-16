@@ -25,6 +25,7 @@ const defaultState = {
     annotationOrder: [],
     submitting: false,
     submitted: false,
+    previewing: false,
     submissionError: "",
     keywordSearchResults: [],
     searchingKeywords: false
@@ -207,12 +208,14 @@ export default function (state = defaultState, action) {
     case actions.SUBMIT_SUCCESS:
         return Object.assign({}, state, {
             submitting: false,
-            submitted: true
+            submitted: true,
+            previewing: false,
         });
     case actions.SUBMIT_FAIL:
         return Object.assign({}, state, {
             submitting: false,
             submitted: false,
+            previewing: false,
             submissionError: action.error
         });
     case actions.RESET_SUBMISSION:
@@ -224,6 +227,7 @@ export default function (state = defaultState, action) {
             annotationOrder: [],
             submitting: false,
             submitted: false,
+            previewing: false,
             submissionError: ""
         });
     case actions.ATTEMPT_KEYWORD_SEARCH:
@@ -309,6 +313,16 @@ export default function (state = defaultState, action) {
                     }
                 }
             }
+        };
+    case actions.PREVIEW:
+        return {
+            ...state,
+            previewing: true
+        };
+    case actions.EDIT:
+        return {
+            ...state,
+            previewing: false
         };
     default:
         return state;
