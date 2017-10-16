@@ -3,119 +3,36 @@
 import React from 'react';
 import  {Link} from 'react-router';
 import EditableLabel from 'lib/components/editableLabel';
+import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 
 
 class UserProfilePanel extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            clicking: true
+            showProfile: false
         };
-
-        this.handleMouseDown = this.handleMouseDown.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        this.toggle = this.toggle.bind(this);
     }
 
-    handleClick() {
-        // console.log(event);
-        if(this.state.clicking) {
-            this.setState({
-                clicking: false
-            });
-        } else {
-            this.props.componentShouldDismiss();
-        }
-
-    }
-
-    handleMouseDown() {
+    toggle() {
         this.setState({
-            clicking: true
+            showProfile: !this.state.showProfile
         });
-    }
-    
-    componentDidMount() {
-        window.addEventListener("click", this.handleClick);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener("click", this.handleClick);
-    }
-
-    handleEmailChange() {
-
-    }
-
-    validateEmail() {
-
     }
 
     render() {
-
-        const containerStyle = {
-            position: "absolute",
-            display: "block",
-            width: "240px",
-            right: 0,
-            textAlign: 'left',
-            fontSize: "1.1em"
-        };
-
-        const profileDataContainerStyle = {
-            padding: '7px',
-            display: "fixed"
-            // width: "100%"
-        };
-
-        const profileDataStyle = {
-            whiteSpace: "noWrap",
-            width: "100%",
-            textOverflow: "ellipsis",
-            marginBottom: "7px"
-        };
-
-        const logoutButtonContainerStyle = {
-            width: "100%",
-            borderTop: "solid 1px #FFFFFF"
-        };
-
-        const logoutButtonStyle = {
-            padding: "15px 10px",
-            textDecoration: "none",
-            display: "block",
-            textAlign: "center"
-        };
-
-        const profileDataLabelStyle = {
-            fontSize: '0.7em'
-        };
-
+        // TODO: Add split dropdown so that email editing/ other info still works.
         return (
-            <div style={containerStyle} className={this.props.className} onMouseDown={this.handleMouseDown}>
-                <div style={profileDataContainerStyle}>
-                    <div style={profileDataStyle}>
-                        <div style={profileDataLabelStyle}>ORCID:</div>
-                        <div>{this.props.orcid}</div>
-                    </div>
-                    <div style={profileDataStyle}>
-                        <div style={profileDataLabelStyle}>EMAIL:</div>
-                        <div>
-                            <EditableLabel
-                                placeholder="Add Email..."
-                                value={this.props.email}
-                                className="email-label"
-                                editingClassName="email-label-editing"
-                                inputType="email"
-                                onSubmit={this.props.onEmailChange}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div style={logoutButtonContainerStyle}>
-                    <Link style={logoutButtonStyle} to="/" onClick={this.props.onLogoutClick}>Logout</Link>
-                </div>
-            </div>
+            <Dropdown isOpen={this.state.showProfile} toggle={this.toggle}>
+                <DropdownToggle caret color="link" className="nav-link text-light" 
+                style={{cursor: 'pointer'}}>
+                    {this.props.name} 
+                </DropdownToggle>
+                <DropdownMenu right>
+                    <DropdownItem onClick={this.props.onLogoutClick}>Logout</DropdownItem>
+                </DropdownMenu>
+            </Dropdown>
         );
     }
 }
@@ -126,7 +43,6 @@ UserProfilePanel.propTypes = {
     email: React.PropTypes.string,
     onEmailChange: React.PropTypes.func,
     onLogoutClick: React.PropTypes.func,
-    componentShouldDismiss: React.PropTypes.func,
     className: React.PropTypes.string
 };
 
