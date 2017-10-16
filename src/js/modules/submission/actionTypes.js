@@ -22,4 +22,6 @@ export const CLEAR_KEYWORD_SEARCH = "submission/CLEAR_KEYWORD_SEARCH";
 export const ADD_EVIDENCE_WITH = "submission/ADD_EVIDENCE_WITH";
 export const VALIDATE_EVIDENCE_WITH_SUCCESS = "submission/VALIDATE_EVIDENCE_WITH_SUCCESS";
 export const VALIDATE_EVIDENCE_WITH_FAIL = "submission/VALIDATE_EVIDENCE_WITH_FAIL";
+export const PREVIEW = "submission/PREVIEW";
+export const EDIT = "submission/EDIT";
 

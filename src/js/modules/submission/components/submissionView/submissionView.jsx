@@ -62,7 +62,33 @@ class SubmissionView extends React.Component {
                         <CardHeader>
                             <h1>New Annotation Submission</h1>
                         </CardHeader>
-                        <CardBody className="submission-form-container">
+                        {this.props.previewing ? 
+                        (<CardBody>
+                            <Row>
+                                <span>The previewed submission here</span>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Button color="warning" size="lg"
+                                        className="btn-submit"
+                                        onClick={this.props.edit}
+                                        disabled={!this.props.canSubmit}
+                                    >
+                                        Make Changes
+                                    </Button>
+                                </Col>
+                                <Col>
+                                    <Button color="success" size="lg"
+                                        className="btn-submit"
+                                        onClick={this.props.submit}
+                                        disabled={!this.props.canSubmit}
+                                    >
+                                        Submit Annotations
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </CardBody>):
+                        (<CardBody className="submission-form-container">
                             <PublicationField/>
                             <GeneList/>
                             <AnnotationList/>
@@ -77,14 +103,14 @@ class SubmissionView extends React.Component {
                                 <Col>
                                     <Button color="success" size="lg"
                                         className="btn-submit"
-                                        onClick={this.props.submit}
+                                        onClick={this.props.preview}
                                         disabled={!this.props.canSubmit}
                                     >
-                                        Submit Annotations
+                                        Continue
                                     </Button>
                                 </Col>
                             </Row>
-                        </CardBody>
+                        </CardBody>)}
                     </Card>
                 </Col>
             </Row>
@@ -94,15 +120,20 @@ class SubmissionView extends React.Component {
 
 SubmissionView.propTypes = {
     submit: React.PropTypes.func,
+    preview: React.PropTypes.func,
+    edit: React.PropTypes.func,
     resetSubmission: React.PropTypes.func,
     submitting: React.PropTypes.bool,
     submitted: React.PropTypes.bool,
+    previewing: React.PropTypes.bool,
     canSubmit: React.PropTypes.bool,
     errorMessage: React.PropTypes.string,
 };
 
 SubmissionView.defaultProps = {
-    submit: () => {}
+    submit: () => {},
+    preview: () => {},
+    edit: () => {},
 };
 
 export default SubmissionView;
