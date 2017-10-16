@@ -50,79 +50,81 @@ class SubmissionView extends React.Component {
         );
 
         return (
-            <Row className="justify-content-md-center">
-                <Col
-                    className="col-md-8 col-offset-4 submission-view-container"
-                >
-                    {this.props.errorMessage ? errorMessage : null}
-                    <Card className="submission-view">
-                        {this.props.submitting ? submittingPanel :
-                            (this.props.submitted ? submittedPanel : null)
-                        }
+            <Container fluid className="mt-3">
+                <Row className="justify-content-md-center">
+                    <Col
+                        className="col-md-10 col-offset-4 submission-view-container"
+                    >
+                        {this.props.errorMessage ? errorMessage : null}
+                        <Card className="submission-view">
+                            {this.props.submitting ? submittingPanel :
+                                (this.props.submitted ? submittedPanel : null)
+                            }
 
-                        <CardHeader>
-                            <h1>New Annotation Submission</h1>
-                        </CardHeader>
-                        {this.props.previewing ?
-                        (<CardBody>
-                            <Row>
-                                <span>The previewed submission here</span>
-                            </Row>
-                            <Row>
-                                <Col>
-                                    <Button color="warning"
-                                        className="btn-submit"
-                                        onClick={this.props.edit}
-                                        disabled={!this.props.canSubmit}
-                                    >
-                                        <span className="fa fa-chevron-left"></span> Make Changes
-                                    </Button>
-                                </Col>
-                                <Col className="text-right">
-                                    <Button color="success"
-                                        className="btn-submit"
-                                        onClick={this.props.submit}
-                                        disabled={!this.props.canSubmit}
-                                    >
-                                        <span className="fa fa-save"></span> Submit Annotations
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </CardBody>):
-                        (<ListGroup className="submission-form-container">
-                            <ListGroupItem>
-                                <PublicationField/>
-                            </ListGroupItem>
-                            <ListGroupItem>
-                                <GeneList/>
-                            </ListGroupItem>
-                            <ListGroupItem>
-                                <AnnotationList/>
-                            </ListGroupItem>
-                            <ListGroupItem>
+                            <CardHeader>
+                                New Annotation Submission
+                            </CardHeader>
+                            {this.props.previewing ?
+                            (<CardBody>
+                                <Row>
+                                    <span>The previewed submission here</span>
+                                </Row>
                                 <Row>
                                     <Col>
-                                        <Button color="danger"
-                                            onClick={this.props.resetSubmission}
+                                        <Button color="warning"
+                                            className="btn-submit"
+                                            onClick={this.props.edit}
+                                            disabled={!this.props.canSubmit}
                                         >
-                                            Reset Form
+                                            <span className="fa fa-chevron-left"></span> Make Changes
                                         </Button>
                                     </Col>
                                     <Col className="text-right">
-                                        <Button color="success"// size="lg"
+                                        <Button color="success"
                                             className="btn-submit"
-                                            onClick={this.props.preview}
+                                            onClick={this.props.submit}
                                             disabled={!this.props.canSubmit}
                                         >
-                                            Review Submission <span className="fa fa-chevron-right"></span>
+                                            <span className="fa fa-save"></span> Submit Annotations
                                         </Button>
                                     </Col>
                                 </Row>
-                            </ListGroupItem>
-                        </ListGroup>)}
-                    </Card>
-                </Col>
-            </Row>
+                            </CardBody>):
+                            (<ListGroup className="submission-form-container">
+                                <ListGroupItem>
+                                    <PublicationField/>
+                                </ListGroupItem>
+                                <ListGroupItem>
+                                    <GeneList/>
+                                </ListGroupItem>
+                                <ListGroupItem>
+                                    <AnnotationList/>
+                                </ListGroupItem>
+                                <ListGroupItem>
+                                    <Row>
+                                        <Col>
+                                            <Button color="danger"
+                                                onClick={this.props.resetSubmission}
+                                            >
+                                                Reset Form
+                                            </Button>
+                                        </Col>
+                                        <Col className="text-right">
+                                            <Button color="success"// size="lg"
+                                                className="btn-submit"
+                                                onClick={this.props.preview}
+                                                disabled={!this.props.canSubmit}
+                                            >
+                                                Review Submission <span className="fa fa-chevron-right"></span>
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </ListGroupItem>
+                            </ListGroup>)}
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
         );
     }
 }
