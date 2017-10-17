@@ -50,6 +50,7 @@ input[type=text] {
     }
 
 }
+*/
 
 .smart-text-input-suggestions {
     position: absolute;
@@ -66,8 +67,7 @@ input[type=text] {
             word-break: break-all;
             cursor: pointer;
             &.selected {
-                background-color: $bgColor;
-                color: $fgColorActive2;
+                background-color: $lightGreen;
             }
         }
     }
@@ -82,4 +82,4 @@ input[type=text] {
         padding: 12px 0px;
     }
 
-}*/
+}
