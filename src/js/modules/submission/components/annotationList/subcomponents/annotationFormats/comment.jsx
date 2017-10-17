@@ -38,7 +38,7 @@ class Comment extends React.Component {
                             )}
                             value={this.props.annotationData.data.comment}
                             placeholder="Type your comment..."
-                            className="comment-text-area"
+                            className="comment-text-area form-control"
                         >
                         </CustomTextArea>
                     </Label>

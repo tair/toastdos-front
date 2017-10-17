@@ -1,6 +1,6 @@
 @import "globals";
 
-select {
+select, textarea {
     -webkit-appearance: none;
     border: none;
     border-radius: 0;
@@ -8,6 +8,7 @@ select {
     background-color: #FFFFFF;
     outline: none;
     -moz-appearance: none;
+    width: 100%;
 }
 /*
 $arrowColor: $accentColor;
