@@ -2,7 +2,9 @@
 
 import React from 'react';
 import CustomTextInput from "lib/components/customTextInput";
-import { Button, ButtonGroup, Col, Row } from 'reactstrap';
+import { Card, CardHeader, CardBody,
+    Label, FormGroup,
+    Button, ButtonGroup, Col, Row } from 'reactstrap';
 
 
 class SingleGene extends React.Component {
@@ -19,7 +21,6 @@ class SingleGene extends React.Component {
     }
 
     handleFieldBlur() {
-
         // add small delay to ensure focus triggered for next field
         setTimeout(() => {
             if(this.locusNameField === document.activeElement) {
@@ -48,6 +49,7 @@ class SingleGene extends React.Component {
                 onKeyDown={this.props.onKeyDown}
                 onBlur={this.handleFieldBlur}
                 disabled={this.props.validating}
+                readOnly={this.props.finalized ? "readonly" : ""}
                 placeholder="e.g. AT2G23380"
             />);
 
@@ -59,6 +61,7 @@ class SingleGene extends React.Component {
                 onKeyDown={this.props.onKeyDown}
                 onBlur={this.handleFieldBlur}
                 disabled={this.props.validating}
+                readOnly={this.props.finalized ? "readonly" : ""}
                 placeholder="e.g. CLF"
             />);
 
@@ -70,83 +73,71 @@ class SingleGene extends React.Component {
                 onKeyDown={this.props.onKeyDown}
                 onBlur={this.handleFieldBlur}
                 disabled={this.props.validating}
+                readOnly={this.props.finalized ? "readonly" : ""}
                 placeholder="e.g. CURLY LEAF"
             />
         );
 
 
         return (
-            <div className="single-gene">
-                <h4>
-                    {this.props.title}
-                </h4>
-                <Row className="input-group">
-                    <Col className="input-container">
-                        <h5>
-                            Locus Name
-                        </h5>
-                        {this.props.finalized ? 
-                            (
-                                <span>
-                                    {this.props.locusNameValue ?
-                                        this.props.locusNameValue : (<em className="light-text">None</em>)}
-                                </span>
-                            ) 
-                        : locusNameInput}
-                    </Col>
-                    <Col className="input-container">
-                        <h5>
-                            Gene Symbol
-                        </h5>
-                        {this.props.finalized ? 
-                            (
-                                <span>
-                                    {this.props.geneSymbolValue ?
-                                        this.props.geneSymbolValue : (<em className="light-text">None</em>)}
-                                </span>
-                            ) 
-                        : geneSymbolInput}
-                    </Col>
-                    <Col className="input-container">
-                        <h5>
-                            Full Gene Name
-                        </h5>
-                        {this.props.finalized ? 
-                            (
-                                <span>
-                                    {this.props.fullNameValue ?
-                                        this.props.fullNameValue : (<em className="light-text">None</em>)}
-                                </span>
-                            ) 
-                        : fullNameInput}
-                    </Col>
-                    <ButtonGroup>
-                        {this.props.finalized ?
-                        (<Button color="warning" size="sm"
-                            className="edit-button-container">
-                            <span
-                                className="fa fa-pencil"
-                                style={{
-                                    fontSize: "1.3em",
-                                    cursor: "pointer"
-                                }}
-                                onClick={this.props.onEditClick}
-                            >
-                        </span>
-                        </Button>) : null}
-                        <Button color="danger" size="sm"
-                            onClick={this.props.onRemoveClick}
-                        >
-                            <span className="fa fa-close" title="Remove Gene"></span>
-                        </Button>
-                    </ButtonGroup>
-                </Row>
-                <div>
-                    {this.props.validating ? (<span>Validating...</span>) : null}
-                    {this.props.validationError ? 
-                        (<span>{this.props.validationError}</span>) : null}
-                </div>
-            </div>
+            <Card className="single-gene">
+                <CardHeader>
+                    <Row>
+                        <Col>
+                        {this.props.title}
+                        </Col>
+                        <Col sm="1" className="text-right input-container">
+                            <ButtonGroup>
+                                {this.props.finalized ?
+                                (<Button color="warning" size="sm"
+                                    className="edit-button-container"
+                                    onClick={this.props.onEditClick}
+                                    >
+                                    <span className="fa fa-pencil"
+                                        style={{
+                                            fontSize: "1.3em",
+                                            cursor: "pointer"
+                                        }}
+                                    >
+                                    </span>
+                                </Button>) : null}
+                                <Button color="danger" size="sm"
+                                    onClick={this.props.onRemoveClick}
+                                >
+                                    <span className="fa fa-close" title="Remove Gene"></span>
+                                </Button>
+                            </ButtonGroup>
+                        </Col>
+                    </Row>
+                </CardHeader>
+                <CardBody className={this.props.finalized ? "bg-light": null}>
+                    <Row>
+                        <Col>
+                            <Label>
+                                Locus Name
+                                {locusNameInput}
+                            </Label>
+                        </Col>
+                        <Col>
+                            <Label>
+                                Gene Symbol
+                                {geneSymbolInput}
+                            </Label>
+                        </Col>
+                        <Col>
+                            <Label>
+                                Full Gene Name
+                                {fullNameInput}
+                            </Label>
+                        </Col>
+                    </Row>
+                    <div>
+                        {this.props.validating ? (<span>Validating...</span>) : null}
+                        {this.props.validationError ?
+                            (<span>{this.props.validationError}</span>) : null}
+                    </div>
+                </CardBody>
+            </Card>
         );
     }
 }

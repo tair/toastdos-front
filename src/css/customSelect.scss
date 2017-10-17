@@ -1,7 +1,4 @@
 @import "globals";
-/*
-$arrowColor: $accentColor;
-$arrowColorFocused: $accentColorActive;
 
 select {
     -webkit-appearance: none;
@@ -12,6 +9,9 @@ select {
     outline: none;
     -moz-appearance: none;
 }
+/*
+$arrowColor: $accentColor;
+$arrowColorFocused: $accentColorActive;
 
 .custom-select {
     display: inline-block;

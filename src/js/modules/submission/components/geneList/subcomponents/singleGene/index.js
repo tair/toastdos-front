@@ -63,7 +63,7 @@ class SingleGeneContainer extends React.Component {
     attemptToFinalize() {
         // local validation
         // submit to backend
-        if(this.state.locusNameValue) {
+        if(this.props.finalized !== true && this.state.locusNameValue) {
             this.props.validateGeneData({
                 locusName: this.state.locusNameValue,
                 geneSymbol: this.state.geneSymbolValue,

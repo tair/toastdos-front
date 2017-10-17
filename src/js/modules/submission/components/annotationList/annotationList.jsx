@@ -17,7 +17,7 @@ class AnnotationList extends React.Component {
         return (
             <AnnotationEntry
                 key={`annotation_${annotationId}`}
-                title={`Annotation ${index + 1}`}
+                title={index + 1}
                 annotationType={currAnnotation.annotationType}
                 onTypeChange={this.props.handleAnnotationTypeChange.bind(this, annotationId)}
                 onDeleteClick={this.props.removeAnnotation.bind(this, annotationId)}
