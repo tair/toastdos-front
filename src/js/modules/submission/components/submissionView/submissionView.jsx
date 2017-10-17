@@ -5,7 +5,7 @@ import PublicationField from '../publicationField';
 import GeneList from '../geneList';
 import AnnotationList from '../annotationList';
 import SubmissionReadOnly from '../submissionReadOnly';
-import {Card, CardImg, CardText, CardHeader,
+import {Alert, Card, CardImg, CardText, CardHeader,
     CardBody, CardTitle, CardSubtitle, Button,
     ListGroup, ListGroupItem, ListGroupItemHeading,
     Form, FormGroup, Label, Input,
@@ -21,34 +21,26 @@ class SubmissionView extends React.Component {
     render() {
 
         const submittingPanel = (
-            <div className="submit-panel">
-                <div className="submit-content">
-                   <span>Submitting...</span> 
-                </div>
-            </div>
+            <Alert className="mb-3">
+                <span className="fa fa-refresh fa-spin" /> Submitting...
+            </Alert>
         );
 
         const submittedPanel = (
-            <div className="submit-panel">
-                <div className="submit-content">
-                    <span>Submitted!</span> 
-                    <Button color="primary"
-                        onClick={this.props.resetSubmission}
-                    >
-                    Back
-                    </Button>
-                </div>
-            </div>
+            <Alert color="success"  className="mb-3">
+                <span className="fa fa-check" /> Submitted! 
+                <Button size="sm" color="green" className="ml-2" style={{verticalAlign: "inherit"}}
+                    onClick={this.props.resetSubmission}>
+                    Create New Submission
+                </Button>
+            </Alert>
         );
 
-
         const errorMessage = (
-            <div className="error-box-container">
-                <div className="error-box">
-                    <strong>Submission Error: </strong>
-                    <span>{this.props.errorMessage}</span>
-                </div>
-            </div>
+            <Alert color="danger"  className="mb-3">
+                <span className="fa fa-cross" /> <strong>Submission Error: </strong>
+                {this.props.errorMessage}
+            </Alert>
         );
 
         return (
@@ -58,17 +50,17 @@ class SubmissionView extends React.Component {
                         className="col-md-10 col-offset-4 submission-view-container"
                     >
                         {this.props.errorMessage ? errorMessage : null}
-                        <Card className="submission-view">
-                            {this.props.submitting ? submittingPanel :
+                        {this.props.submitting ? submittingPanel :
                                 (this.props.submitted ? submittedPanel : null)
                             }
+                        <Card className="submission-view">
                         <CardHeader>
                             <h1>New Annotation Submission</h1>
                         </CardHeader>
                         {this.props.previewing ?
                         (<CardBody>
                             <SubmissionReadOnly />
-                            <Row className="mt-3">
+                            {!this.props.submitted ? (<Row className="mt-3">
                                 <Col>
                                     <Button color="warning"
                                         className="btn-submit"
@@ -87,7 +79,7 @@ class SubmissionView extends React.Component {
                                         <span className="fa fa-save"></span> Submit Annotations
                                     </Button>
                                 </Col>
-                            </Row>
+                            </Row>) : null}
                         </CardBody>):
                             (<Form className="submission-form-container">
                                 <ListGroup>
