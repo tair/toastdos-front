@@ -4,6 +4,7 @@ import React from 'react';
 import PublicationField from '../publicationField';
 import GeneList from '../geneList';
 import AnnotationList from '../annotationList';
+import SubmissionReadOnly from '../submissionReadOnly';
 import {Card, CardImg, CardText, CardHeader,
     CardBody, CardTitle, CardSubtitle, Button,
     ListGroup, ListGroupItem, ListGroupItemHeading,
@@ -65,10 +66,8 @@ class SubmissionView extends React.Component {
                         </CardHeader>
                         {this.props.previewing ?
                         (<CardBody>
-                            <Row>
-                                <span>The previewed submission here</span>
-                            </Row>
-                            <Row>
+                            <SubmissionReadOnly />
+                            <Row className="mt-3">
                                 <Col>
                                     <Button color="warning"
                                         className="btn-submit"

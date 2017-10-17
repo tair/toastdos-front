@@ -209,13 +209,11 @@ export default function (state = defaultState, action) {
         return Object.assign({}, state, {
             submitting: false,
             submitted: true,
-            previewing: false,
         });
     case actions.SUBMIT_FAIL:
         return Object.assign({}, state, {
             submitting: false,
             submitted: false,
-            previewing: false,
             submissionError: action.error
         });
     case actions.RESET_SUBMISSION:

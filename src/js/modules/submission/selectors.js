@@ -44,13 +44,13 @@ export function hasValidGenes(state) {
     }
 }
 
-const publicationSelector = state => state[name].publicationIdValue;
+export const publicationSelector = state => state[name].publicationIdValue;
 
-const geneListSelector = state => state[name].geneOrder.map(
+export const geneListSelector = state => state[name].geneOrder.map(
     gid => state[name].geneIndex[gid]
 );
 
-const annotationListSelector = state => state[name].annotationOrder.map(
+export const annotationListSelector = state => state[name].annotationOrder.map(
     aid => state[name].annotationIndex[aid]
 );
 
