@@ -3,7 +3,7 @@
 import React from 'react';
 import CustomTextInput from "lib/components/customTextInput";
 import { Card, CardHeader, CardBody,
-    Label, FormGroup,
+    Label, FormGroup, InputGroup, InputGroupAddon,
     Button, ButtonGroup, Col, Row } from 'reactstrap';
 
 
@@ -17,7 +17,7 @@ class SingleGene extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if(!this.props.finalized && prevProps.finalized) {
             this.locusNameField.focus();
-        }   
+        }
     }
 
     handleFieldBlur() {
@@ -80,13 +80,18 @@ class SingleGene extends React.Component {
 
 
         return (
-            <Card className="single-gene">
+            <Card className="single-gene mt-3">
                 <CardHeader>
                     <Row>
                         <Col>
-                        {this.props.title}
+                            <InputGroup>
+                                <InputGroupAddon className="bg-light-green text-dark">
+                                    {this.props.title}
+                                </InputGroupAddon>
+                                {locusNameInput}
+                            </InputGroup>
                         </Col>
-                        <Col sm="1" className="text-right input-container">
+                        <Col sm="2" className="text-right">
                             <ButtonGroup>
                                 {this.props.finalized ?
                                 (<Button color="warning" size="sm"
@@ -113,19 +118,13 @@ class SingleGene extends React.Component {
                 <CardBody className={this.props.finalized ? "bg-light": null}>
                     <Row>
                         <Col>
-                            <Label>
-                                Locus Name
-                                {locusNameInput}
-                            </Label>
-                        </Col>
-                        <Col>
-                            <Label>
+                            <Label className="d-block">
                                 Gene Symbol
                                 {geneSymbolInput}
                             </Label>
                         </Col>
                         <Col>
-                            <Label>
+                            <Label className="d-block">
                                 Full Gene Name
                                 {fullNameInput}
                             </Label>

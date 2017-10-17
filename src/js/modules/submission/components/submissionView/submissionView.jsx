@@ -63,7 +63,7 @@ class SubmissionView extends React.Component {
                             }
 
                             <CardHeader>
-                                New Annotation Submission
+                                <h2>New Annotation Submission</h2>
                             </CardHeader>
                             {this.props.previewing ?
                             (<CardBody>
@@ -93,16 +93,16 @@ class SubmissionView extends React.Component {
                             </CardBody>):
                             (<Form className="submission-form-container">
                                 <ListGroup>
-                                    <ListGroupItem>
+                                    <ListGroupItem className="border-left-0 border-right-0 border-top-0">
                                         <PublicationField/>
                                     </ListGroupItem>
-                                    <ListGroupItem>
+                                    <ListGroupItem className="border-left-0 border-right-0">
                                         <GeneList/>
                                     </ListGroupItem>
-                                    <ListGroupItem>
+                                    <ListGroupItem className="border-left-0 border-right-0">
                                         <AnnotationList/>
                                     </ListGroupItem>
-                                    <ListGroupItem>
+                                    <ListGroupItem className="border-left-0 border-right-0">
                                         <Row>
                                             <Col>
                                                 <Button color="danger"

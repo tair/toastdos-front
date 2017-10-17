@@ -16,18 +16,20 @@ class Comment extends React.Component {
         return (
             <div>
                 <div>
-                    <h5>Gene</h5>
-                    <GenePicker
-                        onChange={value => this.props.onDataChange(
-                            Object.assign({}, this.props.annotationData.data, {
-                                geneLocalId: value
-                            })
-                        )}
-                        value={this.props.annotationData.data.geneLocalId}
-                    />
+                    <Label className="d-block">
+                        Gene
+                        <GenePicker
+                            onChange={value => this.props.onDataChange(
+                                Object.assign({}, this.props.annotationData.data, {
+                                    geneLocalId: value
+                                })
+                            )}
+                            value={this.props.annotationData.data.geneLocalId}
+                        />
+                    </Label>
                 </div>
                 <div>
-                    <Label>Comment
+                    <Label className="d-block">Comment
                         <CustomTextArea name="comment"
                             onChange={event => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {

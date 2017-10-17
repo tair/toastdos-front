@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import { Input } from 'reactstrap';
 import 'css/customTextInput.scss';
 
 class CustomTextInput extends React.Component {
@@ -31,15 +32,9 @@ class CustomTextInput extends React.Component {
     }
 
     render() {
-        let classes = [this.props.className];
-
-        if(this.state.focused) {
-            classes.push('focused');
-        }
 
         return (
-            <div style={this.props.style} className={classes.join(" ")}>
-                <input type="text"
+                <Input type="text"
                     className="form-control"
                     onChange={this.props.onChange}
                     onFocus={this.handleFocus}
@@ -52,9 +47,9 @@ class CustomTextInput extends React.Component {
                     ref={this.props.inputRef}
                     spellCheck={this.props.spellCheck}
                     id={this.props.inputId}
-                />
-                {this.props.children}
-            </div>
+                >
+                    {this.props.children}
+                </Input>
         );
     }
 }

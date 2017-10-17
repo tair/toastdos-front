@@ -22,7 +22,7 @@ class GeneGene extends React.Component {
         return (
             <Row>
                 <Col>
-                    <Label>
+                    <Label className="d-block">
                         Gene 1
                         <GenePicker
                             onChange={value => this.props.onDataChange(
@@ -35,7 +35,7 @@ class GeneGene extends React.Component {
                     </Label>
                 </Col>
                 <Col>
-                    <Label>
+                    <Label className="d-block">
                         Gene 2
                         <GenePicker
                             onChange={value => this.props.onDataChange(
@@ -48,7 +48,7 @@ class GeneGene extends React.Component {
                     </Label>
                 </Col>
                 <Col>
-                    <Label>
+                    <Label className="d-block">
                         Method
                         <KeywordTextInput
                             onChange={value => this.props.onDataChange(

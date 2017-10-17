@@ -2,7 +2,7 @@
 
 import React from 'react';
 import SingleGene from './subcomponents/singleGene';
-import { Button } from 'reactstrap';
+import { Button, Row, Col } from 'reactstrap';
 
 class GeneList extends React.Component {
     constructor(props) {
@@ -16,7 +16,7 @@ class GeneList extends React.Component {
         return (
             <SingleGene
                 key={`gene_${geneData.localId}`}
-                title={`Gene ${index + 1}`}
+                title={`Locus ${index + 1}`}
                 onRemoveClick={() => this.props.removeGene(geneId)}
                 validateGeneData={this.props.validateGeneData.bind(this, geneId)}
                 onEditClick={this.props.editGeneData.bind(this, geneId)}
@@ -34,12 +34,7 @@ class GeneList extends React.Component {
         return (
             <div className="gene-list-container">
                 <div className="gene-list">
-                    <h2>Genes <Button color="success" size="sm"
-                            onClick={this.props.onGeneAddClick}
-                        >
-                            <span className="fa fa-plus" title="Add Gene"></span>
-                        </Button>
-                    </h2>
+                    <h3>Genes</h3>
                     {(this.props.geneOrder.length <= 0) ? 
                        (
                         <span className="empty-message">
@@ -48,6 +43,15 @@ class GeneList extends React.Component {
                        ) : null
                     }
                     {this.props.geneOrder.map(this.generateGene)}
+                    <Row className="justify-content-sm-center mt-3 mb-3">
+                        <Col sm={{size:4, offset:4}} className="justify-content-sm-center">
+                            <Button block color="success"
+                                onClick={this.props.onGeneAddClick}
+                                >
+                                <span className="fa fa-plus" title="Add Gene"></span> Add Gene
+                            </Button>
+                        </Col>
+                    </Row>
                 </div>
             </div>
         );

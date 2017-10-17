@@ -18,8 +18,8 @@ class PublicationField extends React.Component {
 
         return (
             <div className="publication-field">
-                <h2>Publication</h2>
-                <Label>PubMed ID or Digital Object Identifier (DOI)
+                <h3>Publication</h3>
+                <Label className="d-block">PubMed ID or Digital Object Identifier (DOI)
                     <CustomTextInput
                         value={this.props.publicationIdValue}
                         style={inputStyle}

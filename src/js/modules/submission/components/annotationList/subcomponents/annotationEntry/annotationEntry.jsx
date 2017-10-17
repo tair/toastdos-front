@@ -1,7 +1,8 @@
 "use strict";
 
 import React from 'react';
-import { Card, CardHeader, CardBody, Input, Label,
+import { Card, CardHeader, CardBody,
+    Input, InputGroup, InputGroupAddon, Label,
     Form, FormGroup, Row, Col, Button } from 'reactstrap';
 
 import CustomSelect from 'lib/components/customSelect';
@@ -79,19 +80,21 @@ class AnnotationEntry extends React.Component {
 
     render() {
         return (
-            <Card className="annotation-entry">
+            <Card className="annotation-entry mt-3">
                 <CardHeader>
                     <Row>
                         <Col>
-                            <Label> {this.props.title} Annotation Type
-                                <CustomSelect
-                                    name="Annotation Type"
+                            <InputGroup>
+                                <InputGroupAddon className="bg-light-green text-dark">
+                                    {this.props.title}
+                                </InputGroupAddon>
+                                <CustomSelect name="Annotation Type"
                                     onChange={this.handleTypeChange}
                                     value={this.props.annotationType}
                                 >
                                     {Object.keys(annotationTypes).map(this.generateTypeOption)}
                                 </CustomSelect>
-                            </Label>
+                            </InputGroup>
                         </Col>
                         <Col sm="1" className="text-right input-container">
                             <Button color="danger" size="sm"

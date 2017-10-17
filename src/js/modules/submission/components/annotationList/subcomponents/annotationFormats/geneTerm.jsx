@@ -1,7 +1,8 @@
 "use strict";
 
 import React from 'react';
-import { Media, Label, Button, Row, Col } from 'reactstrap';
+import { ListGroup, ListGroupItem, InputGroup, InputGroupAddon,
+    Label, Button, Row, Col } from 'reactstrap';
 
 import GenePicker from '../genePicker';
 import { annotationTypeData } from "../../../../constants";
@@ -41,8 +42,8 @@ class GeneTerm extends React.Component {
         const currentEvidenceWith = this.props.annotationData.data.evidenceWithIndex[evidenceWithId];
         // TODO: Clean up this code and move into its own component.
         return (
-            <Media key={`evidence_with_${evidenceWithId}`}>
-                <Media body>
+            <ListGroupItem key={`evidence_with_${evidenceWithId}`}>
+                <InputGroup>
                     <CustomTextInput
                         placeholder="e.g. a locus, protein"
                         value={currentEvidenceWith.locusName}
@@ -61,13 +62,13 @@ class GeneTerm extends React.Component {
                         onBlur={() => {this.props.validateEvidenceWith(evidenceWithId);}}
                         style={{marginRight: 10}}
                     />
-                </Media>
-                <Media right>
-                    <span className={this.getEWStatus(currentEvidenceWith.finalized, currentEvidenceWith.isValid)}
-                        style={{color: this.getEWColor(currentEvidenceWith.finalized, currentEvidenceWith.isValid)}} >
-                    </span>
-                </Media>
-            </Media>
+                    <InputGroupAddon>
+                        <span className={this.getEWStatus(currentEvidenceWith.finalized, currentEvidenceWith.isValid)}
+                            style={{color: this.getEWColor(currentEvidenceWith.finalized, currentEvidenceWith.isValid)}} >
+                        </span>
+                    </InputGroupAddon>
+                </InputGroup>
+            </ListGroupItem>
         );
     }
 
@@ -75,9 +76,10 @@ class GeneTerm extends React.Component {
         let typeData = annotationTypeData[this.props.annotationData.annotationType];
 
         return (
+            <div>
             <Row>
                 <Col style={inputContainerStyle}>
-                    <Label>
+                    <Label className="d-block">
                         Gene
                         <GenePicker
                             onChange={value => this.props.onDataChange(
@@ -90,7 +92,7 @@ class GeneTerm extends React.Component {
                     </Label>
                 </Col>
                 <Col style={inputContainerStyle}>
-                    <Label>
+                    <Label className="d-block">
                         {typeData.name}
                         <KeywordTextInput
                             onChange={value => this.props.onDataChange(
@@ -112,7 +114,7 @@ class GeneTerm extends React.Component {
                     </Label>
                 </Col>
                 <Col style={inputContainerStyle}>
-                    <Label>
+                    <Label className="d-block">
                         Method
                         <KeywordTextInput
                             onChange={value => this.props.onDataChange(
@@ -135,20 +137,25 @@ class GeneTerm extends React.Component {
                         />
                     </Label>
                 </Col>
+            </Row>
+            <Row>
                 {(this.props.annotationData.data.methodEvidenceCode === 'IGI' || this.props.annotationData.data.methodEvidenceCode === 'IPI')?(
                 <Col>
                     <Label>
                         Evidence With
-                        {this.props.annotationData.data.evidenceWithOrder.map(this.generateEvidenceWith)}
-                        <Button color="success"
-                            onClick={this.props.onEvidenceWithAddClick}
-                        >
-                            <span className="fa fa-plus"></span> Evidence With
-                        </Button>
                     </Label>
+                    <ListGroup>
+                        {this.props.annotationData.data.evidenceWithOrder.map(this.generateEvidenceWith)}
+                    </ListGroup>
+                    <Button color="success"
+                        onClick={this.props.onEvidenceWithAddClick}
+                    >
+                        <span className="fa fa-plus"></span> Evidence With
+                    </Button>
                 </Col>
                 ):(<span />)}
             </Row>
+            </div>
         );
     }
 }
