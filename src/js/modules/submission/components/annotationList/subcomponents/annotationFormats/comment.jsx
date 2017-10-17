@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import { Label, Button, Row, Col } from 'reactstrap';
 
 import GenePicker from '../genePicker';
 import CustomTextArea from 'lib/components/customTextArea';
@@ -26,19 +27,19 @@ class Comment extends React.Component {
                     />
                 </div>
                 <div>
-                    <h5>Comment</h5>
-                    <CustomTextArea
-                        name="comment"
-                        onChange={event => this.props.onDataChange(
-                            Object.assign({}, this.props.annotationData.data, {
-                                comment: event.target.value
-                            })
-                        )}
-                        value={this.props.annotationData.data.comment}
-                        placeholder="Type your comment..."
-                        className="comment-text-area"
-                    >
-                    </CustomTextArea>
+                    <Label>Comment
+                        <CustomTextArea name="comment"
+                            onChange={event => this.props.onDataChange(
+                                Object.assign({}, this.props.annotationData.data, {
+                                    comment: event.target.value
+                                })
+                            )}
+                            value={this.props.annotationData.data.comment}
+                            placeholder="Type your comment..."
+                            className="comment-text-area"
+                        >
+                        </CustomTextArea>
+                    </Label>
                 </div>
             </div>
         );

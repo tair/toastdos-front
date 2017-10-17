@@ -86,7 +86,7 @@ class SingleGene extends React.Component {
                         <Col>
                         {this.props.title}
                         </Col>
-                        <Col className="text-right input-container">
+                        <Col sm="1" className="text-right input-container">
                             <ButtonGroup>
                                 {this.props.finalized ?
                                 (<Button color="warning" size="sm"

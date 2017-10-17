@@ -7,7 +7,7 @@ import AnnotationList from '../annotationList';
 import {Card, CardImg, CardText, CardHeader,
     CardBody, CardTitle, CardSubtitle, Button,
     ListGroup, ListGroupItem, ListGroupItemHeading,
-    Form, FormGroup,
+    Form, FormGroup, Label, Input,
     ListGroupItemText, Container, Row, Col} from 'reactstrap';
 
 import 'css/submissionView.scss';
@@ -91,37 +91,39 @@ class SubmissionView extends React.Component {
                                     </Col>
                                 </Row>
                             </CardBody>):
-                            (<ListGroup className="submission-form-container">
-                                <ListGroupItem>
-                                    <PublicationField/>
-                                </ListGroupItem>
-                                <ListGroupItem>
-                                    <GeneList/>
-                                </ListGroupItem>
-                                <ListGroupItem>
-                                    <AnnotationList/>
-                                </ListGroupItem>
-                                <ListGroupItem>
-                                    <Row>
-                                        <Col>
-                                            <Button color="danger"
-                                                onClick={this.props.resetSubmission}
-                                            >
-                                                Reset Form
-                                            </Button>
-                                        </Col>
-                                        <Col className="text-right">
-                                            <Button color="success"// size="lg"
-                                                className="btn-submit"
-                                                onClick={this.props.preview}
-                                                disabled={!this.props.canSubmit}
-                                            >
-                                                Review Submission <span className="fa fa-chevron-right"></span>
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </ListGroupItem>
-                            </ListGroup>)}
+                            (<Form className="submission-form-container">
+                                <ListGroup>
+                                    <ListGroupItem>
+                                        <PublicationField/>
+                                    </ListGroupItem>
+                                    <ListGroupItem>
+                                        <GeneList/>
+                                    </ListGroupItem>
+                                    <ListGroupItem>
+                                        <AnnotationList/>
+                                    </ListGroupItem>
+                                    <ListGroupItem>
+                                        <Row>
+                                            <Col>
+                                                <Button color="danger"
+                                                    onClick={this.props.resetSubmission}
+                                                >
+                                                    Reset Form
+                                                </Button>
+                                            </Col>
+                                            <Col className="text-right">
+                                                <Button color="success"
+                                                    className="btn-submit"
+                                                    onClick={this.props.preview}
+                                                    disabled={!this.props.canSubmit}
+                                                >
+                                                    Review Submission <span className="fa fa-chevron-right"></span>
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    </ListGroupItem>
+                                </ListGroup>
+                            </Form>)}
                         </Card>
                     </Col>
                 </Row>
