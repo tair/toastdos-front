@@ -7,6 +7,7 @@ import AnnotationList from '../annotationList';
 import {Card, CardImg, CardText, CardHeader,
     CardBody, CardTitle, CardSubtitle, Button,
     ListGroup, ListGroupItem, ListGroupItemHeading,
+    Form, FormGroup,
     ListGroupItemText, Container, Row, Col} from 'reactstrap';
 
 import 'css/submissionView.scss';

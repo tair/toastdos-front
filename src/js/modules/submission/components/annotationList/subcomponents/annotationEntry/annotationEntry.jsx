@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-import { Card, CardHeader, CardBody, Button } from 'reactstrap';
+import { Card, CardHeader, CardBody, Form, FormGroup, Button } from 'reactstrap';
 
 import CustomSelect from 'lib/components/customSelect';
 
@@ -80,22 +80,24 @@ class AnnotationEntry extends React.Component {
         return (
             <Card className="annotation-entry">
                 <CardHeader>
-                <h4>{this.props.title}</h4>
+                    {this.props.title}
                 </CardHeader>
                 <CardBody>
-                    <CustomSelect
-                        name="Annotation Type"
-                        onChange={this.handleTypeChange}
-                        value={this.props.annotationType}
-                    >
-                        {Object.keys(annotationTypes).map(this.generateTypeOption)}
-                    </CustomSelect>
-                    {this.renderAnnotationFormat()}
-                    <Button color="danger" size="sm"
-                        onClick={this.props.onDeleteClick}
-                    >
-                        <span className="fa fa-close" title="Remove Annotation"></span>
-                    </Button>
+                    <FormGroup>
+                        <CustomSelect
+                            name="Annotation Type"
+                            onChange={this.handleTypeChange}
+                            value={this.props.annotationType}
+                        >
+                            {Object.keys(annotationTypes).map(this.generateTypeOption)}
+                        </CustomSelect>
+                        {this.renderAnnotationFormat()}
+                        <Button color="danger" size="sm"
+                            onClick={this.props.onDeleteClick}
+                        >
+                            <span className="fa fa-close" title="Remove Annotation"></span>
+                        </Button>
+                    </FormGroup>
                 </CardBody>
             </Card>
         );
