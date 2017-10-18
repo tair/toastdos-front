@@ -6,6 +6,7 @@ export const REMOVE_GENE = "submission/REMOVE_GENE";
 export const ATTEMPT_VALIDATE_GENE = "submission/ATTEMPT_VALIDATE_GENE";
 export const VALIDATE_GENE_SUCCESS = "submission/VALIDATE_GENE_SUCCESS";
 export const VALIDATE_GENE_FAIL = "submission/VALIDATE_GENE_FAIL";
+export const UPDATE_GENE_DATA = "submission/UPDATE_GENE_DATA";
 export const EDIT_GENE_DATA = "submission/EDIT_GENE_DATA";
 export const ADD_NEW_ANNOTATION = "submission/ADD_NEW_ANNOTATION";
 export const REMOVE_ANNOTATION = "submission/REMOVE_ANNOTATION";

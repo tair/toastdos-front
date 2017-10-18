@@ -96,8 +96,8 @@ class AnnotationEntry extends React.Component {
                                 </CustomSelect>
                             </InputGroup>
                         </Col>
-                        <Col sm="1" className="text-right input-container">
-                            <Button color="danger" size="sm"
+                        <Col sm="auto" className="text-right input-container">
+                            <Button color="danger"
                                 onClick={this.props.onDeleteClick}
                             >
                                 <span className="fa fa-close" title="Remove Annotation"></span>

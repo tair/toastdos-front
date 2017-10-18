@@ -18,7 +18,7 @@ const ConnectedSubmissionReadOnly = connect(
         genes: geneListSelector,
         annotations: annotationListSelector,
         geneIndex: s => s.submission.geneIndex
-    }), dispatch => {}
+    }), dispatch => ({})
 )(SubmissionReadOnly);
 
 export default ConnectedSubmissionReadOnly;

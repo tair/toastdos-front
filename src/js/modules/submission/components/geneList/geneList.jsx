@@ -19,6 +19,7 @@ class GeneList extends React.Component {
                 title={`Locus ${index + 1}`}
                 onRemoveClick={() => this.props.removeGene(geneId)}
                 validateGeneData={this.props.validateGeneData.bind(this, geneId)}
+                updateGeneData={this.props.updateGeneData.bind(this, geneId)}
                 onEditClick={this.props.editGeneData.bind(this, geneId)}
                 validating={geneData.validating}
                 locusName={geneData.finalizedLocusName}
@@ -34,7 +35,7 @@ class GeneList extends React.Component {
         return (
             <div className="gene-list-container">
                 <div className="gene-list">
-                    <h3>Genes</h3>
+                    <h4>Genes</h4>
                     {(this.props.geneOrder.length <= 0) ? 
                        (
                         <span className="empty-message">

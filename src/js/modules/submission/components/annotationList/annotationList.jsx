@@ -32,7 +32,7 @@ class AnnotationList extends React.Component {
     render() {
         return (
             <div className="annotation-list-container">
-                <h3>Annotations</h3>
+                <h4>Annotations</h4>
                 {(this.props.annotationOrder.length <= 0) ? 
                    (
                     <span className="empty-message">

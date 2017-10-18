@@ -75,6 +75,17 @@ export default function (state = defaultState, action) {
         newState.geneIndex[action.localId].validationError = '';
         newState.geneIndex[action.localId].validating = true;
         return Object.assign({}, state, newState);
+    case actions.UPDATE_GENE_DATA:
+        return {
+            ...state,
+            geneIndex: {
+                ...state.geneIndex,
+                [action.localId]: {
+                    ...state.geneIndex[action.localId],
+                    ...action.geneData
+                }
+            }
+        };
     case actions.VALIDATE_GENE_SUCCESS:
         newState = {
             geneIndex: Object.assign({}, state.geneIndex),
@@ -86,8 +97,6 @@ export default function (state = defaultState, action) {
         newState.geneIndex[action.localId].validationError = '';
 
         newState.geneIndex[action.localId].finalizedLocusName = action.geneData.locusName;
-        newState.geneIndex[action.localId].finalizedGeneSymbol = action.geneData.geneSymbol;
-        newState.geneIndex[action.localId].finalizedFullName = action.geneData.fullName;
         
 
         return Object.assign({}, state, newState);
@@ -167,7 +176,15 @@ export default function (state = defaultState, action) {
                 keywordId: null,
                 methodName: "",
                 methodId: null,
-                methodEvidenceCode: null
+                methodEvidenceCode: null,
+                evidenceWithIndex: {
+                    "init": {
+                        finalized: false,
+                        isValid: false,
+                        locusName: ""
+                    }
+                },
+                evidenceWithOrder: ["init"]
             };
             break;
         case annotationFormats.GENE_GENE:

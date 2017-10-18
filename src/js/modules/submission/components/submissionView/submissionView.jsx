@@ -55,7 +55,7 @@ class SubmissionView extends React.Component {
                         }
                         <Card className="submission-view">
                             <CardHeader>
-                                <h2>New Annotation Submission</h2>
+                                <span className="fa fa-file-text" /> New Annotation Submission
                             </CardHeader>
                             {this.props.previewing ?
                             (<CardBody>
@@ -98,7 +98,7 @@ class SubmissionView extends React.Component {
                                                 <Button color="danger"
                                                     onClick={this.props.resetSubmission}
                                                 >
-                                                    Reset Form
+                                                    <span className="fa fa-trash"></span> Reset Form
                                                 </Button>
                                             </Col>
                                             <Col className="text-right">

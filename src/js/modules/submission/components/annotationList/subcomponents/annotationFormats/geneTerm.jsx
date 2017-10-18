@@ -8,6 +8,7 @@ import GenePicker from '../genePicker';
 import { annotationTypeData } from "../../../../constants";
 import KeywordTextInput from '../../../keywordTextInput';
 import CustomTextInput from "lib/components/customTextInput";
+import ValidationStatus from "../../../validationStatus";
 
 const inputContainerStyle = {
     display: "inline-block",
@@ -21,22 +22,6 @@ class GeneTerm extends React.Component {
         this.generateEvidenceWith = this.generateEvidenceWith.bind(this);
     }
 
-    getEWColor(finalized, isValid) {
-        if (finalized) {
-            return isValid? "green": "red";
-        } else {
-            return "black";
-        }
-    }
-
-    getEWStatus(finalized, isValid) {
-        let className = "fa fa-fw ";
-        if (finalized) {
-            return className +  (isValid? "fa-check": "fa-exclamation-circle");
-        } else {
-            return className + "fa-chain";
-        }
-    }
 
     generateEvidenceWith(evidenceWithId) {
         const currentEvidenceWith = this.props.annotationData.data.evidenceWithIndex[evidenceWithId];
@@ -63,9 +48,7 @@ class GeneTerm extends React.Component {
                         style={{marginRight: 10}}
                     />
                     <InputGroupAddon>
-                        <span className={this.getEWStatus(currentEvidenceWith.finalized, currentEvidenceWith.isValid)}
-                            style={{color: this.getEWColor(currentEvidenceWith.finalized, currentEvidenceWith.isValid)}} >
-                        </span>
+                        <ValidationStatus finalized={currentEvidenceWith.finalized} isValid={currentEvidenceWith.isValid} />
                     </InputGroupAddon>
                 </InputGroup>
             </ListGroupItem>
@@ -147,7 +130,7 @@ class GeneTerm extends React.Component {
                     <ListGroup>
                         {this.props.annotationData.data.evidenceWithOrder.map(this.generateEvidenceWith)}
                     </ListGroup>
-                    <Button color="success"
+                    <Button color="success" className="mt-3"
                         onClick={this.props.onEvidenceWithAddClick}
                     >
                         <span className="fa fa-plus"></span> Evidence With
