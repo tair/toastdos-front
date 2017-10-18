@@ -1,9 +1,6 @@
 @import "globals";
 
-$arrowColor: $accentColor;
-$arrowColorFocused: $accentColorActive;
-
-select {
+select, textarea {
     -webkit-appearance: none;
     border: none;
     border-radius: 0;
@@ -11,7 +8,11 @@ select {
     background-color: #FFFFFF;
     outline: none;
     -moz-appearance: none;
+    width: 100%;
 }
+/*
+$arrowColor: $accentColor;
+$arrowColorFocused: $accentColorActive;
 
 .custom-select {
     display: inline-block;
@@ -74,3 +75,4 @@ select {
     }
 
 }
+*/

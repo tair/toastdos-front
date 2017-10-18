@@ -163,7 +163,6 @@ class SmartTextInput extends React.Component {
                             />
                         </div>
                     ) : null
-
                 }
             </span>
         );

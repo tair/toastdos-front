@@ -4,6 +4,12 @@ import React from 'react';
 import PublicationField from '../publicationField';
 import GeneList from '../geneList';
 import AnnotationList from '../annotationList';
+import SubmissionReadOnly from '../submissionReadOnly';
+import {Alert, Card, CardImg, CardText, CardHeader,
+    CardBody, CardFooter, CardTitle, CardSubtitle, Button,
+    ListGroup, ListGroupItem, ListGroupItemHeading,
+    Form, FormGroup, Label, Input,
+    ListGroupItemText, Container, Row, Col} from 'reactstrap';
 
 import 'css/submissionView.scss';
 
@@ -15,87 +21,134 @@ class SubmissionView extends React.Component {
     render() {
 
         const submittingPanel = (
-            <div className="submit-panel">
-                <div className="submit-content">
-                   <span>Submitting...</span> 
-                </div>
-            </div>
+            <Alert className="mb-3">
+                <span className="fa fa-refresh fa-spin" /> Submitting...
+            </Alert>
         );
 
         const submittedPanel = (
-            <div className="submit-panel">
-                <div className="submit-content">
-                    <span>Submitted!</span> 
-                    <button
-                        className="btn btn-primary"
-                        onClick={this.props.resetSubmission}
-                    >
-                    Back
-                    </button>
-                </div>
-            </div>
+            <Alert color="success"  className="mb-3">
+                <span className="fa fa-check" /> Submitted! 
+                <Button size="sm" color="green" className="ml-2" style={{verticalAlign: "inherit"}}
+                    onClick={this.props.resetSubmission}>
+                    Create New Submission
+                </Button>
+            </Alert>
         );
 
-
         const errorMessage = (
-            <div className="error-box-container">
-                <div className="error-box">
-                    <strong>Submission Error: </strong>
-                    <span>{this.props.errorMessage}</span>
-                </div>
-            </div>
+            <Alert color="danger"  className="mb-3">
+                <span className="fa fa-cross" /> <strong>Submission Error: </strong>
+                {this.props.errorMessage}
+            </Alert>
         );
 
         return (
-            <div
-                className="submission-view-container"
-            >
-                {this.props.errorMessage ? errorMessage : null}
-                <div className="submission-view">
-                    {this.props.submitting ? submittingPanel :
-                        (this.props.submitted ? submittedPanel : null)
-                    }
-                    <h1>New Annotation Submission</h1>
-                    <div className="submission-navigator-container">
-                        <div className="submission-navigator">
-                            {/* todo submission navigator wlil go here */}
-                        </div>
-                    </div>
-                    <div className="submission-form-container">
-                        <button
-                            className="btn btn-secondary"
-                            onClick={this.props.resetSubmission}
-                        >
-                            Reset Form
-                        </button>
-                        <PublicationField />
-                        <GeneList />
-                        <AnnotationList />
-                        <button
-                            className="btn btn-primary btn-lg btn-submit"
-                            onClick={this.props.submit}
-                            disabled={!this.props.canSubmit}
-                        >
-                            Submit Annotations
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <Container fluid className="mt-3">
+                <Row className="justify-content-md-center">
+                    <Col
+                        className="col-md-10 col-offset-4 submission-view-container"
+                    >
+                        {this.props.errorMessage ? errorMessage : null}
+                        {this.props.submitting ? submittingPanel :
+                            (this.props.submitted ? submittedPanel : null)
+                        }
+                        <Card className="submission-view">
+                            <CardHeader>
+                                <span className="fa fa-file-text" /> New Annotation Submission
+                            </CardHeader>
+                            <CardBody className="p-0">
+                                <Form className="submission-form-container">
+                                {this.props.previewing ?
+                                (
+                                    <SubmissionReadOnly />
+                                ):
+                                (
+                                    <ListGroup>
+                                        <ListGroupItem className="border-left-0 border-right-0 border-top-0">
+                                            <PublicationField/>
+                                        </ListGroupItem>
+                                        <ListGroupItem className="border-left-0 border-right-0">
+                                            <GeneList/>
+                                        </ListGroupItem>
+                                        <ListGroupItem className="border-left-0 border-right-0 border-bottom-0">
+                                            <AnnotationList/>
+                                        </ListGroupItem>
+                                    </ListGroup>
+                                )}
+                                </Form>
+                            </CardBody>
+                            <CardFooter>
+                            {this.props.previewing ?
+                            (
+                                !this.props.submitted ?
+                                (
+                                <Row>
+                                    <Col>
+                                        <Button color="warning"
+                                            className="btn-submit"
+                                            onClick={this.props.edit}
+                                            disabled={!this.props.canSubmit}
+                                        >
+                                            <span className="fa fa-chevron-left"></span> Make Changes
+                                        </Button>
+                                    </Col>
+                                    <Col className="text-right">
+                                        <Button color="success"
+                                            className="btn-submit"
+                                            onClick={this.props.submit}
+                                            disabled={!this.props.canSubmit}
+                                        >
+                                            <span className="fa fa-save"></span> Submit Annotations
+                                        </Button>
+                                    </Col>
+                                </Row>
+                                ) : null
+                            ) : (
+                                <Row>
+                                    <Col>
+                                        <Button color="danger"
+                                            onClick={this.props.resetSubmission}
+                                        >
+                                            Reset Form
+                                        </Button>
+                                    </Col>
+                                    <Col className="text-right">
+                                        <Button color="success"
+                                            className="btn-submit"
+                                            onClick={this.props.preview}
+                                            disabled={!this.props.canSubmit}
+                                        >
+                                            Review Submission <span className="fa fa-chevron-right"></span>
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            )}
+                            </CardFooter>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
         );
     }
 }
 
 SubmissionView.propTypes = {
     submit: React.PropTypes.func,
+    preview: React.PropTypes.func,
+    edit: React.PropTypes.func,
     resetSubmission: React.PropTypes.func,
     submitting: React.PropTypes.bool,
     submitted: React.PropTypes.bool,
+    previewing: React.PropTypes.bool,
     canSubmit: React.PropTypes.bool,
     errorMessage: React.PropTypes.string,
 };
 
 SubmissionView.defaultProps = {
-    submit: () => {}
+    submit: () => {},
+    preview: () => {},
+    edit: () => {},
 };
 
 export default SubmissionView;

@@ -38,6 +38,9 @@ class SingleGeneContainer extends React.Component {
         this.setState({
             locusNameValue: event.target.value.toUpperCase()
         });
+        if (this.props.finalized) {
+            this.props.onEditClick();
+        }
     }
 
     /**
@@ -47,6 +50,9 @@ class SingleGeneContainer extends React.Component {
     handleGeneSymbolChange(event) {
         this.setState({
             geneSymbolValue: event.target.value
+        });
+        this.props.updateGeneData({
+            finalizedGeneSymbol: event.target.value
         });
     }
 
@@ -58,16 +64,17 @@ class SingleGeneContainer extends React.Component {
         this.setState({
             fullNameValue: event.target.value
         });
+        this.props.updateGeneData({
+            finalizedFullName: event.target.value
+        });
     }
 
     attemptToFinalize() {
         // local validation
         // submit to backend
-        if(this.state.locusNameValue) {
+        if(this.props.finalized !== true && this.state.locusNameValue) {
             this.props.validateGeneData({
-                locusName: this.state.locusNameValue,
-                geneSymbol: this.state.geneSymbolValue,
-                fullName: this.state.fullNameValue 
+                locusName: this.state.locusNameValue, 
             });
         }
     }
@@ -106,6 +113,7 @@ SingleGeneContainer.propTypes = {
     onRemoveClick: React.PropTypes.func,
     onEditClick: React.PropTypes.func,
     validateGeneData: React.PropTypes.func,
+    updateGeneData: React.PropTypes.func,
     validating: React.PropTypes.bool,
     validationError: React.PropTypes.string,
     finalized: React.PropTypes.bool
@@ -119,6 +127,7 @@ SingleGeneContainer.defaultProps = {
     onRemoveClick: () => {},
     onEditClick: () => {},
     validateGeneData: () => {},
+    updateGeneData: () => {},
     validating: false,
     validationError: "",
     finalized: false

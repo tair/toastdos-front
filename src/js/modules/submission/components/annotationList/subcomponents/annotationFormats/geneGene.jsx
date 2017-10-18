@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import { Label, Button, Row, Col } from 'reactstrap';
 
 import GenePicker from '../genePicker';
 import KeywordTextInput from '../../../keywordTextInput';
@@ -19,53 +20,58 @@ class GeneGene extends React.Component {
 
     render() {
         return (
-            <div>
-                <div style={inputContainerStyle}>
-                    <h5>Gene 1</h5>
-                    <GenePicker
-                        onChange={value => this.props.onDataChange(
-                            Object.assign({}, this.props.annotationData.data, {
-                                gene1LocalId: value
-                            })
-                        )}
-                        value={this.props.annotationData.data.gene1LocalId}
-                    />
-                </div>
-                <div style={inputContainerStyle}>
-                    <h5>Gene 2</h5>
-                    <GenePicker
-                        onChange={value => this.props.onDataChange(
-                            Object.assign({}, this.props.annotationData.data, {
-                                gene2LocalId: value
-                            })
-                        )}
-                        value={this.props.annotationData.data.gene2LocalId}
-                    />
-                </div>
-                <div style={inputContainerStyle}>
-                    <h5>Method</h5>
-                    <KeywordTextInput
-                        onChange={value => this.props.onDataChange(
-                            Object.assign({}, this.props.annotationData.data, {
-                                methodName: value,
-                                methodId: null,
-                                methodEvidenceCode: null,
-                            })
-                        )}
-                        onSelect={(id, value) => this.props.onDataChange(
-                            Object.assign({}, this.props.annotationData.data, {
-                                methodName: value.name,
-                                methodId: id,
-                                methodEvidenceCode: null,
-                            })
-                        )}
-                        placeholder="e.g. Enzyme Assay"
-                        value={this.props.annotationData.data.methodName}
-                        searchScope="eco"
-                    />
-                </div>
-                
-            </div>
+            <Row>
+                <Col>
+                    <Label className="d-block">
+                        Gene 1
+                        <GenePicker
+                            onChange={value => this.props.onDataChange(
+                                Object.assign({}, this.props.annotationData.data, {
+                                    gene1LocalId: value
+                                })
+                            )}
+                            value={this.props.annotationData.data.gene1LocalId}
+                        />
+                    </Label>
+                </Col>
+                <Col>
+                    <Label className="d-block">
+                        Gene 2
+                        <GenePicker
+                            onChange={value => this.props.onDataChange(
+                                Object.assign({}, this.props.annotationData.data, {
+                                    gene2LocalId: value
+                                })
+                            )}
+                            value={this.props.annotationData.data.gene2LocalId}
+                        />
+                    </Label>
+                </Col>
+                <Col>
+                    <Label className="d-block">
+                        Method
+                        <KeywordTextInput
+                            onChange={value => this.props.onDataChange(
+                                Object.assign({}, this.props.annotationData.data, {
+                                    methodName: value,
+                                    methodId: null,
+                                    methodEvidenceCode: null,
+                                })
+                            )}
+                            onSelect={(id, value) => this.props.onDataChange(
+                                Object.assign({}, this.props.annotationData.data, {
+                                    methodName: value.name,
+                                    methodId: id,
+                                    methodEvidenceCode: null,
+                                })
+                            )}
+                            placeholder="e.g. Enzyme Assay"
+                            value={this.props.annotationData.data.methodName}
+                            searchScope="eco"
+                        />
+                    </Label>
+                </Col>
+            </Row>
         );
     }
 }

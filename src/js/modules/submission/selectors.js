@@ -44,14 +44,24 @@ export function hasValidGenes(state) {
     }
 }
 
-const publicationSelector = state => state[name].publicationIdValue;
+export const publicationSelector = state => state[name].publicationIdValue;
 
-const geneListSelector = state => state[name].geneOrder.map(
+export const geneListSelector = state => state[name].geneOrder.map(
     gid => state[name].geneIndex[gid]
 );
 
-const annotationListSelector = state => state[name].annotationOrder.map(
+export const annotationListSelector = state => state[name].annotationOrder.map(
     aid => state[name].annotationIndex[aid]
+);
+
+export const evidenceWithSelector = createSelector(
+    annotationListSelector,
+    (annotations) =>         
+        Object.assign.apply(null, 
+            [{}].concat(annotations
+                .filter(a => annotationTypeData[a.annotationType].format ==
+                    annotationFormats.GENE_TERM)
+                .map(a => a.data.evidenceWithIndex)))
 );
 
 export const canSubmit = createSelector(

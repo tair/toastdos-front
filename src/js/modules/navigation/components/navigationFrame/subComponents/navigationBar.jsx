@@ -1,118 +1,60 @@
 "use strict";
 
 import React from 'react';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, 
+    Dropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap';
 import  {Link} from 'react-router';
 import orcidInfo from 'resources/orcid_app_info';
 import userInfoModule from 'modules/userInfo';
+import goatLogo from 'img/goat.svg'
 
 const AUTH_URL = orcidInfo.authUrl;
-
-const navigationBarStyle = {
-    display: "block",
-    padding: "0 50px"
-};
-
-const navigationListStyle = {
-    width: "50%",
-    display: "inline",
-    padding: 0,
-    margin: 0,
-    listStyle: "none"
-};
-
-const navigationLinkStyle = {
-    cursor: "pointer",
-    display: "block",
-    height: "100%",
-    padding: "15px 10px",
-    textDecoration: "none",
-    textAlign: "center",
-    WebkitUserSelect: "none", /* webkit (safari, chrome) browsers */
-    MozUserSelect: "none", /* mozilla browsers */
-    KhtmlUserSelect: "none", /* webkit (konqueror) browsers */
-    MsUserSelect: "none"
-};
-
-const rightNavListStyle = {
-    float: "right",
-    textAlign: "right"
-};
 
 class NavigationBar extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            showProfile: false
-        };
-
-        this.onProfileClick = this.onProfileClick.bind(this);
-        this.dismissProfile = this.dismissProfile.bind(this);
         this.createNavigationLink = this.createNavigationLink.bind(this);
-    }
-
-    onProfileClick() {
-        this.setState({
-            showProfile: !this.state.showProfile
-        });
-    }
-
-    dismissProfile() {
-        this.setState({
-            showProfile: false
-        });
     }
 
     createNavigationLink(linkData) {
         return (
-            <li style={{display: 'inline-block'}} key={linkData.name}>
-                <Link style={navigationLinkStyle} to={linkData.to}>{linkData.name}</Link>
-            </li>
+            <NavItem key={linkData.name}>
+                <Link className="nav-link text-light" to={linkData.to}>{linkData.name}</Link>
+            </NavItem>
         );
     }
 
     render() {
-
         return (
-            <div className="navigation-bar" style={navigationBarStyle}>
-                <ul style={navigationListStyle}>
+            <Navbar dark color="success" expand="xs">
+                <NavbarBrand href="/" className="nav-link text-light">
+                    <img src={goatLogo} className="brand-logo" />
+                    GOAT
+                </NavbarBrand>
+                <Nav className="mr-auto" navbar>
                     {this.props.links.filter(l => l.show()).map(this.createNavigationLink)}
-                </ul>
-                <ul style={Object.assign({}, navigationListStyle, rightNavListStyle)}>
-                    
+                </Nav>
+                <Nav navbar>
                     {this.props.isAuthenticated ? (
-                        <li style={{display: 'inline', float: 'right'}}>
-                            <button
-                                style={navigationLinkStyle}
-                                onClick={this.onProfileClick}
-                            >
-                                {this.props.userName} &#x25BE;
-                            </button>
-                            {this.state.showProfile ? (
-                                <div style={{position: 'relative'}}>
-                                    <userInfoModule.components.UserProfilePanel
-                                        componentShouldDismiss={this.dismissProfile}
-                                        className="profile-panel"
-                                    />
-                                </div>
-                            ) : null}
-                        </li>
+                        <NavItem>
+                            <userInfoModule.components.UserProfilePanel />
+                        </NavItem>
                     ) : (
-                        <li style={{display: 'inline-block', float: 'right'}}>
-                            <a style={navigationLinkStyle} href={AUTH_URL}>Login with ORCID</a>
-                        </li>
+                        <NavItem>
+                            <NavLink href={AUTH_URL} className="text-light">
+                                Login with ORCID
+                            </NavLink>
+                        </NavItem>
                     )}
-                        
-                    
-                </ul>
-            </div>
+                </Nav>
+            </Navbar>
         );
     }
 }
 
 NavigationBar.propTypes = {
     isAuthenticated: React.PropTypes.bool,
-    userName: React.PropTypes.string,
     links: React.PropTypes.arrayOf(React.PropTypes.object)
 };
 
