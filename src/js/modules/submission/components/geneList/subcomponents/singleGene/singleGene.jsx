@@ -67,18 +67,24 @@ class SingleGene extends React.Component {
                     </Row>
                 </CardHeader>
                 <CardBody>
-                    <Row>
-                        <Col>
-                            <Label className="d-block">
+                    <Row className="align-items-end">
+                        <Col xs="3" className="text-right d-table-cell">
+                            <Label className="align-center">
                                 Gene Symbol
-                                {geneSymbolInput}
                             </Label>
                         </Col>
-                        <Col>
-                            <Label className="d-block">
+                        <Col className="d-block">
+                            {geneSymbolInput}
+                        </Col>
+                    </Row>
+                    <Row className="mt-3 align-items-end">
+                        <Col xs="3" className="text-right d-table-cell">
+                            <Label className="align-center">
                                 Full Gene Name
-                                {fullNameInput}
                             </Label>
+                        </Col>
+                        <Col className="d-block">
+                            {fullNameInput}
                         </Col>
                     </Row>
                 </CardBody>

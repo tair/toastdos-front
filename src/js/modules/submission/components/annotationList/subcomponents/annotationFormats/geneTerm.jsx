@@ -60,10 +60,13 @@ class GeneTerm extends React.Component {
 
         return (
             <div>
-            <Row>
-                <Col style={inputContainerStyle}>
-                    <Label className="d-block">
-                        Gene
+                <Row className="align-items-end">
+                    <Col xs="3" className="text-right d-table-cell">
+                        <Label className="align-center">
+                            Gene
+                        </Label>
+                    </Col>
+                    <Col className="d-block">
                         <GenePicker
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -72,11 +75,15 @@ class GeneTerm extends React.Component {
                             )}
                             value={this.props.annotationData.data.geneLocalId}
                         />
-                    </Label>
-                </Col>
-                <Col style={inputContainerStyle}>
-                    <Label className="d-block">
-                        {typeData.name}
+                    </Col>
+                </Row>
+                <Row className="align-items-end mt-3">
+                    <Col xs="3" className="text-right d-table-cell">
+                        <Label className="align-center">
+                            {typeData.name}
+                        </Label>
+                    </Col>
+                    <Col className="d-block">
                         <KeywordTextInput
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -94,11 +101,15 @@ class GeneTerm extends React.Component {
                             value={this.props.annotationData.data.keywordName}
                             searchScope={typeData.keywordScope}
                         />
-                    </Label>
-                </Col>
-                <Col style={inputContainerStyle}>
-                    <Label className="d-block">
-                        Method
+                    </Col>
+                </Row>
+                <Row className="align-items-end mt-3">
+                    <Col xs="3" className="text-right d-table-cell">
+                        <Label className="align-center">
+                            Method
+                        </Label>
+                    </Col>
+                    <Col className="d-block">
                         <KeywordTextInput
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -118,26 +129,35 @@ class GeneTerm extends React.Component {
                             value={this.props.annotationData.data.methodName}
                             searchScope="eco"
                         />
-                    </Label>
-                </Col>
-            </Row>
-            <Row>
+                    </Col>
+                </Row>
                 {(this.props.annotationData.data.methodEvidenceCode === 'IGI' || this.props.annotationData.data.methodEvidenceCode === 'IPI')?(
-                <Col>
-                    <Label>
-                        Evidence With
-                    </Label>
-                    <ListGroup>
-                        {this.props.annotationData.data.evidenceWithOrder.map(this.generateEvidenceWith)}
-                    </ListGroup>
-                    <Button color="success" className="mt-3"
-                        onClick={this.props.onEvidenceWithAddClick}
-                    >
-                        <span className="fa fa-plus"></span> Evidence With
-                    </Button>
-                </Col>
+                <Row className="mt-3">
+                    <Col xs="3" className="text-right d-table-cell">
+                        <Label className="align-center pt-3">
+                            Evidence With
+                        </Label>
+                    </Col>
+                    <Col className="d-block">
+                        <ListGroup>
+                            {this.props.annotationData.data.evidenceWithOrder.map(this.generateEvidenceWith)}
+                        </ListGroup>
+                        <Row className="justify-content-md-center">
+                            <Col xs="auto" className="align-self-center">
+                                <Button color="success" className="btn-sm"
+                                    style={{
+                                        borderTopRightRadius:0,
+                                        borderTopLeftRadius:0,
+                                    }}
+                                    onClick={this.props.onEvidenceWithAddClick}
+                                >
+                                    <span className="fa fa-plus"></span> Evidence With
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
                 ):(<span />)}
-            </Row>
             </div>
         );
     }

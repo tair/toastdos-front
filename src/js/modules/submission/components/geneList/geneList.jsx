@@ -2,7 +2,7 @@
 
 import React from 'react';
 import SingleGene from './subcomponents/singleGene';
-import { Button, Row, Col } from 'reactstrap';
+import { Alert, Button, Row, Col } from 'reactstrap';
 
 class GeneList extends React.Component {
     constructor(props) {
@@ -35,22 +35,30 @@ class GeneList extends React.Component {
         return (
             <div className="gene-list-container">
                 <div className="gene-list">
-                    <h4>Genes</h4>
-                    {(this.props.geneOrder.length <= 0) ? 
-                       (
-                        <span className="empty-message">
-                            No Genes                       
-                        </span>
-                       ) : null
-                    }
-                    {this.props.geneOrder.map(this.generateGene)}
-                    <Row className="justify-content-sm-center mt-3 mb-3">
-                        <Col sm={{size:4, offset:4}} className="justify-content-sm-center">
-                            <Button block color="success"
-                                onClick={this.props.onGeneAddClick}
-                                >
-                                <span className="fa fa-plus" title="Add Gene"></span> Add Gene
-                            </Button>
+                    <Row>
+                        <Col>
+                            <h4>Genes</h4>
+                        </Col>
+                        <Col sm={{size:9}}>
+                            {(this.props.geneOrder.length <= 0) ?
+                            (
+                                <Alert color="secondary">
+                                    <span className="empty-message">
+                                        No Genes
+                                    </span>
+                                </Alert>
+                            ) : null
+                            }
+                            {this.props.geneOrder.map(this.generateGene)}
+                            <Row className="justify-content-sm-center mt-3 mb-3">
+                                <Col sm={{size:4, offset:4}} className="justify-content-sm-center">
+                                    <Button block color="success"
+                                        onClick={this.props.onGeneAddClick}
+                                        >
+                                        <span className="fa fa-plus" title="Add Gene"></span> Add Gene
+                                    </Button>
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                 </div>

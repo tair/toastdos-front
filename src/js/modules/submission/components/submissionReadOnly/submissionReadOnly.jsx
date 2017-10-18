@@ -5,7 +5,7 @@ import PublicationField from '../publicationField';
 import GeneList from '../geneList';
 import AnnotationList from '../annotationList';
 import {Card, CardHeader, CardBody, CardTitle, Button, Container,
-    Row, Col, ListGroup, ListGroupItem} from 'reactstrap';
+    Row, Col, Label, ListGroup, ListGroupItem} from 'reactstrap';
 
 import {
         annotationTypeData,
@@ -32,24 +32,28 @@ class SubmissionReadOnly extends React.Component {
                 {gene.finalizedLocusName}
                 </CardHeader>
                 {(gene.finalizedGeneSymbol || gene.finalizedFullName) ? (
-                    <CardBody>
+                <CardBody>
                     <Row>
-                        <Col xs="4">
-                            <strong>Symbol:</strong> 
+                        <Col xs="3" className="text-right d-table-cell">
+                            <Label className="align-center">
+                                Symbol:
+                            </Label>
                         </Col>
-                        <Col>
+                        <Col className="d-block">
                             {gene.finalizedGeneSymbol}
                         </Col>
                     </Row>
-                    <Row className="mt-2">
-                        <Col xs="4">
-                            <strong>Full Name:</strong>
+                    <Row className="mt-3">
+                        <Col xs="3" className="text-right d-table-cell">
+                            <Label className="align-center">
+                                Full Name:
+                            </Label>
                         </Col>
-                        <Col>
+                        <Col className="d-block">
                             {gene.finalizedFullName}
                         </Col>
                     </Row>
-                    </CardBody>
+                </CardBody>
                 ): null}
             </Card>
         );
@@ -76,32 +80,38 @@ class SubmissionReadOnly extends React.Component {
                 title = `${type}: ${this.getLocusName(annotation.data.geneLocalId)}`;
                 body = (<div>
                     <Row>
-                        <Col xs="4">
-                            <strong>Method:</strong> 
+                        <Col xs="3" className="text-right d-table-cell">
+                            <Label className="align-center">
+                                Method:
+                            </Label>
                         </Col>
-                        <Col>
+                        <Col className="d-block">
                             {annotation.data.methodName}
                         </Col>
                     </Row>
-                    <Row className="mt-2">
-                        <Col xs="4">
-                            <strong>{type}:</strong>
+                    <Row className="mt-3">
+                        <Col xs="3" className="text-right d-table-cell">
+                            <Label className="align-center">
+                                {type}:
+                            </Label>
                         </Col>
-                        <Col>
+                        <Col className="d-block">
                             {annotation.data.keywordName}
                         </Col>
                     </Row>
                     {annotation.data.evidenceWithOrder.length == 0? null : (
-                        <Row className="mt-2">
-                            <Col xs="4">
-                                <strong>Evidence With:</strong>
-                            </Col>
-                            <Col>
-                                <ListGroup>
-                                    {annotation.data.evidenceWithOrder.map(this.renderEvidenceWith)}
-                                </ListGroup>
-                            </Col>
-                        </Row>
+                    <Row className="mt-3">
+                        <Col xs="3" className="text-right d-table-cell">
+                            <Label className="align-center">
+                                Evidence With:
+                            </Label>
+                        </Col>
+                        <Col className="d-block">
+                            <ListGroup>
+                                {annotation.data.evidenceWithOrder.map(this.renderEvidenceWith)}
+                            </ListGroup>
+                        </Col>
+                    </Row>
                     )}
                 </div>);
                 break;
@@ -111,11 +121,14 @@ class SubmissionReadOnly extends React.Component {
                     this.getLocusName(annotation.data.gene1LocalId) +
                     ' \u2194 ' +
                     this.getLocusName(annotation.data.gene2LocalId);
-                body = (<Row>
-                    <Col xs="4">
-                        <strong>Method:</strong> 
+                body = (
+                <Row>
+                    <Col xs="3" className="text-right d-table-cell">
+                        <Label className="align-center">
+                            Method:
+                        </Label>
                     </Col>
-                    <Col>
+                    <Col className="d-block">
                         {annotation.data.methodName}
                     </Col>
                 </Row>);
@@ -136,8 +149,8 @@ class SubmissionReadOnly extends React.Component {
 
     render() {
         return (
-            <Row>
-                <Col>
+            <ListGroup>
+                <ListGroupItem className="border-left-0 border-right-0 border-top-0">
                     <Row>
                         <Col sm="3">
                             <h5>Publication ID</h5>
@@ -146,6 +159,8 @@ class SubmissionReadOnly extends React.Component {
                             <em>{this.props.publication}</em>
                         </Col>
                     </Row>
+                </ListGroupItem>
+                <ListGroupItem className="border-left-0 border-right-0">
                     <Row className="mt-3">
                         <Col sm="3">
                             <h5>Genes</h5>
@@ -154,6 +169,8 @@ class SubmissionReadOnly extends React.Component {
                             {this.props.genes.filter(g => g.finalized).map(this.renderGene)}
                         </Col>
                     </Row>
+                </ListGroupItem>
+                <ListGroupItem className="border-left-0 border-right-0 border-bottom-0">
                     <Row className="mt-3">
                         <Col sm="3">
                             <h5>Annotations</h5>
@@ -162,8 +179,8 @@ class SubmissionReadOnly extends React.Component {
                             {this.props.annotations.map(this.renderAnnotation)}
                         </Col>
                     </Row>
-                </Col>
-            </Row>
+                </ListGroupItem>
+            </ListGroup>
         );
     }
 }

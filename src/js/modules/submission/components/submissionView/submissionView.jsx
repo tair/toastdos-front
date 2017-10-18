@@ -6,7 +6,7 @@ import GeneList from '../geneList';
 import AnnotationList from '../annotationList';
 import SubmissionReadOnly from '../submissionReadOnly';
 import {Alert, Card, CardImg, CardText, CardHeader,
-    CardBody, CardTitle, CardSubtitle, Button,
+    CardBody, CardFooter, CardTitle, CardSubtitle, Button,
     ListGroup, ListGroupItem, ListGroupItemHeading,
     Form, FormGroup, Label, Input,
     ListGroupItemText, Container, Row, Col} from 'reactstrap';
@@ -57,10 +57,33 @@ class SubmissionView extends React.Component {
                             <CardHeader>
                                 <span className="fa fa-file-text" /> New Annotation Submission
                             </CardHeader>
+                            <CardBody className="p-0">
+                                <Form className="submission-form-container">
+                                {this.props.previewing ?
+                                (
+                                    <SubmissionReadOnly />
+                                ):
+                                (
+                                    <ListGroup>
+                                        <ListGroupItem className="border-left-0 border-right-0 border-top-0">
+                                            <PublicationField/>
+                                        </ListGroupItem>
+                                        <ListGroupItem className="border-left-0 border-right-0">
+                                            <GeneList/>
+                                        </ListGroupItem>
+                                        <ListGroupItem className="border-left-0 border-right-0 border-bottom-0">
+                                            <AnnotationList/>
+                                        </ListGroupItem>
+                                    </ListGroup>
+                                )}
+                                </Form>
+                            </CardBody>
+                            <CardFooter>
                             {this.props.previewing ?
-                            (<CardBody>
-                                <SubmissionReadOnly />
-                                {!this.props.submitted ? (<Row className="mt-3">
+                            (
+                                !this.props.submitted ?
+                                (
+                                <Row>
                                     <Col>
                                         <Button color="warning"
                                             className="btn-submit"
@@ -79,41 +102,29 @@ class SubmissionView extends React.Component {
                                             <span className="fa fa-save"></span> Submit Annotations
                                         </Button>
                                     </Col>
-                                </Row>) : null}
-                            </CardBody>):
-                            (<Form className="submission-form-container">
-                                <ListGroup>
-                                    <ListGroupItem className="border-left-0 border-right-0 border-top-0">
-                                        <PublicationField/>
-                                    </ListGroupItem>
-                                    <ListGroupItem className="border-left-0 border-right-0">
-                                        <GeneList/>
-                                    </ListGroupItem>
-                                    <ListGroupItem className="border-left-0 border-right-0">
-                                        <AnnotationList/>
-                                    </ListGroupItem>
-                                    <ListGroupItem className="border-left-0 border-right-0">
-                                        <Row>
-                                            <Col>
-                                                <Button color="danger"
-                                                    onClick={this.props.resetSubmission}
-                                                >
-                                                    <span className="fa fa-trash"></span> Reset Form
-                                                </Button>
-                                            </Col>
-                                            <Col className="text-right">
-                                                <Button color="success"
-                                                    className="btn-submit"
-                                                    onClick={this.props.preview}
-                                                    disabled={!this.props.canSubmit}
-                                                >
-                                                    Review Submission <span className="fa fa-chevron-right"></span>
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    </ListGroupItem>
-                                </ListGroup>
-                            </Form>)}
+                                </Row>
+                                ) : null
+                            ) : (
+                                <Row>
+                                    <Col>
+                                        <Button color="danger"
+                                            onClick={this.props.resetSubmission}
+                                        >
+                                            Reset Form
+                                        </Button>
+                                    </Col>
+                                    <Col className="text-right">
+                                        <Button color="success"
+                                            className="btn-submit"
+                                            onClick={this.props.preview}
+                                            disabled={!this.props.canSubmit}
+                                        >
+                                            Review Submission <span className="fa fa-chevron-right"></span>
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            )}
+                            </CardFooter>
                         </Card>
                     </Col>
                 </Row>
