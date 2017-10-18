@@ -5,7 +5,7 @@ import PublicationField from '../publicationField';
 import GeneList from '../geneList';
 import AnnotationList from '../annotationList';
 import {Card, CardHeader, CardBody, CardTitle, Button, Container,
-    Row, Col} from 'reactstrap';
+    Row, Col, ListGroup, ListGroupItem} from 'reactstrap';
 
 import {
         annotationTypeData,
@@ -18,6 +18,7 @@ class SubmissionReadOnly extends React.Component {
     constructor(props) {
         super(props);
         this.renderAnnotation = this.renderAnnotation.bind(this);
+        this.renderEvidenceWith = this.renderEvidenceWith.bind(this);
     }
 
     getLocusName(geneId) {
@@ -54,6 +55,14 @@ class SubmissionReadOnly extends React.Component {
         );
     }
 
+    renderEvidenceWith(evidenceWithId) {
+        return (
+            <ListGroupItem key={evidenceWithId}>
+                {this.props.evidenceWith[evidenceWithId].locusName}
+            </ListGroupItem>
+        );
+    }
+
 
     renderAnnotation(annotation) {
         let body, title;
@@ -82,6 +91,18 @@ class SubmissionReadOnly extends React.Component {
                             {annotation.data.keywordName}
                         </Col>
                     </Row>
+                    {annotation.data.evidenceWithOrder.length == 0? null : (
+                        <Row className="mt-2">
+                            <Col xs="4">
+                                <strong>Evidence With:</strong>
+                            </Col>
+                            <Col>
+                                <ListGroup>
+                                    {annotation.data.evidenceWithOrder.map(this.renderEvidenceWith)}
+                                </ListGroup>
+                            </Col>
+                        </Row>
+                    )}
                 </div>);
                 break;
             case annotationFormats.GENE_GENE:
@@ -150,6 +171,7 @@ class SubmissionReadOnly extends React.Component {
 SubmissionReadOnly.propTypes = {
     publication: React.PropTypes.string,
     genes: React.PropTypes.array,
+    evidenceWith: React.PropTypes.object,
     annotations: React.PropTypes.array,
     geneIndex: React.PropTypes.object
 };

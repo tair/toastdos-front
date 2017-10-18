@@ -137,13 +137,13 @@ export default function (state = defaultState, action) {
                 methodId: null,
                 methodEvidenceCode: null,
                 evidenceWithIndex: {
-                    "init": {
+                    ["init" + action.localId]: {
                         finalized: false,
                         isValid: false,
                         locusName: ""
                     }
                 },
-                evidenceWithOrder: ["init"]
+                evidenceWithOrder: ["init" + action.localId]
             }
         };
 
@@ -178,13 +178,13 @@ export default function (state = defaultState, action) {
                 methodId: null,
                 methodEvidenceCode: null,
                 evidenceWithIndex: {
-                    "init": {
+                    ["init" + action.localId]: {
                         finalized: false,
                         isValid: false,
                         locusName: ""
                     }
                 },
-                evidenceWithOrder: ["init"]
+                evidenceWithOrder: ["init" + action.localId]
             };
             break;
         case annotationFormats.GENE_GENE:
@@ -294,6 +294,7 @@ export default function (state = defaultState, action) {
         return {
             ...state,
             annotationIndex: {
+                ...state.annotationIndex,
                 [action.annotationId]: {
                     ...annotationSuccess,
                     data: {
@@ -315,6 +316,7 @@ export default function (state = defaultState, action) {
         return {
             ...state,
             annotationIndex: {
+                ...state.annotationIndex,
                 [action.annotationId]: {
                     ...annotationFail,
                     data: {
