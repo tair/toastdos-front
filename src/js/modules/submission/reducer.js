@@ -23,6 +23,14 @@ const defaultState = {
     geneOrder: ["init"],
     annotationIndex: {},
     annotationOrder: [],
+    evidenceWithIndex: {
+        "binit": {
+            localId: "binit",
+            finalized: false,
+            isValid: false,
+            locusName: ""
+        }
+    },
     submitting: false,
     submitted: false,
     submissionError: "",
@@ -126,14 +134,7 @@ export default function (state = defaultState, action) {
                 methodName: "",
                 methodId: null,
                 methodEvidenceCode: null,
-                evidenceWithIndex: {
-                    "init": {
-                        finalized: false,
-                        isValid: false,
-                        locusName: ""
-                    }
-                },
-                evidenceWithOrder: ["init"]
+                evidenceWithOrder: ["binit"]
             }
         };
 
@@ -200,6 +201,15 @@ export default function (state = defaultState, action) {
 
         return Object.assign({}, state, newState);
 
+    case actions.UPDATE_EVIDENCE_WITH:
+        newState = {
+            evidenceWithIndex: Object.assign({}, state.evidenceWithIndex),
+        };
+
+        newState.evidenceWithIndex[action.evidenceWithId] = action.data;
+
+        return Object.assign({}, state, newState);
+
     case actions.ATTEMPT_SUBMIT:
         return Object.assign({}, state, {
             submitting: true
@@ -249,19 +259,21 @@ export default function (state = defaultState, action) {
         let annotation = state.annotationIndex[action.annotationId];
         return {
             ...state,
+            evidenceWithIndex: {
+                ...state.evidenceWithIndex,
+                [action.newEvidenceWithId]: {
+                    ...state.evidenceWithIndex[action.newEvidenceWithId],
+                    localId: action.newEvidenceWithId,
+                    finalized: false,
+                    isValid: false,
+                    locusName: ""
+                }
+            },
             annotationIndex: {
                 [action.annotationId]: {
                     ...annotation,
                     data: {
                         ...annotation.data,
-                        evidenceWithIndex: {
-                            ...annotation.data.evidenceWithIndex,
-                            [action.newEvidenceWithId]: {
-                                finalized: false,
-                                isValid: false,
-                                locusName: ""
-                            }
-                        },
                         evidenceWithOrder: annotation.data.evidenceWithOrder
                             .concat(action.newEvidenceWithId)
                     }
@@ -269,44 +281,26 @@ export default function (state = defaultState, action) {
             }
         };
     case actions.VALIDATE_EVIDENCE_WITH_SUCCESS:
-        let annotationSuccess = state.annotationIndex[action.annotationId];
         return {
             ...state,
-            annotationIndex: {
-                [action.annotationId]: {
-                    ...annotationSuccess,
-                    data: {
-                        ...annotationSuccess.data,
-                        evidenceWithIndex: {
-                            ...annotationSuccess.data.evidenceWithIndex,
-                            [action.evidenceWithId]: {
-                                ...annotationSuccess.data.evidenceWithIndex[action.evidenceWithId],
-                                finalized: true,
-                                isValid: true,
-                            }
-                        }
-                    }
+            evidenceWithIndex: {
+                ...evidenceWithIndex,
+                [action.evidenceWithId]: {
+                    ...evidenceWithIndex[action.evidenceWithId],
+                    finalized: true,
+                    isValid: true,
                 }
             }
         };
     case actions.VALIDATE_EVIDENCE_WITH_FAIL:
-        let annotationFail = state.annotationIndex[action.annotationId];
         return {
             ...state,
-            annotationIndex: {
-                [action.annotationId]: {
-                    ...annotationFail,
-                    data: {
-                        ...annotationFail.data,
-                        evidenceWithIndex: {
-                            ...annotationFail.data.evidenceWithIndex,
-                            [action.evidenceWithId]: {
-                                ...annotationFail.data.evidenceWithIndex[action.evidenceWithId],
-                                finalized: true,
-                                isValid: false,
-                            }
-                        }
-                    }
+            evidenceWithIndex: {
+                ...state.evidenceWithIndex,
+                [action.evidenceWithId]: {
+                    ...state.evidenceWithIndex[action.evidenceWithId],
+                    finalized: true,
+                    isValid: false,
                 }
             }
         };

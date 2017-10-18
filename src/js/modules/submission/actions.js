@@ -87,8 +87,7 @@ export function validateEvidenceWith(annotationId, evidenceWithId) {
     return (dispatch, getState) => {
         const currState = getState();
         const token = AuthModule.selectors.rawJwtSelector(currState);
-        const evidenceWith = currState.submission.annotationIndex[annotationId].data
-            .evidenceWithIndex[evidenceWithId];
+        const evidenceWith = currState.submission.evidenceWithIndex[evidenceWithId];
 
         validateGene(evidenceWith.locusName, token, (err, data) => {
             if(err) {
@@ -157,6 +156,14 @@ export function addEvidenceWith(annotationId, newEvidenceWithId) {
         type: actions.ADD_EVIDENCE_WITH,
         annotationId,
         newEvidenceWithId
+    };
+}
+
+export function updateEvidenceWith(evidenceWithId, data) {
+    return {
+        type: actions.UPDATE_EVIDENCE_WITH,
+        evidenceWithId: evidenceWithId,
+        data: data
     };
 }
 
