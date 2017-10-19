@@ -1,6 +1,9 @@
 "use strict";
 
 import React from 'react';
+import { Card, CardHeader, CardBody,
+    Input, InputGroup, InputGroupAddon, Label,
+    Form, FormGroup, Row, Col, Button } from 'reactstrap';
 
 import CustomSelect from 'lib/components/customSelect';
 
@@ -77,29 +80,35 @@ class AnnotationEntry extends React.Component {
 
     render() {
         return (
-            <div className="annotation-entry">
-                <h4>{this.props.title}</h4>
-                <div>
-                    <CustomSelect
-                        name="Annotation Type"
-                        onChange={this.handleTypeChange}
-                        value={this.props.annotationType}
-                    >
-                        {Object.keys(annotationTypes).map(this.generateTypeOption)}
-                    </CustomSelect>
-                </div>
-                <div>
+            <Card className="annotation-entry mt-3">
+                <CardHeader>
+                    <Row>
+                        <Col>
+                            <InputGroup>
+                                <InputGroupAddon className="bg-light-green text-dark">
+                                    {this.props.title}
+                                </InputGroupAddon>
+                                <CustomSelect name="Annotation Type"
+                                    onChange={this.handleTypeChange}
+                                    value={this.props.annotationType}
+                                >
+                                    {Object.keys(annotationTypes).map(this.generateTypeOption)}
+                                </CustomSelect>
+                            </InputGroup>
+                        </Col>
+                        <Col sm="auto" className="text-right input-container">
+                            <Button color="danger"
+                                onClick={this.props.onDeleteClick}
+                            >
+                                <span className="fa fa-close" title="Remove Annotation"></span>
+                            </Button>
+                        </Col>
+                    </Row>
+                </CardHeader>
+                <CardBody>
                     {this.renderAnnotationFormat()}
-                </div>
-                <div>
-                    <button
-                        className="btn btn-secondary"
-                        onClick={this.props.onDeleteClick}
-                    >
-                        Remove Annotation
-                    </button>
-                </div>
-            </div>
+                </CardBody>
+            </Card>
         );
     }
  }

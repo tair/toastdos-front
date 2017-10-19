@@ -1,7 +1,8 @@
 "use strict";
 
 import React from 'react';
-
+import { ListGroupItem, InputGroup, InputGroupAddon } from 'reactstrap';
+import ValidationStatus from "../validationStatus";
 import CustomTextInput from "lib/components/customTextInput";
 
 const inputContainerStyle = {
@@ -35,23 +36,26 @@ class EvidenceWith extends React.Component {
         const currentEvidenceWith = this.props.evidenceWithIndex[this.props.evidenceWithId];
         
         return (
-            <div style={inputContainerStyle} key={`evidence_with_${this.props.evidenceWithId}`}>
-                <CustomTextInput 
-                    placeholder="e.g. a locus, protein"
-                    value={currentEvidenceWith.locusName}
-                    onChange={event => this.props.updateEvidenceWith(this.props.evidenceWithId, 
-                        {
-                            ...currentEvidenceWith,
-                            finalized: false,
-                            locusName: event.target.value
-                        }
-                    )}
-                    onBlur={() => {this.props.validateEvidenceWith(this.props.evidenceWithId);}}
-                    style={{ marginRight: 10 }}
-                />
-                <div className={this.getEWStatus(currentEvidenceWith.finalized, currentEvidenceWith.isValid)}
-                    style={{ color: this.getEWColor(currentEvidenceWith.finalized, currentEvidenceWith.isValid) }} />
-            </div>
+            <ListGroupItem key={`evidence_with_${this.props.evidenceWithId}`}>
+                <InputGroup>
+                    <CustomTextInput
+                        placeholder="e.g. a locus, protein"
+                        value={currentEvidenceWith.locusName}
+                        onChange={event => this.props.updateEvidenceWith(this.props.evidenceWithId,
+                            {
+                                ...currentEvidenceWith,
+                                finalized: false,
+                                locusName: event.target.value
+                            }
+                        )}
+                        onBlur={() => {this.props.validateEvidenceWith(this.props.evidenceWithId);}}
+                        style={{marginRight: 10}}
+                        />
+                    <InputGroupAddon>
+                        <ValidationStatus finalized={currentEvidenceWith.finalized} isValid={currentEvidenceWith.isValid} />
+                    </InputGroupAddon>
+                </InputGroup>
+            </ListGroupItem>
         );
     }
 }

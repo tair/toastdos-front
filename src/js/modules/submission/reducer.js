@@ -23,16 +23,10 @@ const defaultState = {
     geneOrder: ["init"],
     annotationIndex: {},
     annotationOrder: [],
-    evidenceWithIndex: {
-        "binit": {
-            localId: "binit",
-            finalized: false,
-            isValid: false,
-            locusName: ""
-        }
-    },
+    evidenceWithIndex: {},
     submitting: false,
     submitted: false,
+    previewing: false,
     submissionError: "",
     keywordSearchResults: [],
     searchingKeywords: false
@@ -82,6 +76,17 @@ export default function (state = defaultState, action) {
         newState.geneIndex[action.localId].validationError = '';
         newState.geneIndex[action.localId].validating = true;
         return Object.assign({}, state, newState);
+    case actions.UPDATE_GENE_DATA:
+        return {
+            ...state,
+            geneIndex: {
+                ...state.geneIndex,
+                [action.localId]: {
+                    ...state.geneIndex[action.localId],
+                    ...action.geneData
+                }
+            }
+        };
     case actions.VALIDATE_GENE_SUCCESS:
         newState = {
             geneIndex: Object.assign({}, state.geneIndex),
@@ -93,8 +98,6 @@ export default function (state = defaultState, action) {
         newState.geneIndex[action.localId].validationError = '';
 
         newState.geneIndex[action.localId].finalizedLocusName = action.geneData.locusName;
-        newState.geneIndex[action.localId].finalizedGeneSymbol = action.geneData.geneSymbol;
-        newState.geneIndex[action.localId].finalizedFullName = action.geneData.fullName;
         
 
         return Object.assign({}, state, newState);
@@ -134,7 +137,7 @@ export default function (state = defaultState, action) {
                 methodName: "",
                 methodId: null,
                 methodEvidenceCode: null,
-                evidenceWithOrder: ["binit"]
+                evidenceWithOrder: []
             }
         };
 
@@ -167,7 +170,8 @@ export default function (state = defaultState, action) {
                 keywordId: null,
                 methodName: "",
                 methodId: null,
-                methodEvidenceCode: null
+                methodEvidenceCode: null,
+                evidenceWithOrder: []
             };
             break;
         case annotationFormats.GENE_GENE:
@@ -217,13 +221,15 @@ export default function (state = defaultState, action) {
     case actions.SUBMIT_SUCCESS:
         return Object.assign({}, state, {
             submitting: false,
-            submitted: true
+            submitted: true,
+            submissionError: "",
         });
     case actions.SUBMIT_FAIL:
         return Object.assign({}, state, {
             submitting: false,
             submitted: false,
-            submissionError: action.error
+            submissionError: action.error,
+            previewing: false,
         });
     case actions.RESET_SUBMISSION:
         return Object.assign({}, state, {
@@ -234,6 +240,7 @@ export default function (state = defaultState, action) {
             annotationOrder: [],
             submitting: false,
             submitted: false,
+            previewing: false,
             submissionError: ""
         });
     case actions.ATTEMPT_KEYWORD_SEARCH:
@@ -295,14 +302,33 @@ export default function (state = defaultState, action) {
     case actions.VALIDATE_EVIDENCE_WITH_FAIL:
         return {
             ...state,
-            evidenceWithIndex: {
-                ...state.evidenceWithIndex,
-                [action.evidenceWithId]: {
-                    ...state.evidenceWithIndex[action.evidenceWithId],
-                    finalized: true,
-                    isValid: false,
+            annotationIndex: {
+                ...state.annotationIndex,
+                [action.annotationId]: {
+                    ...annotationFail,
+                    data: {
+                        ...annotationFail.data,
+                        evidenceWithIndex: {
+                            ...annotationFail.data.evidenceWithIndex,
+                            [action.evidenceWithId]: {
+                                ...annotationFail.data.evidenceWithIndex[action.evidenceWithId],
+                                finalized: true,
+                                isValid: false,
+                            }
+                        }
+                    }
                 }
             }
+        };
+    case actions.PREVIEW:
+        return {
+            ...state,
+            previewing: true
+        };
+    case actions.EDIT:
+        return {
+            ...state,
+            previewing: false
         };
     default:
         return state;

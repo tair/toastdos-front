@@ -47,3 +47,7 @@ There are a number of subdirectories within the application structure.
 		- Root React Component that the rest of the components are built on top of.
 	- **store.js**
 		- The Redux store. The various reducers are combined here.
+
+Credits
+----
+Goat icon made by [Nikita Golubev](https://www.flaticon.com/authors/nikita-golubev) from [www.flaticon.com]()

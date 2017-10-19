@@ -2,39 +2,15 @@
 
 import React from 'react';
 import CustomTextInput from "lib/components/customTextInput";
+import ValidationStatus from "../../../validationStatus";
+import { Card, CardHeader, CardBody,
+    Label, FormGroup, InputGroup, InputGroupAddon,
+    Button, ButtonGroup, Col, Row } from 'reactstrap';
 
 
 class SingleGene extends React.Component {
     constructor(props) {
         super(props);
-
-        this.handleFieldBlur = this.handleFieldBlur.bind(this);
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if(!this.props.finalized && prevProps.finalized) {
-            this.locusNameField.focus();
-        }   
-    }
-
-    handleFieldBlur() {
-
-        // add small delay to ensure focus triggered for next field
-        setTimeout(() => {
-            if(this.locusNameField === document.activeElement) {
-                return;
-            }
-
-            if(this.geneSymbolField === document.activeElement) {
-                return;
-            }
-
-            if(this.fullNameField === document.activeElement) {
-                return;
-            }
-
-            this.props.onBlur();
-        }, 100);
     }
 
     render() {
@@ -43,9 +19,8 @@ class SingleGene extends React.Component {
             <CustomTextInput
                 value={this.props.locusNameValue}
                 onChange={this.props.onLocusNameChange}
-                inputRef={ref => (this.locusNameField = ref)}
                 onKeyDown={this.props.onKeyDown}
-                onBlur={this.handleFieldBlur}
+                onBlur={this.props.onBlur}
                 disabled={this.props.validating}
                 placeholder="e.g. AT2G23380"
             />);
@@ -54,10 +29,7 @@ class SingleGene extends React.Component {
             <CustomTextInput
                 value={this.props.geneSymbolValue}
                 onChange={this.props.onGeneSymbolChange}
-                inputRef={ref => (this.geneSymbolField = ref)}
                 onKeyDown={this.props.onKeyDown}
-                onBlur={this.handleFieldBlur}
-                disabled={this.props.validating}
                 placeholder="e.g. CLF"
             />);
 
@@ -65,85 +37,58 @@ class SingleGene extends React.Component {
             <CustomTextInput
                 value={this.props.fullNameValue}
                 onChange={this.props.onFullNameChange}
-                inputRef={ref => (this.fullNameField = ref)}
                 onKeyDown={this.props.onKeyDown}
-                onBlur={this.handleFieldBlur}
-                disabled={this.props.validating}
                 placeholder="e.g. CURLY LEAF"
             />
         );
 
 
         return (
-            <div className="single-gene">
-                <h4>
-                    {this.props.title}
-                </h4>
-                <div className="input-group">
-                    <div className="input-container">
-                        <h5>
-                            Locus Name
-                        </h5>
-                        {this.props.finalized ? 
-                            (
-                                <span>
-                                    {this.props.locusNameValue ?
-                                        this.props.locusNameValue : (<em className="light-text">None</em>)}
-                                </span>
-                            ) 
-                        : locusNameInput}
-                    </div>
-                    <div className="input-container">
-                        <h5>
-                            Gene Symbol
-                        </h5>
-                        {this.props.finalized ? 
-                            (
-                                <span>
-                                    {this.props.geneSymbolValue ?
-                                        this.props.geneSymbolValue : (<em className="light-text">None</em>)}
-                                </span>
-                            ) 
-                        : geneSymbolInput}
-                    </div>
-                    <div className="input-container">
-                        <h5>
-                            Full Gene Name
-                        </h5>
-                        {this.props.finalized ? 
-                            (
-                                <span>
-                                    {this.props.fullNameValue ?
-                                        this.props.fullNameValue : (<em className="light-text">None</em>)}
-                                </span>
-                            ) 
-                        : fullNameInput}
-                    </div>
-                    {this.props.finalized ?
-                    (<div className="edit-button-container">
-                        <span
-                            className="fa fa-pencil"
-                            style={{
-                                fontSize: "1.3em",
-                                cursor: "pointer"
-                            }}
-                            onClick={this.props.onEditClick}
-                        >
-                       </span> 
-                    </div>) : null}
-                </div>
-                <div>
-                    <button
-                        className="btn btn-secondary"
-                        onClick={this.props.onRemoveClick}
-                    >
-                        Remove Gene
-                    </button>
-                    {this.props.validating ? (<span>Validating...</span>) : null}
-                    {this.props.validationError ? 
-                        (<span>{this.props.validationError}</span>) : null}
-                </div>
-            </div>
+            <Card className="single-gene mt-3">
+                <CardHeader>
+                    <Row>
+                        <Col>
+                            <InputGroup>
+                                <InputGroupAddon className="bg-light-green text-dark">
+                                    {this.props.title}
+                                </InputGroupAddon>
+                                {locusNameInput}
+                                <InputGroupAddon>
+                                    <ValidationStatus validating={this.props.validating} finalized={this.props.finalized || !!this.props.validationError} isValid={this.props.validationError == ""} />
+                                </InputGroupAddon>
+                            </InputGroup>
+                        </Col>
+                        <Col sm="auto" className="text-right">
+                            <Button color="danger"
+                                onClick={this.props.onRemoveClick}>
+                                <span className="fa fa-close" title="Remove Gene"></span>
+                            </Button>
+                        </Col>
+                    </Row>
+                </CardHeader>
+                <CardBody>
+                    <Row className="align-items-end">
+                        <Col xs="3" className="text-right d-table-cell">
+                            <Label className="align-center">
+                                Gene Symbol
+                            </Label>
+                        </Col>
+                        <Col className="d-block">
+                            {geneSymbolInput}
+                        </Col>
+                    </Row>
+                    <Row className="mt-3 align-items-end">
+                        <Col xs="3" className="text-right d-table-cell">
+                            <Label className="align-center">
+                                Full Gene Name
+                            </Label>
+                        </Col>
+                        <Col className="d-block">
+                            {fullNameInput}
+                        </Col>
+                    </Row>
+                </CardBody>
+            </Card>
         );
     }
 }
@@ -158,7 +103,6 @@ SingleGene.propTypes = {
     onBlur: React.PropTypes.func,
     onKeyDown: React.PropTypes.func,
     onRemoveClick: React.PropTypes.func,
-    onEditClick: React.PropTypes.func,
     title: React.PropTypes.string,
     validating: React.PropTypes.bool,
     validationError: React.PropTypes.string,
@@ -175,7 +119,6 @@ SingleGene.defaultProps = {
     onBlur: () => {},
     onKeyDown: () => {},
     onRemoveClick: () => {},
-    onEditClick: () => {},
     title: "",
     validating: false,
     validationError: "",

@@ -2,6 +2,7 @@
 
 import React from "react";
 import 'css/customSelect.scss';
+import { Input } from 'reactstrap';
 
 class CustomSelect extends React.Component {
     constructor(props) {
@@ -48,21 +49,16 @@ class CustomSelect extends React.Component {
         }
 
         return (
-            <div className={classes.join(" ")}>
-                <select
-                    name={this.props.name}
-                    id={this.props.id}
-                    onChange={this.handleChange}
-                    onFocus={this.handleFocus}
-                    onBlur={this.handleBlur}
-                    value={this.state.value}
-                >
-                    {this.props.children}
-                </select>
-                <div className="arrow">
-                    <i className="fa fa-chevron-down" aria-hidden="true"></i>
-                </div>
-            </div>
+            <Input type="select" className={classes.join(" ")}
+                name={this.props.name}
+                id={this.props.id}
+                onChange={this.handleChange}
+                onFocus={this.handleFocus}
+                onBlur={this.handleBlur}
+                value={this.state.value}
+            >
+                {this.props.children}
+            </Input>
         );
     }
 }

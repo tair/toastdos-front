@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import { Alert, Button, Row, Col } from 'reactstrap';
 
 import AnnotationEntry from './subcomponents/annotationEntry';
 
@@ -16,7 +17,7 @@ class AnnotationList extends React.Component {
         return (
             <AnnotationEntry
                 key={`annotation_${annotationId}`}
-                title={`Annotation ${index + 1}`}
+                title={`Annotation ${index+1}`}
                 annotationType={currAnnotation.annotationType}
                 onTypeChange={this.props.handleAnnotationTypeChange.bind(this, annotationId)}
                 onDeleteClick={this.props.removeAnnotation.bind(this, annotationId)}
@@ -31,24 +32,40 @@ class AnnotationList extends React.Component {
     render() {
         return (
             <div className="annotation-list-container">
-                <h2>Annotations</h2>
-                <button
-                    className="btn btn-secondary"
-                    onClick={this.props.onAnnotationAddClick}
-                    disabled={!this.props.hasGenes}
-                >
-                    Add Annotation
-                </button>
-                {(this.props.annotationOrder.length <= 0) ? 
-                   (
-                    <span className="empty-message">
-                        No Annotations                       
-                    </span>
-                   ) : null
-                }
-                <div className="annotation-list">
-                    {this.props.annotationOrder.map(this.generateAnnotationEntry)}
-                </div>
+                <Row>
+                    <Col>
+                        <h4>Annotations</h4>
+                    </Col>
+                    <Col sm={{size:9}}>
+                        {(this.props.annotationOrder.length <= 0) ?
+                        (
+                            <Alert color="secondary">
+                                <span className="empty-message">
+                                    No Annotations.
+                                    {(!this.props.hasGenes) ? (
+                                        <span className="empty-message"> Please add a valid gene before adding annotations.
+                                        </span>
+                                    ) : (null)
+                                    }
+                                </span>
+                            </Alert>
+                        ) : (
+                            <div className="annotation-list">
+                                {this.props.annotationOrder.map(this.generateAnnotationEntry)}
+                            </div>
+                        )}
+                        <Row className="justify-content-sm-center mt-3 mb-3">
+                            <Col sm={{size:4, offset:4}} className="justify-content-sm-center">
+                                <Button block color="success"
+                                    onClick={this.props.onAnnotationAddClick}
+                                    disabled={!this.props.hasGenes}
+                                >
+                                    <span className="fa fa-plus" title="Add Annotation"></span> Add Annotation
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
             </div>
         );
     }

@@ -121,6 +121,14 @@ export function editGeneData(localId) {
     };
 }
 
+export function updateGeneData(localId, geneData) {
+    return {
+        type: actions.UPDATE_GENE_DATA,
+        localId,
+        geneData
+    };
+}
+
 export function addNewAnnotation(localId) {
     return {
         type: actions.ADD_NEW_ANNOTATION,
@@ -249,4 +257,14 @@ export function clearKeywordSearch() {
     };
 }
 
+export function preview() {
+    return {
+        type: actions.PREVIEW,
+    };
+}
 
+export function edit() {
+    return {
+        type: actions.EDIT,
+    };
+}

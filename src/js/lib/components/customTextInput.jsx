@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import { Input } from 'reactstrap';
 import 'css/customTextInput.scss';
 
 class CustomTextInput extends React.Component {
@@ -31,16 +32,10 @@ class CustomTextInput extends React.Component {
     }
 
     render() {
-        let classes = [this.props.className];
-
-        if(this.state.focused) {
-            classes.push('focused');
-        }
 
         return (
-            <div style={this.props.style} className={classes.join(" ")}>
-                <input
-                    type="text"
+                <Input type="text"
+                    className="form-control"
                     onChange={this.props.onChange}
                     onFocus={this.handleFocus}
                     onBlur={this.handleBlur}
@@ -48,12 +43,13 @@ class CustomTextInput extends React.Component {
                     placeholder={this.props.placeholder}
                     onKeyDown={this.props.onKeyDown}
                     disabled={this.props.disabled}
+                    readOnly={this.props.readOnly}
                     ref={this.props.inputRef}
                     spellCheck={this.props.spellCheck}
                     id={this.props.inputId}
-                />
-                {this.props.children}
-            </div>
+                >
+                    {this.props.children}
+                </Input>
         );
     }
 }
@@ -66,6 +62,7 @@ CustomTextInput.propTypes = {
     ]),
     inputRef: React.PropTypes.func,
     disabled: React.PropTypes.bool,
+    readOnly: React.PropTypes.string,
     placeholder: React.PropTypes.string,
     style: React.PropTypes.object,
     onBlur: React.PropTypes.func,
@@ -74,11 +71,11 @@ CustomTextInput.propTypes = {
     className: React.PropTypes.string,
     spellCheck: React.PropTypes.bool,
     inputId: React.PropTypes.string
-
 };
 
 CustomTextInput.defaultProps = {
     disabled: false,
+    readOnly: "",
     onChange: () => {},
     value: "",
     placeholder: "",

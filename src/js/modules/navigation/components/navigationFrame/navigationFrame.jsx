@@ -3,26 +3,14 @@
 import React from 'react';
 import NavigationBar from './subComponents/navigationBar';
 
-
-
 class NavigationFrame extends React.Component {
     constructor(props) {
         super(props);
-        
-        this.state = {
-            // set initial state
-        };
     }
 
     render() {
 
         let links = [
-            {
-                to: '/',
-                name: 'GOAT',
-                show: () => true
-                
-            },
             {
                 to: '/submission',
                 name: 'Submission',
@@ -53,7 +41,6 @@ class NavigationFrame extends React.Component {
 NavigationFrame.propTypes = {
     isAuthenticated: React.PropTypes.bool,
     onLogoutClick: React.PropTypes.func,
-    userName: React.PropTypes.string,
     userRoles: React.PropTypes.arrayOf(React.PropTypes.string),
 };
 
