@@ -23,6 +23,7 @@ class GeneTerm extends React.Component {
     generateEvidenceWith(evidenceWithId) {
         return (
             <EvidenceWith 
+                key={evidenceWithId}
                 evidenceWithId={evidenceWithId}
                 validateEvidenceWith={this.props.validateEvidenceWith}
             />

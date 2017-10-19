@@ -14,7 +14,6 @@ const ConnectedEvidenceWith = connect(
         evidenceWithIndex: state.submission.evidenceWithIndex
     }),
     dispatch => ({
-        validateEvidenceWith: (annotationId, evidenceWithId) => dispatch(validateEvidenceWith(annotationId, evidenceWithId)),
         updateEvidenceWith: (evidenceWithId, data) => dispatch(updateEvidenceWith(evidenceWithId, data))
     })
 )(EvidenceWith);

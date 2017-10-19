@@ -33,22 +33,19 @@ class EvidenceWith extends React.Component {
 
     render() {
         const currentEvidenceWith = this.props.evidenceWithIndex[this.props.evidenceWithId];
+        
         return (
             <div style={inputContainerStyle} key={`evidence_with_${this.props.evidenceWithId}`}>
                 <CustomTextInput 
                     placeholder="e.g. a locus, protein"
                     value={currentEvidenceWith.locusName}
-                    onChange={event => this.props.updateEvidenceWith(this.props.evidenceWithId, {
-                        ...this.props,
-                        evidenceWithIndex: {
-                            ...this.props.evidenceWithIndex,
-                            [this.props.evidenceWithId]: {
-                                ...currentEvidenceWith,
-                                finalized: false,
-                                locusName: event.target.value
-                            }
+                    onChange={event => this.props.updateEvidenceWith(this.props.evidenceWithId, 
+                        {
+                            ...currentEvidenceWith,
+                            finalized: false,
+                            locusName: event.target.value
                         }
-                    })}
+                    )}
                     onBlur={() => {this.props.validateEvidenceWith(this.props.evidenceWithId);}}
                     style={{ marginRight: 10 }}
                 />

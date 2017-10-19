@@ -284,9 +284,9 @@ export default function (state = defaultState, action) {
         return {
             ...state,
             evidenceWithIndex: {
-                ...evidenceWithIndex,
+                ...state.evidenceWithIndex,
                 [action.evidenceWithId]: {
-                    ...evidenceWithIndex[action.evidenceWithId],
+                    ...state.evidenceWithIndex[action.evidenceWithId],
                     finalized: true,
                     isValid: true,
                 }
