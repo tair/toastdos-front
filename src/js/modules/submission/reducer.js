@@ -205,15 +205,6 @@ export default function (state = defaultState, action) {
 
         return Object.assign({}, state, newState);
 
-    case actions.UPDATE_EVIDENCE_WITH:
-        newState = {
-            evidenceWithIndex: Object.assign({}, state.evidenceWithIndex),
-        };
-
-        newState.evidenceWithIndex[action.evidenceWithId] = action.data;
-
-        return Object.assign({}, state, newState);
-
     case actions.ATTEMPT_SUBMIT:
         return Object.assign({}, state, {
             submitting: true
@@ -287,6 +278,39 @@ export default function (state = defaultState, action) {
                 }
             }
         };
+
+    case actions.REMOVE_EVIDENCE_WITH:
+        
+        let an = Object.assign({},state.annotationIndex[state.annotationOrder[action.annotationId]]);
+        let evidenceWithIndex = Object.assign({},state.evidenceWithIndex);
+        delete evidenceWithIndex[action.evidenceWithId];
+
+        return {
+            ...state,
+            evidenceWithIndex: evidenceWithIndex,
+            annotationIndex: {
+                ...state.annotationIndex,
+                [state.annotationOrder[action.annotationId]]: {
+                    ...an,
+                    data: {
+                        ...an.data,
+                        evidenceWithOrder: [].concat(
+                            an.data.evidenceWithOrder
+                            .filter(e => e != action.evidenceWithId))
+                    }
+                }
+            }
+        };
+
+    case actions.UPDATE_EVIDENCE_WITH:
+        newState = {
+            evidenceWithIndex: Object.assign({}, state.evidenceWithIndex),
+        };
+
+        newState.evidenceWithIndex[action.evidenceWithId] = action.data;
+
+        return Object.assign({}, state, newState);
+
     case actions.VALIDATE_EVIDENCE_WITH_SUCCESS:
         return {
             ...state,
@@ -300,26 +324,17 @@ export default function (state = defaultState, action) {
             }
         };
     case actions.VALIDATE_EVIDENCE_WITH_FAIL:
-        return {
-            ...state,
-            annotationIndex: {
-                ...state.annotationIndex,
-                [action.annotationId]: {
-                    ...annotationFail,
-                    data: {
-                        ...annotationFail.data,
-                        evidenceWithIndex: {
-                            ...annotationFail.data.evidenceWithIndex,
-                            [action.evidenceWithId]: {
-                                ...annotationFail.data.evidenceWithIndex[action.evidenceWithId],
-                                finalized: true,
-                                isValid: false,
-                            }
-                        }
+            return {
+                ...state,
+                evidenceWithIndex: {
+                    ...state.evidenceWithIndex,
+                    [action.evidenceWithId]: {
+                        ...state.evidenceWithIndex[action.evidenceWithId],
+                        finalized: true,
+                        isValid: false,
                     }
                 }
-            }
-        };
+            };
     case actions.PREVIEW:
         return {
             ...state,

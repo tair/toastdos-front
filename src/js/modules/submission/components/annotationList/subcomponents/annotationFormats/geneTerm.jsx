@@ -22,12 +22,13 @@ class GeneTerm extends React.Component {
         this.generateEvidenceWith = this.generateEvidenceWith.bind(this);
     }
 
-    generateEvidenceWith(evidenceWithId) {
+    generateEvidenceWith(evidenceWithId, annotationId) {
         return (
-            <EvidenceWith 
+            <EvidenceWith
                 key={evidenceWithId}
                 evidenceWithId={evidenceWithId}
                 validateEvidenceWith={this.props.validateEvidenceWith}
+                removeEvidenceWith={this.props.removeEvidenceWith.bind(this,annotationId,evidenceWithId)}
             />
         );
     }
@@ -142,15 +143,18 @@ class GeneTerm extends React.Component {
 
 GeneTerm.propTypes = {
     annotationData: React.PropTypes.object,
+    annotationId: React.PropTypes.any,
     validateEvidenceWith: React.PropTypes.func,
     onEvidenceWithAddClick: React.PropTypes.func,
-    onDataChange: React.PropTypes.func
+    onDataChange: React.PropTypes.func,
+    removeEvidenceWith: React.PropTypes.func
 };
 
 GeneTerm.defaultProps = {
     onDataChange: () => {},
     onEvidenceWithAddClick: () => {},
-    validateEvidenceWith: () => {}
+    validateEvidenceWith: () => {},
+    removeEvidenceWith: () => {}
 };
 
 export default GeneTerm;

@@ -167,6 +167,14 @@ export function addEvidenceWith(annotationId, newEvidenceWithId) {
     };
 }
 
+export function removeEvidenceWith(annotationId, evidenceWithId) {
+    return {
+        type: actions.REMOVE_EVIDENCE_WITH,
+        annotationId: annotationId,
+        evidenceWithId: evidenceWithId
+    };
+}
+
 export function updateEvidenceWith(evidenceWithId, data) {
     return {
         type: actions.UPDATE_EVIDENCE_WITH,

@@ -25,6 +25,8 @@ class AnnotationList extends React.Component {
                 onDataUpdate={this.props.updateAnnotationData.bind(this, annotationId)}
                 onEvidenceWithAddClick={this.props.addEvidenceWith.bind(this, annotationId)}
                 validateEvidenceWith={this.props.validateEvidenceWith.bind(this, annotationId)}
+                removeEvidenceWith={this.props.removeEvidenceWith}
+                annotationId={annotationId}
             />
         );
     }
@@ -83,6 +85,7 @@ AnnotationList.propTypes = {
     onAnnotationAddClick: React.PropTypes.func,
     handleAnnotationTypeChange: React.PropTypes.func,
     removeAnnotation: React.PropTypes.func,
+    removeEvidenceWith: React.PropTypes.func,
     hasGenes: React.PropTypes.bool
 };
 
