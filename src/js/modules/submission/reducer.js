@@ -268,6 +268,7 @@ export default function (state = defaultState, action) {
                 }
             },
             annotationIndex: {
+                ...state.annotationIndex,
                 [action.annotationId]: {
                     ...annotation,
                     data: {
@@ -294,22 +295,6 @@ export default function (state = defaultState, action) {
             an.data.evidenceWithOrder.filter(e => e != action.evidenceWithId);
 
         return Object.assign({},state, newState);
-        // return {
-        //     ...state,
-        //     evidenceWithIndex: evidenceWithIndex,
-        //     annotationIndex: {
-        //         ...state.annotationIndex,
-        //         [state.annotationOrder[action.annotationId]]: {
-        //             ...an,
-        //             data: {
-        //                 ...an.data,
-        //                 evidenceWithOrder: [].concat(
-        //                     an.data.evidenceWithOrder
-        //                     .filter(e => e != action.evidenceWithId))
-        //             }
-        //         }
-        //     }
-        // };
 
     case actions.UPDATE_EVIDENCE_WITH:
         newState = {

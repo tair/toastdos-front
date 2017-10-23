@@ -14,6 +14,7 @@ class AnnotationList extends React.Component {
 
     generateAnnotationEntry(annotationId, index) {
         let currAnnotation = this.props.annotationIndex[annotationId];
+
         return (
             <AnnotationEntry
                 key={`annotation_${annotationId}`}
