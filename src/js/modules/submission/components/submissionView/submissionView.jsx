@@ -43,6 +43,9 @@ class SubmissionView extends React.Component {
             </Alert>
         );
 
+        const showGenes = false;
+        const showAnnotations = false;
+
         return (
             <Container fluid className="mt-3">
                 <Row className="justify-content-md-center">
@@ -68,12 +71,12 @@ class SubmissionView extends React.Component {
                                         <ListGroupItem className="border-left-0 border-right-0 border-top-0">
                                             <PublicationField/>
                                         </ListGroupItem>
-                                        <ListGroupItem className="border-left-0 border-right-0">
+                                        {this.props.publicationPresent ? <ListGroupItem className="border-left-0 border-right-0">
                                             <GeneList/>
-                                        </ListGroupItem>
-                                        <ListGroupItem className="border-left-0 border-right-0 border-bottom-0">
+                                        </ListGroupItem> : null}
+                                        {this.props.publicationPresent && this.props.genesPresent ? <ListGroupItem className="border-left-0 border-right-0 border-bottom-0">
                                             <AnnotationList/>
-                                        </ListGroupItem>
+                                        </ListGroupItem>  : null}
                                     </ListGroup>
                                 )}
                                 </Form>

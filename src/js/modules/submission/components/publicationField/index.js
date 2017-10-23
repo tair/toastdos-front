@@ -9,7 +9,7 @@ const ConnectedPublicationField = connect(
         publicationIdValue: state.submission.publicationIdValue
     }),
     dispatch => ({
-        onChange: e => dispatch(changePublicationId(e.target.value))
+        onBlur: e => dispatch(changePublicationId(e.target.value))
     })
 )(PublicationField);
 
