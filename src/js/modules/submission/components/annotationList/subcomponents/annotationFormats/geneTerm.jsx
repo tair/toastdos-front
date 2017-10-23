@@ -36,7 +36,7 @@ class GeneTerm extends React.Component {
 
     render() {
         let typeData = annotationTypeData[this.props.annotationData.annotationType];
-        console.log(this.props.annotationData.data.evidenceWithOrder);
+        
         return (
             <div>
                 <Row className="align-items-end">
