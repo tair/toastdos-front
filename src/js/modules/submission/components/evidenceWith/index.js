@@ -7,7 +7,8 @@ import EvidenceWith from './evidenceWith';
 import {
     validateEvidenceWith,
     updateEvidenceWith,
-    removeEvidenceWith
+    removeEvidenceWith,
+    clearEvidenceWith
 } from '../../actions';
 
 const ConnectedEvidenceWith = connect(
@@ -16,6 +17,7 @@ const ConnectedEvidenceWith = connect(
     }),
     dispatch => ({
         updateEvidenceWith: (evidenceWithId, data) => dispatch(updateEvidenceWith(evidenceWithId, data)),
+        clearEvidenceWith: (evidenceWithId) => dispatch(clearEvidenceWith(evidenceWithId))
     })
 )(EvidenceWith);
 

@@ -13,28 +13,12 @@ const inputContainerStyle = {
 class EvidenceWith extends React.Component {
     constructor(props) {
         super(props);
-    }
 
-    getEWColor(finalized, isValid) {
-        if (finalized) {
-            return isValid ? "green" : "red";
-        } else {
-            return "black";
-        }
-    }
-
-    getEWStatus(finalized, isValid) {
-        let className = "fa fa-fw ";
-        if (finalized) {
-            return className + (isValid ? "fa-check" : "fa-exclamation-circle");
-        } else {
-            return className + "fa-chain";
-        }
     }
 
     render() {
         let currentEvidenceWith = this.props.evidenceWithIndex[this.props.evidenceWithId];
-        
+
         return (
             <ListGroupItem key={`evidence_with_${this.props.evidenceWithId}`}>
                 <Row>
@@ -59,11 +43,19 @@ class EvidenceWith extends React.Component {
                         </InputGroup>
                     </Col>
                     <Col sm="auto" className="text-right input-container">
+                        {(Object.keys(this.props.evidenceWithIndex).length === 1)?(
+                        <Button color="danger"
+                            onClick={() => this.props.clearEvidenceWith(this.props.evidenceWithId)}
+                        >
+                            <span className="fa fa-close" title="Remove Evidence With"></span>
+                        </Button>
+                        ):(
                         <Button color="danger"
                             onClick={this.props.removeEvidenceWith}
                         >
                             <span className="fa fa-close" title="Remove Evidence With"></span>
                         </Button>
+                        )}
                     </Col>
                 </Row>
             </ListGroupItem>
@@ -76,14 +68,16 @@ EvidenceWith.propTypes = {
     evidenceWithId: React.PropTypes.any,
     validateEvidenceWith: React.PropTypes.func,
     updateEvidenceWith: React.PropTypes.func,
-    removeEvidenceWith: React.PropTypes.func
+    removeEvidenceWith: React.PropTypes.func,
+    clearEvidenceWith: React.PropTypes.func
 };
 
 EvidenceWith.defaultProps = {
     evidenceWithIndex: {},
     validateEvidenceWith: () => {},
     updateEvidenceWith: () => {},
-    removeEvidenceWith: () => {}
+    removeEvidenceWith: () => {},
+    clearEvidenceWith: () => {}
 };
 
 export default EvidenceWith;

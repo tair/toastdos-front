@@ -22,6 +22,10 @@ class GeneTerm extends React.Component {
         this.generateEvidenceWith = this.generateEvidenceWith.bind(this);
     }
 
+    componentWillMount() {
+        this.setState(this.props.onEvidenceWithAddClick);
+    }
+
     generateEvidenceWith(evidenceWithId) {
         let annotationId = this.props.annotationId;
         return (

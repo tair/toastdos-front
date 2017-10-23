@@ -183,6 +183,13 @@ export function updateEvidenceWith(evidenceWithId, data) {
     };
 }
 
+export function clearEvidenceWith(evidenceWithId) {
+    return {
+        type: actions.CLEAR_EVIDENCE_WITH,
+        evidenceWithId: evidenceWithId
+    };
+}
+
 function submitSuccess(response) {
     return {
         type: actions.SUBMIT_SUCCESS,

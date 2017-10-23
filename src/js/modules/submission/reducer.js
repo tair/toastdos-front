@@ -305,6 +305,17 @@ export default function (state = defaultState, action) {
 
         return Object.assign({}, state, newState);
 
+    case actions.CLEAR_EVIDENCE_WITH:
+        newState = {
+            evidenceWithIndex: Object.assign({},state.evidenceWithIndex)
+        }
+        
+        newState.evidenceWithIndex[action.evidenceWithId].finalized = false;
+        newState.evidenceWithIndex[action.evidenceWithId].isValid = false;
+        newState.evidenceWithIndex[action.evidenceWithId].locusName = "";
+
+        return Object.assign({},state,newState);
+
     case actions.VALIDATE_EVIDENCE_WITH_SUCCESS:
         return {
             ...state,
