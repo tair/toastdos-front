@@ -280,27 +280,36 @@ export default function (state = defaultState, action) {
         };
 
     case actions.REMOVE_EVIDENCE_WITH:
-        
-        let an = Object.assign({},state.annotationIndex[state.annotationOrder[action.annotationId]]);
-        let evidenceWithIndex = Object.assign({},state.evidenceWithIndex);
-        delete evidenceWithIndex[action.evidenceWithId];
 
-        return {
-            ...state,
-            evidenceWithIndex: evidenceWithIndex,
-            annotationIndex: {
-                ...state.annotationIndex,
-                [state.annotationOrder[action.annotationId]]: {
-                    ...an,
-                    data: {
-                        ...an.data,
-                        evidenceWithOrder: [].concat(
-                            an.data.evidenceWithOrder
-                            .filter(e => e != action.evidenceWithId))
-                    }
-                }
-            }
-        };
+        newState = {
+            evidenceWithIndex: Object.assign({}, state.evidenceWithIndex),
+            annotationIndex: Object.assign({}, state.annotationIndex)
+        }
+
+        delete newState.evidenceWithIndex[action.evidenceWithId];
+
+        let an = state.annotationIndex[action.annotationId];
+
+        newState.annotationIndex[action.annotationId].data.evidenceWithOrder = 
+            an.data.evidenceWithOrder.filter(e => e != action.evidenceWithId);
+
+        return Object.assign({},state, newState);
+        // return {
+        //     ...state,
+        //     evidenceWithIndex: evidenceWithIndex,
+        //     annotationIndex: {
+        //         ...state.annotationIndex,
+        //         [state.annotationOrder[action.annotationId]]: {
+        //             ...an,
+        //             data: {
+        //                 ...an.data,
+        //                 evidenceWithOrder: [].concat(
+        //                     an.data.evidenceWithOrder
+        //                     .filter(e => e != action.evidenceWithId))
+        //             }
+        //         }
+        //     }
+        // };
 
     case actions.UPDATE_EVIDENCE_WITH:
         newState = {

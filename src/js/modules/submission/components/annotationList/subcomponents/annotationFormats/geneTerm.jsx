@@ -22,7 +22,8 @@ class GeneTerm extends React.Component {
         this.generateEvidenceWith = this.generateEvidenceWith.bind(this);
     }
 
-    generateEvidenceWith(evidenceWithId, annotationId) {
+    generateEvidenceWith(evidenceWithId) {
+        let annotationId = this.props.annotationId;
         return (
             <EvidenceWith
                 key={evidenceWithId}
@@ -35,7 +36,7 @@ class GeneTerm extends React.Component {
 
     render() {
         let typeData = annotationTypeData[this.props.annotationData.annotationType];
-
+        console.log(this.props.annotationData.data.evidenceWithOrder);
         return (
             <div>
                 <Row className="align-items-end">
