@@ -57,18 +57,18 @@ class PublicationField extends React.Component {
                             <CardBody>
                                 {this.props.publicationInfo.url ? (
                                 <Row className="align-items-end mt-3">
-                                    <Col xs="4" className="text-right d-table-cell">
+                                    <Col xs="3" className="text-right d-table-cell">
                                         <Label className="align-center">
                                             URL
                                         </Label>
                                     </Col>
-                                    <Col className="d-block">
-                                        <Input value={this.props.publicationInfo.url} disabled></Input>
+                                    <Col className="d-block mb-2">
+                                        <a target="_blank" href={this.props.publicationInfo.url}>{this.props.publicationInfo.url}</a>
                                     </Col>
                                 </Row>
                                 ):(
                                 [<Row key="Title" className="align-items-end mt-3">
-                                    <Col xs="4" className="text-right d-table-cell">
+                                    <Col xs="3" className="text-right d-table-cell">
                                         <Label className="align-center">
                                             Title
                                         </Label>
@@ -78,7 +78,7 @@ class PublicationField extends React.Component {
                                     </Col>
                                 </Row>,
                                 <Row key="Author" className="align-items-end mt-3">
-                                    <Col xs="4" className="text-right d-table-cell">
+                                    <Col xs="3" className="text-right d-table-cell">
                                         <Label className="align-center">
                                             Author
                                         </Label>

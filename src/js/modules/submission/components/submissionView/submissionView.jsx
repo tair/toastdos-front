@@ -88,7 +88,7 @@ class SubmissionView extends React.Component {
                                 )}
                                 </Form>
                             </CardBody>
-                            <CardFooter>
+                            <CardFooter className="submissionFooter">
                             {this.props.previewing ?
                             (
                                 !this.props.submitted ?
@@ -120,7 +120,7 @@ class SubmissionView extends React.Component {
                                         <Button color="danger"
                                             onClick={this.props.resetSubmission}
                                         >
-                                            Reset Form
+                                            <span className="fa fa-trash" /> Reset Form
                                         </Button>
                                     </Col>
                                     <Col className="text-right">
