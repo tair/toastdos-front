@@ -9,6 +9,7 @@ import { annotationTypeData } from "../../../../constants";
 import KeywordTextInput from '../../../keywordTextInput';
 import CustomTextInput from "lib/components/customTextInput";
 import ValidationStatus from "../../../validationStatus";
+import ValidationInput from "../../../validationInput";
 
 const inputContainerStyle = {
     display: "inline-block",
@@ -28,29 +29,26 @@ class GeneTerm extends React.Component {
         // TODO: Clean up this code and move into its own component.
         return (
             <ListGroupItem key={`evidence_with_${evidenceWithId}`}>
-                <InputGroup>
-                    <CustomTextInput
-                        placeholder="e.g. a locus, protein"
-                        value={currentEvidenceWith.locusName}
-                        onChange={event => this.props.onDataChange({
-                                    ...this.props.annotationData.data,
-                                    evidenceWithIndex: {
-                                        ...this.props.annotationData.data.evidenceWithIndex,
-                                        [evidenceWithId]: {
-                                            ...currentEvidenceWith,
-                                            finalized: false,
-                                            locusName: event.target.value
-                                        }
+                <ValidationInput
+                    finalized={currentEvidenceWith.finalized}
+                    isValid={currentEvidenceWith.isValid}
+                    placeholder="e.g. a locus, protein"
+                    value={currentEvidenceWith.locusName}
+                    onChange={event => this.props.onDataChange({
+                                ...this.props.annotationData.data,
+                                evidenceWithIndex: {
+                                    ...this.props.annotationData.data.evidenceWithIndex,
+                                    [evidenceWithId]: {
+                                        ...currentEvidenceWith,
+                                        finalized: false,
+                                        locusName: event.target.value
                                     }
-                                })
-                            }
-                        onBlur={() => {this.props.validateEvidenceWith(evidenceWithId);}}
-                        style={{marginRight: 10}}
-                    />
-                    <InputGroupAddon>
-                        <ValidationStatus finalized={currentEvidenceWith.finalized} isValid={currentEvidenceWith.isValid} />
-                    </InputGroupAddon>
-                </InputGroup>
+                                }
+                            })
+                        }
+                    onBlur={() => {this.props.validateEvidenceWith(evidenceWithId);}}
+                    style={{marginRight: 10}}
+                />
             </ListGroupItem>
         );
     }

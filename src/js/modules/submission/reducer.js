@@ -9,6 +9,16 @@ import {
 
 const defaultState = {
     publicationIdValue: "",
+    publicationInfo: {
+        author: "",
+        url: "",
+        title: "",
+    },
+    publicationValidation: {
+        finalized: false,
+        validating: false,
+        validationError: ""
+    },
     geneIndex: {
         "init": {
             localId: "init",
@@ -39,6 +49,45 @@ export default function (state = defaultState, action) {
         return Object.assign({}, state, {
             publicationIdValue: action.value
         });
+    case actions.ATTEMPT_VALIDATE_PUBLICATION:
+        return {
+            ...state,
+            publicationIdValue: '',
+            publicationValidation: {
+                validating: true,
+                validationError: '',
+                finalized: false,
+            },
+            publicationInfo: {
+                author: '',
+                url: '',
+                title: '',
+            },
+        };
+    case actions.VALIDATE_PUBLICATION_SUCCESS:
+        return {
+            ...state,
+            publicationIdValue: action.publicationId,
+            publicationValidation: {
+                validating: false,
+                validationError: '',
+                finalized: true
+            },
+            publicationInfo: {
+                author: action.data.author,
+                url: action.data.url,
+                title: action.data.title,
+            },
+        };
+    case actions.VALIDATE_PUBLICATION_FAIL:
+        return {
+            ...state,
+            publicationValidation: {
+                ...state.publicationValidation,
+                validating: false,
+                validationError: action.error,
+            }
+        };
     case actions.ADD_NEW_GENE:
         newState = {
             geneIndex: Object.assign({}, state.geneIndex),

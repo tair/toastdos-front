@@ -2,15 +2,21 @@
 
 import { connect } from 'react-redux';
 import PublicationField from './publicationField';
-import { changePublicationId } from '../../actions';
+import { changePublicationId, attemptValidatePublication } from '../../actions';
 
 const ConnectedPublicationField = connect(
     state => ({
-        publicationIdValue: state.submission.publicationIdValue
+        publicationIdValue: state.submission.publicationIdValue,
+        publicationValidation: state.submission.publicationValidation,
+        publicationInfo: state.submission.publicationInfo,
     }),
     dispatch => ({
-        onBlur: e => dispatch(changePublicationId(e.target.value))
+        attemptValidatePublication: (publicationId) => dispatch(attemptValidatePublication(publicationId))
     })
 )(PublicationField);
+
+ConnectedPublicationField.defaultProps = {
+    ...PublicationField.defaultProps
+};
 
 export default ConnectedPublicationField;

@@ -105,6 +105,37 @@ export function validateGene(name, jwt, callback) {
     });
 }
 
+/**
+ * Request for validating a publication
+ * @param  {String}   publicationId - the publicationId
+ * @param  {String}   jwt - auth token
+ * @param  {Function} callback  - the callback
+ */
+export function validatePublication(publicationId, jwt, callback) {
+    return request({
+        method: 'POST',
+        timeout: 15000,
+        url: `${BASE_URL}/api/publication`,
+        json: {
+            publication_id: publicationId
+        },
+        headers: {
+            'Authorization': `Bearer ${jwt}`
+        }
+    }, (err, resp, body) => {
+        if(resp.status === 404) {
+            return callback({error: "NOT_FOUND"});
+        }
+        if(err) {
+            return callback(err);
+        }
+        if(resp.status === 500) {
+            return callback(body);
+        }
+        return callback(null, body);
+    });
+}
+
 export function submitSubmission(submissionData, jwt, callback) {
     // console.log(submissionData);
     return request({

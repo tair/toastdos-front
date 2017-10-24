@@ -3,6 +3,7 @@
 import AuthModule from 'modules/authentication';
 import {
     validateGene,
+    validatePublication,
     submitSubmission,
     searchKeywords
 } from 'lib/api';
@@ -28,6 +29,45 @@ export function removeGene(localId) {
     return {
         type: actions.REMOVE_GENE,
         localId: localId
+    };
+}
+
+export function attemptValidatePublication(publicationId) {
+    return (dispatch, getState) => {
+        const currState = getState();
+        const token = AuthModule.selectors.rawJwtSelector(currState);
+
+        dispatch({
+            type: actions.ATTEMPT_VALIDATE_PUBLICATION
+        });
+
+        if (publicationId.length > 0 && publicationId !== '0') {
+            validatePublication(publicationId, token, (err, data) => { if(err) {
+                    if(err.error === 'NOT_FOUND') {
+                        return dispatch(validatePublicationFail("Publication Not Found"));
+                    }
+                    return dispatch(validatePublicationFail("Error Validating Publication"));
+                }
+                return dispatch(validatePublicationSuccess(publicationId, data));
+            });
+        } else {
+            return dispatch(validatePublicationFail("Publication ID is empty"));
+        }
+    };
+}
+
+function validatePublicationSuccess(publicationId, data) {
+    return {
+        type: actions.VALIDATE_PUBLICATION_SUCCESS,
+        publicationId: publicationId,
+        data: data
+    };
+}
+
+function validatePublicationFail(error) {
+    return {
+        type: actions.VALIDATE_PUBLICATION_FAIL,
+        error: error
     };
 }
 

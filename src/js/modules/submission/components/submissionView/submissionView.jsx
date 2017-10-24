@@ -9,6 +9,7 @@ import {Alert, Card, CardImg, CardText, CardHeader,
     CardBody, CardFooter, CardTitle, CardSubtitle, Button,
     ListGroup, ListGroupItem, ListGroupItemHeading,
     Form, FormGroup, Label, Input,
+    Nav, NavItem, NavLink,
     ListGroupItemText, Container, Row, Col} from 'reactstrap';
 
 import 'css/submissionView.scss';
@@ -58,7 +59,13 @@ class SubmissionView extends React.Component {
                         }
                         <Card className="submission-view">
                             <CardHeader>
-                                <span className="fa fa-file-text" /> New Annotation Submission
+                                <Row className="align-items-center" >
+                                    <Col>
+                                        <span className="fa fa-file-text" /> New Annotation Submission
+                                    </Col>
+                                    <Col md='9'>
+                                    </Col>
+                                </Row>
                             </CardHeader>
                             <CardBody className="p-0">
                                 <Form className="submission-form-container">
