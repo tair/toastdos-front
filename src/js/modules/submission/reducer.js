@@ -7,39 +7,43 @@ import {
         annotationFormats 
     } from './constants';
 
-const defaultState = {
-    publicationIdValue: "",
-    publicationInfo: {
-        author: "",
-        url: "",
-        title: "",
-    },
-    publicationValidation: {
-        finalized: false,
-        validating: false,
-        validationError: ""
-    },
-    geneIndex: {
-        "init": {
-            localId: "init",
-            finalizedLocusName: "",
-            finalizedGeneSymbol: "",
-            finalizedFullName: "",
+function getDefaultState() {
+    return {
+        publicationIdValue: "",
+        publicationInfo: {
+            author: "",
+            url: "",
+            title: "",
+        },
+        publicationValidation: {
             finalized: false,
             validating: false,
             validationError: ""
-        }
-    },
-    geneOrder: ["init"],
-    annotationIndex: {},
-    annotationOrder: [],
-    submitting: false,
-    submitted: false,
-    previewing: false,
-    submissionError: "",
-    keywordSearchResults: [],
-    searchingKeywords: false
-};
+        },
+        geneIndex: {
+            "init": {
+                localId: "init",
+                finalizedLocusName: "",
+                finalizedGeneSymbol: "",
+                finalizedFullName: "",
+                finalized: false,
+                validating: false,
+                validationError: ""
+            }
+        },
+        geneOrder: ["init"],
+        annotationIndex: {},
+        annotationOrder: [],
+        submitting: false,
+        submitted: false,
+        previewing: false,
+        submissionError: "",
+        keywordSearchResults: [],
+        searchingKeywords: false
+    }
+}
+
+const defaultState = getDefaultState();
 
 
 export default function (state = defaultState, action) {
@@ -277,7 +281,7 @@ export default function (state = defaultState, action) {
             previewing: false,
         });
     case actions.RESET_SUBMISSION:
-        return defaultState;
+        return getDefaultState();
     case actions.ATTEMPT_KEYWORD_SEARCH:
         return Object.assign({}, state, {
             searchingKeywords: true
