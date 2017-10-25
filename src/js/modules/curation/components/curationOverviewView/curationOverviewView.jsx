@@ -4,6 +4,8 @@ import "css/curationView.scss";
 import SearchFilter from './subcomponents/searchFilter';
 import SubmissionTable from './subcomponents/submissionTable';
 
+import {Container, Row, Col, Card, CardHeader, CardBody} from 'reactstrap';
+
 
 
 class CurationOverviewView extends React.Component {
@@ -17,22 +19,27 @@ class CurationOverviewView extends React.Component {
 
     render() {
         return (
-            <div className="curation-view-container">
-              <div className="curation-view">
-                <h1>Submission Curation</h1>
-                <div className="curation-table-container">
-                    <h2>Curation List</h2>
-                    <SubmissionTable
-                        loading={this.props.loading}
-                        submissions={this.props.submissions}
-                        loadSubmissions={this.props.loadSubmissions}
-                        totalPages={this.props.totalPages}
-                        pageSize={this.props.pageSize}
-                        currentPage={this.props.currPage}
-                    />
-                </div>
-              </div>
-            </div>
+            <Container fluid className="mt-3">
+                <Row className="justify-content-md-center">
+                    <Col md="10">
+                        <Card className="submission-view">
+                            <CardHeader>
+                                <span className="fa fa-check" /> Submission Curation
+                            </CardHeader>
+                            <CardBody>
+                                <SubmissionTable
+                                    loading={this.props.loading}
+                                    submissions={this.props.submissions}
+                                    loadSubmissions={this.props.loadSubmissions}
+                                    totalPages={this.props.totalPages}
+                                    pageSize={this.props.pageSize}
+                                    currentPage={this.props.currPage}
+                                />
+                            </CardBody>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
         );
     }
 }

@@ -186,3 +186,5 @@ bin/
 
 resources/orcid_app_info.json
 
+.vscode
+

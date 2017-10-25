@@ -7,29 +7,43 @@ import {
         annotationFormats 
     } from './constants';
 
-const defaultState = {
-    publicationIdValue: "",
-    geneIndex: {
-        "init": {
-            localId: "init",
-            finalizedLocusName: "",
-            finalizedGeneSymbol: "",
-            finalizedFullName: "",
+function getDefaultState() {
+    return {
+        publicationIdValue: "",
+        publicationInfo: {
+            author: "",
+            url: "",
+            title: "",
+        },
+        publicationValidation: {
             finalized: false,
             validating: false,
             validationError: ""
-        }
-    },
-    geneOrder: ["init"],
-    annotationIndex: {},
-    annotationOrder: [],
-    submitting: false,
-    submitted: false,
-    previewing: false,
-    submissionError: "",
-    keywordSearchResults: [],
-    searchingKeywords: false
-};
+        },
+        geneIndex: {
+            "init": {
+                localId: "init",
+                finalizedLocusName: "",
+                finalizedGeneSymbol: "",
+                finalizedFullName: "",
+                finalized: false,
+                validating: false,
+                validationError: ""
+            }
+        },
+        geneOrder: ["init"],
+        annotationIndex: {},
+        annotationOrder: [],
+        submitting: false,
+        submitted: false,
+        previewing: false,
+        submissionError: "",
+        keywordSearchResults: [],
+        searchingKeywords: false
+    }
+}
+
+const defaultState = getDefaultState();
 
 
 export default function (state = defaultState, action) {
@@ -39,6 +53,45 @@ export default function (state = defaultState, action) {
         return Object.assign({}, state, {
             publicationIdValue: action.value
         });
+    case actions.ATTEMPT_VALIDATE_PUBLICATION:
+        return {
+            ...state,
+            publicationIdValue: '',
+            publicationValidation: {
+                validating: true,
+                validationError: '',
+                finalized: false,
+            },
+            publicationInfo: {
+                author: '',
+                url: '',
+                title: '',
+            },
+        };
+    case actions.VALIDATE_PUBLICATION_SUCCESS:
+        return {
+            ...state,
+            publicationIdValue: action.publicationId,
+            publicationValidation: {
+                validating: false,
+                validationError: '',
+                finalized: true
+            },
+            publicationInfo: {
+                author: action.data.author,
+                url: action.data.url,
+                title: action.data.title,
+            },
+        };
+    case actions.VALIDATE_PUBLICATION_FAIL:
+        return {
+            ...state,
+            publicationValidation: {
+                ...state.publicationValidation,
+                validating: false,
+                validationError: action.error,
+            }
+        };
     case actions.ADD_NEW_GENE:
         newState = {
             geneIndex: Object.assign({}, state.geneIndex),
@@ -74,6 +127,8 @@ export default function (state = defaultState, action) {
         };
         newState.geneIndex[action.localId].validationError = '';
         newState.geneIndex[action.localId].validating = true;
+        newState.geneIndex[action.localId].finalized = false;
+
         return Object.assign({}, state, newState);
     case actions.UPDATE_GENE_DATA:
         return {
@@ -92,12 +147,9 @@ export default function (state = defaultState, action) {
         };
 
         newState.geneIndex[action.localId].validating = false;
-
-        newState.geneIndex[action.localId].finalized = true;
         newState.geneIndex[action.localId].validationError = '';
-
-        newState.geneIndex[action.localId].finalizedLocusName = action.geneData.locusName;
-        
+        newState.geneIndex[action.localId].finalized = true;
+        newState.geneIndex[action.localId].finalizedLocusName = action.locusName;
 
         return Object.assign({}, state, newState);
     case actions.VALIDATE_GENE_FAIL:
@@ -105,20 +157,11 @@ export default function (state = defaultState, action) {
             geneIndex: Object.assign({}, state.geneIndex),
         };
 
-        newState.geneIndex[action.localId].validationError = action.error;
-
         newState.geneIndex[action.localId].validating = false;
+        newState.geneIndex[action.localId].validationError = action.error;
+        newState.geneIndex[action.localId].finalized = true;
+        newState.geneIndex[action.localId].finalizedLocusName = '';
         
-
-        return Object.assign({}, state, newState);
-    
-    case actions.EDIT_GENE_DATA:
-        newState = {
-            geneIndex: Object.assign({}, state.geneIndex)
-        };
-
-        newState.geneIndex[action.localId].finalized = false;
-
         return Object.assign({}, state, newState);
     case actions.ADD_NEW_ANNOTATION:
         newState = {
@@ -139,7 +182,8 @@ export default function (state = defaultState, action) {
                 evidenceWithIndex: {
                     ["init" + action.localId]: {
                         finalized: false,
-                        isValid: false,
+                        validating: false,
+                        validationError: '',
                         locusName: ""
                     }
                 },
@@ -180,7 +224,8 @@ export default function (state = defaultState, action) {
                 evidenceWithIndex: {
                     ["init" + action.localId]: {
                         finalized: false,
-                        isValid: false,
+                        validating: false,
+                        validationError: '',
                         locusName: ""
                     }
                 },
@@ -236,17 +281,7 @@ export default function (state = defaultState, action) {
             previewing: false,
         });
     case actions.RESET_SUBMISSION:
-        return Object.assign({}, state, {
-            publicationIdValue: "",
-            geneIndex: {},
-            geneOrder: [],
-            annotationIndex: {},
-            annotationOrder: [],
-            submitting: false,
-            submitted: false,
-            previewing: false,
-            submissionError: ""
-        });
+        return getDefaultState();
     case actions.ATTEMPT_KEYWORD_SEARCH:
         return Object.assign({}, state, {
             searchingKeywords: true
@@ -279,12 +314,36 @@ export default function (state = defaultState, action) {
                             ...annotation.data.evidenceWithIndex,
                             [action.newEvidenceWithId]: {
                                 finalized: false,
-                                isValid: false,
+                                validationError: '',
+                                validating: false,
                                 locusName: ""
                             }
                         },
                         evidenceWithOrder: annotation.data.evidenceWithOrder
                             .concat(action.newEvidenceWithId)
+                    }
+                }
+            }
+        };
+    case actions.ATTEMPT_VALIDATE_EVIDENCE_WITH:
+        let annotationAttemptEvidenceWith = state.annotationIndex[action.annotationId];
+        return {
+            ...state,
+            annotationIndex: {
+                ...state.annotationIndex,
+                [action.annotationId]: {
+                    ...annotationAttemptEvidenceWith,
+                    data: {
+                        ...annotationAttemptEvidenceWith.data,
+                        evidenceWithIndex: {
+                            ...annotationAttemptEvidenceWith.data.evidenceWithIndex,
+                            [action.evidenceWithId]: {
+                                ...annotationAttemptEvidenceWith.data.evidenceWithIndex[action.evidenceWithId],
+                                finalized: false,
+                                validationError: '',
+                                validating: true,
+                            }
+                        }
                     }
                 }
             }
@@ -304,7 +363,9 @@ export default function (state = defaultState, action) {
                             [action.evidenceWithId]: {
                                 ...annotationSuccess.data.evidenceWithIndex[action.evidenceWithId],
                                 finalized: true,
-                                isValid: true,
+                                validationError: '',
+                                validating: false,
+                                locusName: action.locusName,
                             }
                         }
                     }
@@ -326,7 +387,9 @@ export default function (state = defaultState, action) {
                             [action.evidenceWithId]: {
                                 ...annotationFail.data.evidenceWithIndex[action.evidenceWithId],
                                 finalized: true,
-                                isValid: false,
+                                validationError: action.error,
+                                validating: false,
+                                locusName: '',
                             }
                         }
                     }
@@ -336,7 +399,8 @@ export default function (state = defaultState, action) {
     case actions.PREVIEW:
         return {
             ...state,
-            previewing: true
+            previewing: true,
+            submissionError: ""
         };
     case actions.EDIT:
         return {

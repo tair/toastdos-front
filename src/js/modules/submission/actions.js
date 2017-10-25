@@ -3,6 +3,7 @@
 import AuthModule from 'modules/authentication';
 import {
     validateGene,
+    validatePublication,
     submitSubmission,
     searchKeywords
 } from 'lib/api';
@@ -31,7 +32,46 @@ export function removeGene(localId) {
     };
 }
 
-export function attemptValidateGene(localId, geneData) {
+export function attemptValidatePublication(publicationId) {
+    return (dispatch, getState) => {
+        const currState = getState();
+        const token = AuthModule.selectors.rawJwtSelector(currState);
+
+        dispatch({
+            type: actions.ATTEMPT_VALIDATE_PUBLICATION
+        });
+
+        if (publicationId.length > 0 && publicationId !== '0') {
+            validatePublication(publicationId, token, (err, data) => { if(err) {
+                    if(err.error === 'NOT_FOUND') {
+                        return dispatch(validatePublicationFail("Publication Not Found"));
+                    }
+                    return dispatch(validatePublicationFail("Error Validating Publication"));
+                }
+                return dispatch(validatePublicationSuccess(publicationId, data));
+            });
+        } else {
+            return dispatch(validatePublicationFail("Publication ID is empty"));
+        }
+    };
+}
+
+function validatePublicationSuccess(publicationId, data) {
+    return {
+        type: actions.VALIDATE_PUBLICATION_SUCCESS,
+        publicationId: publicationId,
+        data: data
+    };
+}
+
+function validatePublicationFail(error) {
+    return {
+        type: actions.VALIDATE_PUBLICATION_FAIL,
+        error: error
+    };
+}
+
+export function attemptValidateGene(localId, locusName) {
     return (dispatch, getState) => {
         const currState = getState();
         const token = AuthModule.selectors.rawJwtSelector(currState);
@@ -42,36 +82,31 @@ export function attemptValidateGene(localId, geneData) {
         });
 
         // make sure we didn't add gene already
-        // newState.geneIndex[action.localId].validating = false;
-        // console.log(state.geneIndex);
-        // console.log(action.localId);
         for(var gi in currState[name].geneIndex) {
             // console.log(gi)
             if(`${gi}` === `${localId}`) continue;
-            if(currState[name].geneIndex[gi].finalizedLocusName === geneData.locusName) {
-                return dispatch(validateGeneFail(localId, 'Gene already added'));
+            if(currState[name].geneIndex[gi].finalizedLocusName === locusName) {
+                return dispatch(validateGeneFail(localId, 'Locus already added'));
             }
         }
 
-
-        // console.log(geneData)
-        validateGene(geneData.locusName, token, (err, data) => {
+        validateGene(locusName, token, (err, data) => {
             if(err) {
                 if(err.error === 'NOT_FOUND') {
-                    return dispatch(validateGeneFail(localId, "Gene Not Found"));
+                    return dispatch(validateGeneFail(localId, "Locus Not Found"));
                 }
-                return dispatch(validateGeneFail(localId, "Error Validating Gene"));
+                return dispatch(validateGeneFail(localId, "Error Validating Locus"));
             }
-            return dispatch(validateGeneSuccess(localId, geneData));
+            return dispatch(validateGeneSuccess(localId, locusName));
         });
     };
 }
 
-function validateGeneSuccess(localId, geneData) {
+function validateGeneSuccess(localId, locusName) {
     return {
         type: actions.VALIDATE_GENE_SUCCESS,
         localId: localId,
-        geneData: geneData
+        locusName
     };
 }
 
@@ -83,42 +118,44 @@ function validateGeneFail(localId, error) {
     };
 }
 
-export function validateEvidenceWith(annotationId, evidenceWithId) {
+export function validateEvidenceWith(annotationId, evidenceWithId, locusName) {
     return (dispatch, getState) => {
         const currState = getState();
         const token = AuthModule.selectors.rawJwtSelector(currState);
-        const evidenceWith = currState.submission.annotationIndex[annotationId].data
-            .evidenceWithIndex[evidenceWithId];
 
-        validateGene(evidenceWith.locusName, token, (err, data) => {
+        dispatch({
+            type: actions.ATTEMPT_VALIDATE_EVIDENCE_WITH,
+            annotationId,
+            evidenceWithId,
+        });
+
+        validateGene(locusName, token, (err, data) => {
             if(err) {
-                return dispatch(validateEvidenceWithFail(annotationId, evidenceWithId));
+                if(err.error === 'NOT_FOUND') {
+                    return dispatch(validateEvidenceWithFail(annotationId, evidenceWithId, "Locus Not Found"));
+                }
+                return dispatch(validateEvidenceWithFail(annotationId, evidenceWithId, "Error Validating Locus"));
             }
-            return dispatch(validateEvidenceWithSuccess(annotationId, evidenceWithId));
+            return dispatch(validateEvidenceWithSuccess(annotationId, evidenceWithId, locusName));
         });
     };
 }
 
-function validateEvidenceWithFail(annotationId, evidenceWithId) {
+function validateEvidenceWithFail(annotationId, evidenceWithId, error) {
     return {
         type: actions.VALIDATE_EVIDENCE_WITH_FAIL,
         annotationId,
+        error,
         evidenceWithId
     };
 }
 
-function validateEvidenceWithSuccess(annotationId, evidenceWithId) {
+function validateEvidenceWithSuccess(annotationId, evidenceWithId, locusName) {
     return {
         type: actions.VALIDATE_EVIDENCE_WITH_SUCCESS,
         annotationId,
-        evidenceWithId
-    };
-}
-
-export function editGeneData(localId) {
-    return {
-        type: actions.EDIT_GENE_DATA,
-        localId: localId
+        evidenceWithId,
+        locusName
     };
 }
 

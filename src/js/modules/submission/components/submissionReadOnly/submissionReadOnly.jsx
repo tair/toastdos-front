@@ -78,6 +78,8 @@ class SubmissionReadOnly extends React.Component {
                 break;
             case annotationFormats.GENE_TERM:
                 title = `${type}: ${this.getLocusName(annotation.data.geneLocalId)}`;
+                const showEvidenceWith = annotation.data.methodEvidenceCode == 'IPI' || 
+                    annotation.data.methodEvidenceCode == 'IGI';
                 body = (<div>
                     <Row>
                         <Col xs="3" className="text-right d-table-cell">
@@ -99,7 +101,7 @@ class SubmissionReadOnly extends React.Component {
                             {annotation.data.keywordName}
                         </Col>
                     </Row>
-                    {annotation.data.evidenceWithOrder.length == 0? null : (
+                    {!showEvidenceWith? null : (
                     <Row className="mt-3">
                         <Col xs="3" className="text-right d-table-cell">
                             <Label className="align-center">

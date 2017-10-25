@@ -29,7 +29,7 @@ const ConnectedAnnotationList = connect(
         removeAnnotation: localId => dispatch(removeAnnotation(localId)),
         updateAnnotationData: (localId, data) => dispatch(updateAnnotationData(localId, data)),
         addEvidenceWith: annotationId => dispatch(addEvidenceWith(annotationId, generateId())),
-        validateEvidenceWith: (annotationId, evidenceWithId) => dispatch(validateEvidenceWith(annotationId, evidenceWithId))
+        validateEvidenceWith: (annotationId, evidenceWithId, locusName) => dispatch(validateEvidenceWith(annotationId, evidenceWithId, locusName))
     })
 )(AnnotationList);
 

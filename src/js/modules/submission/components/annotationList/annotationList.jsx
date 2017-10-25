@@ -34,7 +34,7 @@ class AnnotationList extends React.Component {
             <div className="annotation-list-container">
                 <Row>
                     <Col>
-                        <h4>Annotations</h4>
+                        <h4>3. Annotations</h4>
                     </Col>
                     <Col sm={{size:9}}>
                         {(this.props.annotationOrder.length <= 0) ?

@@ -8,7 +8,7 @@ import GenePicker from '../genePicker';
 import { annotationTypeData } from "../../../../constants";
 import KeywordTextInput from '../../../keywordTextInput';
 import CustomTextInput from "lib/components/customTextInput";
-import ValidationStatus from "../../../validationStatus";
+import ValidationInput from "../../../validationInput";
 
 const inputContainerStyle = {
     display: "inline-block",
@@ -22,35 +22,24 @@ class GeneTerm extends React.Component {
         this.generateEvidenceWith = this.generateEvidenceWith.bind(this);
     }
 
+    attemptValidate(evidenceWithId, locusName){
+        this.props.validateEvidenceWith(evidenceWithId, locusName);
+    }
 
     generateEvidenceWith(evidenceWithId) {
         const currentEvidenceWith = this.props.annotationData.data.evidenceWithIndex[evidenceWithId];
         // TODO: Clean up this code and move into its own component.
         return (
             <ListGroupItem key={`evidence_with_${evidenceWithId}`}>
-                <InputGroup>
-                    <CustomTextInput
-                        placeholder="e.g. a locus, protein"
-                        value={currentEvidenceWith.locusName}
-                        onChange={event => this.props.onDataChange({
-                                    ...this.props.annotationData.data,
-                                    evidenceWithIndex: {
-                                        ...this.props.annotationData.data.evidenceWithIndex,
-                                        [evidenceWithId]: {
-                                            ...currentEvidenceWith,
-                                            finalized: false,
-                                            locusName: event.target.value
-                                        }
-                                    }
-                                })
-                            }
-                        onBlur={() => {this.props.validateEvidenceWith(evidenceWithId);}}
-                        style={{marginRight: 10}}
-                    />
-                    <InputGroupAddon>
-                        <ValidationStatus finalized={currentEvidenceWith.finalized} isValid={currentEvidenceWith.isValid} />
-                    </InputGroupAddon>
-                </InputGroup>
+                <ValidationInput
+                    finalized={currentEvidenceWith.finalized}
+                    validationError={currentEvidenceWith.validationError}
+                    validating={currentEvidenceWith.validating}
+                    placeholder="e.g. a locus, protein"
+                    value={currentEvidenceWith.locusName}
+                    attemptValidate={(locusName) => this.attemptValidate(evidenceWithId,locusName)}
+                    upperCaseOnly={true}
+                />
             </ListGroupItem>
         );
     }

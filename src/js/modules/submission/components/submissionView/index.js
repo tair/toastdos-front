@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import SubmissionView from './submissionView';
 
-import { canSubmit } from '../../selectors';
+import { canSubmit, geneListSelector } from '../../selectors';
 import {
         attemptSubmit,
         resetSubmission,
@@ -17,6 +17,8 @@ const ConnectedSubmissionView = connect(
         submitting: s => s.submission.submitting,
         submitted: s => s.submission.submitted,
         previewing: s => s.submission.previewing,
+        publicationPresent: s => s.submission.publicationIdValue.length > 0,
+        genesPresent: s => geneListSelector(s).filter(gene => gene.finalized).length > 0,
         canSubmit,
         errorMessage: s => `${s.submission.submissionError}`,
     }),
