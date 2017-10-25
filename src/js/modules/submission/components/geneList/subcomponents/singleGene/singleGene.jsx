@@ -54,7 +54,7 @@ class SingleGene extends React.Component {
                                 </InputGroupAddon>
                                 {locusNameInput}
                                 <InputGroupAddon>
-                                    <ValidationStatus validating={this.props.validating} finalized={this.props.finalized || !!this.props.validationError} isValid={this.props.validationError == ""} />
+                                    <ValidationStatus validating={this.props.validating} finalized={this.props.finalized || !!this.props.validationError} validationError={this.props.validationError} />
                                 </InputGroupAddon>
                             </InputGroup>
                         </Col>

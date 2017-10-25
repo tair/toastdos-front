@@ -26,7 +26,7 @@ class ValidationInput extends React.Component {
                     style={this.props.inputStyle}
                 />
                 <InputGroupAddon>
-                    <ValidationStatus validating={this.props.validating} finalized={this.props.finalized || !!this.props.validationError} isValid={this.props.validationError == ""} />
+                    <ValidationStatus validating={this.props.validating} finalized={this.props.finalized || !!this.props.validationError} isValid={this.props.validationError == ""} validationError={this.props.validationError} />
                 </InputGroupAddon>
             </InputGroup>
         );
