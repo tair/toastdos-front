@@ -117,7 +117,7 @@ class SubmissionView extends React.Component {
                                     </Row>
                             ) : (
                                 <Row>
-                                    <Col>
+                                    <Col sm="3">
                                         <Button color="danger"
                                             onClick={this.props.resetSubmission}
                                         >
