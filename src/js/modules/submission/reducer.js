@@ -123,6 +123,8 @@ export default function (state = defaultState, action) {
         };
         newState.geneIndex[action.localId].validationError = '';
         newState.geneIndex[action.localId].validating = true;
+        newState.geneIndex[action.localId].finalized = false;
+
         return Object.assign({}, state, newState);
     case actions.UPDATE_GENE_DATA:
         return {
@@ -141,12 +143,9 @@ export default function (state = defaultState, action) {
         };
 
         newState.geneIndex[action.localId].validating = false;
-
-        newState.geneIndex[action.localId].finalized = true;
         newState.geneIndex[action.localId].validationError = '';
-
-        newState.geneIndex[action.localId].finalizedLocusName = action.geneData.locusName;
-        
+        newState.geneIndex[action.localId].finalized = true;
+        newState.geneIndex[action.localId].finalizedLocusName = action.locusName;
 
         return Object.assign({}, state, newState);
     case actions.VALIDATE_GENE_FAIL:
@@ -154,20 +153,11 @@ export default function (state = defaultState, action) {
             geneIndex: Object.assign({}, state.geneIndex),
         };
 
-        newState.geneIndex[action.localId].validationError = action.error;
-
         newState.geneIndex[action.localId].validating = false;
+        newState.geneIndex[action.localId].validationError = action.error;
+        newState.geneIndex[action.localId].finalized = true;
+        newState.geneIndex[action.localId].finalizedLocusName = '';
         
-
-        return Object.assign({}, state, newState);
-    
-    case actions.EDIT_GENE_DATA:
-        newState = {
-            geneIndex: Object.assign({}, state.geneIndex)
-        };
-
-        newState.geneIndex[action.localId].finalized = false;
-
         return Object.assign({}, state, newState);
     case actions.ADD_NEW_ANNOTATION:
         newState = {

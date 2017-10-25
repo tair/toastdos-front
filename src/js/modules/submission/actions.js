@@ -71,7 +71,7 @@ function validatePublicationFail(error) {
     };
 }
 
-export function attemptValidateGene(localId, geneData) {
+export function attemptValidateGene(localId, locusName) {
     return (dispatch, getState) => {
         const currState = getState();
         const token = AuthModule.selectors.rawJwtSelector(currState);
@@ -82,36 +82,31 @@ export function attemptValidateGene(localId, geneData) {
         });
 
         // make sure we didn't add gene already
-        // newState.geneIndex[action.localId].validating = false;
-        // console.log(state.geneIndex);
-        // console.log(action.localId);
         for(var gi in currState[name].geneIndex) {
             // console.log(gi)
             if(`${gi}` === `${localId}`) continue;
-            if(currState[name].geneIndex[gi].finalizedLocusName === geneData.locusName) {
+            if(currState[name].geneIndex[gi].finalizedLocusName === locusName) {
                 return dispatch(validateGeneFail(localId, 'Locus already added'));
             }
         }
 
-
-        // console.log(geneData)
-        validateGene(geneData.locusName, token, (err, data) => {
+        validateGene(locusName, token, (err, data) => {
             if(err) {
                 if(err.error === 'NOT_FOUND') {
                     return dispatch(validateGeneFail(localId, "Locus Not Found"));
                 }
                 return dispatch(validateGeneFail(localId, "Error Validating Locus"));
             }
-            return dispatch(validateGeneSuccess(localId, geneData));
+            return dispatch(validateGeneSuccess(localId, locusName));
         });
     };
 }
 
-function validateGeneSuccess(localId, geneData) {
+function validateGeneSuccess(localId, locusName) {
     return {
         type: actions.VALIDATE_GENE_SUCCESS,
         localId: localId,
-        geneData: geneData
+        locusName
     };
 }
 
@@ -161,13 +156,6 @@ function validateEvidenceWithSuccess(annotationId, evidenceWithId, locusName) {
         annotationId,
         evidenceWithId,
         locusName
-    };
-}
-
-export function editGeneData(localId) {
-    return {
-        type: actions.EDIT_GENE_DATA,
-        localId: localId
     };
 }
 

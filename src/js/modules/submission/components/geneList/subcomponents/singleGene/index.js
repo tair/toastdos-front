@@ -13,8 +13,6 @@ class SingleGeneContainer extends React.Component {
             fullNameValue: this.props.fullName
         };
         
-        this.attemptToFinalize = this.attemptToFinalize.bind(this);
-        this.handleKeyPress = this.handleKeyPress.bind(this);
         this.handleLocusNameChange = this.handleLocusNameChange.bind(this);
         this.handleGeneSymbolChange = this.handleGeneSymbolChange.bind(this);
         this.handleFullNameChange = this.handleFullNameChange.bind(this);
@@ -69,22 +67,6 @@ class SingleGeneContainer extends React.Component {
         });
     }
 
-    attemptToFinalize() {
-        // local validation
-        // submit to backend
-        if(this.props.finalized !== true && this.state.locusNameValue) {
-            this.props.validateGeneData({
-                locusName: this.state.locusNameValue, 
-            });
-        }
-    }
-
-    handleKeyPress(event) {
-        if(event.keyCode === 13) {
-            this.attemptToFinalize();
-        }
-    }
-
     render() {
         return React.createElement(SingleGene,{
             locusNameValue: this.state.locusNameValue,
@@ -93,10 +75,9 @@ class SingleGeneContainer extends React.Component {
             onLocusNameChange: this.handleLocusNameChange,
             onGeneSymbolChange: this.handleGeneSymbolChange,
             onFullNameChange: this.handleFullNameChange,
-            onBlur: this.attemptToFinalize,
+            validateGeneData: this.props.validateGeneData,
             onKeyDown: this.handleKeyPress,
             onRemoveClick: this.props.onRemoveClick,
-            onEditClick: this.props.onEditClick,
             title: this.props.title,
             validating: this.props.validating,
             validationError: this.props.validationError,
@@ -111,7 +92,6 @@ SingleGeneContainer.propTypes = {
     geneSymbol: React.PropTypes.string,
     fullName: React.PropTypes.string,
     onRemoveClick: React.PropTypes.func,
-    onEditClick: React.PropTypes.func,
     validateGeneData: React.PropTypes.func,
     updateGeneData: React.PropTypes.func,
     validating: React.PropTypes.bool,
@@ -125,7 +105,6 @@ SingleGeneContainer.defaultProps = {
     geneSymbol: "",
     fullName: "",
     onRemoveClick: () => {},
-    onEditClick: () => {},
     validateGeneData: () => {},
     updateGeneData: () => {},
     validating: false,
