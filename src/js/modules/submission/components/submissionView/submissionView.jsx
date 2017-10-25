@@ -9,7 +9,6 @@ import {Alert, Card, CardImg, CardText, CardHeader,
     CardBody, CardFooter, CardTitle, CardSubtitle, Button,
     ListGroup, ListGroupItem, ListGroupItemHeading,
     Form, FormGroup, Label, Input,
-    Nav, NavItem, NavLink,
     ListGroupItemText, Container, Row, Col} from 'reactstrap';
 
 import 'css/submissionView.scss';
@@ -39,9 +38,6 @@ class SubmissionView extends React.Component {
                 {this.props.errorMessage}
             </Alert>
         );
-
-        const showGenes = false;
-        const showAnnotations = false;
 
         return (
             <Container fluid className="mt-3">

@@ -30,9 +30,6 @@ class ValidationStatus extends React.Component {
             return className + "fa-chain";
         }
     }
-    toggle() {
-
-    }
 
     render() {
         return (
@@ -41,7 +38,7 @@ class ValidationStatus extends React.Component {
                     style={{color: this.getEWColor()}} >
                 </span>
                 <Popover placement="bottom" isOpen={!!this.props.validationError} 
-                    target={this.validationId} toggle={this.toggle}>
+                    target={this.validationId}>
                     <PopoverBody className="text-danger">
                         <strong>{this.props.validationError}</strong>
                     </PopoverBody>

@@ -8,7 +8,6 @@ import GenePicker from '../genePicker';
 import { annotationTypeData } from "../../../../constants";
 import KeywordTextInput from '../../../keywordTextInput';
 import CustomTextInput from "lib/components/customTextInput";
-import ValidationStatus from "../../../validationStatus";
 import ValidationInput from "../../../validationInput";
 
 const inputContainerStyle = {
