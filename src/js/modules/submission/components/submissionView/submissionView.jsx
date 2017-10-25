@@ -29,11 +29,7 @@ class SubmissionView extends React.Component {
 
         const submittedPanel = (
             <Alert color="success"  className="mb-3">
-                <span className="fa fa-check" /> Submitted! 
-                <Button size="sm" color="green" className="ml-2" style={{verticalAlign: "inherit"}}
-                    onClick={this.props.resetSubmission}>
-                    Create New Submission
-                </Button>
+                <span className="fa fa-check" /> Submitted!
             </Alert>
         );
 
@@ -62,8 +58,6 @@ class SubmissionView extends React.Component {
                                 <Row className="align-items-center" >
                                     <Col>
                                         <span className="fa fa-file-text" /> New Annotation Submission
-                                    </Col>
-                                    <Col md='9'>
                                     </Col>
                                 </Row>
                             </CardHeader>
@@ -113,7 +107,14 @@ class SubmissionView extends React.Component {
                                         </Button>
                                     </Col>
                                 </Row>
-                                ) : null
+                                ) : <Row>
+                                        <Col className="text-center">
+                                            <Button color="success"
+                                                onClick={this.props.resetSubmission}>
+                                                Start New Submission
+                                            </Button>
+                                        </Col>
+                                    </Row>
                             ) : (
                                 <Row>
                                     <Col>
@@ -123,14 +124,14 @@ class SubmissionView extends React.Component {
                                             <span className="fa fa-trash" /> Reset Form
                                         </Button>
                                     </Col>
-                                    <Col className="text-right">
+                                    <Col className="text-right align-self-center">
+                                    {this.props.canSubmit ? (
                                         <Button color="success"
                                             className="btn-submit"
-                                            onClick={this.props.preview}
-                                            disabled={!this.props.canSubmit}
-                                        >
+                                            onClick={this.props.preview}>
                                             Review Submission <span className="fa fa-chevron-right"></span>
                                         </Button>
+                                    ) : (<div><span className="fa fa-info-circle" /> Please ensure you have at least a publication, 1 gene, and 1 annotation</div>)}
                                     </Col>
                                 </Row>
                             )}

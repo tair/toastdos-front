@@ -277,17 +277,7 @@ export default function (state = defaultState, action) {
             previewing: false,
         });
     case actions.RESET_SUBMISSION:
-        return Object.assign({}, state, {
-            publicationIdValue: "",
-            geneIndex: {},
-            geneOrder: [],
-            annotationIndex: {},
-            annotationOrder: [],
-            submitting: false,
-            submitted: false,
-            previewing: false,
-            submissionError: ""
-        });
+        return defaultState;
     case actions.ATTEMPT_KEYWORD_SEARCH:
         return Object.assign({}, state, {
             searchingKeywords: true
@@ -405,7 +395,8 @@ export default function (state = defaultState, action) {
     case actions.PREVIEW:
         return {
             ...state,
-            previewing: true
+            previewing: true,
+            submissionError: ""
         };
     case actions.EDIT:
         return {
