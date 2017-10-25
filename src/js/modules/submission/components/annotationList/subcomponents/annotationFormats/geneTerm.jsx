@@ -23,6 +23,9 @@ class GeneTerm extends React.Component {
         this.generateEvidenceWith = this.generateEvidenceWith.bind(this);
     }
 
+    attemptValidate(evidenceWithId, locusName){
+        this.props.validateEvidenceWith(evidenceWithId, locusName);
+    }
 
     generateEvidenceWith(evidenceWithId) {
         const currentEvidenceWith = this.props.annotationData.data.evidenceWithIndex[evidenceWithId];
@@ -31,22 +34,11 @@ class GeneTerm extends React.Component {
             <ListGroupItem key={`evidence_with_${evidenceWithId}`}>
                 <ValidationInput
                     finalized={currentEvidenceWith.finalized}
-                    isValid={currentEvidenceWith.isValid}
+                    validationError={currentEvidenceWith.validationError}
+                    validating={currentEvidenceWith.validating}
                     placeholder="e.g. a locus, protein"
                     value={currentEvidenceWith.locusName}
-                    onChange={event => this.props.onDataChange({
-                                ...this.props.annotationData.data,
-                                evidenceWithIndex: {
-                                    ...this.props.annotationData.data.evidenceWithIndex,
-                                    [evidenceWithId]: {
-                                        ...currentEvidenceWith,
-                                        finalized: false,
-                                        locusName: event.target.value
-                                    }
-                                }
-                            })
-                        }
-                    onBlur={() => {this.props.validateEvidenceWith(evidenceWithId);}}
+                    attemptValidate={(locusName) => this.attemptValidate(evidenceWithId,locusName)}
                     style={{marginRight: 10}}
                 />
             </ListGroupItem>

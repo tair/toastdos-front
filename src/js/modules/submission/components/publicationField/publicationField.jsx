@@ -13,23 +13,6 @@ class PublicationField extends React.Component {
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            value: this.props.publicationIdValue
-        }
-
-        this.onChange = this.onChange.bind(this);
-        this.onBlur = this.onBlur.bind(this);
-    }
-
-    onBlur(event) {
-        this.props.attemptValidatePublication(this.state.value);
-    }
-
-    onChange(event) {
-        this.setState({
-            value: event.target.value
-        });
     }
 
     render() {
@@ -44,10 +27,9 @@ class PublicationField extends React.Component {
                             <CardHeader className="align-center">
                                 <ValidationInput
                                     title="PubMed ID / DOI"
-                                    value={this.state.value}
+                                    value={this.props.publicationIdValue}
                                     placeholder="e.g 21051552 or 10.1104/pp.110.166546"
-                                    onChange={this.onChange}
-                                    onBlur={this.onBlur}
+                                    attemptValidate={this.props.attemptValidatePublication}
                                     validating={this.props.publicationValidation.validating}
                                     finalized={this.props.publicationValidation.finalized}
                                     validationError={this.props.publicationValidation.validationError}

@@ -89,7 +89,7 @@ export function attemptValidateGene(localId, geneData) {
             // console.log(gi)
             if(`${gi}` === `${localId}`) continue;
             if(currState[name].geneIndex[gi].finalizedLocusName === geneData.locusName) {
-                return dispatch(validateGeneFail(localId, 'Gene already added'));
+                return dispatch(validateGeneFail(localId, 'Locus already added'));
             }
         }
 
@@ -98,9 +98,9 @@ export function attemptValidateGene(localId, geneData) {
         validateGene(geneData.locusName, token, (err, data) => {
             if(err) {
                 if(err.error === 'NOT_FOUND') {
-                    return dispatch(validateGeneFail(localId, "Gene Not Found"));
+                    return dispatch(validateGeneFail(localId, "Locus Not Found"));
                 }
-                return dispatch(validateGeneFail(localId, "Error Validating Gene"));
+                return dispatch(validateGeneFail(localId, "Error Validating Locus"));
             }
             return dispatch(validateGeneSuccess(localId, geneData));
         });
@@ -123,35 +123,44 @@ function validateGeneFail(localId, error) {
     };
 }
 
-export function validateEvidenceWith(annotationId, evidenceWithId) {
+export function validateEvidenceWith(annotationId, evidenceWithId, locusName) {
     return (dispatch, getState) => {
         const currState = getState();
         const token = AuthModule.selectors.rawJwtSelector(currState);
-        const evidenceWith = currState.submission.annotationIndex[annotationId].data
-            .evidenceWithIndex[evidenceWithId];
 
-        validateGene(evidenceWith.locusName, token, (err, data) => {
+        dispatch({
+            type: actions.ATTEMPT_VALIDATE_EVIDENCE_WITH,
+            annotationId,
+            evidenceWithId,
+        });
+
+        validateGene(locusName, token, (err, data) => {
             if(err) {
-                return dispatch(validateEvidenceWithFail(annotationId, evidenceWithId));
+                if(err.error === 'NOT_FOUND') {
+                    return dispatch(validateEvidenceWithFail(annotationId, evidenceWithId, "Locus Not Found"));
+                }
+                return dispatch(validateEvidenceWithFail(annotationId, evidenceWithId, "Error Validating Locus"));
             }
-            return dispatch(validateEvidenceWithSuccess(annotationId, evidenceWithId));
+            return dispatch(validateEvidenceWithSuccess(annotationId, evidenceWithId, locusName));
         });
     };
 }
 
-function validateEvidenceWithFail(annotationId, evidenceWithId) {
+function validateEvidenceWithFail(annotationId, evidenceWithId, error) {
     return {
         type: actions.VALIDATE_EVIDENCE_WITH_FAIL,
         annotationId,
+        error,
         evidenceWithId
     };
 }
 
-function validateEvidenceWithSuccess(annotationId, evidenceWithId) {
+function validateEvidenceWithSuccess(annotationId, evidenceWithId, locusName) {
     return {
         type: actions.VALIDATE_EVIDENCE_WITH_SUCCESS,
         annotationId,
-        evidenceWithId
+        evidenceWithId,
+        locusName
     };
 }
 

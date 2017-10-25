@@ -188,7 +188,8 @@ export default function (state = defaultState, action) {
                 evidenceWithIndex: {
                     ["init" + action.localId]: {
                         finalized: false,
-                        isValid: false,
+                        validating: false,
+                        validationError: '',
                         locusName: ""
                     }
                 },
@@ -229,7 +230,8 @@ export default function (state = defaultState, action) {
                 evidenceWithIndex: {
                     ["init" + action.localId]: {
                         finalized: false,
-                        isValid: false,
+                        validating: false,
+                        validationError: '',
                         locusName: ""
                     }
                 },
@@ -328,12 +330,36 @@ export default function (state = defaultState, action) {
                             ...annotation.data.evidenceWithIndex,
                             [action.newEvidenceWithId]: {
                                 finalized: false,
-                                isValid: false,
+                                validationError: '',
+                                validating: false,
                                 locusName: ""
                             }
                         },
                         evidenceWithOrder: annotation.data.evidenceWithOrder
                             .concat(action.newEvidenceWithId)
+                    }
+                }
+            }
+        };
+    case actions.ATTEMPT_VALIDATE_EVIDENCE_WITH:
+        let annotationAttemptEvidenceWith = state.annotationIndex[action.annotationId];
+        return {
+            ...state,
+            annotationIndex: {
+                ...state.annotationIndex,
+                [action.annotationId]: {
+                    ...annotationAttemptEvidenceWith,
+                    data: {
+                        ...annotationAttemptEvidenceWith.data,
+                        evidenceWithIndex: {
+                            ...annotationAttemptEvidenceWith.data.evidenceWithIndex,
+                            [action.evidenceWithId]: {
+                                ...annotationAttemptEvidenceWith.data.evidenceWithIndex[action.evidenceWithId],
+                                finalized: false,
+                                validationError: '',
+                                validating: true,
+                            }
+                        }
                     }
                 }
             }
@@ -353,7 +379,9 @@ export default function (state = defaultState, action) {
                             [action.evidenceWithId]: {
                                 ...annotationSuccess.data.evidenceWithIndex[action.evidenceWithId],
                                 finalized: true,
-                                isValid: true,
+                                validationError: '',
+                                validating: false,
+                                locusName: action.locusName,
                             }
                         }
                     }
@@ -375,7 +403,9 @@ export default function (state = defaultState, action) {
                             [action.evidenceWithId]: {
                                 ...annotationFail.data.evidenceWithIndex[action.evidenceWithId],
                                 finalized: true,
-                                isValid: false,
+                                validationError: action.error,
+                                validating: false,
+                                locusName: '',
                             }
                         }
                     }
