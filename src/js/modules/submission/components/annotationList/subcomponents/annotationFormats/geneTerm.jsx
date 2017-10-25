@@ -39,7 +39,7 @@ class GeneTerm extends React.Component {
                     placeholder="e.g. a locus, protein"
                     value={currentEvidenceWith.locusName}
                     attemptValidate={(locusName) => this.attemptValidate(evidenceWithId,locusName)}
-                    style={{marginRight: 10}}
+                    upperCaseOnly={true}
                 />
             </ListGroupItem>
         );

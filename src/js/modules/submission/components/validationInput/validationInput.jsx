@@ -27,7 +27,7 @@ class ValidationInput extends React.Component {
 
     onChange(event) {
         this.setState({
-            value: event.target.value
+            value: (this.props.upperCaseOnly ) ? event.target.value.toUpperCase() : event.target.value,
         });
     }
 
@@ -53,7 +53,6 @@ class ValidationInput extends React.Component {
                     onChange={this.onChange}
                     onBlur={this.determineAttemptValidate}
                     onKeyDown={this.onKeyDown}
-                    style={this.props.inputStyle}
                 />
                 <InputGroupAddon>
                     <ValidationStatus validating={this.props.validating} finalized={this.props.finalized || !!this.props.validationError} validationError={this.props.validationError} />
@@ -69,11 +68,11 @@ ValidationInput.propTypes = {
     value: React.PropTypes.string,
     onChange: React.PropTypes.func,
     attemptValidate: React.PropTypes.func,
-    style: React.PropTypes.any,
 
     finalized: React.PropTypes.bool,
     validationError: React.PropTypes.string,
-    validating: React.PropTypes.bool
+    validating: React.PropTypes.bool,
+    upperCaseOnly: React.PropTypes.bool,
 };
 
 ValidationInput.defaultProps = {
@@ -82,6 +81,7 @@ ValidationInput.defaultProps = {
     finalized: false,
     validationError: '',
     validating: false,
+    upperCaseOnly: false,
 };
 
 export default ValidationInput;
