@@ -13,7 +13,6 @@ class SingleGeneContainer extends React.Component {
             fullNameValue: this.props.fullName
         };
         
-        this.handleLocusNameChange = this.handleLocusNameChange.bind(this);
         this.handleGeneSymbolChange = this.handleGeneSymbolChange.bind(this);
         this.handleFullNameChange = this.handleFullNameChange.bind(this);
     }
@@ -25,19 +24,6 @@ class SingleGeneContainer extends React.Component {
                 geneSymbolValue: nextProps.geneSymbol,
                 fullNameValue: nextProps.fullName
             });
-        }
-    }
-
-    /**
-     * Event handler for changing the value of the LocusName field
-     * @param  {Event} event - the onChange event
-     */
-    handleLocusNameChange(event) {
-        this.setState({
-            locusNameValue: event.target.value.toUpperCase()
-        });
-        if (this.props.finalized) {
-            this.props.onEditClick();
         }
     }
 
@@ -72,11 +58,9 @@ class SingleGeneContainer extends React.Component {
             locusNameValue: this.state.locusNameValue,
             geneSymbolValue: this.state.geneSymbolValue,
             fullNameValue: this.state.fullNameValue,
-            onLocusNameChange: this.handleLocusNameChange,
             onGeneSymbolChange: this.handleGeneSymbolChange,
             onFullNameChange: this.handleFullNameChange,
             validateGeneData: this.props.validateGeneData,
-            onKeyDown: this.handleKeyPress,
             onRemoveClick: this.props.onRemoveClick,
             title: this.props.title,
             validating: this.props.validating,

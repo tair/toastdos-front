@@ -68,7 +68,6 @@ ValidationInput.propTypes = {
     value: React.PropTypes.string,
     onChange: React.PropTypes.func,
     attemptValidate: React.PropTypes.func,
-
     finalized: React.PropTypes.bool,
     validationError: React.PropTypes.string,
     validating: React.PropTypes.bool,

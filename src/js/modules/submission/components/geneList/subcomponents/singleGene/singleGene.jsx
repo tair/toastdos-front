@@ -40,8 +40,6 @@ class SingleGene extends React.Component {
                             <ValidationInput
                                 title={this.props.title}
                                 value={this.props.locusNameValue}
-                                onChange={this.props.onLocusNameChange}
-                                onKeyDown={this.props.onKeyDown}
                                 placeholder="e.g. AT2G23380"
                                 validating={this.props.validating}
                                 validationError={this.props.validationError}
@@ -89,11 +87,9 @@ SingleGene.propTypes = {
     locusNameValue: React.PropTypes.string,
     geneSymbolValue: React.PropTypes.string,
     fullNameValue: React.PropTypes.string,
-    onLocusNameChange: React.PropTypes.func,
     onGeneSymbolChange: React.PropTypes.func,
     onFullNameChange: React.PropTypes.func,
     validateGeneData: React.PropTypes.func,
-    onKeyDown: React.PropTypes.func,
     onRemoveClick: React.PropTypes.func,
     title: React.PropTypes.string,
     validating: React.PropTypes.bool,
@@ -105,11 +101,9 @@ SingleGene.defaultProps = {
     locusNameValue: "",
     geneSymbolValue: "",
     fullNameValue: "",
-    onLocusNameChange: () => {},
     onGeneSymbolChange: () => {},
     onFullNameChange: () => {},
     validateGeneData: () => {},
-    onKeyDown: () => {},
     onRemoveClick: () => {},
     title: "",
     validating: false,
