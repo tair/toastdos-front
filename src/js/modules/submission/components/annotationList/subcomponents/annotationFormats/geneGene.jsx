@@ -27,7 +27,7 @@ class GeneGene extends React.Component {
                             Gene 1
                         </Label>
                     </Col>
-                    <Col className="d-block">
+                    <Col>
                         <GenePicker
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -44,7 +44,7 @@ class GeneGene extends React.Component {
                             Gene 2
                         </Label>
                     </Col>
-                    <Col className="d-block">
+                    <Col>
                         <GenePicker
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -61,7 +61,7 @@ class GeneGene extends React.Component {
                             Method
                         </Label>
                     </Col>
-                    <Col className="d-block">
+                    <Col>
                         <KeywordTextInput
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {

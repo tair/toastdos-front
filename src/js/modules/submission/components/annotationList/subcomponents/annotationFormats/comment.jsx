@@ -21,7 +21,7 @@ class Comment extends React.Component {
                             Gene
                         </Label>
                     </Col>
-                    <Col className="d-block">
+                    <Col>
                         <GenePicker
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -38,7 +38,7 @@ class Comment extends React.Component {
                             Comment
                         </Label>
                     </Col>
-                    <Col className="d-block">
+                    <Col>
                         <CustomTextArea name="comment"
                             onChange={event => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
