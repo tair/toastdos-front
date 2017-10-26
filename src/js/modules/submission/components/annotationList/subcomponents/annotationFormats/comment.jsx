@@ -15,9 +15,13 @@ class Comment extends React.Component {
     render() {
         return (
             <div>
-                <div>
-                    <Label className="d-block">
-                        Gene
+                <Row className="align-items-end">
+                    <Col xs="3" className="text-right d-table-cell">
+                        <Label className="align-center">
+                            Gene
+                        </Label>
+                    </Col>
+                    <Col className="d-block">
                         <GenePicker
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -26,10 +30,15 @@ class Comment extends React.Component {
                             )}
                             value={this.props.annotationData.data.geneLocalId}
                         />
-                    </Label>
-                </div>
-                <div>
-                    <Label className="d-block">Comment
+                    </Col>
+                </Row>
+                <Row className="align-items-center mt-3">
+                    <Col xs="3" className="text-right d-table-cell">
+                        <Label className="align-center">
+                            Comment
+                        </Label>
+                    </Col>
+                    <Col className="d-block">
                         <CustomTextArea name="comment"
                             onChange={event => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -41,8 +50,8 @@ class Comment extends React.Component {
                             className="comment-text-area form-control"
                         >
                         </CustomTextArea>
-                    </Label>
-                </div>
+                    </Col>
+                </Row>
             </div>
         );
     }

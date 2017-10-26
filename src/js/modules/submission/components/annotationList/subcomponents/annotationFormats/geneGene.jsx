@@ -20,10 +20,14 @@ class GeneGene extends React.Component {
 
     render() {
         return (
-            <Row>
-                <Col>
-                    <Label className="d-block">
-                        Gene 1
+            <div>
+                <Row className="align-items-end">
+                    <Col xs="3" className="text-right d-table-cell">
+                        <Label className="align-center">
+                            Gene 1
+                        </Label>
+                    </Col>
+                    <Col className="d-block">
                         <GenePicker
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -32,11 +36,15 @@ class GeneGene extends React.Component {
                             )}
                             value={this.props.annotationData.data.gene1LocalId}
                         />
-                    </Label>
-                </Col>
-                <Col>
-                    <Label className="d-block">
-                        Gene 2
+                    </Col>
+                </Row>
+                <Row className="align-items-end mt-3">
+                    <Col xs="3" className="text-right d-table-cell">
+                        <Label className="align-center">
+                            Gene 2
+                        </Label>
+                    </Col>
+                    <Col className="d-block">
                         <GenePicker
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -45,11 +53,15 @@ class GeneGene extends React.Component {
                             )}
                             value={this.props.annotationData.data.gene2LocalId}
                         />
-                    </Label>
-                </Col>
-                <Col>
-                    <Label className="d-block">
-                        Method
+                    </Col>
+                </Row>
+                <Row className="align-items-end mt-3">
+                    <Col xs="3" className="text-right d-table-cell">
+                        <Label className="align-center">
+                            Method
+                        </Label>
+                    </Col>
+                    <Col className="d-block">
                         <KeywordTextInput
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -69,9 +81,9 @@ class GeneGene extends React.Component {
                             value={this.props.annotationData.data.methodName}
                             searchScope="eco"
                         />
-                    </Label>
-                </Col>
-            </Row>
+                    </Col>
+                </Row>
+            </div>
         );
     }
 }
