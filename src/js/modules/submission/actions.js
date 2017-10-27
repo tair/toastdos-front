@@ -11,6 +11,8 @@ import * as actions from './actionTypes';
 import { name } from './constants';
 import { submissionBodySelector } from './selectors';
 
+import { AsyncAction } from 'lib/asyncActionManager';
+
 export function changePublicationId(value) {
     return {
         type: actions.PUBLICATION_ID_CHANGED,
@@ -32,8 +34,13 @@ export function removeGene(localId) {
     };
 }
 
-export function attemptValidatePublication(publicationId) {
-    return (dispatch, getState) => {
+export class AttemptValidatePublicationAsync extends AsyncAction {
+    constructor(publicationId) {
+        super(actions.ATTEMPT_VALIDATE_PUBLICATION);
+        this.publicationId = publicationId;
+    }
+    
+    execute(dispatch, getState) {
         const currState = getState();
         const token = AuthModule.selectors.rawJwtSelector(currState);
 
@@ -41,19 +48,20 @@ export function attemptValidatePublication(publicationId) {
             type: actions.ATTEMPT_VALIDATE_PUBLICATION
         });
 
-        if (publicationId.length > 0 && publicationId !== '0') {
-            validatePublication(publicationId, token, (err, data) => { if(err) {
+        if (this.publicationId.length > 0 && this.publicationId !== '0') {
+            this.request = validatePublication(this.publicationId, token, (err, data) => { 
+                if(err) {
                     if(err.error === 'NOT_FOUND') {
                         return dispatch(validatePublicationFail("Publication Not Found"));
                     }
                     return dispatch(validatePublicationFail("Error Validating Publication"));
                 }
-                return dispatch(validatePublicationSuccess(publicationId, data));
+                return dispatch(validatePublicationSuccess(this.publicationId, data));
             });
         } else {
             return dispatch(validatePublicationFail("Publication ID is empty"));
         }
-    };
+    }
 }
 
 function validatePublicationSuccess(publicationId, data) {
@@ -71,35 +79,41 @@ function validatePublicationFail(error) {
     };
 }
 
-export function attemptValidateGene(localId, locusName) {
-    return (dispatch, getState) => {
+export class AttemptValidateGeneAsync extends AsyncAction {
+    constructor(localId, locusName) {
+        super(actions.ATTEMPT_VALIDATE_GENE);
+        this.localId = localId;
+        this.locusName = locusName;
+    }
+
+    execute (dispatch, getState) {
         const currState = getState();
         const token = AuthModule.selectors.rawJwtSelector(currState);
 
         dispatch({
             type: actions.ATTEMPT_VALIDATE_GENE,
-            localId: localId
+            localId: this.localId
         });
 
         // make sure we didn't add gene already
         for(var gi in currState[name].geneIndex) {
             // console.log(gi)
-            if(`${gi}` === `${localId}`) continue;
-            if(currState[name].geneIndex[gi].finalizedLocusName === locusName) {
-                return dispatch(validateGeneFail(localId, 'Locus already added'));
+            if(`${gi}` === `${this.localId}`) continue;
+            if(currState[name].geneIndex[gi].finalizedLocusName === this.locusName) {
+                return dispatch(validateGeneFail(this.localId, 'Locus already added'));
             }
         }
 
-        validateGene(locusName, token, (err, data) => {
+        this.request = validateGene(this.locusName, token, (err, data) => {
             if(err) {
                 if(err.error === 'NOT_FOUND') {
-                    return dispatch(validateGeneFail(localId, "Locus Not Found"));
+                    return dispatch(validateGeneFail(this.localId, "Locus Not Found"));
                 }
-                return dispatch(validateGeneFail(localId, "Error Validating Locus"));
+                return dispatch(validateGeneFail(this.localId, "Error Validating Locus"));
             }
-            return dispatch(validateGeneSuccess(localId, locusName));
+            return dispatch(validateGeneSuccess(this.localId, this.locusName));
         });
-    };
+    }
 }
 
 function validateGeneSuccess(localId, locusName) {
@@ -118,27 +132,33 @@ function validateGeneFail(localId, error) {
     };
 }
 
-export function validateEvidenceWith(annotationId, evidenceWithId, locusName) {
-    return (dispatch, getState) => {
+export class AttemptValidateEvidenceWithAsync extends AsyncAction {
+    constructor(annotationId, evidenceWithId, locusName) {
+        super(actions.ATTEMPT_VALIDATE_EVIDENCE_WITH);
+        this.annotationId = annotationId;
+        this.evidenceWithId = evidenceWithId;
+        this.locusName = locusName;
+    }
+    execute(dispatch, getState) {
         const currState = getState();
         const token = AuthModule.selectors.rawJwtSelector(currState);
 
         dispatch({
             type: actions.ATTEMPT_VALIDATE_EVIDENCE_WITH,
-            annotationId,
-            evidenceWithId,
+            annotationId: this.annotationId,
+            evidenceWithId: this.evidenceWithId,
         });
 
-        validateGene(locusName, token, (err, data) => {
+        this.request = validateGene(this.locusName, token, (err, data) => {
             if(err) {
                 if(err.error === 'NOT_FOUND') {
-                    return dispatch(validateEvidenceWithFail(annotationId, evidenceWithId, "Locus Not Found"));
+                    return dispatch(validateEvidenceWithFail(this.annotationId, this.evidenceWithId, "Locus Not Found"));
                 }
-                return dispatch(validateEvidenceWithFail(annotationId, evidenceWithId, "Error Validating Locus"));
+                return dispatch(validateEvidenceWithFail(this.annotationId, this.evidenceWithId, "Error Validating Locus"));
             }
-            return dispatch(validateEvidenceWithSuccess(annotationId, evidenceWithId, locusName));
+            return dispatch(validateEvidenceWithSuccess(this.annotationId, this.evidenceWithId, this.locusName));
         });
-    };
+    }
 }
 
 function validateEvidenceWithFail(annotationId, evidenceWithId, error) {

@@ -10,7 +10,7 @@ import {
         removeAnnotation,
         updateAnnotationData,
         addEvidenceWith,
-        validateEvidenceWith
+        AttemptValidateEvidenceWithAsync
     } from '../../actions';
 
 import {
@@ -29,7 +29,7 @@ const ConnectedAnnotationList = connect(
         removeAnnotation: localId => dispatch(removeAnnotation(localId)),
         updateAnnotationData: (localId, data) => dispatch(updateAnnotationData(localId, data)),
         addEvidenceWith: annotationId => dispatch(addEvidenceWith(annotationId, generateId())),
-        validateEvidenceWith: (annotationId, evidenceWithId, locusName) => dispatch(validateEvidenceWith(annotationId, evidenceWithId, locusName))
+        validateEvidenceWith: (annotationId, evidenceWithId, locusName) => dispatch(new AttemptValidateEvidenceWithAsync(annotationId, evidenceWithId, locusName))
     })
 )(AnnotationList);
 

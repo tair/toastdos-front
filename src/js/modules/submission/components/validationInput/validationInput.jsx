@@ -11,6 +11,8 @@ class ValidationInput extends React.Component {
         this.state = {
             value: this.props.value
         };
+
+        this.lastValue = '';
         this.onKeyDown = this.onKeyDown.bind(this);
         this.onChange = this.onChange.bind(this);
         this.determineAttemptValidate = this.determineAttemptValidate.bind(this);
@@ -31,11 +33,17 @@ class ValidationInput extends React.Component {
         });
     }
 
+    componentDidUpdate() {
+        // TODO: Debounce state updates
+        this.determineAttemptValidate();
+    }
+
     determineAttemptValidate(){
         // only attempt validation if the value was changed
-        if (this.state.value == this.props.value) {
+        if (this.state.value == this.lastValue) {
             return false;
         }
+        this.lastValue = this.state.value;
         this.props.attemptValidate(this.state.value);
     }
 
