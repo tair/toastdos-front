@@ -86,6 +86,8 @@ export function submissionBodySelector(state) {
     const annotationList = state[name].annotationOrder.map(
         aid => state[name].annotationIndex[aid]
     );
+    
+    const evidenceWithMap = evidenceWithSelector(state);
 
     let submissionData = {
         publicationId: state[name].publicationIdValue,
@@ -116,10 +118,12 @@ export function submissionBodySelector(state) {
             };
             break;
         case annotationFormats.GENE_TERM:
+            console.log(a.data);
             annotation.data = {
                 locusName: geneIndex[a.data.geneLocalId].finalizedLocusName,
                 method: (a.data.methodId !== null ? {id: a.data.methodId} : {name: a.data.methodName}),
-                keyword: (a.data.keywordId !== null ? {id: a.data.keywordId} : {name: a.data.keywordName})
+                keyword: (a.data.keywordId !== null ? {id: a.data.keywordId} : {name: a.data.keywordName}),
+                evidenceWith: a.data.evidenceWithOrder.map(evidenceWithLocalId => evidenceWithMap[evidenceWithLocalId].locusName)
             };
             break;
         case annotationFormats.GENE_GENE:
