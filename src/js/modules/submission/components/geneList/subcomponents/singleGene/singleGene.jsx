@@ -63,7 +63,7 @@ class SingleGene extends React.Component {
                                 Gene Symbol
                             </Label>
                         </Col>
-                        <Col className="d-block">
+                        <Col>
                             {geneSymbolInput}
                         </Col>
                     </Row>
@@ -73,7 +73,7 @@ class SingleGene extends React.Component {
                                 Full Gene Name
                             </Label>
                         </Col>
-                        <Col className="d-block">
+                        <Col>
                             {fullNameInput}
                         </Col>
                     </Row>

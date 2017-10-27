@@ -55,7 +55,7 @@ class GeneTerm extends React.Component {
                             Gene
                         </Label>
                     </Col>
-                    <Col className="d-block">
+                    <Col>
                         <GenePicker
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -72,7 +72,7 @@ class GeneTerm extends React.Component {
                             {typeData.name}
                         </Label>
                     </Col>
-                    <Col className="d-block">
+                    <Col>
                         <KeywordTextInput
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -98,7 +98,7 @@ class GeneTerm extends React.Component {
                             Method
                         </Label>
                     </Col>
-                    <Col className="d-block">
+                    <Col>
                         <KeywordTextInput
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -127,7 +127,7 @@ class GeneTerm extends React.Component {
                             Evidence With
                         </Label>
                     </Col>
-                    <Col className="d-block">
+                    <Col>
                         <ListGroup>
                             {this.props.annotationData.data.evidenceWithOrder.map(this.generateEvidenceWith)}
                         </ListGroup>
