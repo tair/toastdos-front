@@ -40,8 +40,8 @@ export function hasValidGenes(state) {
         if(geneIndex[geneOrder[i]].finalized) {
             return true;
         }
+        return false;
     }
-    return false;
 }
 
 export const publicationSelector = state => state[name].publicationIdValue;
