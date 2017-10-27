@@ -40,6 +40,7 @@ class KeywordTextInput extends React.Component {
                 fetchingSuggestions={this.props.fetchingSuggestions}
                 onBlur={this.handleBlur}
                 onFocus={this.handleFocus}
+                required={true}
             />
         );
     }

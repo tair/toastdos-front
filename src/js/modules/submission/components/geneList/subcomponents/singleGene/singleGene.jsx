@@ -46,6 +46,7 @@ class SingleGene extends React.Component {
                                 finalized={this.props.finalized}
                                 attemptValidate={this.props.validateGeneData}
                                 upperCaseOnly={true}
+                                required={true}
                             />
                         </Col>
                         <Col sm="auto" className="text-right">

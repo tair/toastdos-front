@@ -47,6 +47,7 @@ class CustomTextInput extends React.Component {
                     ref={this.props.inputRef}
                     spellCheck={this.props.spellCheck}
                     id={this.props.inputId}
+                    required={this.props.required ? "required" : ""}
                 >
                     {this.props.children}
                 </Input>
@@ -70,12 +71,14 @@ CustomTextInput.propTypes = {
     onKeyDown: React.PropTypes.func,
     className: React.PropTypes.string,
     spellCheck: React.PropTypes.bool,
-    inputId: React.PropTypes.string
+    inputId: React.PropTypes.string,
+    required: React.PropTypes.bool,
 };
 
 CustomTextInput.defaultProps = {
     disabled: false,
     readOnly: "",
+    required: "",
     onChange: () => {},
     value: "",
     placeholder: "",
@@ -84,7 +87,8 @@ CustomTextInput.defaultProps = {
     onKeyDown: () => {},
     inputRef: () => {},
     className: "custom-text-input",
-    inputId: ""
+    inputId: "",
+    required: false,
 };
 
 export default CustomTextInput;

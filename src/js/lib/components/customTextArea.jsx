@@ -51,6 +51,7 @@ class CustomTextArea extends React.Component {
                     onFocus={this.handleFocus}
                     onBlur={this.handleBlur}
                     onChange={this.props.onChange}
+                    required={this.props.required}
                 >
                     {this.props.children}
                 </textarea>
@@ -69,8 +70,8 @@ CustomTextArea.propTypes = {
     onBlur: React.PropTypes.func,
     containerStyle: React.PropTypes.object,
     textAreaStyle: React.PropTypes.object,
-    className: React.PropTypes.string
-    
+    className: React.PropTypes.string,
+    required: React.PropTypes.bool,
 };
 
 CustomTextArea.defaultProps = {
@@ -82,7 +83,8 @@ CustomTextArea.defaultProps = {
     onFocus: () => {},
     containerStyle: {},
     textAreaStyle: {},
-    className: ""
+    className: "",
+    required: false,
 };
 
 

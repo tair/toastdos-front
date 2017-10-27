@@ -5,7 +5,6 @@ import { Label, Row, Col,
     Card, CardHeader, CardBody, Input,
     InputGroup, InputGroupAddon, Button } from 'reactstrap';
 
-import CustomTextInput from "lib/components/customTextInput";
 import ValidationInput from "../validationInput";
 
 
@@ -33,6 +32,7 @@ class PublicationField extends React.Component {
                                     validating={this.props.publicationValidation.validating}
                                     finalized={this.props.publicationValidation.finalized}
                                     validationError={this.props.publicationValidation.validationError}
+                                    required={true}
                                 />
                             </CardHeader>
                             {this.props.publicationValidation.finalized ? (
