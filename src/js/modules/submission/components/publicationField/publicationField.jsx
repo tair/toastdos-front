@@ -31,7 +31,7 @@ class PublicationField extends React.Component {
                                     placeholder="e.g 21051552 or 10.1104/pp.110.166546"
                                     attemptValidate={this.props.attemptValidatePublication}
                                     validationState={this.props.validationState}
-                                    validationError={this.props.publicationValidation.validationError}
+                                    validationError={this.props.validationError}
                                     required={true}
                                 />
                             </CardHeader>
@@ -81,9 +81,7 @@ class PublicationField extends React.Component {
 PublicationField.propTypes = {
     publicationIdValue: React.PropTypes.string,
     validationState: React.PropTypes.string,
-    publicationValidation: React.PropTypes.shape({
-        validationError: React.PropTypes.string
-    }),
+    validationError: React.PropTypes.string,
     publicationInfo: React.PropTypes.shape({
         author: React.PropTypes.string,
         url: React.PropTypes.string,
@@ -95,9 +93,7 @@ PublicationField.propTypes = {
 PublicationField.defaultProps = {
     publicationIdValue: "",
     validationState: validationStates.NOT_VALIDATED,
-    publicationValidation: {
-        validationError: ""
-    },
+    validationError: "",
     publicationInfo: {
         author: '',
         url: '',

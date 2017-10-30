@@ -17,9 +17,7 @@ function getDefaultState() {
             title: "",
         },
         publicationValidationState: validationStates.NOT_VALIDATED,
-        publicationValidation: {
-            validationError: ""
-        },
+        publicationValidationError: "",
         geneIndex: {
             "init": {
                 localId: "init",
@@ -57,9 +55,7 @@ export default function (state = defaultState, action) {
             ...state,
             publicationIdValue: '',
             publicationValidationState: validationStates.VALIDATING,
-            publicationValidation: {
-                validationError: '',
-            },
+            publicationValidationError: '',
             publicationInfo: {
                 author: '',
                 url: '',
@@ -71,9 +67,7 @@ export default function (state = defaultState, action) {
             ...state,
             publicationIdValue: action.publicationId,
             publicationValidationState: validationStates.VALID,
-            publicationValidation: {
-                validationError: '',
-            },
+            publicationValidationError: '',
             publicationInfo: {
                 author: action.data.author,
                 url: action.data.url,
@@ -84,10 +78,7 @@ export default function (state = defaultState, action) {
         return {
             ...state,
             publicationValidationState: validationStates.INVALID,
-            publicationValidation: {
-                ...state.publicationValidation,
-                validationError: action.error,
-            }
+            publicationValidationError: action.error,
         };
     case actions.ADD_NEW_GENE:
         newState = {
