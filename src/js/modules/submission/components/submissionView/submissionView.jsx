@@ -68,12 +68,12 @@ class SubmissionView extends React.Component {
                                         <ListGroupItem className="border-left-0 border-right-0 border-top-0">
                                             <PublicationField/>
                                         </ListGroupItem>
-                                        {this.props.publicationPresent ? <ListGroupItem className="border-left-0 border-right-0">
+                                        <ListGroupItem className="border-left-0 border-right-0">
                                             <GeneList/>
-                                        </ListGroupItem> : null}
-                                        {this.props.publicationPresent && this.props.genesPresent ? <ListGroupItem className="border-left-0 border-right-0 border-bottom-0">
+                                        </ListGroupItem>
+                                        <ListGroupItem className="border-left-0 border-right-0 border-bottom-0">
                                             <AnnotationList/>
-                                        </ListGroupItem>  : null}
+                                        </ListGroupItem>
                                     </ListGroup>
                                 )}
                                 </Form>
