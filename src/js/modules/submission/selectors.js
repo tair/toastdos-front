@@ -33,15 +33,27 @@ export const keywordSearchOrderSelector = createSelector(
     results => results.map(v => v.id)
 );
 
-export function hasValidGenes(state) {
+export function hasAllValidGenes(state) {
+    let [valid, total] = countFinalizedGenes(state);
+    return valid > 0 && valid === total;
+}
+
+export function hasValidGene(state) {
+    let [valid, total] = countFinalizedGenes(state);
+    return valid > 0;
+}
+
+function countFinalizedGenes(state) {
     let geneIndex = state.submission.geneIndex;
     let geneOrder = state.submission.geneOrder;
-    for(let i = 0; i < geneOrder.length; i++) {
+    let geneCount = geneOrder.length;
+    let validCount = 0;
+    for(let i = 0; i < geneCount; i++) {
         if(geneIndex[geneOrder[i]].finalized) {
-            return true;
+            validCount++;
         }
-        return false;
     }
+    return [validCount,geneCount];
 }
 
 export const publicationSelector = state => state[name].publicationIdValue;

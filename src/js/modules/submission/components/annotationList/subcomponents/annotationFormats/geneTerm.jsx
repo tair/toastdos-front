@@ -39,6 +39,7 @@ class GeneTerm extends React.Component {
                     value={currentEvidenceWith.locusName}
                     attemptValidate={(locusName) => this.attemptValidate(evidenceWithId,locusName)}
                     upperCaseOnly={true}
+                    required={true}
                 />
             </ListGroupItem>
         );
@@ -89,6 +90,7 @@ class GeneTerm extends React.Component {
                             placeholder="Start Typing..."
                             value={this.props.annotationData.data.keywordName}
                             searchScope={typeData.keywordScope}
+                            required={true}
                         />
                     </Col>
                 </Row>
@@ -117,6 +119,7 @@ class GeneTerm extends React.Component {
                             placeholder="e.g. Enzyme Assay"
                             value={this.props.annotationData.data.methodName}
                             searchScope="eco"
+                            required={true}
                         />
                     </Col>
                 </Row>

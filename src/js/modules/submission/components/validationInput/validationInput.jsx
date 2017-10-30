@@ -64,6 +64,7 @@ class ValidationInput extends React.Component {
                 <CustomTextInput
                     placeholder={this.props.placeholder}
                     value={this.state.value}
+                    required={this.props.required}
                     onChange={this.onChange}
                     onBlur={this.determineAttemptValidate}
                     onKeyDown={this.onKeyDown}
@@ -86,6 +87,7 @@ ValidationInput.propTypes = {
     validationError: React.PropTypes.string,
     validating: React.PropTypes.bool,
     upperCaseOnly: React.PropTypes.bool,
+    required: React.PropTypes.bool,
 };
 
 ValidationInput.defaultProps = {
@@ -95,6 +97,7 @@ ValidationInput.defaultProps = {
     validationError: '',
     validating: false,
     upperCaseOnly: false,
+    required: false,
 };
 
 export default ValidationInput;
