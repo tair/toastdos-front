@@ -6,6 +6,7 @@ import { Label, Row, Col,
     InputGroup, InputGroupAddon, Button } from 'reactstrap';
 
 import ValidationInput from "../validationInput";
+import { validationStates } from "../../constants";
 
 
 class PublicationField extends React.Component {
@@ -29,8 +30,7 @@ class PublicationField extends React.Component {
                                     value={this.props.publicationIdValue}
                                     placeholder="e.g 21051552 or 10.1104/pp.110.166546"
                                     attemptValidate={this.props.attemptValidatePublication}
-                                    validating={this.props.publicationValidation.validating}
-                                    finalized={this.props.publicationValidation.finalized}
+                                    validationState={this.props.validationState}
                                     validationError={this.props.publicationValidation.validationError}
                                     required={true}
                                 />
@@ -80,9 +80,8 @@ class PublicationField extends React.Component {
 
 PublicationField.propTypes = {
     publicationIdValue: React.PropTypes.string,
+    validationState: React.PropTypes.string,
     publicationValidation: React.PropTypes.shape({
-        finalized: React.PropTypes.bool,
-        validating: React.PropTypes.bool,
         validationError: React.PropTypes.string
     }),
     publicationInfo: React.PropTypes.shape({
@@ -95,9 +94,8 @@ PublicationField.propTypes = {
 
 PublicationField.defaultProps = {
     publicationIdValue: "",
+    validationState: validationStates.NOT_VALIDATED,
     publicationValidation: {
-        finalized: false,
-        validating: false,
         validationError: ""
     },
     publicationInfo: {

@@ -6,6 +6,7 @@ import ValidationInput from "../../../validationInput";
 import { Card, CardHeader, CardBody,
     Label, FormGroup, InputGroup, InputGroupAddon,
     Button, ButtonGroup, Col, Row } from 'reactstrap';
+import { validationStates } from "../../../../constants";
 
 
 class SingleGene extends React.Component {
@@ -41,9 +42,8 @@ class SingleGene extends React.Component {
                                 title={this.props.title}
                                 value={this.props.locusNameValue}
                                 placeholder="e.g. AT2G23380"
-                                validating={this.props.validating}
+                                validationState={this.props.validationState}
                                 validationError={this.props.validationError}
-                                finalized={this.props.finalized}
                                 attemptValidate={this.props.validateGeneData}
                                 upperCaseOnly={true}
                                 required={true}
@@ -93,9 +93,8 @@ SingleGene.propTypes = {
     validateGeneData: React.PropTypes.func,
     onRemoveClick: React.PropTypes.func,
     title: React.PropTypes.string,
-    validating: React.PropTypes.bool,
+    validationState: React.PropTypes.string,
     validationError: React.PropTypes.string,
-    finalized: React.PropTypes.bool
 };
 
 SingleGene.defaultProps = {
@@ -107,9 +106,8 @@ SingleGene.defaultProps = {
     validateGeneData: () => {},
     onRemoveClick: () => {},
     title: "",
-    validating: false,
+    validationState: validationStates.NOT_VALIDATED,
     validationError: "",
-    finalized: false
 };
 
 

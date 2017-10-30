@@ -3,7 +3,8 @@
 import {
     name,
     annotationTypeData,
-    annotationFormats
+    annotationFormats,
+    validationStates,
 } from './constants';
 import { createSelector } from 'reselect';
 
@@ -49,7 +50,7 @@ function countFinalizedGenes(state) {
     let geneCount = geneOrder.length;
     let validCount = 0;
     for(let i = 0; i < geneCount; i++) {
-        if(geneIndex[geneOrder[i]].finalized) {
+        if(geneIndex[geneOrder[i]].validationState === validationStates.VALID) {
             validCount++;
         }
     }
@@ -83,7 +84,7 @@ export const canSubmit = createSelector(
   s => (s[name].submitting),
   (pub, genes, annotations, isSubmitting) => (
       !!pub &&
-      genes.some(g => g.finalized) &&
+      genes.some(g => g.validationState === validationStates.VALID) &&
       (annotations.length > 0) &&
       !isSubmitting
   )
@@ -106,7 +107,7 @@ export function submissionBodySelector(state) {
     };
 
     submissionData.genes = geneList
-        .filter(g => g.finalized) // filter out non-finalized
+        .filter(g => g.validationState === validationStates.VALID) // filter out non-finalized
         .map(g => ({  // map the properties
             locusName: g.finalizedLocusName,
             geneSymbol: g.finalizedGeneSymbol,

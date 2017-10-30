@@ -9,7 +9,8 @@ import {Card, CardHeader, CardBody, CardTitle, Button, Container,
 
 import {
         annotationTypeData,
-        annotationFormats
+        annotationFormats,
+        validationStates,
     } from '../../constants';
 import {geneListSelector, annotationListSelector} from '../../selectors';
 import 'css/submissionView.scss';
@@ -168,7 +169,7 @@ class SubmissionReadOnly extends React.Component {
                             <h5>Genes</h5>
                         </Col>
                         <Col>
-                            {this.props.genes.filter(g => g.finalized).map(this.renderGene)}
+                            {this.props.genes.filter(g => g.validationState === validationStates.VALID).map(this.renderGene)}
                         </Col>
                     </Row>
                 </ListGroupItem>

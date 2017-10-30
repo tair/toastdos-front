@@ -32,9 +32,8 @@ class GeneTerm extends React.Component {
         return (
             <ListGroupItem key={`evidence_with_${evidenceWithId}`}>
                 <ValidationInput
-                    finalized={currentEvidenceWith.finalized}
+                    validationState={currentEvidenceWith.validationState}
                     validationError={currentEvidenceWith.validationError}
-                    validating={currentEvidenceWith.validating}
                     placeholder="e.g. a locus, protein"
                     value={currentEvidenceWith.locusName}
                     attemptValidate={(locusName) => this.attemptValidate(evidenceWithId,locusName)}

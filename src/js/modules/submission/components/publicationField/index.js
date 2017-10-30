@@ -9,6 +9,7 @@ const ConnectedPublicationField = connect(
         publicationIdValue: state.submission.publicationIdValue,
         publicationValidation: state.submission.publicationValidation,
         publicationInfo: state.submission.publicationInfo,
+        validationState: state.submission.publicationValidationState,
     }),
     dispatch => ({
         attemptValidatePublication: (publicationId) => dispatch(new AttemptValidatePublicationAsync(publicationId))

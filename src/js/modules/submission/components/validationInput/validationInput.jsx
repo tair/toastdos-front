@@ -4,6 +4,7 @@ import React from 'react';
 import { InputGroup, InputGroupAddon } from 'reactstrap';
 import CustomTextInput from "lib/components/customTextInput";
 import ValidationStatus from "../validationStatus";
+import { validationStates } from "../../constants";
 
 class ValidationInput extends React.Component {
     constructor(props) {
@@ -70,7 +71,9 @@ class ValidationInput extends React.Component {
                     onKeyDown={this.onKeyDown}
                 />
                 <InputGroupAddon>
-                    <ValidationStatus validating={this.props.validating} finalized={this.props.finalized || !!this.props.validationError} validationError={this.props.validationError} />
+                    <ValidationStatus
+                        validationState={this.props.validationState}
+                        validationError={this.props.validationError} />
                 </InputGroupAddon>
             </InputGroup>
         );
@@ -79,25 +82,27 @@ class ValidationInput extends React.Component {
 
 ValidationInput.propTypes = {
     title: React.PropTypes.string,
+    hasValidationStatus: React.PropTypes.bool,
+    isSmartTextInput: React.PropTypes.bool,
     placeholder: React.PropTypes.string,
     value: React.PropTypes.string,
     onChange: React.PropTypes.func,
     attemptValidate: React.PropTypes.func,
-    finalized: React.PropTypes.bool,
     validationError: React.PropTypes.string,
-    validating: React.PropTypes.bool,
     upperCaseOnly: React.PropTypes.bool,
     required: React.PropTypes.bool,
+    validationState: React.PropTypes.string,
 };
 
 ValidationInput.defaultProps = {
     title: '',
+    hasValidationStatus: false,
+    isSmartTextInput: false,
     children: null,
-    finalized: false,
     validationError: '',
-    validating: false,
     upperCaseOnly: false,
     required: false,
+    validationState: validationStates.NOT_VALIDATED,
 };
 
 export default ValidationInput;
