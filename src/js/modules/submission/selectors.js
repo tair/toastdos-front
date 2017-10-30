@@ -77,15 +77,28 @@ export const evidenceWithSelector = createSelector(
                 .map(a => a.data.evidenceWithIndex)))
 );
 
+export const evidenceWithListSelector = createSelector(
+    annotationListSelector,
+    (annotations) =>
+        [].concat.apply([],
+            annotations.filter(a =>
+            annotationTypeData[a.annotationType].format == annotationFormats.GENE_TERM)
+        .map(a => Object.values(a.data.evidenceWithIndex)))
+);
+
 export const canSubmit = createSelector(
-  publicationSelector,
+  s => (s[name].publicationValidationState),
   geneListSelector,
   annotationListSelector,
+  evidenceWithListSelector,
   s => (s[name].submitting),
-  (pub, genes, annotations, isSubmitting) => (
-      !!pub &&
-      genes.some(g => g.validationState === validationStates.VALID) &&
+  (pubValidationState, genes, annotations, evidenceWith, isSubmitting) => (
+      pubValidationState === validationStates.VALID &&
+      (genes.length > 0) &&
+      genes.every(g => g.validationState === validationStates.VALID) &&
       (annotations.length > 0) &&
+      annotations.every(a => a.data.keywordId != null && a.data.methodId != null) &&
+      (!evidenceWith || evidenceWith.every(ew => ew.validationState === validationStates.VALID)) &&
       !isSubmitting
   )
 );
