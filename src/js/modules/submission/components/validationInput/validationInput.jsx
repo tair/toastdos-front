@@ -13,6 +13,7 @@ class ValidationInput extends React.Component {
         };
 
         this.lastValue = '';
+        this.debouncer = null;
         this.onKeyDown = this.onKeyDown.bind(this);
         this.onChange = this.onChange.bind(this);
         this.determineAttemptValidate = this.determineAttemptValidate.bind(this);
@@ -34,8 +35,13 @@ class ValidationInput extends React.Component {
     }
 
     componentDidUpdate() {
-        // TODO: Debounce state updates
-        this.determineAttemptValidate();
+        if (this.debouncer) {
+            clearTimeout(this.debouncer);
+        }
+
+        this.debouncer = setTimeout(() => {
+            this.determineAttemptValidate();
+        }, 500);
     }
 
     determineAttemptValidate(){

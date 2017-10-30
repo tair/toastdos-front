@@ -35,7 +35,6 @@ class PublicationField extends React.Component {
                                     validationError={this.props.publicationValidation.validationError}
                                 />
                             </CardHeader>
-                            {this.props.publicationValidation.finalized ? (
                             <CardBody>
                                 {this.props.publicationInfo.url ? (
                                 <Row className="align-items-end mt-3">
@@ -70,7 +69,7 @@ class PublicationField extends React.Component {
                                     </Col>
                                 </Row>
                                 ])}
-                            </CardBody>) : null}
+                            </CardBody>
                         </Card>
                     </Col>
                 </Row>
