@@ -49,7 +49,7 @@ class GeneTerm extends React.Component {
 
         return (
             <div>
-                <Row className="align-items-end">
+                <Row className="align-items-middle">
                     <Col xs="3" className="text-right d-table-cell">
                         <Label className="align-center">
                             Gene
@@ -66,7 +66,7 @@ class GeneTerm extends React.Component {
                         />
                     </Col>
                 </Row>
-                <Row className="align-items-end mt-3">
+                <Row className="align-items-middle mt-3">
                     <Col xs="3" className="text-right d-table-cell">
                         <Label className="align-center">
                             {typeData.name}
@@ -92,7 +92,7 @@ class GeneTerm extends React.Component {
                         />
                     </Col>
                 </Row>
-                <Row className="align-items-end mt-3">
+                <Row className="align-items-middle mt-3">
                     <Col xs="3" className="text-right d-table-cell">
                         <Label className="align-center">
                             Method
@@ -121,7 +121,7 @@ class GeneTerm extends React.Component {
                     </Col>
                 </Row>
                 {(this.props.annotationData.data.methodEvidenceCode === 'IGI' || this.props.annotationData.data.methodEvidenceCode === 'IPI')?(
-                <Row className="mt-3">
+                <Row className="align-items-middle mt-3">
                     <Col xs="3" className="text-right d-table-cell">
                         <Label className="align-center pt-3">
                             Evidence With

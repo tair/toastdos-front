@@ -40,7 +40,7 @@ export const annotationTypeData = {
         keywordScope: "plant_anatomy"
     },
     [annotationTypes.TEMPORAL_EXPRESSION]: {
-        name: "Temporal Expression (PO Development Stage)",
+        name: "Temporal Expression (PO Dev. Stage)",
         format: annotationFormats.GENE_TERM,
         keywordScope: "plant_structure_development_stage"
     },
