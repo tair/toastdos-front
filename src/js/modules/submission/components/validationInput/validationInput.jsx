@@ -45,6 +45,14 @@ class ValidationInput extends React.Component {
         }, 500);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.value !== this.state.value && nextProps.validationState === validationStates.NOT_VALIDATED) {
+            this.setState({
+                value: nextProps.value,
+            });
+        }
+    }
+
     determineAttemptValidate(){
         // only attempt validation if the value was changed
         if (this.state.value == this.lastValue) {
