@@ -94,7 +94,7 @@ export const annotationListValidSelector = createSelector(
     annotationListSelector,
     (annotations) =>
         (annotations.length > 0) &&
-        annotations.every(a => a.data.keywordId != null && a.data.methodId != null)
+        annotations.every(a => !a.data.keywordName.trim() && !a.data.methodName.trim())
 );
 
 export const evidenceWithValidSelector = createSelector(
