@@ -6,7 +6,7 @@ import GeneList from './geneList';
 import {
         addNewGene,
         removeGene,
-        attemptValidateGene,
+        AttemptValidateGeneAsync,
         updateGeneData
     } from '../../actions';
 import generateId from "lib/idGenerator";
@@ -19,7 +19,7 @@ const ConnectedGeneList = connect(
     dispatch => ({
         onGeneAddClick: () => dispatch(addNewGene(generateId())),
         removeGene: i => dispatch(removeGene(i)),
-        validateGeneData: (localId, geneData) => dispatch(attemptValidateGene(localId, geneData)),
+        validateGeneData: (localId, geneData) => dispatch(new AttemptValidateGeneAsync(localId, geneData)),
         updateGeneData: (localId, geneData) => dispatch(updateGeneData(localId, geneData)),
     })
 )(GeneList);

@@ -4,12 +4,14 @@ import React from 'react';
 import PublicationField from '../publicationField';
 import GeneList from '../geneList';
 import AnnotationList from '../annotationList';
+import EvidenceWith from '../evidenceWith';
 import {Card, CardHeader, CardBody, CardTitle, Button, Container,
     Row, Col, Label, ListGroup, ListGroupItem} from 'reactstrap';
 
 import {
         annotationTypeData,
-        annotationFormats
+        annotationFormats,
+        validationStates,
     } from '../../constants';
 import {geneListSelector, annotationListSelector} from '../../selectors';
 import 'css/submissionView.scss';
@@ -59,10 +61,10 @@ class SubmissionReadOnly extends React.Component {
         );
     }
 
-    renderEvidenceWith(evidenceWithId) {
+    renderEvidenceWith(evidenceWithId, evidenceWith) {
         return (
             <ListGroupItem key={evidenceWithId}>
-                {this.props.evidenceWith[evidenceWithId].locusName}
+                {evidenceWith[evidenceWithId].locusName}
             </ListGroupItem>
         );
     }
@@ -110,7 +112,9 @@ class SubmissionReadOnly extends React.Component {
                         </Col>
                         <Col>
                             <ListGroup>
-                                {annotation.data.evidenceWithOrder.map(this.renderEvidenceWith)}
+                                {annotation.data.evidenceWithOrder.map((order) =>
+                                    this.renderEvidenceWith(order, this.props.evidenceWith)
+                                )}
                             </ListGroup>
                         </Col>
                     </Row>
@@ -168,7 +172,7 @@ class SubmissionReadOnly extends React.Component {
                             <h5>Genes</h5>
                         </Col>
                         <Col>
-                            {this.props.genes.filter(g => g.finalized).map(this.renderGene)}
+                            {this.props.genes.filter(g => g.validationState === validationStates.VALID).map(this.renderGene)}
                         </Col>
                     </Row>
                 </ListGroupItem>

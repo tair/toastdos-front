@@ -4,6 +4,7 @@ import React from 'react';
 import { InputGroup, InputGroupAddon } from 'reactstrap';
 import CustomTextInput from "lib/components/customTextInput";
 import ValidationStatus from "../validationStatus";
+import { validationStates } from "../../constants";
 
 class ValidationInput extends React.Component {
     constructor(props) {
@@ -11,6 +12,9 @@ class ValidationInput extends React.Component {
         this.state = {
             value: this.props.value
         };
+
+        this.lastValue = '';
+        this.debouncer = null;
         this.onKeyDown = this.onKeyDown.bind(this);
         this.onChange = this.onChange.bind(this);
         this.determineAttemptValidate = this.determineAttemptValidate.bind(this);
@@ -31,11 +35,30 @@ class ValidationInput extends React.Component {
         });
     }
 
+    componentDidUpdate() {
+        if (this.debouncer) {
+            clearTimeout(this.debouncer);
+        }
+
+        this.debouncer = setTimeout(() => {
+            this.determineAttemptValidate();
+        }, 500);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.value !== this.state.value && nextProps.validationState === validationStates.NOT_VALIDATED) {
+            this.setState({
+                value: nextProps.value,
+            });
+        }
+    }
+
     determineAttemptValidate(){
         // only attempt validation if the value was changed
-        if (this.state.value == this.props.value) {
+        if (this.state.value == this.lastValue) {
             return false;
         }
+        this.lastValue = this.state.value;
         this.props.attemptValidate(this.state.value);
     }
 
@@ -50,12 +73,15 @@ class ValidationInput extends React.Component {
                 <CustomTextInput
                     placeholder={this.props.placeholder}
                     value={this.state.value}
+                    required={this.props.required}
                     onChange={this.onChange}
                     onBlur={this.determineAttemptValidate}
                     onKeyDown={this.onKeyDown}
                 />
                 <InputGroupAddon>
-                    <ValidationStatus validating={this.props.validating} finalized={this.props.finalized || !!this.props.validationError} validationError={this.props.validationError} />
+                    <ValidationStatus
+                        validationState={this.props.validationState}
+                        validationError={this.props.validationError} />
                 </InputGroupAddon>
             </InputGroup>
         );
@@ -64,23 +90,26 @@ class ValidationInput extends React.Component {
 
 ValidationInput.propTypes = {
     title: React.PropTypes.string,
+    hasValidationStatus: React.PropTypes.bool,
+    isSmartTextInput: React.PropTypes.bool,
     placeholder: React.PropTypes.string,
     value: React.PropTypes.string,
-    onChange: React.PropTypes.func,
     attemptValidate: React.PropTypes.func,
-    finalized: React.PropTypes.bool,
     validationError: React.PropTypes.string,
-    validating: React.PropTypes.bool,
     upperCaseOnly: React.PropTypes.bool,
+    required: React.PropTypes.bool,
+    validationState: React.PropTypes.string,
 };
 
 ValidationInput.defaultProps = {
     title: '',
+    hasValidationStatus: false,
+    isSmartTextInput: false,
     children: null,
-    finalized: false,
     validationError: '',
-    validating: false,
     upperCaseOnly: false,
+    required: false,
+    validationState: validationStates.NOT_VALIDATED,
 };
 
 export default ValidationInput;

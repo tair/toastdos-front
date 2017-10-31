@@ -10,18 +10,21 @@ import {
         removeAnnotation,
         updateAnnotationData,
         addEvidenceWith,
-        validateEvidenceWith
+        AttemptValidateEvidenceWithAsync,
+        removeEvidenceWith,
     } from '../../actions';
 
 import {
-        hasValidGenes
+        hasValidGene,
+        hasAllValidGenes,
     } from '../../selectors';
 
 const ConnectedAnnotationList = connect(
     state => ({
         annotationIndex: state.submission.annotationIndex,
         annotationOrder: state.submission.annotationOrder,
-        hasGenes: hasValidGenes(state)
+        hasValidGene: hasValidGene(state),
+        hasAllValidGenes: hasAllValidGenes(state),
     }),
     dispatch => ({
         onAnnotationAddClick: () => dispatch(addNewAnnotation(generateId())),
@@ -29,7 +32,8 @@ const ConnectedAnnotationList = connect(
         removeAnnotation: localId => dispatch(removeAnnotation(localId)),
         updateAnnotationData: (localId, data) => dispatch(updateAnnotationData(localId, data)),
         addEvidenceWith: annotationId => dispatch(addEvidenceWith(annotationId, generateId())),
-        validateEvidenceWith: (annotationId, evidenceWithId, locusName) => dispatch(validateEvidenceWith(annotationId, evidenceWithId, locusName))
+        validateEvidenceWith: (annotationId, evidenceWithId, locusName) => dispatch(new AttemptValidateEvidenceWithAsync(annotationId, evidenceWithId, locusName)),
+        removeEvidenceWith: (annotationId, evidenceWithId) => dispatch(removeEvidenceWith(annotationId, evidenceWithId)),
     })
 )(AnnotationList);
 

@@ -4,7 +4,8 @@ import * as actions from "./actionTypes";
 import { 
         annotationTypes,
         annotationTypeData,
-        annotationFormats 
+        annotationFormats,
+        validationStates,
     } from './constants';
 
 function getDefaultState() {
@@ -15,25 +16,22 @@ function getDefaultState() {
             url: "",
             title: "",
         },
-        publicationValidation: {
-            finalized: false,
-            validating: false,
-            validationError: ""
-        },
+        publicationValidationState: validationStates.NOT_VALIDATED,
+        publicationValidationError: "",
         geneIndex: {
             "init": {
                 localId: "init",
                 finalizedLocusName: "",
                 finalizedGeneSymbol: "",
                 finalizedFullName: "",
-                finalized: false,
-                validating: false,
+                validationState: validationStates.NOT_VALIDATED,
                 validationError: ""
             }
         },
         geneOrder: ["init"],
         annotationIndex: {},
         annotationOrder: [],
+        evidenceWithIndex: {},
         submitting: false,
         submitted: false,
         previewing: false,
@@ -44,7 +42,6 @@ function getDefaultState() {
 }
 
 const defaultState = getDefaultState();
-
 
 export default function (state = defaultState, action) {
     let newState = {};
@@ -57,11 +54,8 @@ export default function (state = defaultState, action) {
         return {
             ...state,
             publicationIdValue: '',
-            publicationValidation: {
-                validating: true,
-                validationError: '',
-                finalized: false,
-            },
+            publicationValidationState: validationStates.VALIDATING,
+            publicationValidationError: '',
             publicationInfo: {
                 author: '',
                 url: '',
@@ -72,11 +66,8 @@ export default function (state = defaultState, action) {
         return {
             ...state,
             publicationIdValue: action.publicationId,
-            publicationValidation: {
-                validating: false,
-                validationError: '',
-                finalized: true
-            },
+            publicationValidationState: validationStates.VALID,
+            publicationValidationError: '',
             publicationInfo: {
                 author: action.data.author,
                 url: action.data.url,
@@ -86,11 +77,8 @@ export default function (state = defaultState, action) {
     case actions.VALIDATE_PUBLICATION_FAIL:
         return {
             ...state,
-            publicationValidation: {
-                ...state.publicationValidation,
-                validating: false,
-                validationError: action.error,
-            }
+            publicationValidationState: validationStates.INVALID,
+            publicationValidationError: action.error,
         };
     case actions.ADD_NEW_GENE:
         newState = {
@@ -103,8 +91,7 @@ export default function (state = defaultState, action) {
             finalizedLocusName: "",
             finalizedGeneSymbol: "",
             finalizedFullName: "",
-            finalized: false,
-            validating: false,
+            validationState: validationStates.NOT_VALIDATED,
             validationError: ""
         };
 
@@ -126,8 +113,7 @@ export default function (state = defaultState, action) {
             geneIndex: Object.assign({}, state.geneIndex),
         };
         newState.geneIndex[action.localId].validationError = '';
-        newState.geneIndex[action.localId].validating = true;
-        newState.geneIndex[action.localId].finalized = false;
+        newState.geneIndex[action.localId].validationState = validationStates.VALIDATING;
 
         return Object.assign({}, state, newState);
     case actions.UPDATE_GENE_DATA:
@@ -146,9 +132,8 @@ export default function (state = defaultState, action) {
             geneIndex: Object.assign({}, state.geneIndex),
         };
 
-        newState.geneIndex[action.localId].validating = false;
         newState.geneIndex[action.localId].validationError = '';
-        newState.geneIndex[action.localId].finalized = true;
+        newState.geneIndex[action.localId].validationState = validationStates.VALID;
         newState.geneIndex[action.localId].finalizedLocusName = action.locusName;
 
         return Object.assign({}, state, newState);
@@ -157,9 +142,8 @@ export default function (state = defaultState, action) {
             geneIndex: Object.assign({}, state.geneIndex),
         };
 
-        newState.geneIndex[action.localId].validating = false;
         newState.geneIndex[action.localId].validationError = action.error;
-        newState.geneIndex[action.localId].finalized = true;
+        newState.geneIndex[action.localId].validationState = validationStates.INVALID;
         newState.geneIndex[action.localId].finalizedLocusName = '';
         
         return Object.assign({}, state, newState);
@@ -179,19 +163,10 @@ export default function (state = defaultState, action) {
                 methodName: "",
                 methodId: null,
                 methodEvidenceCode: null,
-                evidenceWithIndex: {
-                    ["init" + action.localId]: {
-                        finalized: false,
-                        validating: false,
-                        validationError: '',
-                        locusName: ""
-                    }
-                },
-                evidenceWithOrder: ["init" + action.localId]
+                evidenceWithOrder: [],
             }
         };
 
-        
         newState.annotationOrder.push(action.localId);
 
         return Object.assign({}, state, newState);
@@ -221,15 +196,7 @@ export default function (state = defaultState, action) {
                 methodName: "",
                 methodId: null,
                 methodEvidenceCode: null,
-                evidenceWithIndex: {
-                    ["init" + action.localId]: {
-                        finalized: false,
-                        validating: false,
-                        validationError: '',
-                        locusName: ""
-                    }
-                },
-                evidenceWithOrder: ["init" + action.localId]
+                evidenceWithOrder: [],
             };
             break;
         case annotationFormats.GENE_GENE:
@@ -305,20 +272,22 @@ export default function (state = defaultState, action) {
         let annotation = state.annotationIndex[action.annotationId];
         return {
             ...state,
+            evidenceWithIndex: {
+                ...state.evidenceWithIndex,
+                [action.newEvidenceWithId]: {
+                    ...state.evidenceWithIndex[action.newEvidenceWithId],
+                    localId: action.newEvidenceWithId,
+                    validationState: validationStates.NOT_VALIDATED,
+                    validationError: '',
+                    locusName: ""
+                }
+            },
             annotationIndex: {
+                ...state.annotationIndex,
                 [action.annotationId]: {
                     ...annotation,
                     data: {
                         ...annotation.data,
-                        evidenceWithIndex: {
-                            ...annotation.data.evidenceWithIndex,
-                            [action.newEvidenceWithId]: {
-                                finalized: false,
-                                validationError: '',
-                                validating: false,
-                                locusName: ""
-                            }
-                        },
                         evidenceWithOrder: annotation.data.evidenceWithOrder
                             .concat(action.newEvidenceWithId)
                     }
@@ -326,73 +295,69 @@ export default function (state = defaultState, action) {
             }
         };
     case actions.ATTEMPT_VALIDATE_EVIDENCE_WITH:
-        let annotationAttemptEvidenceWith = state.annotationIndex[action.annotationId];
-        return {
-            ...state,
-            annotationIndex: {
-                ...state.annotationIndex,
-                [action.annotationId]: {
-                    ...annotationAttemptEvidenceWith,
-                    data: {
-                        ...annotationAttemptEvidenceWith.data,
-                        evidenceWithIndex: {
-                            ...annotationAttemptEvidenceWith.data.evidenceWithIndex,
-                            [action.evidenceWithId]: {
-                                ...annotationAttemptEvidenceWith.data.evidenceWithIndex[action.evidenceWithId],
-                                finalized: false,
-                                validationError: '',
-                                validating: true,
-                            }
-                        }
-                    }
-                }
-            }
+        newState = {
+            evidenceWithIndex: Object.assign({},state.evidenceWithIndex)
+        }
+        
+        newState.evidenceWithIndex[action.evidenceWithId].validationState = validationStates.VALIDATING;
+        newState.evidenceWithIndex[action.evidenceWithId].validationError = '';
+
+        return Object.assign({},state,newState);
+    case actions.REMOVE_EVIDENCE_WITH:
+
+        newState = {
+            evidenceWithIndex: Object.assign({}, state.evidenceWithIndex),
+            annotationIndex: Object.assign({}, state.annotationIndex)
+        }
+
+        delete newState.evidenceWithIndex[action.evidenceWithId];
+
+        let an = state.annotationIndex[action.annotationId];
+
+        newState.annotationIndex[action.annotationId].data.evidenceWithOrder = 
+            an.data.evidenceWithOrder.filter(e => e != action.evidenceWithId);
+
+        return Object.assign({},state, newState);
+    case actions.UPDATE_EVIDENCE_WITH:
+        newState = {
+            evidenceWithIndex: Object.assign({}, state.evidenceWithIndex),
         };
+
+        newState.evidenceWithIndex[action.evidenceWithId] = action.data;
+
+        return Object.assign({}, state, newState);
+    case actions.CLEAR_EVIDENCE_WITH:
+        newState = {
+            evidenceWithIndex: Object.assign({},state.evidenceWithIndex)
+        }
+        
+        newState.evidenceWithIndex[action.evidenceWithId].validationState = validationStates.NOT_VALIDATED;
+        newState.evidenceWithIndex[action.evidenceWithId].locusName = "";
+
+        return Object.assign({},state,newState);
     case actions.VALIDATE_EVIDENCE_WITH_SUCCESS:
-        let annotationSuccess = state.annotationIndex[action.annotationId];
         return {
             ...state,
-            annotationIndex: {
-                ...state.annotationIndex,
-                [action.annotationId]: {
-                    ...annotationSuccess,
-                    data: {
-                        ...annotationSuccess.data,
-                        evidenceWithIndex: {
-                            ...annotationSuccess.data.evidenceWithIndex,
-                            [action.evidenceWithId]: {
-                                ...annotationSuccess.data.evidenceWithIndex[action.evidenceWithId],
-                                finalized: true,
-                                validationError: '',
-                                validating: false,
-                                locusName: action.locusName,
-                            }
-                        }
-                    }
+            evidenceWithIndex: {
+                ...state.evidenceWithIndex,
+                [action.evidenceWithId]: {
+                    ...state.evidenceWithIndex[action.evidenceWithId],
+                    validationState: validationStates.VALID,
+                    validationError: '',
+                    locusName: action.locusName,
                 }
             }
         };
     case actions.VALIDATE_EVIDENCE_WITH_FAIL:
-        let annotationFail = state.annotationIndex[action.annotationId];
         return {
             ...state,
-            annotationIndex: {
-                ...state.annotationIndex,
-                [action.annotationId]: {
-                    ...annotationFail,
-                    data: {
-                        ...annotationFail.data,
-                        evidenceWithIndex: {
-                            ...annotationFail.data.evidenceWithIndex,
-                            [action.evidenceWithId]: {
-                                ...annotationFail.data.evidenceWithIndex[action.evidenceWithId],
-                                finalized: true,
-                                validationError: action.error,
-                                validating: false,
-                                locusName: '',
-                            }
-                        }
-                    }
+            evidenceWithIndex: {
+                ...state.evidenceWithIndex,
+                [action.evidenceWithId]: {
+                    ...state.evidenceWithIndex[action.evidenceWithId],
+                    validationState: validationStates.INVALID,
+                    validationError: action.error,
+                    locusName: '',
                 }
             }
         };

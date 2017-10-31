@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import SubmissionReadOnly from './submissionReadOnly';
 
 import {
-    geneListSelector, 
+    geneListSelector,
     annotationListSelector,
     publicationSelector,
     evidenceWithSelector} from '../../selectors';

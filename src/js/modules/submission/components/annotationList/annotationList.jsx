@@ -14,6 +14,7 @@ class AnnotationList extends React.Component {
 
     generateAnnotationEntry(annotationId, index) {
         let currAnnotation = this.props.annotationIndex[annotationId];
+
         return (
             <AnnotationEntry
                 key={`annotation_${annotationId}`}
@@ -25,6 +26,8 @@ class AnnotationList extends React.Component {
                 onDataUpdate={this.props.updateAnnotationData.bind(this, annotationId)}
                 onEvidenceWithAddClick={this.props.addEvidenceWith.bind(this, annotationId)}
                 validateEvidenceWith={this.props.validateEvidenceWith.bind(this, annotationId)}
+                removeEvidenceWith={this.props.removeEvidenceWith}
+                annotationId={annotationId}
             />
         );
     }
@@ -42,7 +45,7 @@ class AnnotationList extends React.Component {
                             <Alert color="secondary">
                                 <span className="empty-message">
                                     No Annotations.
-                                    {(!this.props.hasGenes) ? (
+                                    {(!this.props.hasValidGene) ? (
                                         <span className="empty-message"> Please add a valid gene before adding annotations.
                                         </span>
                                     ) : (null)
@@ -58,7 +61,7 @@ class AnnotationList extends React.Component {
                             <Col sm={{size:4, offset:4}} className="justify-content-sm-center">
                                 <Button block color="success"
                                     onClick={this.props.onAnnotationAddClick}
-                                    disabled={!this.props.hasGenes}
+                                    disabled={!this.props.hasAllValidGenes}
                                 >
                                     <span className="fa fa-plus" title="Add Annotation"></span> Add Annotation
                                 </Button>
@@ -83,14 +86,17 @@ AnnotationList.propTypes = {
     onAnnotationAddClick: React.PropTypes.func,
     handleAnnotationTypeChange: React.PropTypes.func,
     removeAnnotation: React.PropTypes.func,
-    hasGenes: React.PropTypes.bool
+    hasValidGene: React.PropTypes.bool,
+    hasAllValidGenes: React.PropTypes.bool,
+    removeEvidenceWith: React.PropTypes.func,
 };
 
 AnnotationList.defaultProps = {
     onAnnotationAddClick: () => {},
     annotationIndex: {},
     annotationOrder: [],
-    hasGenes: false
+    hasValidGene: false,
+    hasAllValidGenes: false,
 };
 
 export default AnnotationList;

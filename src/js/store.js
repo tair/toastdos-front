@@ -5,6 +5,8 @@ import { routerReducer } from 'react-router-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
+import { asyncActionMiddleware } from 'lib/asyncActionManager';
+
 import authentication from 'modules/authentication';
 import home from 'modules/home';
 import navigation from 'modules/navigation';
@@ -26,7 +28,7 @@ let reducer = combineReducers({
 let DevTools = (process.env.NODE_ENV === 'development') ? 
 require('lib/components/devTools').default : f => f;
 
-let enhancements = [ applyMiddleware(thunk) ];
+let enhancements = [ applyMiddleware(thunk, asyncActionMiddleware) ];
 (process.env.NODE_ENV === 'development') ?
 enhancements.push(DevTools.instrument()) : null;
 

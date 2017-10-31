@@ -57,9 +57,11 @@ class AnnotationEntry extends React.Component {
             return (
                 <GeneTermFormat
                     annotationData={this.props.annotationData}
+                    annotationId={this.props.annotationId}
                     onDataChange={this.props.onDataUpdate}
                     onEvidenceWithAddClick={this.props.onEvidenceWithAddClick}
                     validateEvidenceWith={this.props.validateEvidenceWith}
+                    removeEvidenceWith={this.props.removeEvidenceWith}
                 />
             );
         case annotationFormats.GENE_GENE:
@@ -119,9 +121,11 @@ AnnotationEntry.propTypes = {
     onTypeChange: React.PropTypes.func,
     onDeleteClick: React.PropTypes.func,
     annotationData: React.PropTypes.object,
+    annotationId: React.PropTypes.any,
     onDataUpdate: React.PropTypes.func,
     onEvidenceWithAddClick: React.PropTypes.func,
     validateEvidenceWith: React.PropTypes.func,
+    removeEvidenceWith: React.PropTypes.func
 };
 
 AnnotationEntry.defaultProps = {
@@ -130,6 +134,7 @@ AnnotationEntry.defaultProps = {
     onDataUpdate: () => {},
     onEvidenceWithAddClick: () => {},
     validateEvidenceWith: () => {},
+    removeEvidenceWith: () => {}
 };
 
 

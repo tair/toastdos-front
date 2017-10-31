@@ -3,7 +3,8 @@
 import {
     name,
     annotationTypeData,
-    annotationFormats
+    annotationFormats,
+    validationStates,
 } from './constants';
 import { createSelector } from 'reselect';
 
@@ -33,15 +34,20 @@ export const keywordSearchOrderSelector = createSelector(
     results => results.map(v => v.id)
 );
 
-export function hasValidGenes(state) {
-    let geneIndex = state.submission.geneIndex;
-    let geneOrder = state.submission.geneOrder;
-    for(let i = 0; i < geneOrder.length; i++) {
-        if(geneIndex[geneOrder[i]].finalized) {
-            return true;
-        }
-        return false;
-    }
+// Returns true if the gene list is valid for the given state
+export function hasAllValidGenes(state) {
+    return geneListValidSelector(state);
+}
+
+// Returns true if the gene list contains a valid gene for the given state
+export function hasValidGene(state) {
+    let hasValidGeneSelector = createSelector(
+        geneListSelector,
+        (genes) =>
+            (genes.length > 0) &&
+            genes.some(g => g.validationState === validationStates.VALID)
+    );
+    return hasValidGeneSelector(state);
 }
 
 export const publicationSelector = state => state[name].publicationIdValue;
@@ -54,27 +60,50 @@ export const annotationListSelector = state => state[name].annotationOrder.map(
     aid => state[name].annotationIndex[aid]
 );
 
-export const evidenceWithSelector = createSelector(
+export const evidenceWithSelector = (state) => state[name].evidenceWithIndex;
+
+export const evidenceWithListSelector = createSelector(
+    evidenceWithSelector,
+    (ew) => Object.values(ew)
+);
+
+export const publicationValidSelector =
+    s => s[name].publicationValidationState === validationStates.VALID
+;
+
+export const geneListValidSelector = createSelector(
+    geneListSelector,
+    (genes) =>
+        (genes.length > 0) &&
+        genes.every(g => g.validationState === validationStates.VALID)
+);
+
+export const annotationListValidSelector = createSelector(
     annotationListSelector,
-    (annotations) =>         
-        Object.assign.apply(null, 
-            [{}].concat(annotations
-                .filter(a => annotationTypeData[a.annotationType].format ==
-                    annotationFormats.GENE_TERM)
-                .map(a => a.data.evidenceWithIndex)))
+    (annotations) =>
+        (annotations.length > 0) &&
+        annotations.every(a => a.data.keywordName.trim() !== '' && a.data.methodName.trim() !== '')
+);
+
+export const evidenceWithValidSelector = createSelector(
+    evidenceWithListSelector,
+    (evidenceWith) =>
+      (!evidenceWith || evidenceWith.every(ew => ew.validationState === validationStates.VALID))
 );
 
 export const canSubmit = createSelector(
-  publicationSelector,
-  geneListSelector,
-  annotationListSelector,
-  s => (s[name].submitting),
-  (pub, genes, annotations, isSubmitting) => (
-      !!pub &&
-      genes.some(g => g.finalized) &&
-      (annotations.length > 0) &&
-      !isSubmitting
-  )
+    publicationValidSelector,
+    geneListValidSelector,
+    annotationListValidSelector,
+    evidenceWithValidSelector,
+    s => (s[name].submitting),
+    (pValid, gValid, aValid, ewValid, isSubmitting) => (
+        pValid &&
+        gValid &&
+        aValid &&
+        ewValid &&
+        !isSubmitting
+    )
 );
 
 export function submissionBodySelector(state) {
@@ -94,7 +123,7 @@ export function submissionBodySelector(state) {
     };
 
     submissionData.genes = geneList
-        .filter(g => g.finalized) // filter out non-finalized
+        .filter(g => g.validationState === validationStates.VALID) // filter out non-finalized
         .map(g => ({  // map the properties
             locusName: g.finalizedLocusName,
             geneSymbol: g.finalizedGeneSymbol,

@@ -145,6 +145,7 @@ class SmartTextInput extends React.Component {
                     onBlur={this.handleBlur}
                     inputRef={r => this.inputRef = r}
                     spellCheck={false}
+                    required={true}
                 />
                 {
                     (this.state.focused && this.state.showSuggestions) ?
@@ -185,7 +186,8 @@ SmartTextInput.propTypes = {
     onFocus: React.PropTypes.func,
     onBlur: React.PropTypes.func,
     onSelect: React.PropTypes.func,
-    className: React.PropTypes.string
+    className: React.PropTypes.string,
+    required: React.PropTypes.bool,
 };
 
 SmartTextInput.defaultProps = {
@@ -201,7 +203,8 @@ SmartTextInput.defaultProps = {
     onFocus: () => {},
     onBlur: () => {},
     onSelect: () => {},
-    className: "smart-text-input"
+    className: "smart-text-input",
+    required: false,
 };
 
 export default SmartTextInput;

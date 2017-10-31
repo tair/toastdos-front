@@ -20,12 +20,11 @@ class GeneList extends React.Component {
                 onRemoveClick={() => this.props.removeGene(geneId)}
                 validateGeneData={this.props.validateGeneData.bind(this, geneId)}
                 updateGeneData={this.props.updateGeneData.bind(this, geneId)}
-                validating={geneData.validating}
                 locusName={geneData.finalizedLocusName}
                 geneSymbol={geneData.finalizedGeneSymbol}
                 fullName={geneData.finalizedFullName}
-                finalized={geneData.finalized}
                 validationError={geneData.validationError}
+                validationState={geneData.validationState}
             />
         );
     }

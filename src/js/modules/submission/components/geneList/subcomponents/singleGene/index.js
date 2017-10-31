@@ -2,6 +2,7 @@
 
 import React from 'react';
 import SingleGene from './singleGene';
+import { validationStates } from "../../../../constants";
 
 class SingleGeneContainer extends React.Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class SingleGeneContainer extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.finalized) {
+        if(nextProps.validationState === validationStates.VALID) {
             this.setState({
                 locusNameValue: nextProps.locusName,
                 geneSymbolValue: nextProps.geneSymbol,
@@ -63,9 +64,8 @@ class SingleGeneContainer extends React.Component {
             validateGeneData: this.props.validateGeneData,
             onRemoveClick: this.props.onRemoveClick,
             title: this.props.title,
-            validating: this.props.validating,
             validationError: this.props.validationError,
-            finalized: this.props.finalized
+            validationState: this.props.validationState,
         });
     }
 }
@@ -78,9 +78,8 @@ SingleGeneContainer.propTypes = {
     onRemoveClick: React.PropTypes.func,
     validateGeneData: React.PropTypes.func,
     updateGeneData: React.PropTypes.func,
-    validating: React.PropTypes.bool,
     validationError: React.PropTypes.string,
-    finalized: React.PropTypes.bool
+    validationState: React.PropTypes.string,
 };
 
 SingleGeneContainer.defaultProps = {
@@ -91,9 +90,8 @@ SingleGeneContainer.defaultProps = {
     onRemoveClick: () => {},
     validateGeneData: () => {},
     updateGeneData: () => {},
-    validating: false,
     validationError: "",
-    finalized: false
+    validationState: validationStates.NOT_VALIDATED,
 };
 
 export default SingleGeneContainer;
