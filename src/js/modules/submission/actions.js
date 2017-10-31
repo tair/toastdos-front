@@ -121,6 +121,10 @@ export class AttemptValidateGeneAsync extends AsyncAction {
                 }
                 return dispatch(validateGeneError(this.localId, "Error Validating Locus"));
             }
+            // automatically add an annotation if there are none
+            if (currState.submission.annotationOrder.length == 0) {
+                dispatch(addNewAnnotation(this.localId));
+            }
             return dispatch(validateGeneSuccess(this.localId, this.locusName));
         });
     }
