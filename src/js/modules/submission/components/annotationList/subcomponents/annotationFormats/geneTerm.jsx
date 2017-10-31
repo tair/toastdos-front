@@ -20,10 +20,7 @@ class GeneTerm extends React.Component {
         super(props);
 
         this.generateEvidenceWith = this.generateEvidenceWith.bind(this);
-    }
-
-    componentWillMount() {
-        this.setState(this.props.onEvidenceWithAddClick);
+        this.needsEvidenceWith = this.props.needsEvidenceWith;
     }
 
     generateEvidenceWith(evidenceWithId) {
@@ -32,10 +29,21 @@ class GeneTerm extends React.Component {
             <EvidenceWith
                 key={evidenceWithId}
                 evidenceWithId={evidenceWithId}
+                annotationData={this.props.annotationData}
                 validateEvidenceWith={this.props.validateEvidenceWith}
                 removeEvidenceWith={this.props.removeEvidenceWith.bind(this,annotationId,evidenceWithId)}
             />
         );
+    }
+
+    componentWillReceiveProps(nextprops) {
+        if (nextprops.annotationData.data.methodEvidenceCode === 'IGI' || nextprops.annotationData.data.methodEvidenceCode === 'IPI') {
+            if (nextprops.annotationData.data.evidenceWithOrder.length == 0) {
+                nextprops.onEvidenceWithAddClick();
+            }
+            this.needsEvidenceWith = true;
+        }
+        else {this.needsEvidenceWith = false;}
     }
 
     render() {
@@ -114,7 +122,7 @@ class GeneTerm extends React.Component {
                         />
                     </Col>
                 </Row>
-                {(this.props.annotationData.data.methodEvidenceCode === 'IGI' || this.props.annotationData.data.methodEvidenceCode === 'IPI')?(
+                {(this.needsEvidenceWith)?(
                 <Row className="mt-3">
                     <Col xs="3" className="text-right d-table-cell">
                         <Label className="align-center pt-3">
@@ -152,14 +160,16 @@ GeneTerm.propTypes = {
     validateEvidenceWith: React.PropTypes.func,
     onEvidenceWithAddClick: React.PropTypes.func,
     onDataChange: React.PropTypes.func,
-    removeEvidenceWith: React.PropTypes.func
+    removeEvidenceWith: React.PropTypes.func,
+    needsEvidenceWith: React.PropTypes.bool,
 };
 
 GeneTerm.defaultProps = {
     onDataChange: () => {},
     onEvidenceWithAddClick: () => {},
     validateEvidenceWith: () => {},
-    removeEvidenceWith: () => {}
+    removeEvidenceWith: () => {},
+    needsEvidenceWith: false,
 };
 
 export default GeneTerm;

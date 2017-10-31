@@ -43,7 +43,7 @@ class EvidenceWith extends React.Component {
                         </InputGroup>
                     </Col>
                     <Col sm="auto" className="text-right input-container">
-                        {(Object.keys(this.props.evidenceWithIndex).length === 1)?(
+                        {(this.props.annotationData.data.evidenceWithOrder.length === 1)?(
                         <Button color="danger"
                             onClick={() => this.props.clearEvidenceWith(this.props.evidenceWithId)}
                         >
@@ -66,6 +66,7 @@ class EvidenceWith extends React.Component {
 EvidenceWith.propTypes = {
     evidenceWithIndex: React.PropTypes.object,
     evidenceWithId: React.PropTypes.any,
+    annotationData: React.PropTypes.any,
     validateEvidenceWith: React.PropTypes.func,
     updateEvidenceWith: React.PropTypes.func,
     removeEvidenceWith: React.PropTypes.func,
