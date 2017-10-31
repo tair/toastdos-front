@@ -86,7 +86,6 @@ ValidationInput.propTypes = {
     isSmartTextInput: React.PropTypes.bool,
     placeholder: React.PropTypes.string,
     value: React.PropTypes.string,
-    onChange: React.PropTypes.func,
     attemptValidate: React.PropTypes.func,
     validationError: React.PropTypes.string,
     upperCaseOnly: React.PropTypes.bool,

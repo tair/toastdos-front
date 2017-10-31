@@ -14,6 +14,7 @@ class AnnotationList extends React.Component {
 
     generateAnnotationEntry(annotationId, index) {
         let currAnnotation = this.props.annotationIndex[annotationId];
+
         return (
             <AnnotationEntry
                 key={`annotation_${annotationId}`}
@@ -25,6 +26,8 @@ class AnnotationList extends React.Component {
                 onDataUpdate={this.props.updateAnnotationData.bind(this, annotationId)}
                 onEvidenceWithAddClick={this.props.addEvidenceWith.bind(this, annotationId)}
                 validateEvidenceWith={this.props.validateEvidenceWith.bind(this, annotationId)}
+                removeEvidenceWith={this.props.removeEvidenceWith}
+                annotationId={annotationId}
             />
         );
     }
@@ -85,6 +88,7 @@ AnnotationList.propTypes = {
     removeAnnotation: React.PropTypes.func,
     hasValidGene: React.PropTypes.bool,
     hasAllValidGenes: React.PropTypes.bool,
+    removeEvidenceWith: React.PropTypes.func,
 };
 
 AnnotationList.defaultProps = {

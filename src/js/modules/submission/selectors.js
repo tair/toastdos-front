@@ -60,23 +60,11 @@ export const annotationListSelector = state => state[name].annotationOrder.map(
     aid => state[name].annotationIndex[aid]
 );
 
-export const evidenceWithSelector = createSelector(
-    annotationListSelector,
-    (annotations) =>         
-        Object.assign.apply(null, 
-            [{}].concat(annotations
-                .filter(a => annotationTypeData[a.annotationType].format ==
-                    annotationFormats.GENE_TERM)
-                .map(a => a.data.evidenceWithIndex)))
-);
+export const evidenceWithSelector = (state) => state[name].evidenceWithIndex;
 
 export const evidenceWithListSelector = createSelector(
-    annotationListSelector,
-    (annotations) =>
-        [].concat.apply([],
-            annotations.filter(a =>
-                annotationTypeData[a.annotationType].format == annotationFormats.GENE_TERM)
-            .map(a => Object.values(a.data.evidenceWithIndex)))
+    evidenceWithSelector,
+    (ew) => Object.values(ew)
 );
 
 export const publicationValidSelector =

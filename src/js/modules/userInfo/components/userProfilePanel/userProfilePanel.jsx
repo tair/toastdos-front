@@ -25,9 +25,9 @@ class UserProfilePanel extends React.Component {
         // TODO: Add split dropdown so that email editing/ other info still works.
         return (
             <Dropdown isOpen={this.state.showProfile} toggle={this.toggle}>
-                <DropdownToggle caret color="link" className="nav-link text-light" 
+                <DropdownToggle caret color="link" className="nav-link text-light"
                 style={{cursor: 'pointer'}}>
-                    {this.props.name} 
+                    {this.props.name}
                 </DropdownToggle>
                 <DropdownMenu right>
                     <DropdownItem onClick={this.props.onLogoutClick}>Logout</DropdownItem>

@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, 
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
     Dropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap';
 import  {Link} from 'react-router';
 import orcidInfo from 'resources/orcid_app_info';

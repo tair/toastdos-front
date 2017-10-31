@@ -5,6 +5,7 @@ import { ListGroup, ListGroupItem, InputGroup, InputGroupAddon,
     Label, Button, Row, Col } from 'reactstrap';
 
 import GenePicker from '../genePicker';
+import EvidenceWith from "../../../evidenceWith";
 import { annotationTypeData } from "../../../../constants";
 import KeywordTextInput from '../../../keywordTextInput';
 import CustomTextInput from "lib/components/customTextInput";
@@ -20,6 +21,7 @@ class GeneTerm extends React.Component {
         super(props);
 
         this.generateEvidenceWith = this.generateEvidenceWith.bind(this);
+        this.needsEvidenceWith = this.props.needsEvidenceWith;
     }
 
     attemptValidate(evidenceWithId, locusName){
@@ -27,26 +29,33 @@ class GeneTerm extends React.Component {
     }
 
     generateEvidenceWith(evidenceWithId) {
-        const currentEvidenceWith = this.props.annotationData.data.evidenceWithIndex[evidenceWithId];
-        // TODO: Clean up this code and move into its own component.
+        let annotationId = this.props.annotationId;
         return (
-            <ListGroupItem key={`evidence_with_${evidenceWithId}`}>
-                <ValidationInput
-                    validationState={currentEvidenceWith.validationState}
-                    validationError={currentEvidenceWith.validationError}
-                    placeholder="e.g. a locus, protein"
-                    value={currentEvidenceWith.locusName}
-                    attemptValidate={(locusName) => this.attemptValidate(evidenceWithId,locusName)}
-                    upperCaseOnly={true}
-                    required={true}
-                />
-            </ListGroupItem>
+            <EvidenceWith
+                key={evidenceWithId}
+                evidenceWithId={evidenceWithId}
+                annotationData={this.props.annotationData}
+                attemptValidate={(locusName) => this.attemptValidate(evidenceWithId,locusName)}
+                removeEvidenceWith={this.props.removeEvidenceWith.bind(this,annotationId,evidenceWithId)}
+            />
         );
+    }
+
+    componentWillReceiveProps(nextprops) {
+        if (nextprops.annotationData.data.methodEvidenceCode === 'IGI' || nextprops.annotationData.data.methodEvidenceCode === 'IPI') {
+            if (nextprops.annotationData.data.evidenceWithOrder.length == 0) {
+                nextprops.onEvidenceWithAddClick();
+            }
+            this.needsEvidenceWith = true;
+        }
+        else {
+            this.needsEvidenceWith = false;
+        }
     }
 
     render() {
         let typeData = annotationTypeData[this.props.annotationData.annotationType];
-
+        
         return (
             <div>
                 <Row className="align-items-middle">
@@ -122,7 +131,7 @@ class GeneTerm extends React.Component {
                         />
                     </Col>
                 </Row>
-                {(this.props.annotationData.data.methodEvidenceCode === 'IGI' || this.props.annotationData.data.methodEvidenceCode === 'IPI')?(
+                {this.needsEvidenceWith?(
                 <Row className="align-items-middle mt-3">
                     <Col xs="3" className="text-right d-table-cell">
                         <Label className="align-center pt-3">
@@ -156,15 +165,20 @@ class GeneTerm extends React.Component {
 
 GeneTerm.propTypes = {
     annotationData: React.PropTypes.object,
+    annotationId: React.PropTypes.any,
     validateEvidenceWith: React.PropTypes.func,
     onEvidenceWithAddClick: React.PropTypes.func,
-    onDataChange: React.PropTypes.func
+    onDataChange: React.PropTypes.func,
+    removeEvidenceWith: React.PropTypes.func,
+    needsEvidenceWith: React.PropTypes.bool,
 };
 
 GeneTerm.defaultProps = {
     onDataChange: () => {},
     onEvidenceWithAddClick: () => {},
-    validateEvidenceWith: () => {}
+    validateEvidenceWith: () => {},
+    removeEvidenceWith: () => {},
+    needsEvidenceWith: false,
 };
 
 export default GeneTerm;

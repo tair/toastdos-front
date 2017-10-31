@@ -31,6 +31,7 @@ function getDefaultState() {
         geneOrder: ["init"],
         annotationIndex: {},
         annotationOrder: [],
+        evidenceWithIndex: {},
         submitting: false,
         submitted: false,
         previewing: false,
@@ -41,7 +42,6 @@ function getDefaultState() {
 }
 
 const defaultState = getDefaultState();
-
 
 export default function (state = defaultState, action) {
     let newState = {};
@@ -163,18 +163,10 @@ export default function (state = defaultState, action) {
                 methodName: "",
                 methodId: null,
                 methodEvidenceCode: null,
-                evidenceWithIndex: {
-                    ["init" + action.localId]: {
-                        validationState: validationStates.NOT_VALIDATED,
-                        validationError: '',
-                        locusName: ""
-                    }
-                },
-                evidenceWithOrder: ["init" + action.localId]
+                evidenceWithOrder: [],
             }
         };
 
-        
         newState.annotationOrder.push(action.localId);
 
         return Object.assign({}, state, newState);
@@ -204,14 +196,7 @@ export default function (state = defaultState, action) {
                 methodName: "",
                 methodId: null,
                 methodEvidenceCode: null,
-                evidenceWithIndex: {
-                    ["init" + action.localId]: {
-                        validationState: validationStates.NOT_VALIDATED,
-                        validationError: '',
-                        locusName: ""
-                    }
-                },
-                evidenceWithOrder: ["init" + action.localId]
+                evidenceWithOrder: [],
             };
             break;
         case annotationFormats.GENE_GENE:
@@ -287,19 +272,22 @@ export default function (state = defaultState, action) {
         let annotation = state.annotationIndex[action.annotationId];
         return {
             ...state,
+            evidenceWithIndex: {
+                ...state.evidenceWithIndex,
+                [action.newEvidenceWithId]: {
+                    ...state.evidenceWithIndex[action.newEvidenceWithId],
+                    localId: action.newEvidenceWithId,
+                    validationState: validationStates.NOT_VALIDATED,
+                    validationError: '',
+                    locusName: ""
+                }
+            },
             annotationIndex: {
+                ...state.annotationIndex,
                 [action.annotationId]: {
                     ...annotation,
                     data: {
                         ...annotation.data,
-                        evidenceWithIndex: {
-                            ...annotation.data.evidenceWithIndex,
-                            [action.newEvidenceWithId]: {
-                                validationState: validationStates.NOT_VALIDATED,
-                                validationError: '',
-                                locusName: ""
-                            }
-                        },
                         evidenceWithOrder: annotation.data.evidenceWithOrder
                             .concat(action.newEvidenceWithId)
                     }
@@ -307,70 +295,69 @@ export default function (state = defaultState, action) {
             }
         };
     case actions.ATTEMPT_VALIDATE_EVIDENCE_WITH:
-        let annotationAttemptEvidenceWith = state.annotationIndex[action.annotationId];
-        return {
-            ...state,
-            annotationIndex: {
-                ...state.annotationIndex,
-                [action.annotationId]: {
-                    ...annotationAttemptEvidenceWith,
-                    data: {
-                        ...annotationAttemptEvidenceWith.data,
-                        evidenceWithIndex: {
-                            ...annotationAttemptEvidenceWith.data.evidenceWithIndex,
-                            [action.evidenceWithId]: {
-                                ...annotationAttemptEvidenceWith.data.evidenceWithIndex[action.evidenceWithId],
-                                validationState: validationStates.VALIDATING,
-                                validationError: '',
-                            }
-                        }
-                    }
-                }
-            }
+        newState = {
+            evidenceWithIndex: Object.assign({},state.evidenceWithIndex)
+        }
+        
+        newState.evidenceWithIndex[action.evidenceWithId].validationState = validationStates.VALIDATING;
+        newState.evidenceWithIndex[action.evidenceWithId].validationError = '';
+
+        return Object.assign({},state,newState);
+    case actions.REMOVE_EVIDENCE_WITH:
+
+        newState = {
+            evidenceWithIndex: Object.assign({}, state.evidenceWithIndex),
+            annotationIndex: Object.assign({}, state.annotationIndex)
+        }
+
+        delete newState.evidenceWithIndex[action.evidenceWithId];
+
+        let an = state.annotationIndex[action.annotationId];
+
+        newState.annotationIndex[action.annotationId].data.evidenceWithOrder = 
+            an.data.evidenceWithOrder.filter(e => e != action.evidenceWithId);
+
+        return Object.assign({},state, newState);
+    case actions.UPDATE_EVIDENCE_WITH:
+        newState = {
+            evidenceWithIndex: Object.assign({}, state.evidenceWithIndex),
         };
+
+        newState.evidenceWithIndex[action.evidenceWithId] = action.data;
+
+        return Object.assign({}, state, newState);
+    case actions.CLEAR_EVIDENCE_WITH:
+        newState = {
+            evidenceWithIndex: Object.assign({},state.evidenceWithIndex)
+        }
+        
+        newState.evidenceWithIndex[action.evidenceWithId].validationState = validationStates.NOT_VALIDATED;
+        newState.evidenceWithIndex[action.evidenceWithId].locusName = "";
+
+        return Object.assign({},state,newState);
     case actions.VALIDATE_EVIDENCE_WITH_SUCCESS:
-        let annotationSuccess = state.annotationIndex[action.annotationId];
         return {
             ...state,
-            annotationIndex: {
-                ...state.annotationIndex,
-                [action.annotationId]: {
-                    ...annotationSuccess,
-                    data: {
-                        ...annotationSuccess.data,
-                        evidenceWithIndex: {
-                            ...annotationSuccess.data.evidenceWithIndex,
-                            [action.evidenceWithId]: {
-                                ...annotationSuccess.data.evidenceWithIndex[action.evidenceWithId],
-                                validationState: validationStates.VALID,
-                                validationError: '',
-                                locusName: action.locusName,
-                            }
-                        }
-                    }
+            evidenceWithIndex: {
+                ...state.evidenceWithIndex,
+                [action.evidenceWithId]: {
+                    ...state.evidenceWithIndex[action.evidenceWithId],
+                    validationState: validationStates.VALID,
+                    validationError: '',
+                    locusName: action.locusName,
                 }
             }
         };
     case actions.VALIDATE_EVIDENCE_WITH_FAIL:
-        let annotationFail = state.annotationIndex[action.annotationId];
         return {
             ...state,
-            annotationIndex: {
-                ...state.annotationIndex,
-                [action.annotationId]: {
-                    ...annotationFail,
-                    data: {
-                        ...annotationFail.data,
-                        evidenceWithIndex: {
-                            ...annotationFail.data.evidenceWithIndex,
-                            [action.evidenceWithId]: {
-                                ...annotationFail.data.evidenceWithIndex[action.evidenceWithId],
-                                validationState: validationStates.INVALID,
-                                validationError: action.error,
-                                locusName: '',
-                            }
-                        }
-                    }
+            evidenceWithIndex: {
+                ...state.evidenceWithIndex,
+                [action.evidenceWithId]: {
+                    ...state.evidenceWithIndex[action.evidenceWithId],
+                    validationState: validationStates.INVALID,
+                    validationError: action.error,
+                    locusName: '',
                 }
             }
         };
