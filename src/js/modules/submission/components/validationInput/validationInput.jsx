@@ -14,15 +14,10 @@ class ValidationInput extends React.Component {
         };
 
         this.lastValue = '';
-        this.hasRequired = false;
         this.debouncer = null;
         this.onKeyDown = this.onKeyDown.bind(this);
         this.onChange = this.onChange.bind(this);
         this.determineAttemptValidate = this.determineAttemptValidate.bind(this);
-    }
-
-    componentDidMount() {
-        this.hasRequired = true;
     }
 
     onKeyDown(event){
@@ -70,7 +65,7 @@ class ValidationInput extends React.Component {
                 <CustomTextInput
                     placeholder={this.props.placeholder}
                     value={this.state.value}
-                    required={this.hasRequired}
+                    required={this.props.required}
                     onChange={this.onChange}
                     onBlur={this.determineAttemptValidate}
                     onKeyDown={this.onKeyDown}
