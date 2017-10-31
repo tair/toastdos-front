@@ -20,27 +20,27 @@ export const annotationTypes = {
 
 export const annotationTypeData = {
     [annotationTypes.MOLECULAR_FUNCTION]: {
-        name: "Molecular Function",
+        name: "Molecular Function (GO Function)",
         format: annotationFormats.GENE_TERM,
         keywordScope: "molecular_function"
     },
     [annotationTypes.BIOLOGICAL_PROCESS]: {
-        name: "Biological Process",
+        name: "Biological Process (GO Process)",
         format: annotationFormats.GENE_TERM,
         keywordScope: "biological_process"
     },
     [annotationTypes.SUBCELLULAR_LOCATION]: {
-        name: "Subcellular Location",
+        name: "Subcellular Location (GO Component)",
         format: annotationFormats.GENE_TERM,
         keywordScope: "cellular_component"
     },
     [annotationTypes.ANATOMICAL_LOCATION]: {
-        name: "Anatomical Location",
+        name: "Anatomical Location (PO Anatomy)",
         format: annotationFormats.GENE_TERM,
         keywordScope: "plant_anatomy"
     },
     [annotationTypes.TEMPORAL_EXPRESSION]: {
-        name: "Temporal Expression",
+        name: "Temporal Expression (PO Dev. Stage)",
         format: annotationFormats.GENE_TERM,
         keywordScope: "plant_structure_development_stage"
     },
@@ -52,4 +52,11 @@ export const annotationTypeData = {
         name: "Comment",
         format: annotationFormats.COMMENT
     }
+};
+
+export const validationStates = {
+    NOT_VALIDATED: "NOT_VALIDATED",
+    VALIDATING: "VALIDATING",
+    VALID: "VALID",
+    INVALID: "INVALID",
 };

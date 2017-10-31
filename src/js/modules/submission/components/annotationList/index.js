@@ -14,14 +14,16 @@ import {
     } from '../../actions';
 
 import {
-        hasValidGenes
+        hasValidGene,
+        hasAllValidGenes,
     } from '../../selectors';
 
 const ConnectedAnnotationList = connect(
     state => ({
         annotationIndex: state.submission.annotationIndex,
         annotationOrder: state.submission.annotationOrder,
-        hasGenes: hasValidGenes(state)
+        hasValidGene: hasValidGene(state),
+        hasAllValidGenes: hasAllValidGenes(state),
     }),
     dispatch => ({
         onAnnotationAddClick: () => dispatch(addNewAnnotation(generateId())),

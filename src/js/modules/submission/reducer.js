@@ -4,7 +4,8 @@ import * as actions from "./actionTypes";
 import { 
         annotationTypes,
         annotationTypeData,
-        annotationFormats 
+        annotationFormats,
+        validationStates,
     } from './constants';
 
 function getDefaultState() {
@@ -15,19 +16,15 @@ function getDefaultState() {
             url: "",
             title: "",
         },
-        publicationValidation: {
-            finalized: false,
-            validating: false,
-            validationError: ""
-        },
+        publicationValidationState: validationStates.NOT_VALIDATED,
+        publicationValidationError: "",
         geneIndex: {
             "init": {
                 localId: "init",
                 finalizedLocusName: "",
                 finalizedGeneSymbol: "",
                 finalizedFullName: "",
-                finalized: false,
-                validating: false,
+                validationState: validationStates.NOT_VALIDATED,
                 validationError: ""
             }
         },
@@ -57,11 +54,8 @@ export default function (state = defaultState, action) {
         return {
             ...state,
             publicationIdValue: '',
-            publicationValidation: {
-                validating: true,
-                validationError: '',
-                finalized: false,
-            },
+            publicationValidationState: validationStates.VALIDATING,
+            publicationValidationError: '',
             publicationInfo: {
                 author: '',
                 url: '',
@@ -72,11 +66,8 @@ export default function (state = defaultState, action) {
         return {
             ...state,
             publicationIdValue: action.publicationId,
-            publicationValidation: {
-                validating: false,
-                validationError: '',
-                finalized: true
-            },
+            publicationValidationState: validationStates.VALID,
+            publicationValidationError: '',
             publicationInfo: {
                 author: action.data.author,
                 url: action.data.url,
@@ -86,11 +77,8 @@ export default function (state = defaultState, action) {
     case actions.VALIDATE_PUBLICATION_FAIL:
         return {
             ...state,
-            publicationValidation: {
-                ...state.publicationValidation,
-                validating: false,
-                validationError: action.error,
-            }
+            publicationValidationState: validationStates.INVALID,
+            publicationValidationError: action.error,
         };
     case actions.ADD_NEW_GENE:
         newState = {
@@ -103,8 +91,7 @@ export default function (state = defaultState, action) {
             finalizedLocusName: "",
             finalizedGeneSymbol: "",
             finalizedFullName: "",
-            finalized: false,
-            validating: false,
+            validationState: validationStates.NOT_VALIDATED,
             validationError: ""
         };
 
@@ -126,8 +113,7 @@ export default function (state = defaultState, action) {
             geneIndex: Object.assign({}, state.geneIndex),
         };
         newState.geneIndex[action.localId].validationError = '';
-        newState.geneIndex[action.localId].validating = true;
-        newState.geneIndex[action.localId].finalized = false;
+        newState.geneIndex[action.localId].validationState = validationStates.VALIDATING;
 
         return Object.assign({}, state, newState);
     case actions.UPDATE_GENE_DATA:
@@ -146,9 +132,8 @@ export default function (state = defaultState, action) {
             geneIndex: Object.assign({}, state.geneIndex),
         };
 
-        newState.geneIndex[action.localId].validating = false;
         newState.geneIndex[action.localId].validationError = '';
-        newState.geneIndex[action.localId].finalized = true;
+        newState.geneIndex[action.localId].validationState = validationStates.VALID;
         newState.geneIndex[action.localId].finalizedLocusName = action.locusName;
 
         return Object.assign({}, state, newState);
@@ -157,9 +142,8 @@ export default function (state = defaultState, action) {
             geneIndex: Object.assign({}, state.geneIndex),
         };
 
-        newState.geneIndex[action.localId].validating = false;
         newState.geneIndex[action.localId].validationError = action.error;
-        newState.geneIndex[action.localId].finalized = true;
+        newState.geneIndex[action.localId].validationState = validationStates.INVALID;
         newState.geneIndex[action.localId].finalizedLocusName = '';
         
         return Object.assign({}, state, newState);
@@ -181,8 +165,7 @@ export default function (state = defaultState, action) {
                 methodEvidenceCode: null,
                 evidenceWithIndex: {
                     ["init" + action.localId]: {
-                        finalized: false,
-                        validating: false,
+                        validationState: validationStates.NOT_VALIDATED,
                         validationError: '',
                         locusName: ""
                     }
@@ -223,8 +206,7 @@ export default function (state = defaultState, action) {
                 methodEvidenceCode: null,
                 evidenceWithIndex: {
                     ["init" + action.localId]: {
-                        finalized: false,
-                        validating: false,
+                        validationState: validationStates.NOT_VALIDATED,
                         validationError: '',
                         locusName: ""
                     }
@@ -313,9 +295,8 @@ export default function (state = defaultState, action) {
                         evidenceWithIndex: {
                             ...annotation.data.evidenceWithIndex,
                             [action.newEvidenceWithId]: {
-                                finalized: false,
+                                validationState: validationStates.NOT_VALIDATED,
                                 validationError: '',
-                                validating: false,
                                 locusName: ""
                             }
                         },
@@ -339,9 +320,8 @@ export default function (state = defaultState, action) {
                             ...annotationAttemptEvidenceWith.data.evidenceWithIndex,
                             [action.evidenceWithId]: {
                                 ...annotationAttemptEvidenceWith.data.evidenceWithIndex[action.evidenceWithId],
-                                finalized: false,
+                                validationState: validationStates.VALIDATING,
                                 validationError: '',
-                                validating: true,
                             }
                         }
                     }
@@ -362,9 +342,8 @@ export default function (state = defaultState, action) {
                             ...annotationSuccess.data.evidenceWithIndex,
                             [action.evidenceWithId]: {
                                 ...annotationSuccess.data.evidenceWithIndex[action.evidenceWithId],
-                                finalized: true,
+                                validationState: validationStates.VALID,
                                 validationError: '',
-                                validating: false,
                                 locusName: action.locusName,
                             }
                         }
@@ -386,9 +365,8 @@ export default function (state = defaultState, action) {
                             ...annotationFail.data.evidenceWithIndex,
                             [action.evidenceWithId]: {
                                 ...annotationFail.data.evidenceWithIndex[action.evidenceWithId],
-                                finalized: true,
+                                validationState: validationStates.INVALID,
                                 validationError: action.error,
-                                validating: false,
                                 locusName: '',
                             }
                         }

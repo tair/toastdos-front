@@ -68,6 +68,7 @@ class GeneGene extends React.Component {
                             placeholder="e.g. Enzyme Assay"
                             value={this.props.annotationData.data.methodName}
                             searchScope="eco"
+                            required={true}
                         />
                     </Label>
                 </Col>

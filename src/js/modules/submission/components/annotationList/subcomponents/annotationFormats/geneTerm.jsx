@@ -32,13 +32,13 @@ class GeneTerm extends React.Component {
         return (
             <ListGroupItem key={`evidence_with_${evidenceWithId}`}>
                 <ValidationInput
-                    finalized={currentEvidenceWith.finalized}
+                    validationState={currentEvidenceWith.validationState}
                     validationError={currentEvidenceWith.validationError}
-                    validating={currentEvidenceWith.validating}
                     placeholder="e.g. a locus, protein"
                     value={currentEvidenceWith.locusName}
                     attemptValidate={(locusName) => this.attemptValidate(evidenceWithId,locusName)}
                     upperCaseOnly={true}
+                    required={true}
                 />
             </ListGroupItem>
         );
@@ -49,7 +49,7 @@ class GeneTerm extends React.Component {
 
         return (
             <div>
-                <Row className="align-items-end">
+                <Row className="align-items-middle">
                     <Col xs="3" className="text-right d-table-cell">
                         <Label className="align-center">
                             Gene
@@ -66,7 +66,7 @@ class GeneTerm extends React.Component {
                         />
                     </Col>
                 </Row>
-                <Row className="align-items-end mt-3">
+                <Row className="align-items-middle mt-3">
                     <Col xs="3" className="text-right d-table-cell">
                         <Label className="align-center">
                             {typeData.name}
@@ -89,10 +89,11 @@ class GeneTerm extends React.Component {
                             placeholder="Start Typing..."
                             value={this.props.annotationData.data.keywordName}
                             searchScope={typeData.keywordScope}
+                            required={true}
                         />
                     </Col>
                 </Row>
-                <Row className="align-items-end mt-3">
+                <Row className="align-items-middle mt-3">
                     <Col xs="3" className="text-right d-table-cell">
                         <Label className="align-center">
                             Method
@@ -117,11 +118,12 @@ class GeneTerm extends React.Component {
                             placeholder="e.g. Enzyme Assay"
                             value={this.props.annotationData.data.methodName}
                             searchScope="eco"
+                            required={true}
                         />
                     </Col>
                 </Row>
                 {(this.props.annotationData.data.methodEvidenceCode === 'IGI' || this.props.annotationData.data.methodEvidenceCode === 'IPI')?(
-                <Row className="mt-3">
+                <Row className="align-items-middle mt-3">
                     <Col xs="3" className="text-right d-table-cell">
                         <Label className="align-center pt-3">
                             Evidence With

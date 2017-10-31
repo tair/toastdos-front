@@ -5,8 +5,8 @@ import { Label, Row, Col,
     Card, CardHeader, CardBody, Input,
     InputGroup, InputGroupAddon, Button } from 'reactstrap';
 
-import CustomTextInput from "lib/components/customTextInput";
 import ValidationInput from "../validationInput";
+import { validationStates } from "../../constants";
 
 
 class PublicationField extends React.Component {
@@ -30,12 +30,11 @@ class PublicationField extends React.Component {
                                     value={this.props.publicationIdValue}
                                     placeholder="e.g 21051552 or 10.1104/pp.110.166546"
                                     attemptValidate={this.props.attemptValidatePublication}
-                                    validating={this.props.publicationValidation.validating}
-                                    finalized={this.props.publicationValidation.finalized}
-                                    validationError={this.props.publicationValidation.validationError}
+                                    validationState={this.props.validationState}
+                                    validationError={this.props.validationError}
+                                    required={true}
                                 />
                             </CardHeader>
-                            {this.props.publicationValidation.finalized ? (
                             <CardBody>
                                 {this.props.publicationInfo.url ? (
                                 <Row className="align-items-end mt-3">
@@ -70,7 +69,7 @@ class PublicationField extends React.Component {
                                     </Col>
                                 </Row>
                                 ])}
-                            </CardBody>) : null}
+                            </CardBody>
                         </Card>
                     </Col>
                 </Row>
@@ -81,11 +80,8 @@ class PublicationField extends React.Component {
 
 PublicationField.propTypes = {
     publicationIdValue: React.PropTypes.string,
-    publicationValidation: React.PropTypes.shape({
-        finalized: React.PropTypes.bool,
-        validating: React.PropTypes.bool,
-        validationError: React.PropTypes.string
-    }),
+    validationState: React.PropTypes.string,
+    validationError: React.PropTypes.string,
     publicationInfo: React.PropTypes.shape({
         author: React.PropTypes.string,
         url: React.PropTypes.string,
@@ -96,11 +92,8 @@ PublicationField.propTypes = {
 
 PublicationField.defaultProps = {
     publicationIdValue: "",
-    publicationValidation: {
-        finalized: false,
-        validating: false,
-        validationError: ""
-    },
+    validationState: validationStates.NOT_VALIDATED,
+    validationError: "",
     publicationInfo: {
         author: '',
         url: '',

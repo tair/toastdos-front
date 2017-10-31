@@ -4,6 +4,7 @@ import React from 'react';
 
 import { Popover, PopoverBody } from 'reactstrap';
 import generateId from 'lib/idGenerator';
+import { validationStates } from '../../constants';
 
 class ValidationStatus extends React.Component {
     constructor(props) {
@@ -12,22 +13,27 @@ class ValidationStatus extends React.Component {
     }
 
     getEWColor() {
-        if (this.props.finalized) {
-            return !this.props.validationError? "green": "red";
-        } else {
-            return "black";
+        switch (this.props.validationState) {
+            case validationStates.VALID:
+                return "green";
+            case validationStates.INVALID:
+                return "red";
+            default:
+                return "black";
         }
     }
 
     getEWStatus() {
         let className = "fa fa-fw ";
-        if (this.props.validating) {
-            return className + "fa-spin fa-refresh";
-        }
-        if (this.props.finalized) {
-            return className +  (!this.props.validationError? "fa-check": "fa-exclamation-circle");
-        } else {
-            return className + "fa-chain";
+        switch (this.props.validationState) {
+            case validationStates.VALIDATING:
+                return className + "fa-spin fa-refresh";
+            case validationStates.VALID:
+                return className + "fa-check";
+            case validationStates.INVALID:
+                return className + "fa-exclamation-circle";
+            default:
+                return className + "fa-chain";
         }
     }
 
@@ -49,14 +55,12 @@ class ValidationStatus extends React.Component {
 }
 
 ValidationStatus.propTypes = {
-    finalized: React.PropTypes.bool,
-    validating: React.PropTypes.bool,
+    validationState: React.PropTypes.string,
     validationError: React.PropTypes.string
 };
 
 ValidationStatus.defaultProps = {
-    finalized: false,
-    validating: false,
+    validationState: validationStates.NOT_VALIDATED,
     validationError: ''
 };
 

@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-
+import { validationStates } from "../../../../constants";
 import CustomSelect from 'lib/components/customSelect';
 
 class GenePicker extends React.Component {
@@ -36,7 +36,7 @@ class GenePicker extends React.Component {
             >
                 {
                     this.props.geneOrder.filter(
-                        geneId => this.props.geneIndex[geneId].finalized
+                        geneId => this.props.geneIndex[geneId].validationState === validationStates.VALID
                     ).map(this.generateGeneOption)
                 }
             </CustomSelect>

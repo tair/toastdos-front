@@ -7,8 +7,9 @@ import { changePublicationId, AttemptValidatePublicationAsync } from '../../acti
 const ConnectedPublicationField = connect(
     state => ({
         publicationIdValue: state.submission.publicationIdValue,
-        publicationValidation: state.submission.publicationValidation,
+        validationError: state.submission.publicationValidationError,
         publicationInfo: state.submission.publicationInfo,
+        validationState: state.submission.publicationValidationState,
     }),
     dispatch => ({
         attemptValidatePublication: (publicationId) => dispatch(new AttemptValidatePublicationAsync(publicationId))
