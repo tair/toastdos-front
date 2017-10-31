@@ -13,7 +13,6 @@ const inputContainerStyle = {
 class EvidenceWith extends React.Component {
     constructor(props) {
         super(props);
-
     }
 
     render() {

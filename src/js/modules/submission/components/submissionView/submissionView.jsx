@@ -61,9 +61,7 @@ class SubmissionView extends React.Component {
                                 <Form className="submission-form-container">
                                 {this.props.previewing ?
                                 (
-                                    <SubmissionReadOnly
-                                        evidenceWith={this.evidenceWithIndex}
-                                    />
+                                    <SubmissionReadOnly />
                                 ):
                                 (
                                     <ListGroup>

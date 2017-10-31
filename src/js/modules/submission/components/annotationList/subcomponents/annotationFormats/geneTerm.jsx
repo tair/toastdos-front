@@ -43,7 +43,9 @@ class GeneTerm extends React.Component {
             }
             this.needsEvidenceWith = true;
         }
-        else {this.needsEvidenceWith = false;}
+        else {
+            this.needsEvidenceWith = false;
+        }
     }
 
     render() {
@@ -122,7 +124,7 @@ class GeneTerm extends React.Component {
                         />
                     </Col>
                 </Row>
-                {(this.needsEvidenceWith)?(
+                {this.needsEvidenceWith?(
                 <Row className="mt-3">
                     <Col xs="3" className="text-right d-table-cell">
                         <Label className="align-center pt-3">

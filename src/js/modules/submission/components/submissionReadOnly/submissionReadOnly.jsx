@@ -60,7 +60,7 @@ class SubmissionReadOnly extends React.Component {
         );
     }
 
-    renderEvidenceWith(evidenceWithId,evidenceWith) {
+    renderEvidenceWith(evidenceWithId, evidenceWith) {
         return (
             <ListGroupItem key={evidenceWithId}>
                 {evidenceWith[evidenceWithId].locusName}
@@ -110,7 +110,7 @@ class SubmissionReadOnly extends React.Component {
                         <Col className="d-block">
                             <ListGroup>
                                 {annotation.data.evidenceWithOrder.map((order) =>
-                                    this.renderEvidenceWith(order,this.props.evidenceWith)
+                                    this.renderEvidenceWith(order, this.props.evidenceWith)
                                 )}
                             </ListGroup>
                         </Col>
