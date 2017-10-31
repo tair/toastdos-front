@@ -78,13 +78,7 @@ export default function (state = defaultState, action) {
         return {
             ...state,
             publicationValidationState: validationStates.INVALID,
-            publicationValidationError: action.message,
-        };
-    case actions.VALIDATE_PUBLICATION_ERROR:
-        return {
-            ...state,
-            publicationValidationState: validationStates.ERROR_VALIDATING,
-            publicationValidationError: action.message,
+            publicationValidationError: action.error,
         };
     case actions.ADD_NEW_GENE:
         newState = {
@@ -148,20 +142,10 @@ export default function (state = defaultState, action) {
             geneIndex: Object.assign({}, state.geneIndex),
         };
 
-        newState.geneIndex[action.localId].validationError = action.message;
+        newState.geneIndex[action.localId].validationError = action.error;
         newState.geneIndex[action.localId].validationState = validationStates.INVALID;
         newState.geneIndex[action.localId].finalizedLocusName = '';
         
-        return Object.assign({}, state, newState);
-    case actions.VALIDATE_GENE_ERROR:
-        newState = {
-            geneIndex: Object.assign({}, state.geneIndex),
-        };
-
-        newState.geneIndex[action.localId].validationError = action.message;
-        newState.geneIndex[action.localId].validationState = validationStates.ERROR_VALIDATING;
-        newState.geneIndex[action.localId].finalizedLocusName = '';
-
         return Object.assign({}, state, newState);
     case actions.ADD_NEW_ANNOTATION:
         newState = {
@@ -382,30 +366,7 @@ export default function (state = defaultState, action) {
                             [action.evidenceWithId]: {
                                 ...annotationFail.data.evidenceWithIndex[action.evidenceWithId],
                                 validationState: validationStates.INVALID,
-                                validationMessage: action.message,
-                                locusName: '',
-                            }
-                        }
-                    }
-                }
-            }
-        };
-    case actions.VALIDATE_EVIDENCE_WITH_ERROR:
-        let annotationError = state.annotationIndex[action.annotationId];
-        return {
-            ...state,
-            annotationIndex: {
-                ...state.annotationIndex,
-                [action.annotationId]: {
-                    ...annotationError,
-                    data: {
-                        ...annotationError.data,
-                        evidenceWithIndex: {
-                            ...annotationError.data.evidenceWithIndex,
-                            [action.evidenceWithId]: {
-                                ...annotationError.data.evidenceWithIndex[action.evidenceWithId],
-                                validationState: validationStates.ERROR_VALIDATING,
-                                validationError: action.message,
+                                validationError: action.error,
                                 locusName: '',
                             }
                         }

@@ -54,7 +54,7 @@ export class AttemptValidatePublicationAsync extends AsyncAction {
                     if(err.error === 'NOT_FOUND') {
                         return dispatch(validatePublicationFail("Publication Not Found"));
                     }
-                    return dispatch(validatePublicationError("Error Validating Publication"));
+                    return dispatch(validatePublicationFail("Error Validating Publication"));
                 }
                 return dispatch(validatePublicationSuccess(this.publicationId, data));
             });
@@ -72,17 +72,10 @@ function validatePublicationSuccess(publicationId, data) {
     };
 }
 
-function validatePublicationFail(message) {
+function validatePublicationFail(error) {
     return {
         type: actions.VALIDATE_PUBLICATION_FAIL,
-        message,
-    };
-}
-
-function validatePublicationError(message) {
-    return {
-        type: actions.VALIDATE_PUBLICATION_ERROR,
-        message,
+        error: error
     };
 }
 
@@ -111,15 +104,12 @@ export class AttemptValidateGeneAsync extends AsyncAction {
             }
         }
 
-        if (this.locusName.trim() == '') {
-            return dispatch(validateGeneFail(this.localId, "Locus is empty"));
-        }
         this.request = validateGene(this.locusName, token, (err, data) => {
             if(err) {
                 if(err.error === 'NOT_FOUND') {
                     return dispatch(validateGeneFail(this.localId, "Locus Not Found"));
                 }
-                return dispatch(validateGeneError(this.localId, "Error Validating Locus"));
+                return dispatch(validateGeneFail(this.localId, "Error Validating Locus"));
             }
             // automatically add an annotation if there are none
             if (currState.submission.annotationOrder.length == 0) {
@@ -138,19 +128,11 @@ function validateGeneSuccess(localId, locusName) {
     };
 }
 
-function validateGeneFail(localId, message) {
+function validateGeneFail(localId, error) {
     return {
         type: actions.VALIDATE_GENE_FAIL,
         localId: localId,
-        message,
-    };
-}
-
-function validateGeneError(localId, message) {
-    return {
-        type: actions.VALIDATE_GENE_ERROR,
-        localId: localId,
-        message,
+        error: error
     };
 }
 
@@ -176,27 +158,18 @@ export class AttemptValidateEvidenceWithAsync extends AsyncAction {
                 if(err.error === 'NOT_FOUND') {
                     return dispatch(validateEvidenceWithFail(this.annotationId, this.evidenceWithId, "Locus Not Found"));
                 }
-                return dispatch(validateEvidenceWithError(this.annotationId, this.evidenceWithId, "Error Validating Locus"));
+                return dispatch(validateEvidenceWithFail(this.annotationId, this.evidenceWithId, "Error Validating Locus"));
             }
             return dispatch(validateEvidenceWithSuccess(this.annotationId, this.evidenceWithId, this.locusName));
         });
     }
 }
 
-function validateEvidenceWithError(annotationId, evidenceWithId, message) {
-    return {
-        type: actions.VALIDATE_EVIDENCE_WITH_ERROR,
-        annotationId,
-        message,
-        evidenceWithId
-    };
-}
-
-function validateEvidenceWithFail(annotationId, evidenceWithId, message) {
+function validateEvidenceWithFail(annotationId, evidenceWithId, error) {
     return {
         type: actions.VALIDATE_EVIDENCE_WITH_FAIL,
         annotationId,
-        message,
+        error,
         evidenceWithId
     };
 }
