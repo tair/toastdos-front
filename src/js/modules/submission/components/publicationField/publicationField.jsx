@@ -43,7 +43,7 @@ class PublicationField extends React.Component {
                                             URL
                                         </Label>
                                     </Col>
-                                    <Col className="d-block mb-2">
+                                    <Col className="mb-2">
                                         <a target="_blank" href={this.props.publicationInfo.url}>{this.props.publicationInfo.url}</a>
                                     </Col>
                                 </Row>
@@ -54,7 +54,7 @@ class PublicationField extends React.Component {
                                             Title
                                         </Label>
                                     </Col>
-                                    <Col className="d-block">
+                                    <Col>
                                         <Input value={this.props.publicationInfo.title} disabled></Input>
                                     </Col>
                                 </Row>,
@@ -64,7 +64,7 @@ class PublicationField extends React.Component {
                                             Author
                                         </Label>
                                     </Col>
-                                    <Col className="d-block">
+                                    <Col>
                                         <Input value={this.props.publicationInfo.author} disabled></Input>
                                     </Col>
                                 </Row>

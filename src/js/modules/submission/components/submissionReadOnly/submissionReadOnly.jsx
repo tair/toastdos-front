@@ -40,7 +40,7 @@ class SubmissionReadOnly extends React.Component {
                                 Symbol:
                             </Label>
                         </Col>
-                        <Col className="d-block">
+                        <Col>
                             {gene.finalizedGeneSymbol}
                         </Col>
                     </Row>
@@ -50,7 +50,7 @@ class SubmissionReadOnly extends React.Component {
                                 Full Name:
                             </Label>
                         </Col>
-                        <Col className="d-block">
+                        <Col>
                             {gene.finalizedFullName}
                         </Col>
                     </Row>
@@ -88,7 +88,7 @@ class SubmissionReadOnly extends React.Component {
                                 Method:
                             </Label>
                         </Col>
-                        <Col className="d-block">
+                        <Col>
                             {annotation.data.methodName}
                         </Col>
                     </Row>
@@ -98,7 +98,7 @@ class SubmissionReadOnly extends React.Component {
                                 {type}:
                             </Label>
                         </Col>
-                        <Col className="d-block">
+                        <Col>
                             {annotation.data.keywordName}
                         </Col>
                     </Row>
@@ -109,7 +109,7 @@ class SubmissionReadOnly extends React.Component {
                                 Evidence With:
                             </Label>
                         </Col>
-                        <Col className="d-block">
+                        <Col>
                             <ListGroup>
                                 {annotation.data.evidenceWithOrder.map(this.renderEvidenceWith)}
                             </ListGroup>
@@ -131,7 +131,7 @@ class SubmissionReadOnly extends React.Component {
                             Method:
                         </Label>
                     </Col>
-                    <Col className="d-block">
+                    <Col>
                         {annotation.data.methodName}
                     </Col>
                 </Row>);
