@@ -150,7 +150,7 @@ class SmartTextInput extends React.Component {
                 {
                     (this.state.focused && this.state.showSuggestions) ?
                     (
-                        <div style={{position: "relative", zIndex: 500}}>
+                        <div style={{position: "relative", zIndex: 1010}}>
                             <SuggestionList
                                 suggestionOrder={this.props.suggestionOrder}
                                 suggestionIndex={this.props.suggestionIndex}
