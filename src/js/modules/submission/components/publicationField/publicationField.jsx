@@ -7,6 +7,7 @@ import { Label, Row, Col,
 
 import ValidationInput from "../validationInput";
 import { validationStates } from "../../constants";
+import LabelInputRow from "../labelInputRow";
 
 
 class PublicationField extends React.Component {
@@ -37,37 +38,28 @@ class PublicationField extends React.Component {
                             </CardHeader>
                             <CardBody>
                                 {this.props.publicationInfo.url ? (
-                                <Row className="align-items-end mt-3">
-                                    <Col xs="3" className="text-right d-table-cell">
-                                        <Label className="align-center">
-                                            URL
-                                        </Label>
-                                    </Col>
-                                    <Col className="mb-2">
+                                <LabelInputRow
+                                    title="URL"
+                                    inputField={
+                                    <div className="mb-2">
                                         <a target="_blank" href={this.props.publicationInfo.url}>{this.props.publicationInfo.url}</a>
-                                    </Col>
-                                </Row>
+                                    </div>
+                                    }
+                                />
                                 ):(
-                                [<Row key="Title" className="align-items-end mt-3">
-                                    <Col xs="3" className="text-right d-table-cell">
-                                        <Label className="align-center">
-                                            Title
-                                        </Label>
-                                    </Col>
-                                    <Col>
+                                [<LabelInputRow key="Title"
+                                    title="Title"
+                                    inputField={
                                         <Input value={this.props.publicationInfo.title} disabled></Input>
-                                    </Col>
-                                </Row>,
-                                <Row key="Author" className="align-items-end mt-3">
-                                    <Col xs="3" className="text-right d-table-cell">
-                                        <Label className="align-center">
-                                            Author
-                                        </Label>
-                                    </Col>
-                                    <Col>
+                                    }
+                                />
+                                ,
+                                <LabelInputRow key="Author"
+                                    title="Author"
+                                    inputField={
                                         <Input value={this.props.publicationInfo.author} disabled></Input>
-                                    </Col>
-                                </Row>
+                                    }
+                                />
                                 ])}
                             </CardBody>
                         </Card>

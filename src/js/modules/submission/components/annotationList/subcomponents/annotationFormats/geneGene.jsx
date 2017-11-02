@@ -5,6 +5,7 @@ import { Label, Button, Row, Col } from 'reactstrap';
 
 import GenePicker from '../genePicker';
 import KeywordTextInput from '../../../keywordTextInput';
+import LabelInputRow from '../../../labelInputRow';
 
 const inputContainerStyle = {
     display: "inline-block",
@@ -21,13 +22,9 @@ class GeneGene extends React.Component {
     render() {
         return (
             <div>
-                <Row className="align-items-end">
-                    <Col xs="3" className="text-right d-table-cell">
-                        <Label className="align-center">
-                            Gene 1
-                        </Label>
-                    </Col>
-                    <Col>
+                <LabelInputRow
+                    title="Gene 1"
+                    inputField={
                         <GenePicker
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -35,16 +32,11 @@ class GeneGene extends React.Component {
                                 })
                             )}
                             value={this.props.annotationData.data.gene1LocalId}
-                        />
-                    </Col>
-                </Row>
-                <Row className="align-items-end mt-3">
-                    <Col xs="3" className="text-right d-table-cell">
-                        <Label className="align-center">
-                            Gene 2
-                        </Label>
-                    </Col>
-                    <Col>
+                        />}
+                />
+                <LabelInputRow
+                    title="Gene 2"
+                    inputField={
                         <GenePicker
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -52,16 +44,11 @@ class GeneGene extends React.Component {
                                 })
                             )}
                             value={this.props.annotationData.data.gene2LocalId}
-                        />
-                    </Col>
-                </Row>
-                <Row className="align-items-end mt-3">
-                    <Col xs="3" className="text-right d-table-cell">
-                        <Label className="align-center">
-                            Method
-                        </Label>
-                    </Col>
-                    <Col>
+                        />}
+                />
+                <LabelInputRow
+                    title="Method"
+                    inputField={
                         <KeywordTextInput
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -81,9 +68,8 @@ class GeneGene extends React.Component {
                             value={this.props.annotationData.data.methodName}
                             searchScope="eco"
                             required={true}
-                        />
-                    </Col>
-                </Row>
+                        />}
+                />
             </div>
         );
     }

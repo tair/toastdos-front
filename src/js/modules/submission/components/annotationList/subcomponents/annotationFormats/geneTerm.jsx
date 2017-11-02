@@ -10,6 +10,7 @@ import { annotationTypeData } from "../../../../constants";
 import KeywordTextInput from '../../../keywordTextInput';
 import CustomTextInput from "lib/components/customTextInput";
 import ValidationInput from "../../../validationInput";
+import LabelInputRow from "../../../labelInputRow";
 
 const inputContainerStyle = {
     display: "inline-block",
@@ -58,13 +59,9 @@ class GeneTerm extends React.Component {
         
         return (
             <div>
-                <Row className="align-items-middle">
-                    <Col xs="3" className="text-right d-table-cell">
-                        <Label className="align-center">
-                            Gene
-                        </Label>
-                    </Col>
-                    <Col>
+                <LabelInputRow
+                    title="Gene"
+                    inputField={
                         <GenePicker
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -72,16 +69,11 @@ class GeneTerm extends React.Component {
                                 })
                             )}
                             value={this.props.annotationData.data.geneLocalId}
-                        />
-                    </Col>
-                </Row>
-                <Row className="align-items-middle mt-3">
-                    <Col xs="3" className="text-right d-table-cell">
-                        <Label className="align-center">
-                            {typeData.name}
-                        </Label>
-                    </Col>
-                    <Col>
+                        />}
+                />
+                <LabelInputRow
+                    title={typeData.name}
+                    inputField={
                         <KeywordTextInput
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -99,16 +91,11 @@ class GeneTerm extends React.Component {
                             value={this.props.annotationData.data.keywordName}
                             searchScope={typeData.keywordScope}
                             required={true}
-                        />
-                    </Col>
-                </Row>
-                <Row className="align-items-middle mt-3">
-                    <Col xs="3" className="text-right d-table-cell">
-                        <Label className="align-center">
-                            Method
-                        </Label>
-                    </Col>
-                    <Col>
+                        />}
+                />
+                <LabelInputRow
+                    title="Method"
+                    inputField={
                         <KeywordTextInput
                             onChange={value => this.props.onDataChange(
                                 Object.assign({}, this.props.annotationData.data, {
@@ -128,35 +115,33 @@ class GeneTerm extends React.Component {
                             value={this.props.annotationData.data.methodName}
                             searchScope="eco"
                             required={true}
-                        />
-                    </Col>
-                </Row>
+                        />}
+                />
                 {this.needsEvidenceWith?(
-                <Row className="align-items-middle mt-3">
-                    <Col xs="3" className="text-right d-table-cell">
-                        <Label className="align-center pt-3">
-                            Evidence With
-                        </Label>
-                    </Col>
-                    <Col>
-                        <ListGroup>
-                            {this.props.annotationData.data.evidenceWithOrder.map(this.generateEvidenceWith)}
-                        </ListGroup>
-                        <Row className="justify-content-md-center">
-                            <Col xs="auto" className="align-self-center">
-                                <Button color="success" className="btn-sm"
-                                    style={{
-                                        borderTopRightRadius:0,
-                                        borderTopLeftRadius:0,
-                                    }}
-                                    onClick={this.props.onEvidenceWithAddClick}
-                                >
-                                    <span className="fa fa-plus"></span> Evidence With
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
+                <LabelInputRow
+                    title="Evidence With"
+                    align="align-items-start"
+                    inputField={
+                        <div>
+                            <ListGroup>
+                                {this.props.annotationData.data.evidenceWithOrder.map(this.generateEvidenceWith)}
+                            </ListGroup>
+                            <Row className="justify-content-md-center">
+                                <Col xs="auto" className="align-self-center">
+                                    <Button color="success" className="btn-sm"
+                                        style={{
+                                            borderTopRightRadius:0,
+                                            borderTopLeftRadius:0,
+                                        }}
+                                        onClick={this.props.onEvidenceWithAddClick}
+                                    >
+                                        <span className="fa fa-plus"></span> Evidence With
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </div>
+                    }
+                />
                 ):(<span />)}
             </div>
         );
