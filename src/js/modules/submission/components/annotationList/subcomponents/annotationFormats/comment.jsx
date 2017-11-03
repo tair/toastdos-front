@@ -16,34 +16,30 @@ class Comment extends React.Component {
     render() {
         return (
             <div>
-                <LabelInputRow
-                    title="Gene"
-                    inputField={
-                        <GenePicker
-                            onChange={value => this.props.onDataChange(
-                                Object.assign({}, this.props.annotationData.data, {
-                                    geneLocalId: value
-                                })
-                            )}
-                            value={this.props.annotationData.data.geneLocalId}
-                        />}
-                />
-                <LabelInputRow
-                    title="Comment"
-                    inputField={
-                        <CustomTextArea name="comment"
-                            onChange={event => this.props.onDataChange(
-                                Object.assign({}, this.props.annotationData.data, {
-                                    comment: event.target.value
-                                })
-                            )}
-                            value={this.props.annotationData.data.comment}
-                            placeholder="Type your comment..."
-                            className="comment-text-area form-control"
-                            required={true}
-                        >
-                        </CustomTextArea>}
-                />
+                <LabelInputRow title="Gene">
+                    <GenePicker
+                        onChange={value => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                geneLocalId: value
+                            })
+                        )}
+                        value={this.props.annotationData.data.geneLocalId}
+                    />
+                </LabelInputRow>
+                <LabelInputRow title="Comment">
+                    <CustomTextArea name="comment"
+                        onChange={event => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                comment: event.target.value
+                            })
+                        )}
+                        value={this.props.annotationData.data.comment}
+                        placeholder="Type your comment..."
+                        className="comment-text-area form-control"
+                        required={true}
+                    >
+                    </CustomTextArea>
+                </LabelInputRow>
             </div>
         );
     }

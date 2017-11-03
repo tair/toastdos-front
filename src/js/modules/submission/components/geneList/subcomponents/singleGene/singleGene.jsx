@@ -58,14 +58,12 @@ class SingleGene extends React.Component {
                     </Row>
                 </CardHeader>
                 <CardBody>
-                    <LabelInputRow
-                        title="Gene Symbol"
-                        inputField={geneSymbolInput}
-                    />
-                    <LabelInputRow
-                        title="Full Gene Name"
-                        inputField={fullNameInput}
-                    />
+                    <LabelInputRow title="Gene Symbol">
+                        {geneSymbolInput}
+                    </LabelInputRow>
+                    <LabelInputRow title="Full Gene Name">
+                        {fullNameInput}
+                    </LabelInputRow>
                 </CardBody>
             </Card>
         );

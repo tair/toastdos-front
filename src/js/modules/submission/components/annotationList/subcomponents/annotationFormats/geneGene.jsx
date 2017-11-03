@@ -22,54 +22,48 @@ class GeneGene extends React.Component {
     render() {
         return (
             <div>
-                <LabelInputRow
-                    title="Gene 1"
-                    inputField={
-                        <GenePicker
-                            onChange={value => this.props.onDataChange(
-                                Object.assign({}, this.props.annotationData.data, {
-                                    gene1LocalId: value
-                                })
-                            )}
-                            value={this.props.annotationData.data.gene1LocalId}
-                        />}
-                />
-                <LabelInputRow
-                    title="Gene 2"
-                    inputField={
-                        <GenePicker
-                            onChange={value => this.props.onDataChange(
-                                Object.assign({}, this.props.annotationData.data, {
-                                    gene2LocalId: value
-                                })
-                            )}
-                            value={this.props.annotationData.data.gene2LocalId}
-                        />}
-                />
-                <LabelInputRow
-                    title="Method"
-                    inputField={
-                        <KeywordTextInput
-                            onChange={value => this.props.onDataChange(
-                                Object.assign({}, this.props.annotationData.data, {
-                                    methodName: value,
-                                    methodId: null,
-                                    methodEvidenceCode: null,
-                                })
-                            )}
-                            onSelect={(id, value) => this.props.onDataChange(
-                                Object.assign({}, this.props.annotationData.data, {
-                                    methodName: value.name,
-                                    methodId: id,
-                                    methodEvidenceCode: null,
-                                })
-                            )}
-                            placeholder="e.g. Enzyme Assay"
-                            value={this.props.annotationData.data.methodName}
-                            searchScope="eco"
-                            required={true}
-                        />}
-                />
+                <LabelInputRow title="Gene 1">
+                    <GenePicker
+                        onChange={value => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                gene1LocalId: value
+                            })
+                        )}
+                        value={this.props.annotationData.data.gene1LocalId}
+                    />
+                </LabelInputRow>
+                <LabelInputRow title="Gene 2">
+                    <GenePicker
+                        onChange={value => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                gene2LocalId: value
+                            })
+                        )}
+                        value={this.props.annotationData.data.gene2LocalId}
+                    />
+                </LabelInputRow>
+                <LabelInputRow title="Method">
+                    <KeywordTextInput
+                        onChange={value => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                methodName: value,
+                                methodId: null,
+                                methodEvidenceCode: null,
+                            })
+                        )}
+                        onSelect={(id, value) => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                methodName: value.name,
+                                methodId: id,
+                                methodEvidenceCode: null,
+                            })
+                        )}
+                        placeholder="e.g. Enzyme Assay"
+                        value={this.props.annotationData.data.methodName}
+                        searchScope="eco"
+                        required={true}
+                    />
+                </LabelInputRow>
             </div>
         );
     }

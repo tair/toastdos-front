@@ -38,28 +38,19 @@ class PublicationField extends React.Component {
                             </CardHeader>
                             <CardBody>
                                 {this.props.publicationInfo.url ? (
-                                <LabelInputRow
-                                    title="URL"
-                                    inputField={
+                                <LabelInputRow title="URL">
                                     <div className="mb-2">
                                         <a target="_blank" href={this.props.publicationInfo.url}>{this.props.publicationInfo.url}</a>
                                     </div>
-                                    }
-                                />
+                                </LabelInputRow>
                                 ):(
-                                [<LabelInputRow key="Title"
-                                    title="Title"
-                                    inputField={
-                                        <Input value={this.props.publicationInfo.title} disabled></Input>
-                                    }
-                                />
+                                [<LabelInputRow key="Title" title="Title">
+                                    <Input value={this.props.publicationInfo.title} disabled></Input>
+                                </LabelInputRow>
                                 ,
-                                <LabelInputRow key="Author"
-                                    title="Author"
-                                    inputField={
-                                        <Input value={this.props.publicationInfo.author} disabled></Input>
-                                    }
-                                />
+                                <LabelInputRow key="Author" title="Author">
+                                    <Input value={this.props.publicationInfo.author} disabled></Input>
+                                </LabelInputRow>
                                 ])}
                             </CardBody>
                         </Card>

@@ -17,7 +17,7 @@ class LabelInputRow extends React.Component {
                     </Label>
                 </Col>
                 <Col className="p-1">
-                    {this.props.inputField}
+                    {this.props.children}
                 </Col>
             </Row>
         );
@@ -26,13 +26,11 @@ class LabelInputRow extends React.Component {
 
 LabelInputRow.propTypes = {
     title: React.PropTypes.string,
-    inputField: React.PropTypes.any,
     align: React.PropTypes.string,
 };
 
 LabelInputRow.defaultProps = {
     title: '',
-    inputField: null,
     align: 'align-items-center',
 };
 
