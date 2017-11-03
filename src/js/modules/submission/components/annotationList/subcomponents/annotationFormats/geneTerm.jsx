@@ -36,13 +36,21 @@ class GeneTerm extends React.Component {
                 key={evidenceWithId}
                 evidenceWithId={evidenceWithId}
                 annotationData={this.props.annotationData}
-                attemptValidate={(locusName) => this.attemptValidate(evidenceWithId,locusName)}
-                removeEvidenceWith={this.props.removeEvidenceWith.bind(this,annotationId,evidenceWithId)}
+                attemptValidate={(locusName) => this.attemptValidate(evidenceWithId, locusName)}
+                removeEvidenceWith={this.props.removeEvidenceWith.bind(this, evidenceWithId)}
             />
         );
     }
 
     componentWillReceiveProps(nextprops) {
+
+        // Checks for methodId to be null
+        // methodId should only be null if there is no data, or a search is currently unresolved
+        // If methodId is null, removeEvidenceWith is called on all evidenceWith in the annotation
+        if (nextprops.annotationData.data.methodId === null) {
+            this.props.annotationData.data.evidenceWithOrder.map(this.props.removeEvidenceWith);
+        }
+
         if (nextprops.annotationData.data.methodEvidenceCode === 'IGI' || nextprops.annotationData.data.methodEvidenceCode === 'IPI') {
             if (nextprops.annotationData.data.evidenceWithOrder.length == 0) {
                 nextprops.onEvidenceWithAddClick();
