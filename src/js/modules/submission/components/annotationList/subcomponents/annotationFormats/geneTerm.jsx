@@ -42,6 +42,10 @@ class GeneTerm extends React.Component {
     }
 
     componentWillReceiveProps(nextprops) {
+
+        // Checks for methodId to be null
+        // methodId should only be null if there is no data, or a search is currently unresolved
+        // If methodId is null, removeEvidenceWith is called on all evidenceWith in the annotation
         if (nextprops.annotationData.data.methodId === null) {
             this.props.annotationData.data.evidenceWithOrder.map(this.props.removeEvidenceWith);
         }
