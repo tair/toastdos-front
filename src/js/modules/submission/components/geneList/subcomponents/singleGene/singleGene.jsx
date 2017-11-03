@@ -7,7 +7,7 @@ import { Card, CardHeader, CardBody,
     Label, FormGroup, InputGroup, InputGroupAddon,
     Button, ButtonGroup, Col, Row } from 'reactstrap';
 import { validationStates } from "../../../../constants";
-
+import LabelInputRow from '../../../labelInputRow';
 
 class SingleGene extends React.Component {
     constructor(props) {
@@ -58,26 +58,12 @@ class SingleGene extends React.Component {
                     </Row>
                 </CardHeader>
                 <CardBody>
-                    <Row className="align-items-end">
-                        <Col xs="3" className="text-right d-table-cell">
-                            <Label className="align-center">
-                                Gene Symbol
-                            </Label>
-                        </Col>
-                        <Col>
-                            {geneSymbolInput}
-                        </Col>
-                    </Row>
-                    <Row className="mt-3 align-items-end">
-                        <Col xs="3" className="text-right d-table-cell">
-                            <Label className="align-center">
-                                Full Gene Name
-                            </Label>
-                        </Col>
-                        <Col>
-                            {fullNameInput}
-                        </Col>
-                    </Row>
+                    <LabelInputRow title="Gene Symbol">
+                        {geneSymbolInput}
+                    </LabelInputRow>
+                    <LabelInputRow title="Full Gene Name">
+                        {fullNameInput}
+                    </LabelInputRow>
                 </CardBody>
             </Card>
         );

@@ -5,6 +5,7 @@ import { Label, Button, Row, Col } from 'reactstrap';
 
 import GenePicker from '../genePicker';
 import KeywordTextInput from '../../../keywordTextInput';
+import LabelInputRow from '../../../labelInputRow';
 
 const inputContainerStyle = {
     display: "inline-block",
@@ -21,69 +22,48 @@ class GeneGene extends React.Component {
     render() {
         return (
             <div>
-                <Row className="align-items-end">
-                    <Col xs="3" className="text-right d-table-cell">
-                        <Label className="align-center">
-                            Gene 1
-                        </Label>
-                    </Col>
-                    <Col>
-                        <GenePicker
-                            onChange={value => this.props.onDataChange(
-                                Object.assign({}, this.props.annotationData.data, {
-                                    gene1LocalId: value
-                                })
-                            )}
-                            value={this.props.annotationData.data.gene1LocalId}
-                        />
-                    </Col>
-                </Row>
-                <Row className="align-items-end mt-3">
-                    <Col xs="3" className="text-right d-table-cell">
-                        <Label className="align-center">
-                            Gene 2
-                        </Label>
-                    </Col>
-                    <Col>
-                        <GenePicker
-                            onChange={value => this.props.onDataChange(
-                                Object.assign({}, this.props.annotationData.data, {
-                                    gene2LocalId: value
-                                })
-                            )}
-                            value={this.props.annotationData.data.gene2LocalId}
-                        />
-                    </Col>
-                </Row>
-                <Row className="align-items-end mt-3">
-                    <Col xs="3" className="text-right d-table-cell">
-                        <Label className="align-center">
-                            Method
-                        </Label>
-                    </Col>
-                    <Col>
-                        <KeywordTextInput
-                            onChange={value => this.props.onDataChange(
-                                Object.assign({}, this.props.annotationData.data, {
-                                    methodName: value,
-                                    methodId: null,
-                                    methodEvidenceCode: null,
-                                })
-                            )}
-                            onSelect={(id, value) => this.props.onDataChange(
-                                Object.assign({}, this.props.annotationData.data, {
-                                    methodName: value.name,
-                                    methodId: id,
-                                    methodEvidenceCode: null,
-                                })
-                            )}
-                            placeholder="e.g. Enzyme Assay"
-                            value={this.props.annotationData.data.methodName}
-                            searchScope="eco"
-                            required={true}
-                        />
-                    </Col>
-                </Row>
+                <LabelInputRow title="Gene 1">
+                    <GenePicker
+                        onChange={value => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                gene1LocalId: value
+                            })
+                        )}
+                        value={this.props.annotationData.data.gene1LocalId}
+                    />
+                </LabelInputRow>
+                <LabelInputRow title="Gene 2">
+                    <GenePicker
+                        onChange={value => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                gene2LocalId: value
+                            })
+                        )}
+                        value={this.props.annotationData.data.gene2LocalId}
+                    />
+                </LabelInputRow>
+                <LabelInputRow title="Method">
+                    <KeywordTextInput
+                        onChange={value => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                methodName: value,
+                                methodId: null,
+                                methodEvidenceCode: null,
+                            })
+                        )}
+                        onSelect={(id, value) => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                methodName: value.name,
+                                methodId: id,
+                                methodEvidenceCode: null,
+                            })
+                        )}
+                        placeholder="e.g. Enzyme Assay"
+                        value={this.props.annotationData.data.methodName}
+                        searchScope="eco"
+                        required={true}
+                    />
+                </LabelInputRow>
             </div>
         );
     }

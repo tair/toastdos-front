@@ -10,6 +10,7 @@ import { annotationTypeData } from "../../../../constants";
 import KeywordTextInput from '../../../keywordTextInput';
 import CustomTextInput from "lib/components/customTextInput";
 import ValidationInput from "../../../validationInput";
+import LabelInputRow from "../../../labelInputRow";
 
 const inputContainerStyle = {
     display: "inline-block",
@@ -58,105 +59,79 @@ class GeneTerm extends React.Component {
         
         return (
             <div>
-                <Row className="align-items-middle">
-                    <Col xs="3" className="text-right d-table-cell">
-                        <Label className="align-center">
-                            Gene
-                        </Label>
-                    </Col>
-                    <Col>
-                        <GenePicker
-                            onChange={value => this.props.onDataChange(
-                                Object.assign({}, this.props.annotationData.data, {
-                                    geneLocalId: value
-                                })
-                            )}
-                            value={this.props.annotationData.data.geneLocalId}
-                        />
-                    </Col>
-                </Row>
-                <Row className="align-items-middle mt-3">
-                    <Col xs="3" className="text-right d-table-cell">
-                        <Label className="align-center">
-                            {typeData.name}
-                        </Label>
-                    </Col>
-                    <Col>
-                        <KeywordTextInput
-                            onChange={value => this.props.onDataChange(
-                                Object.assign({}, this.props.annotationData.data, {
-                                    keywordName: value,
-                                    keywordId: null
-                                })
-                            )}
-                            onSelect={(id, value) => this.props.onDataChange(
-                                Object.assign({}, this.props.annotationData.data, {
-                                    keywordName: value,
-                                    keywordId: id
-                                })
-                            )}
-                            placeholder="Start Typing..."
-                            value={this.props.annotationData.data.keywordName}
-                            searchScope={typeData.keywordScope}
-                            required={true}
-                        />
-                    </Col>
-                </Row>
-                <Row className="align-items-middle mt-3">
-                    <Col xs="3" className="text-right d-table-cell">
-                        <Label className="align-center">
-                            Method
-                        </Label>
-                    </Col>
-                    <Col>
-                        <KeywordTextInput
-                            onChange={value => this.props.onDataChange(
-                                Object.assign({}, this.props.annotationData.data, {
-                                    methodName: typeof value == 'object'? value.name : value,
-                                    methodId: null,
-                                    methodEvidenceCode: null,
-                                })
-                            )}
-                            onSelect={(id, value) => this.props.onDataChange(
-                                Object.assign({}, this.props.annotationData.data, {
-                                    methodName: value.name,
-                                    methodId: id,
-                                    methodEvidenceCode: value.evidence_code
-                                })
-                            )}
-                            placeholder="e.g. Enzyme Assay"
-                            value={this.props.annotationData.data.methodName}
-                            searchScope="eco"
-                            required={true}
-                        />
-                    </Col>
-                </Row>
+                <LabelInputRow title="Gene">
+                    <GenePicker
+                        onChange={value => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                geneLocalId: value
+                            })
+                        )}
+                        value={this.props.annotationData.data.geneLocalId}
+                    />
+                </LabelInputRow>
+                <LabelInputRow title={typeData.name}>
+                    <KeywordTextInput
+                        onChange={value => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                keywordName: value,
+                                keywordId: null
+                            })
+                        )}
+                        onSelect={(id, value) => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                keywordName: value,
+                                keywordId: id
+                            })
+                        )}
+                        placeholder="Start Typing..."
+                        value={this.props.annotationData.data.keywordName}
+                        searchScope={typeData.keywordScope}
+                        required={true}
+                    />
+                </LabelInputRow>
+                <LabelInputRow title="Method">
+                    <KeywordTextInput
+                        onChange={value => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                methodName: typeof value == 'object'? value.name : value,
+                                methodId: null,
+                                methodEvidenceCode: null,
+                            })
+                        )}
+                        onSelect={(id, value) => this.props.onDataChange(
+                            Object.assign({}, this.props.annotationData.data, {
+                                methodName: value.name,
+                                methodId: id,
+                                methodEvidenceCode: value.evidence_code
+                            })
+                        )}
+                        placeholder="e.g. Enzyme Assay"
+                        value={this.props.annotationData.data.methodName}
+                        searchScope="eco"
+                        required={true}
+                    />
+                </LabelInputRow>
                 {this.needsEvidenceWith?(
-                <Row className="align-items-middle mt-3">
-                    <Col xs="3" className="text-right d-table-cell">
-                        <Label className="align-center pt-3">
-                            Evidence With
-                        </Label>
-                    </Col>
-                    <Col>
-                        <ListGroup>
-                            {this.props.annotationData.data.evidenceWithOrder.map(this.generateEvidenceWith)}
-                        </ListGroup>
-                        <Row className="justify-content-md-center">
-                            <Col xs="auto" className="align-self-center">
-                                <Button color="success" className="btn-sm"
-                                    style={{
-                                        borderTopRightRadius:0,
-                                        borderTopLeftRadius:0,
-                                    }}
-                                    onClick={this.props.onEvidenceWithAddClick}
-                                >
-                                    <span className="fa fa-plus"></span> Evidence With
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
+                <LabelInputRow
+                    title="Evidence With"
+                    align="align-items-start">
+                    <ListGroup>
+                        {this.props.annotationData.data.evidenceWithOrder.map(this.generateEvidenceWith)}
+                    </ListGroup>
+                    <Row className="justify-content-md-center">
+                        <Col xs="auto" className="align-self-center">
+                            <Button color="success" className="btn-sm"
+                                style={{
+                                    borderTopRightRadius:0,
+                                    borderTopLeftRadius:0,
+                                }}
+                                onClick={this.props.onEvidenceWithAddClick}
+                            >
+                                <span className="fa fa-plus"></span> Evidence With
+                            </Button>
+                        </Col>
+                    </Row>
+                </LabelInputRow>
                 ):(<span />)}
             </div>
         );

@@ -82,7 +82,25 @@ export const annotationListValidSelector = createSelector(
     annotationListSelector,
     (annotations) =>
         (annotations.length > 0) &&
-        annotations.every(a => a.data.keywordName.trim() !== '' && a.data.methodName.trim() !== '')
+        annotations.every(a => {
+            switch(annotationTypeData[a.annotationType].format) {
+            case annotationFormats.COMMENT:
+                return (
+                    a.data.comment && a.data.comment.trim() !== ''
+                );
+            case annotationFormats.GENE_TERM:
+                return (
+                    a.data.keywordName && a.data.keywordName.trim() !== '' &&
+                    a.data.methodName && a.data.methodName.trim() !== ''
+                );
+            case annotationFormats.GENE_GENE:
+                return (
+                    a.data.methodName && a.data.methodName.trim() !== ''
+                );
+            default:
+                return false;
+            }
+        })
 );
 
 export const evidenceWithValidSelector = createSelector(
