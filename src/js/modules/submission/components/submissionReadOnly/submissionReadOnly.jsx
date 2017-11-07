@@ -69,6 +69,22 @@ class SubmissionReadOnly extends React.Component {
         );
     }
 
+    renderExternalIdBadge(externalId){
+        return (
+            <Badge color="success">
+            { externalId.indexOf("GO:") !== -1 ?
+                <a href={`http://amigo.geneontology.org/amigo/term/${externalId}#display-lineage-tab`}
+                    className="text-light"
+                    target="_blank"
+                >
+                    {externalId}
+                </a>
+                : <span>{externalId}</span>
+            }
+            </Badge>
+        );
+    }
+
 
     renderAnnotation(annotation) {
         let body, title;
@@ -92,7 +108,7 @@ class SubmissionReadOnly extends React.Component {
                         <Col>
                             {annotation.data.methodName}
                             <br/>
-                            <Badge color="success">{annotation.data.methodExternalId}</Badge>
+                            {this.renderExternalIdBadge(annotation.data.methodExternalId)}
                         </Col>
                     </Row>
                     <Row className="mt-3">
@@ -104,7 +120,7 @@ class SubmissionReadOnly extends React.Component {
                         <Col>
                             {annotation.data.keywordName}
                             <br/>
-                            <Badge color="success">{annotation.data.keywordExternalId}</Badge>
+                            {this.renderExternalIdBadge(annotation.data.keywordExternalId)}
                         </Col>
                     </Row>
                     {!showEvidenceWith? null : (
@@ -141,7 +157,7 @@ class SubmissionReadOnly extends React.Component {
                     <Col>
                         {annotation.data.methodName}
                         <br/>
-                        <Badge color="success">{annotation.data.methodExternalId}</Badge>
+                        {this.renderExternalIdBadge(annotation.data.methodExternalId)}
                     </Col>
                 </Row>);
                 break;
