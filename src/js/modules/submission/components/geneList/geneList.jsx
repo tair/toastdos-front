@@ -36,6 +36,7 @@ class GeneList extends React.Component {
                     <Row>
                         <Col>
                             <h4>2. Genes</h4>
+                            <p>Enter genes from the paper</p>
                         </Col>
                         <Col sm={{size:9}}>
                             {(this.props.geneOrder.length <= 0) ?

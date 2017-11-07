@@ -22,6 +22,7 @@ class PublicationField extends React.Component {
                 <Row>
                     <Col>
                         <h4>1. Publication</h4>
+                        <p>Enter a PubMed ID or a DOI</p>
                     </Col>
                     <Col sm={{size:9}}>
                         <Card className="mt-3">
