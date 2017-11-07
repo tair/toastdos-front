@@ -64,7 +64,7 @@ class AnnotationList extends React.Component {
                                     onClick={this.props.onAnnotationAddClick}
                                     disabled={!this.props.hasAllValidGenes}
                                 >
-                                    <span className="fa fa-plus" title="Add Annotation"></span> Add Annotation
+                                    <span className="fa fa-plus" title="Add Annotation"></span> Add Another Annotation
                                 </Button>
                             </Col>
                         </Row>

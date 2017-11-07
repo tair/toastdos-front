@@ -54,7 +54,7 @@ class GeneList extends React.Component {
                                     <Button block color="success"
                                         onClick={this.props.onGeneAddClick}
                                         >
-                                        <span className="fa fa-plus" title="Add Gene"></span> Add Gene
+                                        <span className="fa fa-plus" title="Add Gene"></span> Add Another Gene
                                     </Button>
                                 </Col>
                             </Row>
