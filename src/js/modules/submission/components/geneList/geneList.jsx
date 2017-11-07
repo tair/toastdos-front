@@ -17,7 +17,11 @@ class GeneList extends React.Component {
             <SingleGene
                 key={`gene_${geneData.localId}`}
                 title={`Locus ${index + 1}`}
-                onRemoveClick={() => this.props.removeGene(geneId)}
+                onRemoveClick={(this.props.geneOrder.length === 1) ? (
+                    () => this.props.clearGene(geneId)
+                ):(
+                    () => this.props.removeGene(geneId)
+                )}
                 validateGeneData={this.props.validateGeneData.bind(this, geneId)}
                 updateGeneData={this.props.updateGeneData.bind(this, geneId)}
                 locusName={geneData.finalizedLocusName}
@@ -72,6 +76,7 @@ GeneList.propTypes = {
     ),
     onGeneAddClick: React.PropTypes.func,
     removeGene: React.PropTypes.func,
+    clearGene: React.PropTypes.func,
     validateGeneData: React.PropTypes.func,
 };
 
@@ -80,6 +85,7 @@ GeneList.defaultProps = {
     geneOrder: [],
     onGeneAddClick: () => {},
     removeGene: () => {},
+    clearGene: () => {},
     validateGeneData: () => {},
 };
 

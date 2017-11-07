@@ -108,6 +108,22 @@ export default function (state = defaultState, action) {
         // newState.gene.splice(action.index, 1);
 
         return Object.assign({}, state, newState);
+
+    case actions.CLEAR_GENE: 
+        newState = {
+            geneIndex: Object.assign({}, state.geneIndex)
+        }
+
+        newState.geneIndex[action.geneId] = {
+            localId: action.geneId,
+            finalizedLocusName: "",
+            finalizedGeneSymbol: "",
+            finalizedFullName: "",
+            validationState: validationStates.NOT_VALIDATED,
+            validationError: ""
+        };
+
+        return Object.assign({}, state, newState);
     case actions.ATTEMPT_VALIDATE_GENE:
         newState = {
             geneIndex: Object.assign({}, state.geneIndex),
@@ -334,7 +350,7 @@ export default function (state = defaultState, action) {
         newState.evidenceWithIndex[action.evidenceWithId].validationState = validationStates.NOT_VALIDATED;
         newState.evidenceWithIndex[action.evidenceWithId].locusName = "";
 
-        return Object.assign({},state,newState);
+        return Object.assign({}, state, newState);
     case actions.VALIDATE_EVIDENCE_WITH_SUCCESS:
         return {
             ...state,
