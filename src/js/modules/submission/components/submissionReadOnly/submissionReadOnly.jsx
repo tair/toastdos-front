@@ -6,7 +6,7 @@ import GeneList from '../geneList';
 import AnnotationList from '../annotationList';
 import EvidenceWith from '../evidenceWith';
 import {Card, CardHeader, CardBody, CardTitle, Button, Container,
-    Row, Col, Label, ListGroup, ListGroupItem} from 'reactstrap';
+    Badge, Row, Col, Label, ListGroup, ListGroupItem} from 'reactstrap';
 
 import {
         annotationTypeData,
@@ -69,6 +69,22 @@ class SubmissionReadOnly extends React.Component {
         );
     }
 
+    renderExternalIdBadge(externalId){
+        return (
+            <Badge color="success">
+            { externalId.indexOf("GO:") !== -1 ?
+                <a href={`http://amigo.geneontology.org/amigo/term/${externalId}#display-lineage-tab`}
+                    className="text-light"
+                    target="_blank"
+                >
+                    {externalId}
+                </a>
+                : <span>{externalId}</span>
+            }
+            </Badge>
+        );
+    }
+
 
     renderAnnotation(annotation) {
         let body, title;
@@ -91,6 +107,8 @@ class SubmissionReadOnly extends React.Component {
                         </Col>
                         <Col>
                             {annotation.data.methodName}
+                            <br/>
+                            {this.renderExternalIdBadge(annotation.data.methodExternalId)}
                         </Col>
                     </Row>
                     <Row className="mt-3">
@@ -101,6 +119,8 @@ class SubmissionReadOnly extends React.Component {
                         </Col>
                         <Col>
                             {annotation.data.keywordName}
+                            <br/>
+                            {this.renderExternalIdBadge(annotation.data.keywordExternalId)}
                         </Col>
                     </Row>
                     {!showEvidenceWith? null : (
@@ -136,6 +156,8 @@ class SubmissionReadOnly extends React.Component {
                     </Col>
                     <Col>
                         {annotation.data.methodName}
+                        <br/>
+                        {this.renderExternalIdBadge(annotation.data.methodExternalId)}
                     </Col>
                 </Row>);
                 break;

@@ -81,13 +81,15 @@ class GeneTerm extends React.Component {
                     <KeywordTextInput
                         onChange={value => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
-                                keywordName: value,
+                                keywordName: value.name,
+                                keywordExternalId: "",
                                 keywordId: null
                             })
                         )}
                         onSelect={(id, value) => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
-                                keywordName: value,
+                                keywordName: value.name,
+                                keywordExternalId: value.external_id,
                                 keywordId: id
                             })
                         )}
@@ -101,8 +103,9 @@ class GeneTerm extends React.Component {
                     <KeywordTextInput
                         onChange={value => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
-                                methodName: typeof value == 'object'? value.name : value,
+                                methodName: value.name,
                                 methodId: null,
+                                methodExternalId: "",
                                 methodEvidenceCode: null,
                             })
                         )}
@@ -110,6 +113,7 @@ class GeneTerm extends React.Component {
                             Object.assign({}, this.props.annotationData.data, {
                                 methodName: value.name,
                                 methodId: id,
+                                methodExternalId: value.external_id,
                                 methodEvidenceCode: value.evidence_code
                             })
                         )}

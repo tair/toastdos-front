@@ -12,8 +12,8 @@ class KeywordTextInput extends React.Component {
 
     handleInputChange(value) {
         this.props.onChange(value);
-        if(value.length >= 3) {
-            this.props.performSearch(value, this.props.searchScope);
+        if(value.name.length >= 3) {
+            this.props.performSearch(value.name, this.props.searchScope);
         }
     }
 

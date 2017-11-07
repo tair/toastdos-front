@@ -160,8 +160,10 @@ export default function (state = defaultState, action) {
                 geneLocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
                 keywordName: "",
                 keywordId: null,
+                keywordExternalId: "",
                 methodName: "",
                 methodId: null,
+                methodExternalId: "",
                 methodEvidenceCode: null,
                 evidenceWithOrder: [],
             }
@@ -193,8 +195,10 @@ export default function (state = defaultState, action) {
                 geneLocalId: ((state.geneOrder.length > 0) ? state.geneOrder[0] : null),
                 keywordName: "",
                 keywordId: null,
+                keywordExternalId: "",
                 methodName: "",
                 methodId: null,
+                methodExternalId: "",
                 methodEvidenceCode: null,
                 evidenceWithOrder: [],
             };
@@ -206,6 +210,7 @@ export default function (state = defaultState, action) {
                 gene2LocalId: ((state.geneOrder.length) > 0 ? state.geneOrder[0] : null),
                 methodName: "",
                 methodId: null,
+                methodExternalId: "",
                 methodEvidenceCode: null
             };
             break;

@@ -34,7 +34,7 @@ class Comment extends React.Component {
                             })
                         )}
                         value={this.props.annotationData.data.comment}
-                        placeholder="Type your comment..."
+                        placeholder="Add a comment describing this gene..."
                         className="comment-text-area form-control"
                         required={true}
                     >
