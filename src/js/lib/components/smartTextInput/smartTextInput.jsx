@@ -22,6 +22,7 @@ class SmartTextInput extends React.Component {
         this.handleSuggestionHover = this.handleSuggestionHover.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.handleDismiss = this.handleDismiss.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -66,6 +67,13 @@ class SmartTextInput extends React.Component {
         });
 
         this.props.onBlur(event);
+    }
+
+    handleDismiss() {
+        this.setState({
+            focused: false,
+            showSuggestions: false
+        });
     }
 
     handleSuggestionSelect(id) {
@@ -161,6 +169,7 @@ class SmartTextInput extends React.Component {
                                 inputLength={this.state.value.length}
                                 minSuggestLength={this.props.minSuggestLength}
                                 hoveredSuggestionId={this.state.hoveredItemId}
+                                dismiss={this.handleDismiss}
                             />
                         </div>
                     ) : null
