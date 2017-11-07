@@ -46,8 +46,9 @@ class GeneGene extends React.Component {
                     <KeywordTextInput
                         onChange={value => this.props.onDataChange(
                             Object.assign({}, this.props.annotationData.data, {
-                                methodName: value,
+                                methodName: value.name,
                                 methodId: null,
+                                methodExternalId: "",
                                 methodEvidenceCode: null,
                             })
                         )}
@@ -55,6 +56,7 @@ class GeneGene extends React.Component {
                             Object.assign({}, this.props.annotationData.data, {
                                 methodName: value.name,
                                 methodId: id,
+                                methodExternalId: value.external_id,
                                 methodEvidenceCode: null,
                             })
                         )}

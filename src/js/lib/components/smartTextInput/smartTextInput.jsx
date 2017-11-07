@@ -48,7 +48,7 @@ class SmartTextInput extends React.Component {
             hoveredItemId: null,
             hoveredItemIndex: null
         });
-        this.props.onChange(event.target.value);
+        this.props.onChange({name:event.target.value});
     }
 
     handleFocus(event) {
@@ -77,9 +77,15 @@ class SmartTextInput extends React.Component {
     }
 
     handleSuggestionSelect(id) {
+        if (this.props.suggestionOrder.length == 0) {
+            return;
+        }
+        if (id == null) {
+            id = this.props.suggestionOrder[0];
+        }
         this.setState({
             selectedItemId: id,
-            value: this.props.suggestionIndex[id],
+            value: this.props.suggestionIndex[id].name,
             showSuggestions: false
         });
         this.props.onSelect(id, this.props.suggestionIndex[id]);

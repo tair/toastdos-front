@@ -6,7 +6,7 @@ import GeneList from '../geneList';
 import AnnotationList from '../annotationList';
 import EvidenceWith from '../evidenceWith';
 import {Card, CardHeader, CardBody, CardTitle, Button, Container,
-    Row, Col, Label, ListGroup, ListGroupItem} from 'reactstrap';
+    Badge, Row, Col, Label, ListGroup, ListGroupItem} from 'reactstrap';
 
 import {
         annotationTypeData,
@@ -91,6 +91,8 @@ class SubmissionReadOnly extends React.Component {
                         </Col>
                         <Col>
                             {annotation.data.methodName}
+                            <br/>
+                            <Badge color="success">{annotation.data.methodExternalId}</Badge>
                         </Col>
                     </Row>
                     <Row className="mt-3">
@@ -101,6 +103,8 @@ class SubmissionReadOnly extends React.Component {
                         </Col>
                         <Col>
                             {annotation.data.keywordName}
+                            <br/>
+                            <Badge color="success">{annotation.data.keywordExternalId}</Badge>
                         </Col>
                     </Row>
                     {!showEvidenceWith? null : (
@@ -136,6 +140,8 @@ class SubmissionReadOnly extends React.Component {
                     </Col>
                     <Col>
                         {annotation.data.methodName}
+                        <br/>
+                        <Badge color="success">{annotation.data.methodExternalId}</Badge>
                     </Col>
                 </Row>);
                 break;
