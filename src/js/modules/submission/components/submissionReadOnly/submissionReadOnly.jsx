@@ -71,6 +71,7 @@ class SubmissionReadOnly extends React.Component {
 
     renderExternalIdBadge(externalId){
         return (
+            externalId !== "" ?
             <Badge color="success">
             { externalId.indexOf("GO:") !== -1 ?
                 <a href={`http://amigo.geneontology.org/amigo/term/${externalId}#display-lineage-tab`}
@@ -81,6 +82,10 @@ class SubmissionReadOnly extends React.Component {
                 </a>
                 : <span>{externalId}</span>
             }
+            </Badge>
+            :
+            <Badge color="warning">
+                <span>No existing ID</span>
             </Badge>
         );
     }
