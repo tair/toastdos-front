@@ -78,7 +78,7 @@ class SubmissionReadOnly extends React.Component {
                     className="text-light"
                     target="_blank"
                 >
-                    {externalId}
+                    {externalId} <span className="fa fa-external-link"></span>
                 </a>
                 : <span>{externalId}</span>
             }
