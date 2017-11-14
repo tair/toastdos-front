@@ -3,6 +3,7 @@
 export const PUBLICATION_ID_CHANGED = "submission/PUBLICATION_ID_CHANGED";
 export const ADD_NEW_GENE = "submission/ADD_NEW_GENE";
 export const REMOVE_GENE = "submission/REMOVE_GENE";
+export const CLEAR_GENE = "submission/CLEAR_GENE";
 export const ATTEMPT_VALIDATE_PUBLICATION = "submission/ATTEMPT_VALIDATE_PUBLICATION";
 export const VALIDATE_PUBLICATION_SUCCESS = "submission/VALIDATE_PUBLICATION_SUCCESS";
 export const VALIDATE_PUBLICATION_FAIL = "submission/VALIDATE_PUBLICATION_FAIL";

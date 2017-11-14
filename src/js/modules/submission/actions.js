@@ -34,6 +34,13 @@ export function removeGene(localId) {
     };
 }
 
+export function clearGene(geneId) {
+    return {
+        type: actions.CLEAR_GENE,
+        geneId: geneId
+    }
+}
+
 export class AttemptValidatePublicationAsync extends AsyncAction {
     constructor(publicationId) {
         super(actions.ATTEMPT_VALIDATE_PUBLICATION);
