@@ -40,7 +40,7 @@ class SuggestionList extends React.Component {
         } else if(this.props.inputLength < this.props.minSuggestLength) {
             return (<span>Type more for suggestions...</span>);
         } else if(this.props.suggestionOrder.length < 1) {
-            return (<span>No Results</span>);
+            return (<span onClick={this.props.dismiss}>No results found, field will be submitted as is.</span>);
         } else {
             return (
                 <div>
@@ -97,6 +97,7 @@ SuggestionList.propTypes = {
     minSuggestLength: React.PropTypes.number,
     onItemSelect: React.PropTypes.func,
     onItemHover: React.PropTypes.func,
+    dismiss: React.PropTypes.func,
     className: React.PropTypes.string
 };
 
@@ -109,6 +110,7 @@ SuggestionList.defaultPropa = {
     minSuggestLength: 0,
     onItemSelect: () => {},
     onItemHover: () => {},
+    dismiss: () => {},
     className: "",
 
 };

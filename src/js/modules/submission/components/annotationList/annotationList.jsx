@@ -38,6 +38,7 @@ class AnnotationList extends React.Component {
                 <Row>
                     <Col>
                         <h4>3. Annotations</h4>
+                        <p>Enter gene annotations</p>
                     </Col>
                     <Col sm={{size:9}}>
                         {(this.props.annotationOrder.length <= 0) ?
@@ -63,7 +64,7 @@ class AnnotationList extends React.Component {
                                     onClick={this.props.onAnnotationAddClick}
                                     disabled={!this.props.hasAllValidGenes}
                                 >
-                                    <span className="fa fa-plus" title="Add Annotation"></span> Add Annotation
+                                    <span className="fa fa-plus" title="Add Annotation"></span> Add Another Annotation
                                 </Button>
                             </Col>
                         </Row>

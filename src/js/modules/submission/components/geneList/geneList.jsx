@@ -40,6 +40,7 @@ class GeneList extends React.Component {
                     <Row>
                         <Col>
                             <h4>2. Genes</h4>
+                            <p>Enter genes from the paper</p>
                         </Col>
                         <Col sm={{size:9}}>
                             {(this.props.geneOrder.length <= 0) ?
@@ -57,7 +58,7 @@ class GeneList extends React.Component {
                                     <Button block color="success"
                                         onClick={this.props.onGeneAddClick}
                                         >
-                                        <span className="fa fa-plus" title="Add Gene"></span> Add Gene
+                                        <span className="fa fa-plus" title="Add Gene"></span> Add Another Gene
                                     </Button>
                                 </Col>
                             </Row>
