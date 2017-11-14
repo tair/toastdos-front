@@ -28,6 +28,7 @@ class AnnotationList extends React.Component {
                 validateEvidenceWith={this.props.validateEvidenceWith.bind(this, annotationId)}
                 removeEvidenceWith={this.props.removeEvidenceWith.bind(this, annotationId)}
                 annotationId={annotationId}
+                curation={this.props.curation}
             />
         );
     }
@@ -38,9 +39,10 @@ class AnnotationList extends React.Component {
                 <Row>
                     <Col>
                         <h4>3. Annotations</h4>
-                        <p>Enter gene annotations</p>
+                        <Alert color="light">Select an annotation format and a gene. All fields are required.</Alert>
                     </Col>
                     <Col sm={{size:9}}>
+                        {this.props.curation ? <h5 className="my-3">Pending Annotations</h5> : null}
                         {(this.props.annotationOrder.length <= 0) ?
                         (
                             <Alert color="secondary">
@@ -58,16 +60,27 @@ class AnnotationList extends React.Component {
                                 {this.props.annotationOrder.map(this.generateAnnotationEntry)}
                             </div>
                         )}
-                        <Row className="justify-content-sm-center mt-3 mb-3">
-                            <Col sm={{size:4, offset:4}} className="justify-content-sm-center">
-                                <Button block color="success"
-                                    onClick={this.props.onAnnotationAddClick}
-                                    disabled={!this.props.hasAllValidGenes}
-                                >
-                                    <span className="fa fa-plus" title="Add Annotation"></span> Add Another Annotation
-                                </Button>
-                            </Col>
-                        </Row>
+                        {!this.props.curation ?
+                            <Row className="justify-content-sm-center mt-3 mb-3">
+                                <Col sm={{size:4, offset:4}} className="justify-content-sm-center">
+                                    <Button block color="success"
+                                        onClick={this.props.onAnnotationAddClick}
+                                        disabled={!this.props.hasAllValidGenes}
+                                    >
+                                        <span className="fa fa-plus" title="Add Annotation"></span> Add Another Annotation
+                                    </Button>
+                                </Col>
+                            </Row> : null}
+                        {this.props.curation ? (
+                            <div>
+                                <h5 className="my-3">Reviewed Annotations</h5>
+                                <Alert color="secondary">
+                                    <span className="empty-message">
+                                        No Reviewed Annotations.
+                                    </span>
+                                </Alert>
+                            </div>
+                        ) : null}
                     </Col>
                 </Row>
             </div>
@@ -90,6 +103,7 @@ AnnotationList.propTypes = {
     hasValidGene: React.PropTypes.bool,
     hasAllValidGenes: React.PropTypes.bool,
     removeEvidenceWith: React.PropTypes.func,
+    curation: React.PropTypes.bool,
 };
 
 AnnotationList.defaultProps = {
@@ -98,6 +112,7 @@ AnnotationList.defaultProps = {
     annotationOrder: [],
     hasValidGene: false,
     hasAllValidGenes: false,
+    curation: false,
 };
 
 export default AnnotationList;

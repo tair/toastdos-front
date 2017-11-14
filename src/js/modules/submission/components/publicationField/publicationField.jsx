@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-import { Label, Row, Col,
+import { Alert, Label, Row, Col,
     Card, CardHeader, CardBody, Input,
     InputGroup, InputGroupAddon, Button } from 'reactstrap';
 
@@ -22,13 +22,13 @@ class PublicationField extends React.Component {
                 <Row>
                     <Col>
                         <h4>1. Publication</h4>
-                        <p>Enter a PubMed ID or a DOI</p>
+                        <Alert color="light">Enter a PubMed ID or a DOI.</Alert>
                     </Col>
                     <Col sm={{size:9}}>
                         <Card className="mt-3">
                             <CardHeader className="align-center">
                                 <ValidationInput
-                                    title="PubMed ID / DOI"
+                                    title="Publication ID"
                                     value={this.props.publicationIdValue}
                                     placeholder="e.g 21051552 or 10.1104/pp.110.166546"
                                     attemptValidate={this.props.attemptValidatePublication}

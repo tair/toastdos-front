@@ -8,7 +8,13 @@ import {
     searchKeywords
 } from 'lib/api';
 import * as actions from './actionTypes';
-import { name } from './constants';
+import {
+    name,
+    annotationTypes,
+    annotationTypeData,
+    annotationFormats,
+    validationStates,
+} from './constants';
 import { submissionBodySelector } from './selectors';
 
 import { AsyncAction } from 'lib/asyncActionManager';
@@ -351,4 +357,75 @@ export function edit() {
     return {
         type: actions.EDIT,
     };
+}
+
+export function loadSubmission(submission) {
+    let newState = {
+        publicationIdValue: submission.publicationId,
+        geneIndex: {},
+        geneOrder: [],
+        annotationIndex: {},
+        annotationOrder: []
+    };
+
+    let locusMap = {};
+
+    for (let gene of submission.genes) {
+        let id = "remote_gene_" + gene.id;
+        locusMap[gene.locusName] = id;
+        newState.geneIndex[id] = {
+            localId: id,
+            finalizedLocusName: gene.locusName,
+            finalizedGeneSymbol: gene.geneSymbol || "",
+            finalizedFullName: gene.fullName || "",
+            validationState: validationStates.VALID,
+            validationError: ""
+        };
+        newState.geneOrder.push(id);
+    }
+
+    for (let annotation of submission.annotations) {
+        let id = "remote_annotation_" + annotation.id;
+        newState.annotationIndex[id] = {
+            localId: id,
+            annotationType: annotation.type,
+        };
+        switch(annotationTypeData[annotation.type].format) {
+            case annotationFormats.GENE_TERM:
+                newState.annotationIndex[id].data = {
+                    geneLocalId: locusMap[annotation.data.locusName],
+                    keywordName: annotation.data.keyword.name,
+                    keywordId: annotation.data.keyword.id,
+                    keywordExternalId: "",
+                    methodName: annotation.data.method.name,
+                    methodId: annotation.data.method.id,
+                    methodExternalId: annotation.data.method.externalId || "",
+                    methodEvidenceCode: annotation.data.method.evidenceCode || null,
+                    evidenceWithOrder: [],
+                };
+                break;
+            case annotationFormats.GENE_GENE:
+                newState.annotationIndex[id].data = {
+                    gene1LocalId: locusMap[annotation.data.locusName],
+                    gene2LocalId: locusMap[annotation.data.locusName2],
+                    methodName: annotation.data.method.name,
+                    methodId: annotation.data.method.id,
+                    methodExternalId: annotation.data.method.externalId || "",
+                    methodEvidenceCode: annotation.data.method.evidenceCode || null
+                };
+                break;
+            case annotationFormats.COMMENT:
+                newState.annotationIndex[id].data = {
+                    geneLocalId: locusMap[annotation.data.locusName],
+                    comment: annotation.data.text
+                };
+                break;
+        }
+        newState.annotationOrder.push(id);
+    }
+
+    return {
+        type: actions.LOAD_SUBMISSION,
+        newState
+    }
 }

@@ -33,10 +33,9 @@ class SubmissionList extends React.Component {
                             value={submission.total - submission.pending} max={submission.total} />
                     </Col>
                     <Col sm="auto" className="text-right">
-                        <Button color={completed ? "info" : "warning"}
-                            href={`/curation/detail/${submission.id}`}>
+                        <Link to={`/curation/detail/${submission.id}`} className={completed ? "btn btn-info" : "btn btn-warning"}>
                             <span className={`fa ${completed ? "fa-file-text-o" : "fa-edit"}`}></span> {completed ? "View" : "Review"}
-                        </Button>
+                        </Link>
                     </Col>
                 </Row>
             </ListGroupItem>

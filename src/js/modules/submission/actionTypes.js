@@ -32,4 +32,5 @@ export const VALIDATE_EVIDENCE_WITH_SUCCESS = "submission/VALIDATE_EVIDENCE_WITH
 export const VALIDATE_EVIDENCE_WITH_FAIL = "submission/VALIDATE_EVIDENCE_WITH_FAIL";
 export const PREVIEW = "submission/PREVIEW";
 export const EDIT = "submission/EDIT";
+export const LOAD_SUBMISSION = "submission/LOAD_SUBMISSION";
 

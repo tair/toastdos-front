@@ -40,7 +40,7 @@ class GeneList extends React.Component {
                     <Row>
                         <Col>
                             <h4>2. Genes</h4>
-                            <p>Enter genes from the paper</p>
+                            <Alert color="light">Enter genes with a UniProt ID, AGI locus ID, or RNA Central ID. Optionally enter a gene symbol and full name.</Alert>
                         </Col>
                         <Col sm={{size:9}}>
                             {(this.props.geneOrder.length <= 0) ?
@@ -53,15 +53,16 @@ class GeneList extends React.Component {
                             ) : null
                             }
                             {this.props.geneOrder.map(this.generateGene)}
-                            <Row className="justify-content-sm-center mt-3 mb-3">
-                                <Col sm={{size:4, offset:4}} className="justify-content-sm-center">
-                                    <Button block color="success"
-                                        onClick={this.props.onGeneAddClick}
-                                        >
-                                        <span className="fa fa-plus" title="Add Gene"></span> Add Another Gene
-                                    </Button>
-                                </Col>
-                            </Row>
+                            {!this.props.curation?
+                                <Row className="justify-content-sm-center mt-3 mb-3">
+                                    <Col sm={{size:4, offset:4}} className="justify-content-sm-center">
+                                        <Button block color="success"
+                                            onClick={this.props.onGeneAddClick}
+                                            >
+                                            <span className="fa fa-plus" title="Add Gene"></span> Add Another Gene
+                                        </Button>
+                                    </Col>
+                                </Row> : null}
                         </Col>
                     </Row>
                 </div>
@@ -79,6 +80,7 @@ GeneList.propTypes = {
     removeGene: React.PropTypes.func,
     clearGene: React.PropTypes.func,
     validateGeneData: React.PropTypes.func,
+    curation: React.PropTypes.bool
 };
 
 GeneList.defaultProps = {
@@ -88,6 +90,7 @@ GeneList.defaultProps = {
     removeGene: () => {},
     clearGene: () => {},
     validateGeneData: () => {},
+    curation: false,
 };
 
 
