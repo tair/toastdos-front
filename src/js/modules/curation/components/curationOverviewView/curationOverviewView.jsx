@@ -2,7 +2,7 @@ import React from 'react';
 import "css/curationView.scss";
 
 import SearchFilter from './subcomponents/searchFilter';
-import SubmissionTable from './subcomponents/submissionTable';
+import SubmissionList from './subcomponents/submissionList';
 
 import {Container, Row, Col, Card, CardHeader, CardBody} from 'reactstrap';
 
@@ -24,16 +24,14 @@ class CurationOverviewView extends React.Component {
                     <Col md="10">
                         <Card className="submission-view">
                             <CardHeader>
-                                <span className="fa fa-check" /> Submission Curation
+                                <span className="fa fa-filter" /> Curation
                             </CardHeader>
-                            <CardBody>
-                                <SubmissionTable
-                                    loading={this.props.loading}
-                                    submissions={this.props.submissions}
+                            <CardBody className="p-0">
+                                <SubmissionList
+                                    inProgressSubmissions={this.props.inProgressSubmissions}
+                                    needsReviewSubmissions={this.props.needsReviewSubmissions}
+                                    reviewedSubmissions={this.props.reviewedSubmissions}
                                     loadSubmissions={this.props.loadSubmissions}
-                                    totalPages={this.props.totalPages}
-                                    pageSize={this.props.pageSize}
-                                    currentPage={this.props.currPage}
                                 />
                             </CardBody>
                         </Card>
@@ -47,7 +45,9 @@ class CurationOverviewView extends React.Component {
 CurationOverviewView.propTypes = {
     loading: React.PropTypes.bool.isRequired,
     loadSubmissions: React.PropTypes.func,
-    submissions: React.PropTypes.arrayOf(React.PropTypes.object),
+    inProgressSubmissions: React.PropTypes.arrayOf(React.PropTypes.object),
+    needsReviewSubmissions: React.PropTypes.arrayOf(React.PropTypes.object),
+    reviewedSubmissions: React.PropTypes.arrayOf(React.PropTypes.object),
     totaPages: React.PropTypes.number,
     pageSize: React.PropTypes.number,
     currPage: React.PropTypes.number
