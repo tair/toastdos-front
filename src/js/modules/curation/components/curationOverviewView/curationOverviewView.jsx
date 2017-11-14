@@ -28,7 +28,9 @@ class CurationOverviewView extends React.Component {
                             </CardHeader>
                             <CardBody className="p-0">
                                 <SubmissionList
-                                    submissions={this.props.submissions}
+                                    inProgressSubmissions={this.props.inProgressSubmissions}
+                                    needsReviewSubmissions={this.props.needsReviewSubmissions}
+                                    reviewedSubmissions={this.props.reviewedSubmissions}
                                     loadSubmissions={this.props.loadSubmissions}
                                 />
                             </CardBody>
@@ -43,7 +45,9 @@ class CurationOverviewView extends React.Component {
 CurationOverviewView.propTypes = {
     loading: React.PropTypes.bool.isRequired,
     loadSubmissions: React.PropTypes.func,
-    submissions: React.PropTypes.arrayOf(React.PropTypes.object),
+    inProgressSubmissions: React.PropTypes.arrayOf(React.PropTypes.object),
+    needsReviewSubmissions: React.PropTypes.arrayOf(React.PropTypes.object),
+    reviewedSubmissions: React.PropTypes.arrayOf(React.PropTypes.object),
     totaPages: React.PropTypes.number,
     pageSize: React.PropTypes.number,
     currPage: React.PropTypes.number

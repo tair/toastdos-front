@@ -3,7 +3,9 @@ import CurationOverviewView from './curationOverviewView';
 import { createStructuredSelector } from 'reselect';
 import {
   loadingSubmissionList,
-  submissionList,
+  submissionInProgressList,
+  submissionNeedsReviewList,
+  submissionReviewedList,
   totalPages,
   pageSize,
   currPage
@@ -16,7 +18,9 @@ import {
 const ConnectedCurationOverviewView = connect(
     createStructuredSelector({
         loading: loadingSubmissionList,
-        submissions: submissionList,
+        inProgressSubmissions: submissionInProgressList,
+        needsReviewSubmissions: submissionNeedsReviewList,
+        reviewedSubmissions: submissionReviewedList,
         totalPages,
         pageSize,
         currPage

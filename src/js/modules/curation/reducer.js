@@ -2,7 +2,9 @@ import * as actions from './actionTypes';
 
 const defaultState = {
     loadingSubmissionList: false,
-    submissionList: [],
+    submissionInProgressList: [],
+    submissionNeedsReviewList: [],
+    submissionReviewedList: [],
     submissionListLoadError: null,
     pageSize: 0,
     totalPages: 0,
@@ -20,7 +22,9 @@ export default function (state = defaultState, action) {
     case actions.SUCCESS_SUBMISSION_LIST:
         return Object.assign({}, state, {
             loadingSubmissionList: false,
-            submissionList: action.submissions.submissions,
+            submissionInProgressList: action.submissions.inProgress,
+            submissionNeedsReviewList: action.submissions.needsReview,
+            submissionReviewedList: action.submissions.reviewed,
             pageSize: action.submissions.page_size,
             totalPages: action.submissions.total_pages,
             currPages: action.submissions.page,

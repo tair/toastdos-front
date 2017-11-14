@@ -5,28 +5,10 @@ import { Alert, Button, Progress, ListGroup, ListGroupItem, Container, Row, Col 
 class SubmissionList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            unreviewedSubmissions: [],
-            reviewInProgressSubmissions: [],
-            reviewedSubmissions: [],
-        };
     }
 
     componentDidMount() {
         this.props.loadSubmissions(1, 10);
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.submissions != this.props.submissions) {
-            this.setState({
-                unreviewedSubmissions: this.props.submissions
-                    .filter((sub)=> sub.pending == sub.total),
-                reviewInProgressSubmissions: this.props.submissions
-                    .filter((sub)=> sub.pending != "0" && sub.pending < sub.total),
-                reviewedSubmissions: this.props.submissions
-                    .filter((sub)=> sub.pending == "0"),
-            });
-        }
     }
 
     renderSubmission(submission) {
@@ -64,19 +46,19 @@ class SubmissionList extends React.Component {
     render() {
         return (
             <ListGroup>
-                {this.state.reviewInProgressSubmissions.length > 0 ?
+                {this.props.inProgressSubmissions.length > 0 ?
                 <ListGroupItem className="pt-3 pb-4 border-0 border-right-0 border-top-0">
                     <h4>In Progress</h4>
                     <ListGroup className="mt-3">
-                    {this.state.reviewInProgressSubmissions.map((val,ind,arr) => this.renderSubmission(val))}
+                    {this.props.inProgressSubmissions.map((val,ind,arr) => this.renderSubmission(val))}
                     </ListGroup>
                 </ListGroupItem>
                 : null}
                 <ListGroupItem className="pt-3 pb-4 border-0 border-right-0">
                     <h4>Needs Review</h4>
                     <ListGroup className="mt-3">
-                    {this.state.unreviewedSubmissions.length > 0 ?
-                        this.state.unreviewedSubmissions.map((val,ind,arr) => this.renderSubmission(val))
+                    {this.props.needsReviewSubmissions.length > 0 ?
+                        this.props.needsReviewSubmissions.map((val,ind,arr) => this.renderSubmission(val))
                     :
                     <Alert color="secondary">
                         <span className="fa fa-info-circle" /> No submissions need review.
@@ -86,8 +68,8 @@ class SubmissionList extends React.Component {
                 <ListGroupItem className="pt-3 pb-4 border-0 border-right-0 border-bottom-0">
                     <h4>Reviewed</h4>
                     <ListGroup className="mt-3">
-                    {this.state.reviewedSubmissions.length > 0 ?
-                        this.state.reviewedSubmissions.map((val,ind,arr) => this.renderSubmission(val))
+                    {this.props.reviewedSubmissions.length > 0 ?
+                        this.props.reviewedSubmissions.map((val,ind,arr) => this.renderSubmission(val))
                     :
                     <Alert color="secondary">
                         <span className="fa fa-info-circle" /> No reviewed submissions.
@@ -100,7 +82,9 @@ class SubmissionList extends React.Component {
 }
 
 SubmissionList.propTypes = {
-    submissions: React.PropTypes.arrayOf(React.PropTypes.object),
+    inProgressSubmissions: React.PropTypes.arrayOf(React.PropTypes.object),
+    needsReviewSubmissions: React.PropTypes.arrayOf(React.PropTypes.object),
+    reviewedSubmissions: React.PropTypes.arrayOf(React.PropTypes.object),
     loadSubmissions: React.PropTypes.func,
     // todo handle pagination
     totalPages: React.PropTypes.number,
