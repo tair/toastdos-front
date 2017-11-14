@@ -393,6 +393,11 @@ export default function (state = defaultState, action) {
             ...state,
             previewing: false
         };
+    case actions.LOAD_SUBMISSION:
+        return {
+            ...getDefaultState(),
+            ...action.newState
+        }
     default:
         return state;
     }

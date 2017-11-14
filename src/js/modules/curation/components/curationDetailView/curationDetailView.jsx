@@ -1,20 +1,26 @@
 import React from 'react';
+import submissionModule from 'modules/submission';
+
+let SubmissionView = submissionModule.components.SubmissionView;
 
 class CurationDetailView extends React.Component {
+
+    componentWillMount() {
+        this.props.requestSubmission(this.props.routeParams.submissionId);
+    }
+
     render() {
         return (
-            <div>
-                <h2>Detail View for submission: 
-                {" " + this.props.routeParams.submissionId}</h2>
-            </div>
+            <SubmissionView curation={true} />
         );
     }
 }
 
 CurationDetailView.propTypes = {
     routeParams: React.PropTypes.shape({
-        submission_id: React.PropTypes.string
+        submissionId: React.PropTypes.string
     }).isRequired,
+    requestSubmission: React.PropTypes.func,
 };
 
 

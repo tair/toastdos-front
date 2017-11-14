@@ -3,7 +3,7 @@
 import React from 'react';
 import { Card, CardHeader, CardBody,
     Input, InputGroup, InputGroupAddon, Label,
-    Form, FormGroup, Row, Col, Button } from 'reactstrap';
+    Form, FormGroup, Row, Col, Button, ButtonGroup } from 'reactstrap';
 
 import CustomSelect from 'lib/components/customSelect';
 
@@ -80,6 +80,28 @@ class AnnotationEntry extends React.Component {
         }
     }
 
+    renderButtons() {
+        if (!this.props.curation) {
+            return (
+                <Button color="danger"
+                    onClick={this.props.onDeleteClick}>
+                    <span className="fa fa-close" title="Remove Annotation"></span>
+                </Button>
+            );
+        } else {
+            return (
+                <ButtonGroup>
+                    <Button color="success" type="button">
+                        <span className="fa fa-check" />
+                    </Button>
+                    <Button color="danger" type="button">
+                        <span className="fa fa-trash" />
+                    </Button>
+                </ButtonGroup>
+            );
+        }
+    }
+
     render() {
         return (
             <Card className="annotation-entry mt-3">
@@ -99,11 +121,7 @@ class AnnotationEntry extends React.Component {
                             </InputGroup>
                         </Col>
                         <Col sm="auto" className="text-right input-container">
-                            <Button color="danger"
-                                onClick={this.props.onDeleteClick}
-                            >
-                                <span className="fa fa-close" title="Remove Annotation"></span>
-                            </Button>
+                            {this.renderButtons()}
                         </Col>
                     </Row>
                 </CardHeader>
@@ -125,7 +143,8 @@ AnnotationEntry.propTypes = {
     onDataUpdate: React.PropTypes.func,
     onEvidenceWithAddClick: React.PropTypes.func,
     validateEvidenceWith: React.PropTypes.func,
-    removeEvidenceWith: React.PropTypes.func
+    removeEvidenceWith: React.PropTypes.func,
+    curation: React.PropTypes.bool
 };
 
 AnnotationEntry.defaultProps = {
@@ -134,7 +153,8 @@ AnnotationEntry.defaultProps = {
     onDataUpdate: () => {},
     onEvidenceWithAddClick: () => {},
     validateEvidenceWith: () => {},
-    removeEvidenceWith: () => {}
+    removeEvidenceWith: () => {},
+    curation: false,
 };
 
 

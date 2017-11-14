@@ -41,7 +41,7 @@ class SingleGene extends React.Component {
                             <ValidationInput
                                 title={this.props.title}
                                 value={this.props.locusNameValue}
-                                placeholder="UniProt ID, AGI locus ID, or RNA Central ID (e.g. AT2G23380)"
+                                placeholder="e.g. AT2G23380"
                                 validationState={this.props.validationState}
                                 validationError={this.props.validationError}
                                 attemptValidate={this.props.validateGeneData}

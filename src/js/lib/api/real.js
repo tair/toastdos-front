@@ -209,3 +209,23 @@ export function listSubmissions(page, limit, sortBy, sortDir, jwt, callback) {
     });
 }
 
+export function getSubmission(submissionId, jwt, callback) {
+    return request({
+        method: 'GET',
+        timeout: 15000,
+        url: `${BASE_URL}/api/submission/${submissionId}`,
+        json: true,
+        headers: {
+            'Authorization': `Bearer ${jwt}`
+        },
+        qs: { }
+    }, (err, res, body) => {
+        if(err) {
+            return callback(err);
+        }
+        if(res.status < 200 || res.status >= 300) {
+            return callback(err);
+        }
+        return callback(null, body);
+    });
+}
