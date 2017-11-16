@@ -29,7 +29,7 @@ class HomeView extends React.Component {
                     <Col className="align-self-center">
                         <h3 className="goat-text text-light text-center align-self-center">&mdash; the &mdash;</h3>
                         <h1 className="goat-text text-light text-center align-self-center">
-                            Genetic Online Annotation Tool
+                            Generic Online Annotation Tool
                         </h1>
                     </Col>
                 </Row>
