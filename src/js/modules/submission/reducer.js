@@ -8,6 +8,18 @@ import {
         validationStates,
     } from './constants';
 
+function getDefaultGeneState() {
+    return {
+        localId: "init",
+        geneSymbolId: null,
+        finalizedLocusName: "",
+        finalizedGeneSymbol: "",
+        finalizedFullName: "",
+        validationState: validationStates.NOT_VALIDATED,
+        validationError: "",
+    };
+}
+
 function getDefaultState() {
     return {
         publicationIdValue: "",
@@ -19,14 +31,7 @@ function getDefaultState() {
         publicationValidationState: validationStates.NOT_VALIDATED,
         publicationValidationError: "",
         geneIndex: {
-            "init": {
-                localId: "init",
-                finalizedLocusName: "",
-                finalizedGeneSymbol: "",
-                finalizedFullName: "",
-                validationState: validationStates.NOT_VALIDATED,
-                validationError: ""
-            }
+            "init": getDefaultGeneState(),
         },
         geneOrder: ["init"],
         annotationIndex: {},
@@ -87,12 +92,8 @@ export default function (state = defaultState, action) {
         };
 
         newState.geneIndex[action.localId] = {
+            ...getDefaultGeneState(),
             localId: action.localId,
-            finalizedLocusName: "",
-            finalizedGeneSymbol: "",
-            finalizedFullName: "",
-            validationState: validationStates.NOT_VALIDATED,
-            validationError: ""
         };
 
         newState.geneOrder.push(action.localId);
@@ -115,12 +116,8 @@ export default function (state = defaultState, action) {
         }
 
         newState.geneIndex[action.geneId] = {
+            ...getDefaultGeneState(),
             localId: action.geneId,
-            finalizedLocusName: "",
-            finalizedGeneSymbol: "",
-            finalizedFullName: "",
-            validationState: validationStates.NOT_VALIDATED,
-            validationError: ""
         };
 
         return Object.assign({}, state, newState);
