@@ -25,6 +25,7 @@ const ConnectedAnnotationList = connect(
         annotationOrder: state.submission.annotationOrder,
         hasValidGene: hasValidGene(state),
         hasAllValidGenes: hasAllValidGenes(state),
+        curating: state.submission.curating,
     }),
     dispatch => ({
         onAnnotationAddClick: () => dispatch(addNewAnnotation(generateId())),

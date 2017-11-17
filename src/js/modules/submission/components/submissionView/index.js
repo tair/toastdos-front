@@ -17,6 +17,7 @@ const ConnectedSubmissionView = connect(
         submitting: s => s.submission.submitting,
         submitted: s => s.submission.submitted,
         previewing: s => s.submission.previewing,
+        curating: s => s.submission.curating,
         canSubmit,
         errorMessage: s => `${s.submission.submissionError}`,
     }),

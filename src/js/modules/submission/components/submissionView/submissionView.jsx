@@ -53,7 +53,7 @@ class SubmissionView extends React.Component {
                             <CardHeader>
                                 <Row className="align-items-center" >
                                     <Col>
-                                        <span className="fa fa-file-text" /> {this.props.curation ? "Curate Submission" : "New Annotation Submission" }
+                                        <span className="fa fa-file-text" /> {this.props.curating ? "Curate Submission" : "New Annotation Submission" }
                                     </Col>
                                 </Row>
                             </CardHeader>
@@ -69,10 +69,10 @@ class SubmissionView extends React.Component {
                                             <PublicationField/>
                                         </ListGroupItem>
                                         <ListGroupItem className="border-left-0 border-right-0">
-                                            <GeneList curation={this.props.curation} />
+                                            <GeneList/>
                                         </ListGroupItem>
                                         <ListGroupItem className="border-left-0 border-right-0 border-bottom-0">
-                                            <AnnotationList curation={this.props.curation} />
+                                            <AnnotationList/>
                                         </ListGroupItem>
                                     </ListGroup>
                                 )}
@@ -97,7 +97,7 @@ class SubmissionView extends React.Component {
                                         <Button color="success"
                                             className="btn-submit"
                                             onClick={this.props.submit}
-                                            disabled={!this.props.canSubmit || this.props.curation}
+                                            disabled={!this.props.canSubmit || this.props.curating}
                                         >
                                             <span className="fa fa-save"></span> Submit Annotations
                                         </Button>
@@ -113,7 +113,7 @@ class SubmissionView extends React.Component {
                                     </Row>
                             ) : (
                                 <Row>
-                                    {!this.props.curation ?
+                                    {!this.props.curating ?
                                         <Col sm="3">
                                             <Button color="danger"
                                                 onClick={this.props.resetSubmission}
@@ -127,7 +127,7 @@ class SubmissionView extends React.Component {
                                         <Button color="success"
                                             className="btn-submit"
                                             onClick={this.props.preview}>
-                                            {this.props.curation ? 'Review Changes' : 'Review Submission'} <span className="fa fa-chevron-right"></span>
+                                            {this.props.curating ? 'Review Changes' : 'Review Submission'} <span className="fa fa-chevron-right"></span>
                                         </Button>
                                     ) : (<div><span className="fa fa-info-circle" /> Please ensure you have at least a publication, 1 gene, and 1 annotation</div>)}
                                     </Col>
@@ -152,14 +152,14 @@ SubmissionView.propTypes = {
     previewing: React.PropTypes.bool,
     canSubmit: React.PropTypes.bool,
     errorMessage: React.PropTypes.string,
-    curation: React.PropTypes.bool,
+    curating: React.PropTypes.bool,
 };
 
 SubmissionView.defaultProps = {
     submit: () => {},
     preview: () => {},
     edit: () => {},
-    curation: false,
+    curating: false,
 
 };
 

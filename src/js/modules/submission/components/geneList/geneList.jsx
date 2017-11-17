@@ -53,7 +53,7 @@ class GeneList extends React.Component {
                             ) : null
                             }
                             {this.props.geneOrder.map(this.generateGene)}
-                            {!this.props.curation?
+                            {!this.props.curating?
                                 <Row className="justify-content-sm-center mt-3 mb-3">
                                     <Col sm={{size:4, offset:4}} className="justify-content-sm-center">
                                         <Button block color="success"
@@ -80,7 +80,7 @@ GeneList.propTypes = {
     removeGene: React.PropTypes.func,
     clearGene: React.PropTypes.func,
     validateGeneData: React.PropTypes.func,
-    curation: React.PropTypes.bool
+    curating: React.PropTypes.bool
 };
 
 GeneList.defaultProps = {
@@ -90,7 +90,7 @@ GeneList.defaultProps = {
     removeGene: () => {},
     clearGene: () => {},
     validateGeneData: () => {},
-    curation: false,
+    curating: false,
 };
 
 

@@ -72,7 +72,8 @@ function getDefaultState() {
         previewing: false,
         submissionError: "",
         keywordSearchResults: [],
-        searchingKeywords: false
+        searchingKeywords: false,
+        curating: false,
     }
 }
 
@@ -437,6 +438,7 @@ export default function (state = defaultState, action) {
             geneOrder: [],
             annotationIndex: {},
             annotationOrder: [],
+            curating: true,
         };
 
         let locusMap = {};

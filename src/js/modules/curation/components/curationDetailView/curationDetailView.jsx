@@ -11,7 +11,7 @@ class CurationDetailView extends React.Component {
 
     render() {
         return (
-            <SubmissionView curation={true} />
+            <SubmissionView/>
         );
     }
 }

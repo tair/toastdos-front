@@ -81,7 +81,7 @@ class AnnotationEntry extends React.Component {
     }
 
     renderButtons() {
-        if (!this.props.curation) {
+        if (!this.props.curating) {
             return (
                 <Button color="danger"
                     onClick={this.props.onDeleteClick}>
@@ -144,7 +144,7 @@ AnnotationEntry.propTypes = {
     onEvidenceWithAddClick: React.PropTypes.func,
     validateEvidenceWith: React.PropTypes.func,
     removeEvidenceWith: React.PropTypes.func,
-    curation: React.PropTypes.bool
+    curating: React.PropTypes.bool
 };
 
 AnnotationEntry.defaultProps = {
@@ -154,7 +154,7 @@ AnnotationEntry.defaultProps = {
     onEvidenceWithAddClick: () => {},
     validateEvidenceWith: () => {},
     removeEvidenceWith: () => {},
-    curation: false,
+    curating: false,
 };
 
 

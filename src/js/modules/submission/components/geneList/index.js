@@ -14,6 +14,7 @@ import generateId from "lib/idGenerator";
 
 const ConnectedGeneList = connect(
     state => ({
+        curating: state.submission.curating,
         geneIndex: state.submission.geneIndex,
         geneOrder: state.submission.geneOrder
     }),
