@@ -497,7 +497,7 @@ export default function (state = defaultState, action) {
             newState.annotationOrder.push(id);
         }
 
-        return Object.assign({},getDefaultState(),newState);
+        return Object.assign({}, getDefaultState(), newState);
     default:
         return state;
     }
