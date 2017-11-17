@@ -428,10 +428,74 @@ export default function (state = defaultState, action) {
             previewing: false
         };
     case actions.LOAD_SUBMISSION:
-        return {
-            ...getDefaultState(),
-            ...action.newState
+        newState = {
+            publication: {
+                ...getDefaultPublicationState(),
+                idValue: action.submission.publicationId,
+            },
+            geneIndex: {},
+            geneOrder: [],
+            annotationIndex: {},
+            annotationOrder: [],
+        };
+
+        let locusMap = {};
+
+        for (let gene of action.submission.genes) {
+            let id = "remote_gene_" + gene.id;
+            locusMap[gene.locusName] = id;
+            newState.geneIndex[id] = {
+                ...getDefaultGeneState(),
+                localId: id,
+                finalizedLocusName: gene.locusName,
+                finalizedGeneSymbol: gene.geneSymbol || "",
+                finalizedFullName: gene.fullName || "",
+                ...getValid(),
+            };
+            newState.geneOrder.push(id);
         }
+
+        for (let annotation of action.submission.annotations) {
+            let id = "remote_annotation_" + annotation.id;
+            newState.annotationIndex[id] = {
+                localId: id,
+                annotationType: annotation.type,
+            };
+            switch(annotationTypeData[annotation.type].format) {
+                case annotationFormats.GENE_TERM:
+                    newState.annotationIndex[id].data = {
+                        geneLocalId: locusMap[annotation.data.locusName],
+                        keywordName: annotation.data.keyword.name,
+                        keywordId: annotation.data.keyword.id,
+                        keywordExternalId: "",
+                        methodName: annotation.data.method.name,
+                        methodId: annotation.data.method.id,
+                        methodExternalId: annotation.data.method.externalId || "",
+                        methodEvidenceCode: annotation.data.method.evidenceCode || null,
+                        evidenceWithOrder: [],
+                    };
+                    break;
+                case annotationFormats.GENE_GENE:
+                    newState.annotationIndex[id].data = {
+                        gene1LocalId: locusMap[annotation.data.locusName],
+                        gene2LocalId: locusMap[annotation.data.locusName2],
+                        methodName: annotation.data.method.name,
+                        methodId: annotation.data.method.id,
+                        methodExternalId: annotation.data.method.externalId || "",
+                        methodEvidenceCode: annotation.data.method.evidenceCode || null
+                    };
+                    break;
+                case annotationFormats.COMMENT:
+                    newState.annotationIndex[id].data = {
+                        geneLocalId: locusMap[annotation.data.locusName],
+                        comment: annotation.data.text
+                    };
+                    break;
+            }
+            newState.annotationOrder.push(id);
+        }
+
+        return Object.assign({},getDefaultState(),newState);
     default:
         return state;
     }
