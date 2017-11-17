@@ -8,17 +8,6 @@ import {
         validationStates,
     } from './constants';
 
-function getDefaultGeneState() {
-    return {
-        localId: "init",
-        geneSymbolId: null,
-        finalizedLocusName: "",
-        finalizedGeneSymbol: "",
-        finalizedFullName: "",
-        ...getNotValidated(),
-    };
-}
-
 function getNotValidated() {
     return {
         validationState: validationStates.NOT_VALIDATED,
@@ -47,16 +36,30 @@ function getInvalid(error) {
     };
 }
 
+function getDefaultGeneState() {
+    return {
+        localId: "init",
+        geneSymbolId: null,
+        finalizedLocusName: "",
+        finalizedGeneSymbol: "",
+        finalizedFullName: "",
+        ...getNotValidated(),
+    };
+}
+
+function getDefaultPublicationState() {
+    return {
+        idValue: "",
+        author: "",
+        url: "",
+        title: "",
+        ...getNotValidated(),
+    };
+}
+
 function getDefaultState() {
     return {
-        publicationIdValue: "",
-        publicationInfo: {
-            author: "",
-            url: "",
-            title: "",
-        },
-        publicationValidationState: validationStates.NOT_VALIDATED,
-        publicationValidationError: "",
+        publication: getDefaultPublicationState(),
         geneIndex: {
             "init": getDefaultGeneState(),
         },
@@ -79,38 +82,40 @@ export default function (state = defaultState, action) {
     let newState = {};
     switch (action.type) {
     case actions.PUBLICATION_ID_CHANGED:
-        return Object.assign({}, state, {
-            publicationIdValue: action.value
-        });
+        return {
+            ...state,
+            publication: {
+                ...state.publication,
+                idValue: action.value,
+            }
+        };
     case actions.ATTEMPT_VALIDATE_PUBLICATION:
         return {
             ...state,
-            publicationIdValue: '',
-            publicationValidationState: validationStates.VALIDATING,
-            publicationValidationError: '',
-            publicationInfo: {
-                author: '',
-                url: '',
-                title: '',
-            },
+            publication: {
+                ...getDefaultPublicationState(),
+                ...getValidating(),
+            }
         };
     case actions.VALIDATE_PUBLICATION_SUCCESS:
         return {
             ...state,
-            publicationIdValue: action.publicationId,
-            publicationValidationState: validationStates.VALID,
-            publicationValidationError: '',
-            publicationInfo: {
+            publication: {
+                ...state.publication,
+                ...getValid(),
+                idValue: action.publicationId,
                 author: action.data.author,
                 url: action.data.url,
                 title: action.data.title,
-            },
+            }
         };
     case actions.VALIDATE_PUBLICATION_FAIL:
         return {
             ...state,
-            publicationValidationState: validationStates.INVALID,
-            publicationValidationError: action.error,
+            publication: {
+                ...state.publication,
+                ...getInvalid(action.error),
+            }
         };
     case actions.ADD_NEW_GENE:
         return {

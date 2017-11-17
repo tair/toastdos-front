@@ -2,14 +2,11 @@
 
 import { connect } from 'react-redux';
 import PublicationField from './publicationField';
-import { changePublicationId, AttemptValidatePublicationAsync } from '../../actions';
+import { AttemptValidatePublicationAsync } from '../../actions';
 
 const ConnectedPublicationField = connect(
     state => ({
-        publicationIdValue: state.submission.publicationIdValue,
-        validationError: state.submission.publicationValidationError,
-        publicationInfo: state.submission.publicationInfo,
-        validationState: state.submission.publicationValidationState,
+        ...state.submission.publication,
     }),
     dispatch => ({
         attemptValidatePublication: (publicationId) => dispatch(new AttemptValidatePublicationAsync(publicationId))

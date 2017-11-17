@@ -361,7 +361,9 @@ export function edit() {
 
 export function loadSubmission(submission) {
     let newState = {
-        publicationIdValue: submission.publicationId,
+        publication: {
+            idValue: submission.publicationId,
+        },
         geneIndex: {},
         geneOrder: [],
         annotationIndex: {},

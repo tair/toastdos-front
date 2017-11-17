@@ -29,7 +29,7 @@ class PublicationField extends React.Component {
                             <CardHeader className="align-center">
                                 <ValidationInput
                                     title="Publication ID"
-                                    value={this.props.publicationIdValue}
+                                    value={this.props.idValue}
                                     placeholder="e.g 21051552 or 10.1104/pp.110.166546"
                                     attemptValidate={this.props.attemptValidatePublication}
                                     validationState={this.props.validationState}
@@ -38,19 +38,19 @@ class PublicationField extends React.Component {
                                 />
                             </CardHeader>
                             <CardBody>
-                                {this.props.publicationInfo.url ? (
+                                {this.props.url ? (
                                 <LabelInputRow title="URL">
                                     <div className="mb-2">
-                                        <a target="_blank" href={this.props.publicationInfo.url}>{this.props.publicationInfo.url}</a>
+                                        <a target="_blank" href={this.props.url}>{this.props.url}</a>
                                     </div>
                                 </LabelInputRow>
                                 ):(
                                 [<LabelInputRow key="Title" title="Title">
-                                    <Input value={this.props.publicationInfo.title} disabled></Input>
+                                    <Input value={this.props.title} disabled></Input>
                                 </LabelInputRow>
                                 ,
                                 <LabelInputRow key="Author" title="Author">
-                                    <Input value={this.props.publicationInfo.author} disabled></Input>
+                                    <Input value={this.props.author} disabled></Input>
                                 </LabelInputRow>
                                 ])}
                             </CardBody>
@@ -63,26 +63,22 @@ class PublicationField extends React.Component {
 }
 
 PublicationField.propTypes = {
-    publicationIdValue: React.PropTypes.string,
+    idValue: React.PropTypes.string,
     validationState: React.PropTypes.string,
     validationError: React.PropTypes.string,
-    publicationInfo: React.PropTypes.shape({
-        author: React.PropTypes.string,
-        url: React.PropTypes.string,
-        title: React.PropTypes.string,
-    }),
+    author: React.PropTypes.string,
+    url: React.PropTypes.string,
+    title: React.PropTypes.string,
     attemptValidatePublication: React.PropTypes.func.isRequired,
 };
 
 PublicationField.defaultProps = {
-    publicationIdValue: "",
+    idValue: "",
     validationState: validationStates.NOT_VALIDATED,
     validationError: "",
-    publicationInfo: {
-        author: '',
-        url: '',
-        title: '',
-    },
+    author: '',
+    url: '',
+    title: '',
     attemptValidatePublication: () => {}
 };
 

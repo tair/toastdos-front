@@ -189,7 +189,7 @@ class SubmissionReadOnly extends React.Component {
                             <h5>Publication ID</h5>
                         </Col>
                         <Col>
-                            <em>{this.props.publication}</em>
+                            <em>{this.props.publicationIdValue}</em>
                         </Col>
                     </Row>
                 </ListGroupItem>
@@ -219,7 +219,7 @@ class SubmissionReadOnly extends React.Component {
 }
 
 SubmissionReadOnly.propTypes = {
-    publication: React.PropTypes.string,
+    publicationIdValue: React.PropTypes.string,
     genes: React.PropTypes.array,
     evidenceWith: React.PropTypes.object,
     annotations: React.PropTypes.array,
