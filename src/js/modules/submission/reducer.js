@@ -8,25 +8,60 @@ import {
         validationStates,
     } from './constants';
 
+function getNotValidated() {
+    return {
+        validationState: validationStates.NOT_VALIDATED,
+        validationError: "",
+    };
+}
+
+function getValidating() {
+    return {
+        validationState: validationStates.VALIDATING,
+        validationError: "",
+    };
+}
+
+function getValid() {
+    return {
+        validationState: validationStates.VALID,
+        validationError: "",
+    };
+}
+
+function getInvalid(error) {
+    return {
+        validationState: validationStates.INVALID,
+        validationError: error,
+    };
+}
+
+function getDefaultGeneState() {
+    return {
+        localId: "init",
+        geneSymbolId: null,
+        finalizedLocusName: "",
+        finalizedGeneSymbol: "",
+        finalizedFullName: "",
+        ...getNotValidated(),
+    };
+}
+
+function getDefaultPublicationState() {
+    return {
+        idValue: "",
+        author: "",
+        url: "",
+        title: "",
+        ...getNotValidated(),
+    };
+}
+
 function getDefaultState() {
     return {
-        publicationIdValue: "",
-        publicationInfo: {
-            author: "",
-            url: "",
-            title: "",
-        },
-        publicationValidationState: validationStates.NOT_VALIDATED,
-        publicationValidationError: "",
+        publication: getDefaultPublicationState(),
         geneIndex: {
-            "init": {
-                localId: "init",
-                finalizedLocusName: "",
-                finalizedGeneSymbol: "",
-                finalizedFullName: "",
-                validationState: validationStates.NOT_VALIDATED,
-                validationError: ""
-            }
+            "init": getDefaultGeneState(),
         },
         geneOrder: ["init"],
         annotationIndex: {},
@@ -37,7 +72,8 @@ function getDefaultState() {
         previewing: false,
         submissionError: "",
         keywordSearchResults: [],
-        searchingKeywords: false
+        searchingKeywords: false,
+        curating: false,
     }
 }
 
@@ -47,57 +83,53 @@ export default function (state = defaultState, action) {
     let newState = {};
     switch (action.type) {
     case actions.PUBLICATION_ID_CHANGED:
-        return Object.assign({}, state, {
-            publicationIdValue: action.value
-        });
+        return {
+            ...state,
+            publication: {
+                ...state.publication,
+                idValue: action.value,
+            }
+        };
     case actions.ATTEMPT_VALIDATE_PUBLICATION:
         return {
             ...state,
-            publicationIdValue: '',
-            publicationValidationState: validationStates.VALIDATING,
-            publicationValidationError: '',
-            publicationInfo: {
-                author: '',
-                url: '',
-                title: '',
-            },
+            publication: {
+                ...getDefaultPublicationState(),
+                ...getValidating(),
+            }
         };
     case actions.VALIDATE_PUBLICATION_SUCCESS:
         return {
             ...state,
-            publicationIdValue: action.publicationId,
-            publicationValidationState: validationStates.VALID,
-            publicationValidationError: '',
-            publicationInfo: {
+            publication: {
+                ...state.publication,
+                ...getValid(),
+                idValue: action.publicationId,
                 author: action.data.author,
                 url: action.data.url,
                 title: action.data.title,
-            },
+            }
         };
     case actions.VALIDATE_PUBLICATION_FAIL:
         return {
             ...state,
-            publicationValidationState: validationStates.INVALID,
-            publicationValidationError: action.error,
+            publication: {
+                ...state.publication,
+                ...getInvalid(action.error),
+            }
         };
     case actions.ADD_NEW_GENE:
-        newState = {
-            geneIndex: Object.assign({}, state.geneIndex),
-            geneOrder: state.geneOrder.slice()
+        return {
+            ...state,
+            geneIndex: {
+                ...state.geneIndex,
+                [action.localId]: {
+                    ...getDefaultGeneState(),
+                    localId: action.localId,
+                }
+            },
+            geneOrder: state.geneOrder.concat(action.localId),
         };
-
-        newState.geneIndex[action.localId] = {
-            localId: action.localId,
-            finalizedLocusName: "",
-            finalizedGeneSymbol: "",
-            finalizedFullName: "",
-            validationState: validationStates.NOT_VALIDATED,
-            validationError: ""
-        };
-
-        newState.geneOrder.push(action.localId);
-
-        return Object.assign({}, state, newState);
     case actions.REMOVE_GENE:
         newState = {
             geneIndex: Object.assign({}, state.geneIndex),
@@ -105,33 +137,30 @@ export default function (state = defaultState, action) {
         };
 
         delete newState.geneIndex[action.localId];
-        // newState.gene.splice(action.index, 1);
 
         return Object.assign({}, state, newState);
-
     case actions.CLEAR_GENE: 
-        newState = {
-            geneIndex: Object.assign({}, state.geneIndex)
-        }
-
-        newState.geneIndex[action.geneId] = {
-            localId: action.geneId,
-            finalizedLocusName: "",
-            finalizedGeneSymbol: "",
-            finalizedFullName: "",
-            validationState: validationStates.NOT_VALIDATED,
-            validationError: ""
+        return {
+            ...state,
+            geneIndex: {
+                ...state.geneIndex,
+                [action.geneId]: {
+                    ...getDefaultGeneState(),
+                    localId: action.geneId,
+                }
+            }
         };
-
-        return Object.assign({}, state, newState);
     case actions.ATTEMPT_VALIDATE_GENE:
-        newState = {
-            geneIndex: Object.assign({}, state.geneIndex),
+        return {
+            ...state,
+            geneIndex: {
+                ...state.geneIndex,
+                [action.localId]: {
+                    ...state.geneIndex[action.localId],
+                    ...getValidating(),
+                }
+            }
         };
-        newState.geneIndex[action.localId].validationError = '';
-        newState.geneIndex[action.localId].validationState = validationStates.VALIDATING;
-
-        return Object.assign({}, state, newState);
     case actions.UPDATE_GENE_DATA:
         return {
             ...state,
@@ -144,25 +173,29 @@ export default function (state = defaultState, action) {
             }
         };
     case actions.VALIDATE_GENE_SUCCESS:
-        newState = {
-            geneIndex: Object.assign({}, state.geneIndex),
+        return {
+            ...state,
+            geneIndex: {
+                ...state.geneIndex,
+                [action.localId]: {
+                    ...state.geneIndex[action.localId],
+                    ...getValid(),
+                    finalizedLocusName: action.locusName,
+                }
+            }
         };
-
-        newState.geneIndex[action.localId].validationError = '';
-        newState.geneIndex[action.localId].validationState = validationStates.VALID;
-        newState.geneIndex[action.localId].finalizedLocusName = action.locusName;
-
-        return Object.assign({}, state, newState);
     case actions.VALIDATE_GENE_FAIL:
-        newState = {
-            geneIndex: Object.assign({}, state.geneIndex),
+        return {
+            ...state,
+            geneIndex: {
+                ...state.geneIndex,
+                [action.localId]: {
+                    ...state.geneIndex[action.localId],
+                    ...getInvalid(action.error),
+                    finalizedLocusName: '',
+                }
+            }
         };
-
-        newState.geneIndex[action.localId].validationError = action.error;
-        newState.geneIndex[action.localId].validationState = validationStates.INVALID;
-        newState.geneIndex[action.localId].finalizedLocusName = '';
-        
-        return Object.assign({}, state, newState);
     case actions.ADD_NEW_ANNOTATION:
         newState = {
             annotationIndex: Object.assign({}, state.annotationIndex),
@@ -298,8 +331,7 @@ export default function (state = defaultState, action) {
                 [action.newEvidenceWithId]: {
                     ...state.evidenceWithIndex[action.newEvidenceWithId],
                     localId: action.newEvidenceWithId,
-                    validationState: validationStates.NOT_VALIDATED,
-                    validationError: '',
+                    ...getNotValidated(),
                     locusName: ""
                 }
             },
@@ -316,14 +348,16 @@ export default function (state = defaultState, action) {
             }
         };
     case actions.ATTEMPT_VALIDATE_EVIDENCE_WITH:
-        newState = {
-            evidenceWithIndex: Object.assign({},state.evidenceWithIndex)
-        }
-        
-        newState.evidenceWithIndex[action.evidenceWithId].validationState = validationStates.VALIDATING;
-        newState.evidenceWithIndex[action.evidenceWithId].validationError = '';
-
-        return Object.assign({},state,newState);
+        return {
+            ...state,
+            evidenceWithIndex: {
+                ...state.evidenceWithIndex,
+                [action.evidenceWithId]: {
+                    ...state.evidenceWithIndex[action.evidenceWithId],
+                    ...getValidating(),
+                }
+            }
+        };
     case actions.REMOVE_EVIDENCE_WITH:
 
         newState = {
@@ -348,14 +382,17 @@ export default function (state = defaultState, action) {
 
         return Object.assign({}, state, newState);
     case actions.CLEAR_EVIDENCE_WITH:
-        newState = {
-            evidenceWithIndex: Object.assign({},state.evidenceWithIndex)
-        }
-        
-        newState.evidenceWithIndex[action.evidenceWithId].validationState = validationStates.NOT_VALIDATED;
-        newState.evidenceWithIndex[action.evidenceWithId].locusName = "";
-
-        return Object.assign({}, state, newState);
+        return {
+            ...state,
+            evidenceWithIndex: {
+                ...state.evidenceWithIndex,
+                [action.evidenceWithId]: {
+                    ...state.evidenceWithIndex[action.evidenceWithId],
+                    ...getNotValidated(),
+                    locusName: '',
+                }
+            }
+        };
     case actions.VALIDATE_EVIDENCE_WITH_SUCCESS:
         return {
             ...state,
@@ -363,8 +400,7 @@ export default function (state = defaultState, action) {
                 ...state.evidenceWithIndex,
                 [action.evidenceWithId]: {
                     ...state.evidenceWithIndex[action.evidenceWithId],
-                    validationState: validationStates.VALID,
-                    validationError: '',
+                    ...getValid(),
                     locusName: action.locusName,
                 }
             }
@@ -376,8 +412,7 @@ export default function (state = defaultState, action) {
                 ...state.evidenceWithIndex,
                 [action.evidenceWithId]: {
                     ...state.evidenceWithIndex[action.evidenceWithId],
-                    validationState: validationStates.INVALID,
-                    validationError: action.error,
+                    ...getInvalid(action.error),
                     locusName: '',
                 }
             }
@@ -394,10 +429,75 @@ export default function (state = defaultState, action) {
             previewing: false
         };
     case actions.LOAD_SUBMISSION:
-        return {
-            ...getDefaultState(),
-            ...action.newState
+        newState = {
+            publication: {
+                ...getDefaultPublicationState(),
+                idValue: action.submission.publicationId,
+            },
+            geneIndex: {},
+            geneOrder: [],
+            annotationIndex: {},
+            annotationOrder: [],
+            curating: true,
+        };
+
+        let locusMap = {};
+
+        for (let gene of action.submission.genes) {
+            let id = "remote_gene_" + gene.id;
+            locusMap[gene.locusName] = id;
+            newState.geneIndex[id] = {
+                ...getDefaultGeneState(),
+                localId: id,
+                finalizedLocusName: gene.locusName,
+                finalizedGeneSymbol: gene.geneSymbol || "",
+                finalizedFullName: gene.fullName || "",
+                ...getValid(),
+            };
+            newState.geneOrder.push(id);
         }
+
+        for (let annotation of action.submission.annotations) {
+            let id = "remote_annotation_" + annotation.id;
+            newState.annotationIndex[id] = {
+                localId: id,
+                annotationType: annotation.type,
+            };
+            switch(annotationTypeData[annotation.type].format) {
+                case annotationFormats.GENE_TERM:
+                    newState.annotationIndex[id].data = {
+                        geneLocalId: locusMap[annotation.data.locusName],
+                        keywordName: annotation.data.keyword.name,
+                        keywordId: annotation.data.keyword.id,
+                        keywordExternalId: "",
+                        methodName: annotation.data.method.name,
+                        methodId: annotation.data.method.id,
+                        methodExternalId: annotation.data.method.externalId || "",
+                        methodEvidenceCode: annotation.data.method.evidenceCode || null,
+                        evidenceWithOrder: [],
+                    };
+                    break;
+                case annotationFormats.GENE_GENE:
+                    newState.annotationIndex[id].data = {
+                        gene1LocalId: locusMap[annotation.data.locusName],
+                        gene2LocalId: locusMap[annotation.data.locusName2],
+                        methodName: annotation.data.method.name,
+                        methodId: annotation.data.method.id,
+                        methodExternalId: annotation.data.method.externalId || "",
+                        methodEvidenceCode: annotation.data.method.evidenceCode || null
+                    };
+                    break;
+                case annotationFormats.COMMENT:
+                    newState.annotationIndex[id].data = {
+                        geneLocalId: locusMap[annotation.data.locusName],
+                        comment: annotation.data.text
+                    };
+                    break;
+            }
+            newState.annotationOrder.push(id);
+        }
+
+        return Object.assign({}, getDefaultState(), newState);
     default:
         return state;
     }

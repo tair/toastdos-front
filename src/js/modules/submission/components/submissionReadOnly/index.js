@@ -7,7 +7,7 @@ import SubmissionReadOnly from './submissionReadOnly';
 import {
     geneListSelector,
     annotationListSelector,
-    publicationSelector,
+    publicationIdValueSelector,
     evidenceWithSelector} from '../../selectors';
 import {
         attemptSubmit,
@@ -18,7 +18,7 @@ import {
 
 const ConnectedSubmissionReadOnly = connect(
     createStructuredSelector({
-        publication: publicationSelector,
+        publicationIdValue: publicationIdValueSelector,
         genes: geneListSelector,
         annotations: annotationListSelector,
         evidenceWith: evidenceWithSelector,

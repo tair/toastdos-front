@@ -44,7 +44,7 @@ export function hasValidGene(state) {
     return hasValidGeneSelector(state);
 }
 
-export const publicationSelector = state => state[name].publicationIdValue;
+export const publicationIdValueSelector = state => state[name].publication.idValue;
 
 export const geneListSelector = state => state[name].geneOrder.map(
     gid => state[name].geneIndex[gid]
@@ -62,7 +62,7 @@ export const evidenceWithListSelector = createSelector(
 );
 
 export const publicationValidSelector =
-    s => s[name].publicationValidationState === validationStates.VALID
+    s => s[name].publication.validationState === validationStates.VALID
 ;
 
 export const geneListValidSelector = createSelector(
@@ -129,7 +129,7 @@ export function submissionBodySelector(state) {
     );
 
     let submissionData = {
-        publicationId: state[name].publicationIdValue,
+        publicationId: publicationIdValueSelector(state),
         genes: [],
         annotations: [],
     };
