@@ -68,6 +68,7 @@ module.exports = {
             domain: path.resolve(__dirname, './src/js/domain'),
             lib: path.resolve(__dirname, './src/js/lib'),
             modules: path.resolve(__dirname, './src/js/modules'),
+            ui: path.resolve(__dirname, './src/js/ui'),
             resources: path.resolve(__dirname, "./resources"),
         },
     },
