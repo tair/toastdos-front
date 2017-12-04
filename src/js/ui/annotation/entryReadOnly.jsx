@@ -23,6 +23,7 @@ class AnnotationEntryReadOnly extends React.Component {
                 <CommentAnnotationReadOnly
                     localId={this.props.annotation.annotationTypeLocalId}
                     annotationTypeName={annotationType.name}
+                    annotationStatus={this.props.annotation.annotationStatus}
                 />
             );
         case annotationFormats.GENE_TERM:
@@ -30,6 +31,7 @@ class AnnotationEntryReadOnly extends React.Component {
                 <GeneTermAnnotationReadOnly
                     localId={this.props.annotation.annotationTypeLocalId}
                     annotationTypeName={annotationType.name}
+                    annotationStatus={this.props.annotation.annotationStatus}
                 />
             );
         case annotationFormats.GENE_GENE:
@@ -37,6 +39,7 @@ class AnnotationEntryReadOnly extends React.Component {
                 <GeneGeneAnnotationReadOnly
                     localId={this.props.annotation.annotationTypeLocalId}
                     annotationTypeName={annotationType.name}
+                    annotationStatus={this.props.annotation.annotationStatus}
                 />
             );
         default:

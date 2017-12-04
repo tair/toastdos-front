@@ -4,6 +4,7 @@ import React from 'react';
 import { Card, CardHeader, CardBody, Row, Col, Label } from 'reactstrap';
 import GeneLocusName from 'modules/connectedComponents/gene/locusName';
 import ExternalIdBadge from 'ui/externalIdBadge';
+import AnnotationStatusReadOnly from 'ui/annotation/statusReadOnly';
 
 class GeneGeneAnnotationReadOnly extends React.Component {
     constructor(props) {
@@ -26,7 +27,16 @@ class GeneGeneAnnotationReadOnly extends React.Component {
         return (
             <Card className="mb-3">
                 <CardHeader>
-                    {this.props.annotationTypeName}: {locus1} {'\u2194'} {locus2}
+                    <Row>
+                        <Col>
+                            {this.props.annotationTypeName}: {locus1} {'\u2194'} {locus2}
+                        </Col>
+                        <Col sm="auto">
+                            <AnnotationStatusReadOnly
+                                annotationStatus={this.props.annotationStatus}
+                            />
+                        </Col>
+                    </Row>
                 </CardHeader>
                 <CardBody>
                     <Row>
