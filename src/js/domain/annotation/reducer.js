@@ -6,6 +6,8 @@ import { annotationTypes } from './constants';
 function getDefaultAnnotationState() {
     return {
         localId: '',
+        annotationId: '',
+        annotationStatus: '',
         annotationType: annotationTypes.MOLECULAR_FUNCTION,
         annotationTypeLocalId: '',
     };
@@ -23,7 +25,9 @@ function annotationIndexReducer(state = defaultState.byLocalId, action) {
             [action.localId]: {
                 ...getDefaultAnnotationState(),
                 localId: action.localId,
-                annotationType: action.annotationType,
+                annotationId: action.annotationData.annotationId,
+                annotationStatus: action.annotationData.annotationStatus,
+                annotationType: action.annotationData.annotationType,
                 annotationTypeLocalId: action.annotationTypeLocalId,
             }
         };
@@ -45,8 +49,7 @@ function annotationIndexReducer(state = defaultState.byLocalId, action) {
         return {
             ...state,
             [action.localId]: {
-                ...getDefaultAnnotationState(),
-                localId: action.localId,
+                ...state[action.localId],
                 annotationType: action.newAnnotationType,
                 annotationTypeLocalId: action.newAnnotationTypeLocalId,
             }

@@ -24,6 +24,7 @@ import { commentAnnotationSelector } from 'domain/commentAnnotation/selectors';
 import { geneTermAnnotationSelector } from 'domain/geneTermAnnotation/selectors';
 import { geneGeneAnnotationSelector } from 'domain/geneGeneAnnotation/selectors';
 
+export const submissionId = state => state[name].submissionId;
 export const publicationLocalId = state => state[name].publicationLocalId;
 export const geneOrder = state => state[name].geneOrder;
 export const annotationOrder = state => state[name].annotationOrder;
@@ -104,6 +105,8 @@ export function submissionBodySelector(state) {
 
     submissionData.annotations = annotationList.map(a => {
         const annotation = {
+            id: a.annotationId,
+            status: a.annotationStatus,
             type: a.annotationType,
             data: {}
         };

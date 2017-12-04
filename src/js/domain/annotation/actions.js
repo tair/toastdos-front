@@ -8,10 +8,11 @@ import { annotationFormats, annotationTypes, annotationTypeData } from './consta
 import { annotationSelector, annotationListSelector } from './selectors';
 import generateId from 'lib/idGenerator';
 
-export function addNew(localId, annotationType) {
+export function addNew(localId, annotationData = {}) {
     return (dispatch, getState) => {
         let toAdd;
-        let format = annotationType ? annotationTypeData[annotationType].format : "";
+        let format = annotationData.annotationType ?
+            annotationTypeData[annotationData.annotationType].format : "";
         // Prepare to create the new annotation type
         switch(format) {
         case annotationFormats.GENE_GENE:
@@ -21,29 +22,29 @@ export function addNew(localId, annotationType) {
             toAdd = commentActions.addNew();
             break;
         case annotationFormats.GENE_TERM:
-            toAdd = geneTermActions.addNew(annotationType);
+            toAdd = geneTermActions.addNew(annotationData.annotationType);
             break;
         default:
             toAdd = geneTermActions.addNew();
-            annotationType = toAdd.newType;
+            annotationData.annotationType = toAdd.newType;
         }
 
         // Create the new annotation type
         dispatch(toAdd);
 
         // Link the newly created annotationType to the annotation
-        let annotation = addAnnotation(localId, annotationType, toAdd.localId);
+        let annotation = addAnnotation(localId, annotationData, toAdd.localId);
         dispatch(annotation);
 
         return annotation;
     };
 }
 
-function addAnnotation(localId, annotationType, annotationTypeLocalId) {
+function addAnnotation(localId, annotationData, annotationTypeLocalId) {
     return {
         type: actions.ADD_NEW,
         localId: localId ? localId : "" + generateId(),
-        annotationType,
+        annotationData,
         annotationTypeLocalId,
     };
 }

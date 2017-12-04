@@ -2,11 +2,6 @@
 
 import React from 'react';
 import { Row, Col, ListGroup, ListGroupItem } from 'reactstrap';
-import {
-    annotationTypeData,
-    annotationFormats,
-} from 'domain/annotation/constants';
-import { validationStates } from 'lib/validation';
 import 'css/submissionView.scss';
 import PublicationFieldReadOnly from 'modules/connectedComponents/publication/fieldReadOnly';
 import SingleGeneReadOnly from 'modules/connectedComponents/gene/singleGeneReadOnly';

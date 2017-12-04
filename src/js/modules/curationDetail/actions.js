@@ -1,7 +1,11 @@
 "use strict";
 
 import AuthModule from 'modules/authentication';
-import { getSubmission, submitSubmission } from 'lib/api';
+import {
+    getSubmission,
+    submitSubmission,
+    submitCurationSubmission,
+} from 'lib/api';
 import * as validation from 'lib/validation';
 import * as actions from './actionTypes';
 import * as pubActions from 'domain/publication/actions';
@@ -15,6 +19,7 @@ import {
 import {
     submissionSelector,
     submissionBodySelector,
+    submissionId,
     publicationLocalId,
     annotationOrder,
     geneOrder,
@@ -58,13 +63,20 @@ export function removeFromGeneOrder(geneLocalId) {
     };
 }
 
-export function addAnnotation(annotationLocalId, annotationType, annotationData) {
+export function addAnnotation(annotationLocalId, annotationData) {
     return (dispatch, getState) => {
+
         // Create the new annotation
-        let newAnnotation = annotationActions.addNew(annotationLocalId, annotationType)(dispatch, getState);
+        let newAnnotation = annotationActions.addNew(
+            annotationLocalId,
+            annotationData,
+        )(dispatch, getState);
 
         if (annotationData) {
-            dispatch(annotationActions.updateAnnotationData(newAnnotation.localId, annotationData));
+            dispatch(annotationActions.updateAnnotationData(
+                newAnnotation.localId,
+                annotationData.annotationFormatData,
+            ));
         }
 
         // Link the newly created annotation to the submission
@@ -129,12 +141,15 @@ export function attemptSubmit() {
         });
 
         const token = AuthModule.selectors.rawJwtSelector(currState);
-        submitSubmission(submissionBody, token, (err, data) => {
-            if(err) {
-                return dispatch(submitFail(err));
+        submitCurationSubmission(
+            submissionId(currState), submissionBody,
+            token, (err, data) => {
+                if(err) {
+                    return dispatch(submitFail(err));
+                }
+                return dispatch(submitSuccess(data));
             }
-            return dispatch(submitSuccess(data));
-        });
+        );
     };
 }
 
@@ -181,6 +196,12 @@ export function loadSubmission(submission) {
         // Reset the curation submission
         dispatch(resetSubmission());
 
+        // Record submisison ID
+        dispatch({
+            type: actions.SET_ID,
+            submissionId: submission.id,
+        });
+
         // Create publication for submission
         let newPub = pubActions.addNew();
         dispatch(newPub);
@@ -208,12 +229,12 @@ export function loadSubmission(submission) {
 
         // Create each annotation
         for (let annotation of submission.annotations) {
-            let id = "remote_annotation_" + annotation.id;
+            let localId = "remote_annotation_" + annotation.id;
 
-            let annotationData;
+            let annotationFormatData;
             switch(annotationTypeData[annotation.type].format) {
                 case annotationFormats.GENE_TERM:
-                    annotationData = {
+                    annotationFormatData = {
                         geneLocalId: locusMap[annotation.data.locusName],
                         keywordName: annotation.data.keyword.name,
                         keywordId: annotation.data.keyword.id,
@@ -226,7 +247,7 @@ export function loadSubmission(submission) {
                     };
                     break;
                 case annotationFormats.GENE_GENE:
-                    annotationData = {
+                    annotationFormatData = {
                         gene1LocalId: locusMap[annotation.data.locusName],
                         gene2LocalId: locusMap[annotation.data.locusName2],
                         methodName: annotation.data.method.name,
@@ -236,14 +257,21 @@ export function loadSubmission(submission) {
                     };
                     break;
                 case annotationFormats.COMMENT:
-                    annotationData = {
+                    annotationFormatData = {
                         geneLocalId: locusMap[annotation.data.locusName],
                         comment: annotation.data.text
                     };
                     break;
             }
 
-            dispatch(addAnnotation(id, annotation.type, annotationData));
+            let annotationData = {
+                annotationId: annotation.id,
+                annotationStatus: annotation.status,
+                annotationType: annotation.type,
+                annotationFormatData: annotationFormatData,
+            };
+
+            dispatch(addAnnotation(localId, annotationData));
         }
 
         return loaded;
