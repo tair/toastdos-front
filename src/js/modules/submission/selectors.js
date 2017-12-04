@@ -30,7 +30,6 @@ export const annotationOrder = state => state[name].annotationOrder;
 export const submitting = state => state[name].submitting;
 export const submitted = state => state[name].submitted;
 export const previewing = state => state[name].previewing;
-export const curating = state => state[name].curating;
 export const errorMessage = state => `${state[name].submissionError}`;
 
 export const submissionSelector = state => state[name];

@@ -8,6 +8,12 @@ export const annotationFormats = {
     GENE_GENE: "GENE_GENE"
 };
 
+export const annotationStatusFormats = {
+    PENDING: "pending",
+    ACCEPTED: "accepted",
+    REJECTED: "rejected"
+};
+
 export const annotationTypes = {
     MOLECULAR_FUNCTION: "MOLECULAR_FUNCTION",
     BIOLOGICAL_PROCESS: "BIOLOGICAL_PROCESS",

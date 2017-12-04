@@ -1,7 +1,7 @@
 "use strict";
 
 import * as actions from './actionTypes';
-import { annotationTypes } from './constants';
+import { annotationTypes, annotationStatusFormats } from './constants';
 
 function getDefaultAnnotationState() {
     return {
@@ -52,6 +52,14 @@ function annotationIndexReducer(state = defaultState.byLocalId, action) {
                 ...state[action.localId],
                 annotationType: action.newAnnotationType,
                 annotationTypeLocalId: action.newAnnotationTypeLocalId,
+            }
+        };
+    case actions.CHANGE_ANNOTATION_STATUS:
+        return {
+            ...state,
+            [action.localId]: {
+                ...state[action.localId],
+                annotationStatus: action.annotationStatus,
             }
         };
     default:

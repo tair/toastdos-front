@@ -3,16 +3,20 @@
 import React from 'react';
 import { Card, CardHeader, CardBody,
     Input, InputGroup, InputGroupAddon, Label,
-    Form, FormGroup, Row, Col, Button, ButtonGroup } from 'reactstrap';
+    Form, FormGroup, Row, Col, Button, ButtonGroup,
+} from 'reactstrap';
 import CustomSelect from 'lib/components/customSelect';
 import {
     annotationTypes,
     annotationTypeData,
-    annotationFormats
+    annotationFormats,
+    annotationStatusFormats,
 } from 'domain/annotation/constants';
 import CommentAnnotation from 'modules/connectedComponents/annotation/comment';
 import GeneTermAnnotation from 'modules/connectedComponents/annotation/geneTerm';
 import GeneGeneAnnotation from 'modules/connectedComponents/annotation/geneGene';
+import AnnotationStatusButton from 'ui/annotation/statusButton';
+
 
 class AnnotationEntry extends React.Component {
     constructor(props) {
@@ -82,14 +86,10 @@ class AnnotationEntry extends React.Component {
             );
         } else {
             return (
-                <ButtonGroup>
-                    <Button color="success" type="button">
-                        <span className="fa fa-check" />
-                    </Button>
-                    <Button color="danger" type="button">
-                        <span className="fa fa-trash" />
-                    </Button>
-                </ButtonGroup>
+                <AnnotationStatusButton
+                    annotationStatus={this.props.annotation.annotationStatus}
+                    onStatusChange={this.props.onStatusChange}
+                />
             );
         }
     }
@@ -135,6 +135,7 @@ AnnotationEntry.propTypes = {
     geneOrder: React.PropTypes.array,
     onTypeChange: React.PropTypes.func,
     onDeleteClick: React.PropTypes.func,
+    onStatusChange: React.PropTypes.func,
     curating: React.PropTypes.bool
 };
 
@@ -143,6 +144,7 @@ AnnotationEntry.defaultProps = {
     title: '',
     geneOrder: [],
     onTypeChange: () => {},
+    onStatusChange: () => {},
     onDeleteClick: () => {},
     curating: false,
 };

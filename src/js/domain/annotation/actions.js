@@ -4,7 +4,12 @@ import * as actions from './actionTypes';
 import * as geneTermActions from 'domain/geneTermAnnotation/actions';
 import * as geneGeneActions from 'domain/geneGeneAnnotation/actions';
 import * as commentActions from 'domain/commentAnnotation/actions';
-import { annotationFormats, annotationTypes, annotationTypeData } from './constants';
+import {
+    annotationFormats,
+    annotationTypes,
+    annotationTypeData,
+    annotationStatusFormats
+} from './constants';
 import { annotationSelector, annotationListSelector } from './selectors';
 import generateId from 'lib/idGenerator';
 
@@ -182,6 +187,14 @@ export function updateAnnotationData(localId, data) {
         case annotationFormats.COMMENT:
             return dispatch(commentActions.update(self.annotationTypeLocalId, data));
         }
+    };
+}
+
+export function changeAnnotationStatus(localId, annotationStatus = annotationStatusFormats.PENDING) {
+    return {
+        type: actions.CHANGE_ANNOTATION_STATUS,
+        localId,
+        annotationStatus,
     };
 }
 

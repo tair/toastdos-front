@@ -8,6 +8,7 @@ import {
     changeAnnotationType,
     addEvidenceWith,
     removeEvidenceWith,
+    changeAnnotationStatus,
 } from 'domain/annotation/actions';
 
 const ConnectedAnnotationEntry = connect(
@@ -20,6 +21,9 @@ const ConnectedAnnotationEntry = connect(
             changeAnnotationType(ownProps.localId, annotationType)
         ),
         removeAnnotation: localId => dispatch(removeAnnotation(localId)),
+        onStatusChange: (annotationStatus) => dispatch(
+            changeAnnotationStatus(ownProps.localId, annotationStatus)
+        ),
     })
 )(AnnotationEntry);
 

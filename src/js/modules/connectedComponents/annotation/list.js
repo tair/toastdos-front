@@ -15,9 +15,7 @@ import {
 } from 'domain/annotation/actions';
 
 const ConnectedAnnotationList = connect(
-    (state, ownProps) => ({
-        curating: false, //state.submission.curating,
-    }),
+    (state, ownProps) => ({}),
     (dispatch, ownProps) => ({
         onAnnotationAddClick: () => ownProps.addAnnotation(),
         removeAnnotation: localId => ownProps.removeAnnotation(localId),
@@ -30,6 +28,13 @@ const ConnectedAnnotationList = connect(
 ConnectedAnnotationList.propTypes = {
     addAnnotation: React.PropTypes.func,
     removeAnnotation: React.PropTypes.func,
+    curating: React.PropTypes.bool,
+};
+
+ConnectedAnnotationList.defaultProps = {
+    addAnnotation: () => {},
+    removeAnnotation: () => {},
+    curating: false,
 };
 
 export default ConnectedAnnotationList;

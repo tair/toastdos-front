@@ -11,7 +11,6 @@ import {
     submitting,
     submitted,
     previewing,
-    curating,
     canSubmit,
     errorMessage,
 } from 'modules/submission/selectors';
@@ -35,7 +34,6 @@ const ConnectedSubmissionView = connect(
         submitting,
         submitted,
         previewing,
-        curating,
         canSubmit,
         errorMessage,
         hasValidGene,
