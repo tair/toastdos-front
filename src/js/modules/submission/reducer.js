@@ -10,7 +10,6 @@ const defaultState = {
     submitted: false,
     previewing: false,
     submissionError: "",
-    curating: false,
 };
 
 function submissionReducer(state = defaultState, action) {

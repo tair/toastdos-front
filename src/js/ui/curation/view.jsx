@@ -61,6 +61,7 @@ class CurationView extends React.Component {
                             publicationLocalId={this.props.publicationLocalId}
                             geneOrder={this.props.geneOrder}
                             annotationOrder={this.props.annotationOrder}
+                            curating={true}
                         />
                     :
                         <ListGroup>
@@ -73,6 +74,7 @@ class CurationView extends React.Component {
                                     annotationOrder={this.props.annotationOrder}
                                     addGene={this.props.addGene}
                                     removeGene={this.props.removeGene}
+                                    curating={true}
                                 />
                             </ListGroupItem>
                             <ListGroupItem className="border-left-0 border-right-0 border-bottom-0">
@@ -82,6 +84,7 @@ class CurationView extends React.Component {
                                     addAnnotation={this.props.addAnnotation}
                                     removeAnnotation={this.props.removeAnnotation}
                                     hasValidGene={this.props.hasValidGene}
+                                    curating={true}
                                 />
                             </ListGroupItem>
                         </ListGroup>

@@ -136,6 +136,28 @@ export function validatePublication(publicationId, jwt, callback) {
     });
 }
 
+export function submitCurationSubmission(submissionId, submissionData, jwt, callback) {
+    return request({
+        method: 'POST',
+        timeout: 15000,
+        url: `${BASE_URL}/api/submission/${submissionId}/curate`,
+        // json: submissionData,
+        body: JSON.stringify(submissionData),
+        headers: {
+            'Authorization': `Bearer ${jwt}`,
+            'Content-type': `application/json`
+        }
+    }, (err, resp, body) => {
+        if(err) {
+            return callback(err);
+        }
+        if(resp.status >= 300) {
+            return callback(body);
+        }
+        return callback(null, body);
+    });
+}
+
 export function submitSubmission(submissionData, jwt, callback) {
     // console.log(submissionData);
     return request({

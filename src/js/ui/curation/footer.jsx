@@ -27,9 +27,9 @@ class CurationFooter extends React.Component {
                         <Button color="success"
                             className="btn-submit"
                             onClick={this.props.submit}
-                            disabled={!this.props.canSubmit || true}
+                            disabled={!this.props.canSubmit}
                         >
-                            <span className="fa fa-save"></span> Submit Annotations
+                            <span className="fa fa-save"></span> Save In Progress Curation
                         </Button>
                     </Col>
                 </Row>

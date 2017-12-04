@@ -3,6 +3,7 @@
 import * as actions from './actionTypes';
 
 const defaultState = {
+    submissionId: '',
     publicationLocalId: '',
     geneOrder: [],
     annotationOrder: [],
@@ -15,6 +16,11 @@ const defaultState = {
 function submissionReducer(state = defaultState, action) {
     let newState = {};
     switch (action.type) {
+    case actions.SET_ID:
+        return {
+            ...state,
+            submissionId: action.submissionId,
+        };
     case actions.SET_PUBLICATION:
         return {
             ...state,

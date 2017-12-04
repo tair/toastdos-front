@@ -11,7 +11,6 @@ import {
 
 const ConnectedGeneList = connect(
     (state,ownProps) => ({
-        curating: ownProps.curating,
         // TODO: refactor geneList to select the genes it needs
         geneIndex: state.domain.gene.byLocalId,
         geneOrder: ownProps.geneOrder
@@ -34,6 +33,16 @@ ConnectedGeneList.propTypes = {
     geneOrder: React.PropTypes.array,
     annotationOrder: React.PropTypes.array,
     addAnnotation: React.PropTypes.func,
+    curating: React.PropTypes.bool,
+};
+
+ConnectedGeneList.defaultProps = {
+    addGene: () => {},
+    removeGene: () => {},
+    geneOrder: [],
+    annotationOrder: [],
+    addAnnotation: () => {},
+    curating: false,
 };
 
 export default ConnectedGeneList;

@@ -1,11 +1,13 @@
 "use strict";
 
 import * as actions from './actionTypes';
-import { annotationTypes } from './constants';
+import { annotationTypes, annotationStatusFormats } from './constants';
 
 function getDefaultAnnotationState() {
     return {
         localId: '',
+        annotationId: '',
+        annotationStatus: '',
         annotationType: annotationTypes.MOLECULAR_FUNCTION,
         annotationTypeLocalId: '',
     };
@@ -23,7 +25,9 @@ function annotationIndexReducer(state = defaultState.byLocalId, action) {
             [action.localId]: {
                 ...getDefaultAnnotationState(),
                 localId: action.localId,
-                annotationType: action.annotationType,
+                annotationId: action.annotationData.annotationId,
+                annotationStatus: action.annotationData.annotationStatus,
+                annotationType: action.annotationData.annotationType,
                 annotationTypeLocalId: action.annotationTypeLocalId,
             }
         };
@@ -45,10 +49,17 @@ function annotationIndexReducer(state = defaultState.byLocalId, action) {
         return {
             ...state,
             [action.localId]: {
-                ...getDefaultAnnotationState(),
-                localId: action.localId,
+                ...state[action.localId],
                 annotationType: action.newAnnotationType,
                 annotationTypeLocalId: action.newAnnotationTypeLocalId,
+            }
+        };
+    case actions.CHANGE_ANNOTATION_STATUS:
+        return {
+            ...state,
+            [action.localId]: {
+                ...state[action.localId],
+                annotationStatus: action.annotationStatus,
             }
         };
     default:

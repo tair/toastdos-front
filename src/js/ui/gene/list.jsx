@@ -53,16 +53,15 @@ class GeneList extends React.Component {
                             ) : null
                             }
                             {this.props.geneOrder.map(this.generateGene)}
-                            {!this.props.curating?
-                                <Row className="justify-content-sm-center mt-3 mb-3">
-                                    <Col sm={{size:4, offset:4}} className="justify-content-sm-center">
-                                        <Button block color="success"
-                                            onClick={this.props.onGeneAddClick}
-                                            >
-                                            <span className="fa fa-plus" title="Add Gene"></span> Add Another Gene
-                                        </Button>
-                                    </Col>
-                                </Row> : null}
+                            <Row className="justify-content-sm-center mt-3 mb-3">
+                                <Col sm={{size:4, offset:4}} className="justify-content-sm-center">
+                                    <Button block color="success"
+                                        onClick={this.props.onGeneAddClick}
+                                        >
+                                        <span className="fa fa-plus" title="Add Gene"></span> Add Another Gene
+                                    </Button>
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                 </div>
