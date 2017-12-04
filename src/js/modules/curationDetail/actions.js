@@ -11,6 +11,7 @@ import * as actions from './actionTypes';
 import * as pubActions from 'domain/publication/actions';
 import * as geneActions from 'domain/gene/actions';
 import * as annotationActions from 'domain/annotation/actions';
+import * as evidenceWithActions from 'domain/evidenceWith/actions';
 import {
     annotationFormats,
     annotationType,
@@ -227,6 +228,7 @@ export function loadSubmission(submission) {
             }));
         }
 
+
         // Create each annotation
         for (let annotation of submission.annotations) {
             let localId = "remote_annotation_" + annotation.id;
@@ -234,6 +236,31 @@ export function loadSubmission(submission) {
             let annotationFormatData;
             switch(annotationTypeData[annotation.type].format) {
                 case annotationFormats.GENE_TERM:
+
+                    let ewOrder = [];
+                    if (annotation.data.evidenceWith) {
+                        // Create each evidence with and record the localId
+                        for (let ew of annotation.data.evidenceWith) {
+                            let newEw = evidenceWithActions.addNew();
+
+                            // create an evidence with
+                            dispatch(newEw);
+
+                            // update its data
+                            dispatch(
+                                evidenceWithActions.updateEvidenceWith(
+                                    newEw.evidenceWithId, {
+                                        ...validation.getValid(),
+                                        locusName: ew,
+                                    }
+                                )
+                            );
+
+                            // add id to order
+                            ewOrder.push(newEw.evidenceWithId);
+                        }
+                    }
+
                     annotationFormatData = {
                         geneLocalId: locusMap[annotation.data.locusName],
                         keywordName: annotation.data.keyword.name,
@@ -243,7 +270,7 @@ export function loadSubmission(submission) {
                         methodId: annotation.data.method.id,
                         methodExternalId: annotation.data.method.externalId || "",
                         methodEvidenceCode: annotation.data.method.evidenceCode || null,
-                        evidenceWithOrder: [],
+                        evidenceWithOrder: ewOrder,
                     };
                     break;
                 case annotationFormats.GENE_GENE:
