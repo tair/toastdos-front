@@ -54,9 +54,3 @@ export const annotationTypeData = {
     }
 };
 
-export const validationStates = {
-    NOT_VALIDATED: "NOT_VALIDATED",
-    VALIDATING: "VALIDATING",
-    VALID: "VALID",
-    INVALID: "INVALID",
-};
