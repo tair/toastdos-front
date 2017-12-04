@@ -1,7 +1,8 @@
-import * as actions from './actionTypes';
+"use strict";
+
 import * as api from 'lib/api';
+import * as actions from './actionTypes';
 import AuthModule from 'modules/authentication';
-import { loadSubmission } from 'modules/submission/actions';
 
 function failSubmissionList(error) {
     return {
@@ -32,33 +33,6 @@ export function requestSubmissionList(page = 1, limit = 20, sortBy = 'date', sor
                 return dispatch(failSubmissionList(err));
             }
             return dispatch(successSubmissionList(data));
-        });
-    };
-}
-
-
-function failSubmission(error) {
-    return {
-        type: actions.FAIL_SUBMISSION,
-        error,
-    };
-}
-
-export function requestSubmission(submissionId) {
-    return (dispatch, getState) => {
-
-        const state = getState();
-        const jwt = AuthModule.selectors.rawJwtSelector(state);
-
-        dispatch({
-            type: actions.REQUEST_SUBMISSION,
-        });
-
-        return api.getSubmission(submissionId, jwt, (err, data) => {
-            if(err) {
-                return dispatch(failSubmission(err));
-            }
-            return dispatch(loadSubmission(data));
         });
     };
 }

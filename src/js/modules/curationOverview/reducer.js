@@ -1,3 +1,5 @@
+"use strict";
+
 import * as actions from './actionTypes';
 
 const defaultState = {
