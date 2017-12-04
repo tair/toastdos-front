@@ -20,6 +20,10 @@ import {
     geneListSelector,
     geneValidSelector,
 } from 'domain/gene/selectors';
+import {
+    evidenceWithValidListSelector
+} from 'domain/evidenceWith/selectors';
+
 import { commentAnnotationSelector } from 'domain/commentAnnotation/selectors';
 import { geneTermAnnotationSelector } from 'domain/geneTermAnnotation/selectors';
 import { geneGeneAnnotationSelector } from 'domain/geneGeneAnnotation/selectors';
@@ -123,6 +127,10 @@ export function submissionBodySelector(state) {
                 method: (gt.methodId !== null ? {id: gt.methodId} : {name: gt.methodName}),
                 keyword: (gt.keywordId !== null ? {id: gt.keywordId} : {name: gt.keywordName})
             };
+            let evidenceWith = evidenceWithValidListSelector(state, gt.evidenceWithOrder).map(ew => ew.locusName);
+            if (evidenceWith.length > 0) {
+                annotation.data.evidenceWith = evidenceWith;
+            }
             break;
         case annotationFormats.GENE_GENE:
             let gg = geneGeneAnnotationSelector(state, a.annotationTypeLocalId)
