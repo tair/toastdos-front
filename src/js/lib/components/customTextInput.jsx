@@ -48,6 +48,7 @@ class CustomTextInput extends React.Component {
                     spellCheck={this.props.spellCheck}
                     id={this.props.inputId}
                     required={this.props.required ? "required" : ""}
+                    style={{textOverflow: "ellipsis"}}
                 >
                     {this.props.children}
                 </Input>

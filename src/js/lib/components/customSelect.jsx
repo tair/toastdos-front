@@ -1,6 +1,6 @@
 "use strict";
 
-import React from "react";
+import React from 'react';
 import 'css/customSelect.scss';
 import { Input } from 'reactstrap';
 

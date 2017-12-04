@@ -1,8 +1,8 @@
 "use strict";
 
+import jwtDecode from 'jwt-decode';
 import * as actions from './actionTypes';
 import { getUserInfo, updateUserInfo } from 'lib/api';
-import jwtDecode from 'jwt-decode';
 
 /**
  * Create a new FAIL_USER_INFO action

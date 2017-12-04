@@ -1,8 +1,9 @@
+"use strict";
+
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { logout } from '../../actions';
 import { jwtExpiration } from '../../selectors';
-
 import TokenWatchdog from './TokenWatchdog';
 
 const mapStateToProps = createStructuredSelector({

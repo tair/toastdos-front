@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-import  {Link} from 'react-router';
+import {Link} from 'react-router';
 import EditableLabel from 'lib/components/editableLabel';
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 

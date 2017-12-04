@@ -1,7 +1,6 @@
 "use strict";
 
 import * as actionTypes from './actionTypes';
-
 import authenticationModule from 'modules/authentication';
 
 const defaultState = {
