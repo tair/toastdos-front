@@ -13,7 +13,7 @@ export const geneTermAnnotationListSelector = (state, annotations) =>
 
 export const needsEvidenceWithSelector = createSelector(
     geneTermAnnotationSelector,
-    gta => (gta && ['IPI','IGI'].indexOf(gta.methodEvidenceCode.trim()) != -1)
+    gta => (gta && ['IPI','IGI'].indexOf(gta.methodEvidenceCode) != -1)
 );
 
 export const allEvidenceWithValidSelector = createSelector(
