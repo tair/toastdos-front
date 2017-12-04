@@ -11,15 +11,3 @@ export const evidenceWithValidSelector = createSelector(
     ew => (ew && ew.locusName && ew.locusName.trim() !== '' &&
         ew.validationState == validationStates.VALID)
 );
-/*
-export const evidenceWithListSelector = createSelector(
-    evidenceWithSelector,
-    (ew) => Object.values(ew)
-);
-
-export const evidenceWithValidSelector = createSelector(
-    evidenceWithListSelector,
-    (evidenceWith) =>
-      (!evidenceWith || evidenceWith.every(ew => ew.validationState === validationStates.VALID))
-);
-*/
