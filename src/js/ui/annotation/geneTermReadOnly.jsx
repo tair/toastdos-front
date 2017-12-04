@@ -7,6 +7,7 @@ import { annotationTypeData } from 'domain/annotation/constants';
 import EvidenceWithReadOnly from 'modules/connectedComponents/evidenceWithReadOnly';
 import ExternalIdBadge from 'ui/externalIdBadge';
 import GeneLocusName from 'modules/connectedComponents/gene/locusName';
+import AnnotationStatusReadOnly from 'ui/annotation/statusReadOnly';
 
 class GeneTermAnnotationReadOnly extends React.Component {
     constructor(props) {
@@ -28,7 +29,16 @@ class GeneTermAnnotationReadOnly extends React.Component {
         return (
             <Card className="mb-3">
                 <CardHeader>
-                    {this.props.annotationTypeName}: {locusName}
+                    <Row>
+                        <Col>
+                            {this.props.annotationTypeName}: {locusName}
+                        </Col>
+                        <Col sm="auto">
+                            <AnnotationStatusReadOnly
+                                annotationStatus={this.props.annotationStatus}
+                            />
+                        </Col>
+                    </Row>
                 </CardHeader>
                 <CardBody>
                     <Row>

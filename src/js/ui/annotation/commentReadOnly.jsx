@@ -1,8 +1,9 @@
 "use strict";
 
 import React from 'react';
-import { Card, CardHeader, CardBody } from 'reactstrap';
+import { Row, Col, Card, CardHeader, CardBody } from 'reactstrap';
 import GeneLocusName from 'modules/connectedComponents/gene/locusName';
+import AnnotationStatusReadOnly from 'ui/annotation/statusReadOnly';
 
 class CommentAnnotationReadOnly extends React.Component {
     constructor(props) {
@@ -13,8 +14,17 @@ class CommentAnnotationReadOnly extends React.Component {
         return (
             <Card className="mb-3">
                 <CardHeader>
-                    {this.props.annotationTypeName}: <GeneLocusName
-                        localId={this.props.commentAnnotation.geneLocalId} />
+                    <Row>
+                        <Col>
+                            {this.props.annotationTypeName}: <GeneLocusName
+                                localId={this.props.commentAnnotation.geneLocalId} />
+                        </Col>
+                        <Col sm="auto">
+                            <AnnotationStatusReadOnly
+                                annotationStatus={this.props.annotationStatus}
+                            />
+                        </Col>
+                    </Row>
                 </CardHeader>
                 <CardBody>
                     {this.props.commentAnnotation.comment}
@@ -26,6 +36,7 @@ class CommentAnnotationReadOnly extends React.Component {
 
 CommentAnnotationReadOnly.propTypes = {
     commentAnnotation: React.PropTypes.object,
+    annotationStatus: React.PropTypes.string,
     annotationTypeName: React.PropTypes.string,
 };
 

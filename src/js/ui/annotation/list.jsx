@@ -33,7 +33,6 @@ class AnnotationList extends React.Component {
                         <Alert color="light">Select an annotation format and a gene. All fields are required.</Alert>
                     </Col>
                     <Col sm={{size:9}}>
-                        {this.props.curating ? <h5 className="my-3">Pending Annotations</h5> : null}
                         {(this.props.annotationOrder.length <= 0) ?
                         (
                             <Alert color="secondary">
@@ -51,7 +50,7 @@ class AnnotationList extends React.Component {
                                 {this.props.annotationOrder.map(this.generateAnnotationEntry)}
                             </div>
                         )}
-                        {!this.props.curating ?
+                        {this.props.curating ? null :
                             <Row className="justify-content-sm-center mt-3 mb-3">
                                 <Col sm={{size:4, offset:4}} className="justify-content-sm-center">
                                     <Button block color="success"
@@ -61,17 +60,8 @@ class AnnotationList extends React.Component {
                                         <span className="fa fa-plus" title="Add Annotation"></span> Add Another Annotation
                                     </Button>
                                 </Col>
-                            </Row> : null}
-                        {this.props.curating ? (
-                            <div>
-                                <h5 className="my-3">Reviewed Annotations</h5>
-                                <Alert color="secondary">
-                                    <span className="empty-message">
-                                        No Reviewed Annotations.
-                                    </span>
-                                </Alert>
-                            </div>
-                        ) : null}
+                            </Row>
+                        }
                     </Col>
                 </Row>
             </div>
