@@ -10,15 +10,11 @@ function getDefaultCommentAnnotationState() {
     };
 }
 
-function getDefaultState() {
-    return {
-        byLocalId: {},
-    }
-}
+const defaultState = {
+    byLocalId: {},
+};
 
-const defaultState = getDefaultState();
-
-function commentAnnotationIndexReducer(state = getDefaultState().byLocalId, action) {
+function commentAnnotationIndexReducer(state = defaultState.byLocalId, action) {
     switch (action.type) {
     case actions.ADD_NEW:
         return {

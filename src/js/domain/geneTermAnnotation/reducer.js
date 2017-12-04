@@ -19,15 +19,11 @@ function getDefaultGeneTermAnnotationState() {
     };
 }
 
-function getDefaultState() {
-    return {
-        byLocalId: {},
-    }
-}
+const defaultState = {
+    byLocalId: {},
+};
 
-const defaultState = getDefaultState();
-
-function geneTermAnnotationIndexReducer(state = getDefaultState().byLocalId, action) {
+function geneTermAnnotationIndexReducer(state = defaultState.byLocalId, action) {
     switch (action.type) {
     case actions.ADD_NEW:
         return {

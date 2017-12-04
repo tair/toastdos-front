@@ -14,15 +14,11 @@ function getDefaultGeneGeneAnnotationState() {
     };
 }
 
-function getDefaultState() {
-    return {
-        byLocalId: {},
-    }
-}
+const defaultState = {
+    byLocalId: {},
+};
 
-const defaultState = getDefaultState();
-
-function geneGeneAnnotationIndexReducer(state = getDefaultState().byLocalId, action) {
+function geneGeneAnnotationIndexReducer(state = defaultState.byLocalId, action) {
     switch (action.type) {
     case actions.ADD_NEW:
         return {

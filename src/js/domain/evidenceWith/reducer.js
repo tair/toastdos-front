@@ -8,12 +8,6 @@ import {
     annotationFormats,
 } from 'domain/annotation/constants';
 
-function getDefaultState() {
-    return {
-        byLocalId: {},
-    };
-}
-
 function getDefaultEvidenceWithState() {
     return {
         localId: '',
@@ -22,9 +16,11 @@ function getDefaultEvidenceWithState() {
     };
 }
 
-const defaultState = getDefaultState();
+const defaultState = {
+    byLocalId: {},
+};
 
-function evidenceWithIndexReducer(state = getDefaultState().byLocalId, action) {
+function evidenceWithIndexReducer(state = defaultState.byLocalId, action) {
     switch (action.type) {
     case actions.ADD:
         return {

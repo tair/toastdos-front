@@ -2,21 +2,17 @@
 
 import * as actions from './actionTypes';
 
-function getDefaultState() {
-    return {
-        publicationLocalId: '',
-        geneOrder: [],
-        annotationOrder: [],
-        submitting: false,
-        submitted: false,
-        previewing: false,
-        submissionError: "",
-    }
-}
+const defaultState = {
+    publicationLocalId: '',
+    geneOrder: [],
+    annotationOrder: [],
+    submitting: false,
+    submitted: false,
+    previewing: false,
+    submissionError: "",
+};
 
-const defaultState = getDefaultState();
-
-function submissionReducer(state = getDefaultState(), action) {
+function submissionReducer(state = defaultState, action) {
     let newState = {};
     switch (action.type) {
     case actions.SET_PUBLICATION:
@@ -80,7 +76,7 @@ function submissionReducer(state = getDefaultState(), action) {
     }
 }
 
-export default function (state = getDefaultState(), action) {
+export default function (state = defaultState, action) {
     let newState = {
         ...state,
         ...submissionReducer(state,action),
@@ -88,7 +84,7 @@ export default function (state = getDefaultState(), action) {
     switch (action.type) {
     case actions.LOAD_SUBMISSION:
     case actions.RESET_SUBMISSION:
-        return getDefaultState();
+        return defaultState;
     default:
         return Object.assign({}, state, newState);
     }

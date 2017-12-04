@@ -2,14 +2,10 @@
 
 import * as actions from './actionTypes';
 
-function getDefaultState() {
-    return {
-        keywordSearchResults: [],
-        searchingKeywords: false,
-    }
-}
-
-const defaultState = getDefaultState();
+const defaultState = {
+    keywordSearchResults: [],
+    searchingKeywords: false,
+};
 
 export default function (state = defaultState, action) {
     switch (action.type) {
