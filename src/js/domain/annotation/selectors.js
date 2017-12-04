@@ -4,7 +4,8 @@ import { createSelector } from 'reselect';
 import {
     name,
     annotationFormats,
-    annotationTypeData
+    annotationTypeData,
+    annotationStatusFormats
 } from './constants';
 import { commentAnnotationValidSelector } from 'domain/commentAnnotation/selectors';
 import { geneTermAnnotationValidSelector } from 'domain/geneTermAnnotation/selectors';
@@ -20,6 +21,17 @@ export const annotationTypeSelector = createSelector(
 export const annotationListSelector = (state, annotations) =>
     annotations.map(localId => annotationSelector(state, localId));
 
+export const pendingListSelector = (state, annotations) =>
+    annotationListSelector(state, annotations).filter(
+        annotation => (annotation.annotationStatus &&
+            annotation.annotationStatus == annotationStatusFormats.PENDING)
+    );
+
+export const reviewedListSelector = (state, annotations) =>
+    annotationListSelector(state, annotations).filter(
+        annotation => (annotation.annotationStatus &&
+            annotation.annotationStatus != annotationStatusFormats.PENDING)
+    );
 
 export const annotationTypeValidSelector = createSelector(
     state => state,

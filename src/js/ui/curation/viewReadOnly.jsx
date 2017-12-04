@@ -4,13 +4,12 @@ import React from 'react';
 import { Row, Col, ListGroup, ListGroupItem } from 'reactstrap';
 import 'css/submissionView.scss';
 import PublicationFieldReadOnly from 'modules/connectedComponents/publication/fieldReadOnly';
-import AnnotationListReadOnly from 'ui/annotation/listReadOnly';
 import GeneListReadOnly from 'ui/gene/listReadOnly';
+import AnnotationListReadOnly from 'modules/connectedComponents/annotation/listCurationReadOnly';
 
-class SubmissionReadOnly extends React.Component {
+class CurationReadOnly extends React.Component {
     constructor(props) {
         super(props);
-
     }
 
     render() {
@@ -25,7 +24,9 @@ class SubmissionReadOnly extends React.Component {
                             <h5>Genes</h5>
                         </Col>
                         <Col>
-                            <GeneListReadOnly geneOrder={this.props.geneOrder} />
+                            <GeneListReadOnly
+                                curating={true}
+                                geneOrder={this.props.geneOrder} />
                         </Col>
                     </Row>
                 </ListGroupItem>
@@ -35,7 +36,8 @@ class SubmissionReadOnly extends React.Component {
                             <h5>Annotations</h5>
                         </Col>
                         <Col>
-                            <AnnotationListReadOnly annotationOrder={this.props.annotationOrder} />
+                            <AnnotationListReadOnly
+                                annotationOrder={this.props.annotationOrder} />
                         </Col>
                     </Row>
                 </ListGroupItem>
@@ -44,10 +46,10 @@ class SubmissionReadOnly extends React.Component {
     }
 }
 
-SubmissionReadOnly.propTypes = {
+CurationReadOnly.propTypes = {
     publicationLocalId: React.PropTypes.string,
     geneOrder: React.PropTypes.array,
     annotationOrder: React.PropTypes.array,
 };
 
-export default SubmissionReadOnly;
+export default CurationReadOnly;

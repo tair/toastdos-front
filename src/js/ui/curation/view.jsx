@@ -7,7 +7,7 @@ import 'css/submissionView.scss';
 import PublicationField from 'modules/connectedComponents/publication/field';
 import GeneList from 'modules/connectedComponents/gene/list';
 import AnnotationList from 'modules/connectedComponents/annotation/list';
-import SubmissionReadOnly from 'ui/submission/viewReadOnly';
+import CurationReadOnly from 'ui/curation/viewReadOnly';
 import SubmissionInfoPanel from 'ui/submission/infoPanel';
 import CurationFooter from 'ui/curation/footer';
 import SubmissionStructure from 'ui/submission/structure';
@@ -57,7 +57,7 @@ class CurationView extends React.Component {
             >
                 <Form className="submission-form-container">
                     {this.props.previewing ?
-                        <SubmissionReadOnly
+                        <CurationReadOnly
                             publicationLocalId={this.props.publicationLocalId}
                             geneOrder={this.props.geneOrder}
                             annotationOrder={this.props.annotationOrder}
