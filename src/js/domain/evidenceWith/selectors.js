@@ -11,3 +11,7 @@ export const evidenceWithValidSelector = createSelector(
     ew => (ew && ew.locusName && ew.locusName.trim() !== '' &&
         ew.validationState == validationStates.VALID)
 );
+
+export const evidenceWithValidListSelector = (state, ewIds) =>
+    ewIds.filter(ewId => evidenceWithValidSelector(state, ewId))
+        .map(ewId => evidenceWithSelector(state, ewId));
