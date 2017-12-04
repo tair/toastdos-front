@@ -2,7 +2,7 @@
 
 import reducer from './reducer';
 import * as constants from './constants';
-import SubmissionView from './components/submissionView';
+import SubmissionView from 'modules/connectedComponents/submissionView';
 
 export default {
     components: {

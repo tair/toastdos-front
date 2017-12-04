@@ -1,9 +1,8 @@
 "use strict";
 
 import { connect } from 'react-redux';
-import LoginView from './loginView';
 import { createStructuredSelector } from 'reselect';
-
+import LoginView from './loginView';
 import { requestLogin } from '../../actions';
 import { isAuthenticated, isAuthenticating, loginError } from '../../selectors';
 

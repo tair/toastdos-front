@@ -1,6 +1,6 @@
 "use strict";
 
-import AsyncAction from "./asyncAction";
+import AsyncAction from './asyncAction';
 
 class AsyncActionManager {
     constructor() {

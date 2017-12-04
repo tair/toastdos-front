@@ -1,8 +1,7 @@
 "use strict";
 
 import jwtDecode from 'jwt-decode';
-
-import { login } from "lib/api";
+import { login } from 'lib/api';
 import * as actions from './actionTypes';
 import userInfoModule from 'modules/userInfo';
 

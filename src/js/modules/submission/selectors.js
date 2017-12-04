@@ -1,135 +1,95 @@
 "use strict";
 
+import { name } from './constants';
 import {
-    name,
     annotationTypeData,
     annotationFormats,
-    validationStates,
-} from './constants';
+} from 'domain/annotation/constants';
 import { createSelector } from 'reselect';
-
-export const fetchingSuggestionsSelector = state => state[name].searchingKeywords;
-
-const keywordSearchResults = state => state[name].keywordSearchResults;
-export const keywordSearchIndexSelector = createSelector(
-    keywordSearchResults,
-    results => results.reduce((acc, cur) => {
-        acc[cur.id] = {
-            name: cur.name,
-            external_id: cur.external_id,
-            evidence_code: cur.evidence_code
-        };
-        return acc;
-    }, {})
-);
-
-export const keywordSearchOrderSelector = createSelector(
-    keywordSearchResults,
-    results => results.map(v => v.id)
-);
-
-// Returns true if the gene list is valid for the given state
-export function hasAllValidGenes(state) {
-    return geneListValidSelector(state);
-}
-
-// Returns true if the gene list contains a valid gene for the given state
-export function hasValidGene(state) {
-    let hasValidGeneSelector = createSelector(
-        geneListSelector,
-        (genes) =>
-            (genes.length > 0) &&
-            genes.some(g => g.validationState === validationStates.VALID)
-    );
-    return hasValidGeneSelector(state);
-}
-
-export const publicationIdValueSelector = state => state[name].publication.idValue;
-
-export const geneListSelector = state => state[name].geneOrder.map(
-    gid => state[name].geneIndex[gid]
-);
-
-export const annotationListSelector = state => state[name].annotationOrder.map(
-    aid => state[name].annotationIndex[aid]
-);
-
-export const evidenceWithSelector = (state) => state[name].evidenceWithIndex;
-
-export const evidenceWithListSelector = createSelector(
-    evidenceWithSelector,
-    (ew) => Object.values(ew)
-);
-
-export const publicationValidSelector =
-    s => s[name].publication.validationState === validationStates.VALID
-;
-
-export const geneListValidSelector = createSelector(
+import { validationStates } from 'lib/validation';
+import {
+    publicationSelector,
+    publicationValidSelector
+} from 'domain/publication/selectors';
+import {
+    annotationSelector,
+    annotationValidSelector,
+} from 'domain/annotation/selectors';
+import {
+    geneSelector,
     geneListSelector,
-    (genes) =>
-        (genes.length > 0) &&
-        genes.every(g => g.validationState === validationStates.VALID)
+    geneValidSelector,
+} from 'domain/gene/selectors';
+import { commentAnnotationSelector } from 'domain/commentAnnotation/selectors';
+import { geneTermAnnotationSelector } from 'domain/geneTermAnnotation/selectors';
+import { geneGeneAnnotationSelector } from 'domain/geneGeneAnnotation/selectors';
+
+export const publicationLocalId = state => state[name].publicationLocalId;
+export const geneOrder = state => state[name].geneOrder;
+export const annotationOrder = state => state[name].annotationOrder;
+export const submitting = state => state[name].submitting;
+export const submitted = state => state[name].submitted;
+export const previewing = state => state[name].previewing;
+export const curating = state => state[name].curating;
+export const errorMessage = state => `${state[name].submissionError}`;
+
+export const submissionSelector = state => state[name];
+
+export const annotationListSelector = createSelector(
+    state => state,
+    annotationOrder,
+    (state, annotations) =>
+        annotations.map(localId => annotationSelector(state, localId))
 );
 
 export const annotationListValidSelector = createSelector(
-    annotationListSelector,
-    (annotations) =>
-        (annotations.length > 0) &&
-        annotations.every(a => {
-            switch(annotationTypeData[a.annotationType].format) {
-            case annotationFormats.COMMENT:
-                return (
-                    a.data.comment && a.data.comment.trim() !== ''
-                );
-            case annotationFormats.GENE_TERM:
-                return (
-                    a.data.keywordName && a.data.keywordName.trim() !== '' &&
-                    a.data.methodName && a.data.methodName.trim() !== ''
-                );
-            case annotationFormats.GENE_GENE:
-                return (
-                    a.data.methodName && a.data.methodName.trim() !== ''
-                );
-            default:
-                return false;
-            }
-        })
+    state => state,
+    annotationOrder,
+    // Return true if all annotations are valid
+    (state, annotations) =>
+        annotations.length > 0 &&
+        !annotations.find(localId => !annotationValidSelector(state, localId))
 );
 
-export const evidenceWithValidSelector = createSelector(
-    evidenceWithListSelector,
-    (evidenceWith) =>
-      (!evidenceWith || evidenceWith.every(ew => ew.validationState === validationStates.VALID))
+export const genesSelector = createSelector(
+    state => state,
+    geneOrder,
+    (state, genes) => geneListSelector(state, genes)
+);
+
+export const hasValidGene = createSelector(
+    state => state,
+    geneOrder,
+    // Return true if at least one gene is valid
+    (state, genes) =>
+        genes.length > 0 &&
+        undefined !== genes.find(localId => geneValidSelector(state, localId))
+);
+
+export const geneListValidSelector = createSelector(
+    state => state,
+    geneOrder,
+    // Return true if all genes are valid
+    (state, genes) =>
+        genes.length > 0 &&
+        !genes.find(localId => !geneValidSelector(state, localId))
 );
 
 export const canSubmit = createSelector(
-    publicationValidSelector,
+    state => publicationValidSelector(state, publicationLocalId(state)),
     geneListValidSelector,
     annotationListValidSelector,
-    evidenceWithValidSelector,
-    s => (s[name].submitting),
-    (pValid, gValid, aValid, ewValid, isSubmitting) => (
-        pValid &&
-        gValid &&
-        aValid &&
-        ewValid &&
-        !isSubmitting
-    )
+    submitting,
+    (pValid, gValid, aValid, isSubmitting) => (pValid && gValid && aValid && !isSubmitting)
 );
 
 export function submissionBodySelector(state) {
 
-    const geneIndex = state[name].geneIndex;
-
-    const geneList = geneListSelector(state);
-
-    const annotationList = state[name].annotationOrder.map(
-        aid => state[name].annotationIndex[aid]
-    );
+    const geneList = genesSelector(state);
+    const annotationList = annotationListSelector(state);
 
     let submissionData = {
-        publicationId: publicationIdValueSelector(state),
+        publicationId: publicationSelector(state, publicationLocalId(state)).idValue,
         genes: [],
         annotations: [],
     };
@@ -151,23 +111,26 @@ export function submissionBodySelector(state) {
 
         switch(annotationTypeData[a.annotationType].format) {
         case annotationFormats.COMMENT:
+            let ca = commentAnnotationSelector(state, a.annotationTypeLocalId);
             annotation.data = {
-                locusName: geneIndex[a.data.geneLocalId].finalizedLocusName,
-                text: a.data.comment
+                locusName: geneSelector(state, ca.geneLocalId).finalizedLocusName,
+                text: ca.comment
             };
             break;
         case annotationFormats.GENE_TERM:
+            let gt = geneTermAnnotationSelector(state, a.annotationTypeLocalId)
             annotation.data = {
-                locusName: geneIndex[a.data.geneLocalId].finalizedLocusName,
-                method: (a.data.methodId !== null ? {id: a.data.methodId} : {name: a.data.methodName}),
-                keyword: (a.data.keywordId !== null ? {id: a.data.keywordId} : {name: a.data.keywordName})
+                locusName: geneSelector(state, gt.geneLocalId).finalizedLocusName,
+                method: (gt.methodId !== null ? {id: gt.methodId} : {name: gt.methodName}),
+                keyword: (gt.keywordId !== null ? {id: gt.keywordId} : {name: gt.keywordName})
             };
             break;
         case annotationFormats.GENE_GENE:
+            let gg = geneGeneAnnotationSelector(state, a.annotationTypeLocalId)
             annotation.data = {
-                locusName: geneIndex[a.data.gene1LocalId].finalizedLocusName,
-                locusName2: geneIndex[a.data.gene2LocalId].finalizedLocusName,
-                method: (a.data.methodId !== null ? {id: a.data.methodId} : {name: a.data.methodName})
+                locusName: geneSelector(state, gg.gene1LocalId).finalizedLocusName,
+                locusName2: geneSelector(state, gg.gene2LocalId).finalizedLocusName,
+                method: (gg.methodId !== null ? {id: gg.methodId} : {name: gg.methodName})
             };
             break;
         }
@@ -175,8 +138,6 @@ export function submissionBodySelector(state) {
         return annotation;
     });
 
-
     return submissionData;
-
 }
 

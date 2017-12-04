@@ -10,17 +10,21 @@ import { asyncActionMiddleware } from 'lib/asyncActionManager';
 import authentication from 'modules/authentication';
 import home from 'modules/home';
 import navigation from 'modules/navigation';
-import submission from 'modules/submission';
 import userInfo from 'modules/userInfo';
-import curation from 'modules/curation';
+import domain from 'domain';
+import submission from 'modules/submission';
+import curationDetail from 'modules/curationDetail';
+import curationOverview from 'modules/curationOverview';
 
 let reducer = combineReducers({
     [home.constants.name]: home.reducer,
     [authentication.constants.name]: authentication.reducer,
     [navigation.constants.name]: navigation.reducer,
-    [submission.constants.name]: submission.reducer,
     [userInfo.constants.name]: userInfo.reducer,
-    [curation.constants.name]: curation.reducer,
+    [domain.constants.name]: domain.reducer,
+    [submission.constants.name]: submission.reducer,
+    [curationDetail.constants.name]: curationDetail.reducer,
+    [curationOverview.constants.name]: curationOverview.reducer,
     routing: routerReducer
 });
 

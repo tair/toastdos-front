@@ -1,6 +1,8 @@
+"use strict";
+
 import { createSelector } from 'reselect';
-import { name } from './constants';
 import jwtDecode from 'jwt-decode';
+import { name } from './constants';
 
 
 export const rawJwtSelector = state => state[name].jwt ? state[name].jwt : null;

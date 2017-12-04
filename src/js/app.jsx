@@ -10,7 +10,8 @@ import homeModule from 'modules/home';
 import authenticationModule from 'modules/authentication';
 import submissionModule from 'modules/submission';
 import navigationModule from 'modules/navigation';
-import curationModule from 'modules/curation';
+import curationDetailModule from 'modules/curationDetail';
+import curationOverviewModule from 'modules/curationOverview';
 
 import { isAuthenticated, redirectIfLoggedIn } from 'lib/routeChecks';
 import DefaultLoadingAnimation from 'lib/components/loadingAnimations/defaultLoadingAnimation';
@@ -60,12 +61,12 @@ class App extends React.Component {
                     />
                     <Route
                         path="curation/detail/:submissionId"
-                        component={curationModule.components.CurationDetailView}
+                        component={curationDetailModule.components.CurationView}
                         onEnter={isAuthenticated}
                     />
                     <Route
                         path="curation"
-                        component={curationModule.components.CurationOverviewView}
+                        component={curationOverviewModule.components.CurationOverviewView}
                         onEnter={isAuthenticated}
                     />
                 </Route>
