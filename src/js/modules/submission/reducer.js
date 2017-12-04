@@ -5,36 +5,7 @@ import {
         annotationTypes,
         annotationTypeData,
         annotationFormats,
-        validationStates,
     } from './constants';
-
-function getNotValidated() {
-    return {
-        validationState: validationStates.NOT_VALIDATED,
-        validationError: "",
-    };
-}
-
-function getValidating() {
-    return {
-        validationState: validationStates.VALIDATING,
-        validationError: "",
-    };
-}
-
-function getValid() {
-    return {
-        validationState: validationStates.VALID,
-        validationError: "",
-    };
-}
-
-function getInvalid(error) {
-    return {
-        validationState: validationStates.INVALID,
-        validationError: error,
-    };
-}
 
 function getDefaultGeneState() {
     return {
