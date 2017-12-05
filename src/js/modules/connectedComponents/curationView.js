@@ -13,6 +13,7 @@ import {
     previewing,
     canSubmit,
     errorMessage,
+    hasPendingAnnotations,
 } from 'modules/curationDetail/selectors';
 import {
     attemptSubmit,
@@ -37,6 +38,7 @@ const ConnectedCurationView = connect(
         canSubmit,
         errorMessage,
         hasValidGene,
+        hasPendingAnnotations,
     }),
     dispatch => ({
         preview: () => dispatch(preview()),
