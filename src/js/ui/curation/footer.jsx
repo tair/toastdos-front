@@ -29,7 +29,12 @@ class CurationFooter extends React.Component {
                             onClick={this.props.submit}
                             disabled={!this.props.canSubmit}
                         >
-                            <span className="fa fa-save"></span> Save In Progress Curation
+                            <span className="fa fa-save"></span> {
+                                this.props.hasPendingAnnotations ?
+                                    "Save In Progress Curation"
+                                :
+                                    "Finish Curating Submission"
+                            }
                         </Button>
                     </Col>
                 </Row>
@@ -61,6 +66,7 @@ CurationFooter.propTypes = {
     previewing: React.PropTypes.bool,
     submitted: React.PropTypes.bool,
     canSubmit: React.PropTypes.bool,
+    hasPendingAnnotations: React.PropTypes.bool,
 
     submit: React.PropTypes.func,
     preview: React.PropTypes.func,
@@ -72,6 +78,7 @@ CurationFooter.defaultProps = {
     previewing: false,
     submitted: false,
     canSubmit: false,
+    hasPendingAnnotations: false,
 
     submit: () => {},
     preview: () => {},

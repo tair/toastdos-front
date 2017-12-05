@@ -18,14 +18,30 @@ export const annotationTypeSelector = createSelector(
     annotation => annotation.annotationType
 );
 
+export const annotationPending = createSelector(
+    annotationSelector,
+    (annotation) => (
+        annotation.annotationStatus &&
+        annotation.annotationStatus == annotationStatusFormats.PENDING
+    )
+);
+
+export const orderHasPendingAnnotations = (state, annotations) => (
+    annotations.find(
+        localId => annotationPending(state, localId)
+    ) != undefined
+);
+
 export const annotationListSelector = (state, annotations) =>
     annotations.map(localId => annotationSelector(state, localId));
 
-export const pendingListSelector = (state, annotations) =>
-    annotationListSelector(state, annotations).filter(
-        annotation => (annotation.annotationStatus &&
-            annotation.annotationStatus == annotationStatusFormats.PENDING)
-    );
+export const pendingListSelector = (state, annotations) => (
+    annotations.filter(
+        localId => annotationPending(state, localId)
+    ).map(
+        localId => annotationSelector(state, localId)
+    )
+);
 
 export const reviewedListSelector = (state, annotations) =>
     annotationListSelector(state, annotations).filter(

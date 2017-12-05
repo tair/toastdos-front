@@ -14,6 +14,7 @@ import {
 import {
     annotationSelector,
     annotationValidSelector,
+    orderHasPendingAnnotations,
 } from 'domain/annotation/selectors';
 import {
     geneSelector,
@@ -53,6 +54,9 @@ export const annotationListValidSelector = createSelector(
         annotations.length > 0 &&
         !annotations.find(localId => !annotationValidSelector(state, localId))
 );
+
+export const hasPendingAnnotations = (state) =>
+    orderHasPendingAnnotations(state, annotationOrder(state));
 
 export const genesSelector = createSelector(
     state => state,

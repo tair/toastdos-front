@@ -46,6 +46,7 @@ class CurationView extends React.Component {
                 submit={this.props.submit}
                 preview={this.props.preview}
                 edit={this.props.edit}
+                hasPendingAnnotations={this.props.hasPendingAnnotations}
             />
         );
 
@@ -117,6 +118,7 @@ CurationView.propTypes = {
     addGene: React.PropTypes.func,
     removeGene: React.PropTypes.func,
     hasValidGene: React.PropTypes.bool,
+    hasPendingAnnotations: React.PropTypes.bool,
 };
 
 CurationView.defaultProps = {
@@ -131,6 +133,7 @@ CurationView.defaultProps = {
     addGene: () => {},
     removeGene: () => {},
     hasValidGene: false,
+    hasPendingAnnotations: false,
 };
 
 export default CurationView;
