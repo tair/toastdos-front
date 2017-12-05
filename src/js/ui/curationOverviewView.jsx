@@ -22,7 +22,7 @@ class CurationOverviewView extends React.Component {
                     <Col md="10">
                         <Card className="submission-view">
                             <CardHeader>
-                                <span className="fa fa-filter" /> Curation
+                                <span className="fa fa-filter" /> Submissions for Curation
                             </CardHeader>
                             <CardBody className="p-0">
                                 <SubmissionList
