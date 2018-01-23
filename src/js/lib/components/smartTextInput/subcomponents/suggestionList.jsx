@@ -19,6 +19,13 @@ class SuggestionList extends React.Component {
     }
 
     generateListElement(suggestionId, index) {
+        let suggestion = this.props.suggestionIndex[suggestionId];
+        let suggestionText =
+            typeof suggestion == 'object' ?
+            (suggestion.external_id ? suggestion.external_id + ": " : "")
+                + suggestion.name
+            : suggestion;
+
         return (
             <li
                 key={`suggestion-${suggestionId}`}
@@ -27,9 +34,7 @@ class SuggestionList extends React.Component {
                 onMouseOver={() => this.listItemHover(suggestionId, index)}
                 ref={r => (this.props.hoveredSuggestionId === suggestionId) ? (this.hoveredRef = r) : null}
             >
-                {typeof this.props.suggestionIndex[suggestionId] == 'object'? 
-                    this.props.suggestionIndex[suggestionId].name :
-                    this.props.suggestionIndex[suggestionId]}
+                {suggestionText}
             </li>
         );
     }
