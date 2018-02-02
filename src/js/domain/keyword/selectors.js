@@ -9,9 +9,10 @@ const keywordSearchResults = state => state.domain[name].keywordSearchResults;
 export const keywordSearchIndexSelector = createSelector(
     keywordSearchResults,
     results => results.reduce((acc, cur) => {
-        acc[cur.id] = {
+        acc[cur.id + cur.synonym] = {
             name: cur.name,
             external_id: cur.external_id,
+            synonym: cur.synonym,
             evidence_code: cur.evidence_code
         };
         return acc;
@@ -20,5 +21,5 @@ export const keywordSearchIndexSelector = createSelector(
 
 export const keywordSearchOrderSelector = createSelector(
     keywordSearchResults,
-    results => results.map(v => v.id)
+    results => results.map(v => v.id + v.synonym)
 );

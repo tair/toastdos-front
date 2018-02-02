@@ -1,4 +1,5 @@
 import React from 'react';
+import { Badge } from 'reactstrap';
 
 class SuggestionList extends React.Component {
     constructor(props) {
@@ -20,11 +21,21 @@ class SuggestionList extends React.Component {
 
     generateListElement(suggestionId, index) {
         let suggestion = this.props.suggestionIndex[suggestionId];
-        let suggestionText =
-            typeof suggestion == 'object' ?
-            (suggestion.external_id ? suggestion.external_id + ": " : "")
-                + suggestion.name
-            : suggestion;
+        let suggestionText;
+        if (typeof suggestion == 'object') {
+            suggestionText = (<span>
+                    <Badge color="success">
+                        {suggestion.external_id}
+                    </Badge>
+                    {suggestion.name}
+                    {suggestion.synonym ? 
+                    <Badge color="warning">
+                        Synonym matched: {suggestion.synonym}
+                    </Badge>: null}
+                    </span>);
+        } else {
+            suggestionText = suggestion;
+        }
 
         return (
             <li
