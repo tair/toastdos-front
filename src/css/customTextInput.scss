@@ -68,14 +68,21 @@ input[type=text] {
         & > li {
             padding: 7px 5px;
             word-break: break-all;
+            overflow: hidden;
             cursor: pointer;
+            text-overflow: ellipsis;
             &.selected {
                 background-color: $lightGreen;
+            }
+
+            & .badge {
+                margin-right: 0.25em;
+                max-width: 100%;
             }
         }
     }
 
-    & span {
+    & > span {
         text-align: center;
         width: 100%;
         margin: 0 auto;
