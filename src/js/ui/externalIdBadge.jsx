@@ -11,48 +11,47 @@ class ExternalIdBadge extends React.Component {
         this.externalId = this.props.externalId;
     }
 
+    // generate href url for the given externalId
     generateExternalIdLink(externalId) {
-        let link = <span>{externalId}</span>;
-        let baseUrl = '';
+        let href = '';
+        // GO external id
         if (externalId.indexOf("GO:") !== -1) {
             let goBaseUrl = 'http://amigo.geneontology.org/amigo/term/';
-            link = (
-                <a href={`${goBaseUrl}${externalId}#display-lineage-tab`}
-                    className="text-light"
-                    target="_blank"
-                >
-                    {externalId} <span className="fa fa-external-link"></span>
-                </a>
-            );
+            href = `${goBaseUrl}${externalId}#display-lineage-tab`;
+
+        // PO external id
         } else if (externalId.indexOf("PO:") !== -1) {
             let poBaseUrl = 'http://browser.planteome.org/amigo/term/';
-            link = (
-                <a href={`${poBaseUrl}${externalId}`}
-                    className="text-light"
-                    target="_blank"
-                >
-                    {externalId} <span className="fa fa-external-link"></span>
-                </a>
-            );
+            href = `${poBaseUrl}${externalId}`;
+
+        // ECO external id
         } else if (externalId.indexOf("ECO:") !== -1) {
             let ecoBaseUrl = 'http://www.evidenceontology.org/browse/';
-            link = (
-                <a href={`${ecoBaseUrl}#${externalId}`}
-                    className="text-light"
-                    target="_blank"
-                >
+            href = `${ecoBaseUrl}#${externalId}`;
+        }
+
+        return href;
+    }
+
+    // generate the html element for the given externalId
+    generateIdElement(externalId){
+        let href = this.generateExternalIdLink(externalId);
+        if (href !== "") {
+            return (
+                <a href={href} className="text-light" target="_blank">
                     {externalId} <span className="fa fa-external-link"></span>
                 </a>
             );
+        } else {
+            return <span>{externalId}</span>;
         }
-        return link;
     }
 
     render() {
         return (
             this.externalId !== "" ?
             <Badge color="success">
-                {this.generateExternalIdLink(this.externalId)}
+                {this.generateIdElement(this.externalId)}
             </Badge>
             :
             <Badge color="warning">
