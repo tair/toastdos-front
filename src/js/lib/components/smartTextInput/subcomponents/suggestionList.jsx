@@ -27,11 +27,11 @@ class SuggestionList extends React.Component {
                     <Badge color="success">
                         {suggestion.external_id}
                     </Badge>
-                    {suggestion.name}
                     {suggestion.synonym ? 
                     <Badge color="warning">
-                        Synonym matched: {suggestion.synonym}
+                        Synonym
                     </Badge>: null}
+                    {suggestion.name}
                     </span>);
         } else {
             suggestionText = suggestion;
