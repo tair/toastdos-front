@@ -91,7 +91,7 @@ class GeneTermAnnotation extends React.Component {
                             Object.assign({}, this.props.geneTermAnnotation, {
                                 keywordName: value.name,
                                 keywordExternalId: value.external_id,
-                                keywordId: id
+                                keywordId: value.id
                             })
                         )}
                         placeholder="Start Typing..."
@@ -113,7 +113,7 @@ class GeneTermAnnotation extends React.Component {
                         onSelect={(id, value) => this.props.onDataChange(
                             Object.assign({}, this.props.geneTermAnnotation, {
                                 methodName: value.name,
-                                methodId: id,
+                                methodId: value.id,
                                 methodExternalId: value.external_id,
                                 methodEvidenceCode: value.evidence_code
                             })
