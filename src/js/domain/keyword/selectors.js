@@ -10,6 +10,7 @@ export const keywordSearchIndexSelector = createSelector(
     keywordSearchResults,
     results => results.reduce((acc, cur) => {
         acc[cur.id + cur.synonym] = {
+            id: cur.id,
             name: cur.name,
             external_id: cur.external_id,
             synonym: cur.synonym,

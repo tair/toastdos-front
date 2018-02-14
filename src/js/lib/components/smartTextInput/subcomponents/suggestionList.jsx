@@ -30,7 +30,7 @@ class SuggestionList extends React.Component {
                     {suggestion.name}
                     {suggestion.synonym ? 
                     <Badge color="warning">
-                        Synonym matched: {suggestion.synonym}
+                        Synonym: {suggestion.synonym}
                     </Badge>: null}
                     </span>);
         } else {

@@ -43,7 +43,7 @@ class GeneGeneAnnotation extends React.Component {
                         onSelect={(id, value) => this.props.onDataChange(
                             Object.assign({}, this.props.geneGeneAnnotation, {
                                 methodName: value.name,
-                                methodId: id,
+                                methodId: value.id,
                                 methodExternalId: value.external_id,
                                 methodEvidenceCode: "",
                             })
