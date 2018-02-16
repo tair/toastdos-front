@@ -81,7 +81,7 @@ module.exports = {
             lib: path.resolve(__dirname, './src/js/lib'),
             modules: path.resolve(__dirname, './src/js/modules'),
             ui: path.resolve(__dirname, './src/js/ui'),
-            resources: path.resolve(__dirname, "./resources"),
+            resources: path.resolve(process.env.RESOURCEROOT),
         },
     },
 };
