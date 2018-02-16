@@ -4,6 +4,11 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+if(!process.env.RESOURCEROOT) {
+	console.error('No environment variable RESOURCEROOT found.');
+	process.exit(1);
+}
+
 
 module.exports = {
     entry: './src/index.js',
