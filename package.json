@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf ./bin; webpack -p --config webpack.production.config.js",
+    "eslint": "./node_modules/.bin/eslint src/",
     "start": "webpack-dev-server -d ./src/index.js --hot --inline --history-api-fallback"
   },
   "author": "",
@@ -26,7 +27,7 @@
     "json-loader": "^0.5.4",
     "jsonfile": "^2.4.0",
     "jwt-decode": "^2.1.0",
-    "node-sass": "^3.8.0",
+    "node-sass": "^4.7.2",
     "normalize.css": "^4.2.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",

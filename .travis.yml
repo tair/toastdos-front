@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - "8"
+install:
+  - npm install
+script:
+  - mkdir -p $RESOURCEROOT
+  - node ./scripts/generateOrcidFile.js
+  - npm run build
+deploy:
+  - provider: s3
+    skip-cleanup: true
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: $AWS_BUCKET
+    region: $AWS_REGION
+    local-dir: ".bin/"
+    upload-dir: "front"
+    on:
+      branch: development
+
