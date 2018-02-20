@@ -14,7 +14,7 @@ deploy:
     secret_access_key: $AWS_SECRET_KEY
     bucket: $AWS_BUCKET
     region: $AWS_REGION
-    local-dir: ".bin/"
+    local-dir: "bin"
     upload-dir: "front"
     on:
       branch: development
