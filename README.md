@@ -1,5 +1,6 @@
-# toastdos-front
+# toastdos-front [![Build Status](https://travis-ci.org/tair/toastdos-front.svg?branch=development)](https://travis-ci.org/tair/toastdos-front)
 The front end system for the GOAT community annotation tool
+
 
 Usage
 ----
