@@ -4,7 +4,7 @@ import React from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
     Dropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap';
 import  {Link} from 'react-router';
-import orcidInfo from 'resources/orcid_app_info';
+import orcidInfo from 'resources/orcid_public_info';
 import userInfoModule from 'modules/userInfo';
 import goatLogo from 'img/goat.svg'
 

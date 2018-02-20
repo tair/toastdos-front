@@ -20,6 +20,11 @@ class NavigationFrame extends React.Component {
                 to: '/curation',
                 name: 'Curation',
                 show: () => this.props.userRoles.includes('Curator')
+            },
+            {
+                to: '/exports',
+                name: 'Exports',
+                show: () => true
             }
         ];
 
