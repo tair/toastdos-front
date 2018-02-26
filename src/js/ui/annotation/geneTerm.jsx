@@ -10,6 +10,7 @@ import KeywordTextInput from 'modules/connectedComponents/keywordTextInput';
 import CustomTextArea from 'lib/components/customTextArea';
 import ValidationInput from 'ui/validationInput';
 import LabelInputRow from 'ui/labelInputRow';
+import LabelDropdownInputRow from 'ui/labelDropdownInputRow';
 
 const inputContainerStyle = {
     display: "inline-block",
@@ -22,6 +23,7 @@ class GeneTermAnnotation extends React.Component {
 
         this.generateEvidenceWith = this.generateEvidenceWith.bind(this);
         this.needsEvidenceWith = this.props.needsEvidenceWith;
+        this.multiEvidenceWith = this.props.multiEvidenceWith;
     }
 
     attemptValidate(evidenceWithId, locusName){
@@ -55,6 +57,12 @@ class GeneTermAnnotation extends React.Component {
                 nextprops.onEvidenceWithAddClick();
             }
             this.needsEvidenceWith = true;
+            if (nextprops.geneTermAnnotation.evidenceWithOrder.length >= 2) {
+                this.multiEvidenceWith = true;
+            }
+            else {
+                this.multiEvidenceWith = false;
+            }
         }
         else {
             this.needsEvidenceWith = false;
@@ -124,28 +132,54 @@ class GeneTermAnnotation extends React.Component {
                         required={true}
                     />
                 </LabelInputRow>
+
                 {this.needsEvidenceWith?(
-                <LabelInputRow
-                    title="Evidence With"
-                    align="align-items-start">
-                    <ListGroup>
-                        {this.props.geneTermAnnotation.evidenceWithOrder.map(this.generateEvidenceWith)}
-                    </ListGroup>
-                    <Row className="justify-content-md-center">
-                        <Col xs="auto" className="align-self-center">
-                            <Button color="success" className="btn-sm"
-                                style={{
-                                    borderTopRightRadius:0,
-                                    borderTopLeftRadius:0,
-                                }}
-                                onClick={this.props.onEvidenceWithAddClick}
-                            >
-                                <span className="fa fa-plus"></span> Evidence With
+                    this.multiEvidenceWith?(
+                        <LabelDropdownInputRow
+                            title="Evidence With"
+                            align="align-items-start"
+                            value={this.props.evidenceWithRelation}
+                            items={[ "OR" , "AND" ]}
+                            onClick={this.props.updateEvidenceWithRelation}>
+                            <ListGroup>
+                                {this.props.geneTermAnnotation.evidenceWithOrder.map(this.generateEvidenceWith)}
+                            </ListGroup>
+                            <Row className="justify-content-md-center">
+                                <Col xs="auto" className="align-self-center">
+                                    <Button color="success" className="btn-sm"
+                                        style={{
+                                            borderTopRightRadius: 0,
+                                            borderTopLeftRadius: 0,
+                                        }}
+                                        onClick={this.props.onEvidenceWithAddClick}
+                                    >
+                                        <span className="fa fa-plus"></span> Evidence With
                             </Button>
-                        </Col>
-                    </Row>
-                </LabelInputRow>
-                ):(<span />)}
+                                </Col>
+                            </Row>
+                        </LabelDropdownInputRow>
+                    ):(
+                        <LabelInputRow
+                            title="Evidence With"
+                            align="align-items-start">
+                            <ListGroup>
+                                {this.props.geneTermAnnotation.evidenceWithOrder.map(this.generateEvidenceWith)}
+                            </ListGroup>
+                            <Row className="justify-content-md-center">
+                                <Col xs="auto" className="align-self-center">
+                                    <Button color="success" className="btn-sm"
+                                        style={{
+                                            borderTopRightRadius: 0,
+                                            borderTopLeftRadius: 0,
+                                        }}
+                                        onClick={this.props.onEvidenceWithAddClick}
+                                    >
+                                        <span className="fa fa-plus"></span> Evidence With
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </LabelInputRow >
+                    )):(<span />)}
             </div>
         );
     }
@@ -160,7 +194,10 @@ GeneTermAnnotation.propTypes = {
     onDataChange: React.PropTypes.func,
     clearEvidenceWith: React.PropTypes.func,
     removeEvidenceWith: React.PropTypes.func,
+    updateEvidenceWithRelation: React.PropTypes.func,
+    evidenceWithRelation: React.PropTypes.string,
     needsEvidenceWith: React.PropTypes.bool,
+    multiEvidenceWith: React.PropTypes.bool,
 };
 
 GeneTermAnnotation.defaultProps = {
@@ -169,7 +206,10 @@ GeneTermAnnotation.defaultProps = {
     validateEvidenceWith: () => {},
     clearEvidenceWith: () => {},
     removeEvidenceWith: () => {},
+    updateEvidenceWithRelation: () => {},
+    evidenceWithRelation: "",
     needsEvidenceWith: false,
+    multiEvidenceWith: false,
 };
 
 export default GeneTermAnnotation;
