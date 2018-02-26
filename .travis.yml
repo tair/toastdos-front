@@ -3,10 +3,18 @@ node_js:
   - "8"
 install:
   - npm install
+env:
+  - DDIR=deployment-dir
 script:
   - mkdir -p $RESOURCEROOT
   - node ./scripts/generateOrcidFile.js
   - npm run build
+before-deploy:
+  - mkdir -p $TRAVIS_COMMIT
+  - cp -r appspec.yml bin server-scripts $TRAVIS_COMMIT
+  - zip -r $TRAVIS_COMMIT $TRAVIS_COMMIT
+  - mkdir -p $DDIR
+  - cp $TRAVIS_COMMIT.zip $DDIR
 deploy:
   - provider: s3
     skip-cleanup: true
@@ -14,8 +22,8 @@ deploy:
     secret_access_key: $AWS_SECRET_KEY
     bucket: $AWS_BUCKET
     region: $AWS_REGION
-    local-dir: "bin"
-    upload-dir: "front"
+    local-dir: $DDIR
+    upload-dir: "front/$TRAVIS_BRANCH/"
     on:
       branch: development
 
