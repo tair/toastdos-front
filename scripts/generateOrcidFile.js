@@ -14,7 +14,7 @@ const fs        = require('fs');
 const path      = require('path');
 
 let jsonStructure = {
-    authUrl: "http://orcidAuthUrl.com"
+    authUrl: (!process.env.ORCID_AUTHURL) ? "http://orcidAuthUrl.com" : process.env.ORCID_AUTHURL
 }
 
 jsonfile.writeFileSync(path.join(DESTINATION_DIR, FILENAME), jsonStructure, {spaces: 2});
