@@ -23,7 +23,6 @@ class GeneTermAnnotation extends React.Component {
 
         this.generateEvidenceWith = this.generateEvidenceWith.bind(this);
         this.needsEvidenceWith = this.props.needsEvidenceWith;
-        this.multiEvidenceWith = this.props.multiEvidenceWith;
     }
 
     attemptValidate(evidenceWithId, locusName){
@@ -57,12 +56,6 @@ class GeneTermAnnotation extends React.Component {
                 nextprops.onEvidenceWithAddClick();
             }
             this.needsEvidenceWith = true;
-            if (nextprops.geneTermAnnotation.evidenceWithOrder.length >= 2) {
-                this.multiEvidenceWith = true;
-            }
-            else {
-                this.multiEvidenceWith = false;
-            }
         }
         else {
             this.needsEvidenceWith = false;
@@ -133,8 +126,8 @@ class GeneTermAnnotation extends React.Component {
                     />
                 </LabelInputRow>
 
-                {this.needsEvidenceWith?(
-                    this.multiEvidenceWith?(
+                {this.needsEvidenceWith ? (
+                    this.props.geneTermAnnotation.evidenceWithOrder.length >= 2 ? (
                         <LabelDropdownInputRow
                             title="Evidence With"
                             align="align-items-start"
@@ -178,7 +171,7 @@ class GeneTermAnnotation extends React.Component {
                                     </Button>
                                 </Col>
                             </Row>
-                        </LabelInputRow >
+                        </LabelInputRow>
                     )):(<span />)}
             </div>
         );
@@ -197,7 +190,6 @@ GeneTermAnnotation.propTypes = {
     updateEvidenceWithRelation: React.PropTypes.func,
     evidenceWithRelation: React.PropTypes.string,
     needsEvidenceWith: React.PropTypes.bool,
-    multiEvidenceWith: React.PropTypes.bool,
 };
 
 GeneTermAnnotation.defaultProps = {
@@ -209,7 +201,6 @@ GeneTermAnnotation.defaultProps = {
     updateEvidenceWithRelation: () => {},
     evidenceWithRelation: "",
     needsEvidenceWith: false,
-    multiEvidenceWith: false,
 };
 
 export default GeneTermAnnotation;
