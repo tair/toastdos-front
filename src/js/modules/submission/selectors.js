@@ -130,6 +130,10 @@ export function submissionBodySelector(state) {
             let evidenceWith = evidenceWithValidListSelector(state, gt.evidenceWithOrder).map(ew => ew.locusName);
             if (evidenceWith.length > 0) {
                 annotation.data.evidenceWith = evidenceWith;
+                // TODO: Needs backend support for evidenceWithRelation field
+                // if (evidenceWith.length > 1) {
+                //     annotation.data.evidenceWithRelation = gt.evidenceWithRelation;
+                // }
             }
             break;
         case annotationFormats.GENE_GENE:

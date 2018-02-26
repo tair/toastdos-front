@@ -16,6 +16,7 @@ function getDefaultGeneTermAnnotationState() {
         methodExternalId: "",
         methodEvidenceCode: "",
         evidenceWithOrder: [],
+        evidenceWithRelation: "",
     };
 }
 
@@ -65,6 +66,15 @@ function geneTermAnnotationIndexReducer(state = defaultState.byLocalId, action) 
                 ...geneTermAnnotation,
                 evidenceWithOrder: geneTermAnnotation.evidenceWithOrder
                     .concat(action.evidenceWithId)
+            }
+        };
+    case actions.UPDATE_EVIDENCE_WITH_RELATION:
+        geneTermAnnotation = state[action.localId];
+        return {
+            ...state,
+            [action.localId]: {
+                ...geneTermAnnotation,
+                evidenceWithRelation: action.relation
             }
         };
     case actions.REMOVE_EVIDENCE_WITH:

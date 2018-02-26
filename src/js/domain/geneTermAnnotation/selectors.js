@@ -34,3 +34,8 @@ export const geneTermAnnotationValidSelector = createSelector(
         allEWValid
     )
 );
+
+export const evidenceWithRelationSelector = createSelector(
+    geneTermAnnotationSelector,
+    gta => gta.evidenceWithRelation
+);
