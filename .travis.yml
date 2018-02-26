@@ -23,7 +23,7 @@ deploy:
     bucket: $AWS_BUCKET
     region: $AWS_REGION
     local-dir: $DDIR
-    upload-dir: "front/$TRAVIS_BRANCH/"
+    upload-dir: "front/$TRAVIS_BRANCH"
     on:
       branch: development
 
