@@ -1,0 +1,11 @@
+version: 0.0
+os: linux
+files:
+  - source: bin/
+    destination: /home/ec2-user/codedeploy-landingpad/
+hooks:
+  AfterInstall:
+    - location: server-scripts/after-install
+      timeout: 300
+      runas: root
+
