@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: bin/
-    destination: /home/ec2-user/codedeploy-landingpad/
+    destination: /home/ec2-user/codedeploy-landingpad/front/
 hooks:
   AfterInstall:
     - location: server-scripts/after-install
