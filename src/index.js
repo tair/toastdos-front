@@ -24,7 +24,7 @@ import App from './js/app';
 
 let app_props = {
 	// set app props
-    
+
 };
 
 ReactDOM.render(
@@ -32,7 +32,7 @@ ReactDOM.render(
         Provider,
         {store: Store},
         React.createElement(App, app_props)
-    ), 
+    ),
 	document.getElementById('app-container')
 );
 

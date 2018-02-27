@@ -44,7 +44,7 @@ export default function handleAction(state = defaultState, action) {
         return Object.assign({}, state, {
             isAuthenticated: true,
             jwt: action.jwt,
-            initializing: false 
+            initializing: false
         });
     case actionTypes.NO_TOKEN_LOADED:
         return Object.assign({}, state, {

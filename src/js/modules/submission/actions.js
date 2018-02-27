@@ -21,10 +21,10 @@ export function initialize() {
         dispatch(newPub);
 
         // Link the newly created publication to the submission
-        dispatch(setPublication(newPub.localId))
+        dispatch(setPublication(newPub.localId));
 
         // Create gene for submission
-        dispatch(addGene())
+        dispatch(addGene());
     };
 }
 
@@ -35,7 +35,7 @@ export function addGene() {
         dispatch(newGene);
 
         // Link the newly created gene to the submission
-        dispatch(addToGeneOrder(newGene.localId))
+        dispatch(addToGeneOrder(newGene.localId));
     };
 }
 
@@ -45,7 +45,7 @@ export function removeGene(geneLocalId) {
         dispatch(geneActions.removeGene(geneLocalId));
 
         // Remove the link to the gene
-        dispatch(removeFromGeneOrder(geneLocalId))
+        dispatch(removeFromGeneOrder(geneLocalId));
     };
 }
 
@@ -69,7 +69,7 @@ export function addAnnotation() {
         let newAnnotation = annotationActions.addNew()(dispatch, getState);
 
         // Link the newly created annotation to the submission
-        dispatch(addToAnnotationOrder(newAnnotation.localId))
+        dispatch(addToAnnotationOrder(newAnnotation.localId));
     };
 }
 
@@ -79,7 +79,7 @@ export function removeAnnotation(annotationLocalId) {
         dispatch(annotationActions.remove(annotationLocalId));
 
         // Remove the link to the annotation
-        dispatch(removeFromAnnotationOrder(annotationLocalId))
+        dispatch(removeFromAnnotationOrder(annotationLocalId));
     };
 }
 
@@ -179,5 +179,5 @@ export function loadSubmission(submission) {
     return {
         type: actions.LOAD_SUBMISSION,
         submission,
-    }
+    };
 }

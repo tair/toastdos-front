@@ -75,7 +75,7 @@ export function remove(localId) {
         }
 
         // Delete annotation
-        return dispatch(removeAnnotation(localId))
+        return dispatch(removeAnnotation(localId));
     };
 }
 

@@ -5,7 +5,7 @@ import React from 'react';
 class TokenWatchdog extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             expTimeout: null
         };

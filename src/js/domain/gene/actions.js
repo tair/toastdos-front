@@ -34,7 +34,7 @@ export function clearGene(geneId) {
     return {
         type: actions.CLEAR_GENE,
         geneId: geneId
-    }
+    };
 }
 
 export function attemptValidateGene(localId, locusName, geneOrder, annotationOrder, addAnnotation) {

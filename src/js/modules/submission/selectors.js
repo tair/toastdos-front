@@ -121,7 +121,7 @@ export function submissionBodySelector(state) {
             };
             break;
         case annotationFormats.GENE_TERM:
-            let gt = geneTermAnnotationSelector(state, a.annotationTypeLocalId)
+            let gt = geneTermAnnotationSelector(state, a.annotationTypeLocalId);
             annotation.data = {
                 locusName: geneSelector(state, gt.geneLocalId).finalizedLocusName,
                 method: (gt.methodId !== null ? {id: gt.methodId} : {name: gt.methodName}),
@@ -133,7 +133,7 @@ export function submissionBodySelector(state) {
             }
             break;
         case annotationFormats.GENE_GENE:
-            let gg = geneGeneAnnotationSelector(state, a.annotationTypeLocalId)
+            let gg = geneGeneAnnotationSelector(state, a.annotationTypeLocalId);
             annotation.data = {
                 locusName: geneSelector(state, gg.gene1LocalId).finalizedLocusName,
                 locusName2: geneSelector(state, gg.gene2LocalId).finalizedLocusName,

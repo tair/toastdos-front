@@ -23,4 +23,4 @@ export default function (state = defaultState, action) {
         [keyword.constants.name]: keyword.reducer,
         [publication.constants.name]: publication.reducer,
     })(state,action);
-};
+}
