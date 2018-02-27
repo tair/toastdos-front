@@ -112,28 +112,30 @@ export function submissionBodySelector(state) {
             data: {}
         };
 
+        let ca, gt, gg, evidenceWith;
+
         switch(annotationTypeData[a.annotationType].format) {
         case annotationFormats.COMMENT:
-            let ca = commentAnnotationSelector(state, a.annotationTypeLocalId);
+            ca = commentAnnotationSelector(state, a.annotationTypeLocalId);
             annotation.data = {
                 locusName: geneSelector(state, ca.geneLocalId).finalizedLocusName,
                 text: ca.comment
             };
             break;
         case annotationFormats.GENE_TERM:
-            let gt = geneTermAnnotationSelector(state, a.annotationTypeLocalId);
+            gt = geneTermAnnotationSelector(state, a.annotationTypeLocalId);
             annotation.data = {
                 locusName: geneSelector(state, gt.geneLocalId).finalizedLocusName,
                 method: (gt.methodId !== null ? {id: gt.methodId} : {name: gt.methodName}),
                 keyword: (gt.keywordId !== null ? {id: gt.keywordId} : {name: gt.keywordName})
             };
-            let evidenceWith = evidenceWithValidListSelector(state, gt.evidenceWithOrder).map(ew => ew.locusName);
+            evidenceWith = evidenceWithValidListSelector(state, gt.evidenceWithOrder).map(ew => ew.locusName);
             if (evidenceWith.length > 0) {
                 annotation.data.evidenceWith = evidenceWith;
             }
             break;
         case annotationFormats.GENE_GENE:
-            let gg = geneGeneAnnotationSelector(state, a.annotationTypeLocalId);
+            gg = geneGeneAnnotationSelector(state, a.annotationTypeLocalId);
             annotation.data = {
                 locusName: geneSelector(state, gg.gene1LocalId).finalizedLocusName,
                 locusName2: geneSelector(state, gg.gene2LocalId).finalizedLocusName,

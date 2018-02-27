@@ -9,7 +9,7 @@ const ConnectedPublicationFieldReadOnly = connect(
     (state, ownProps) => ({
         ...publicationSelector(state, ownProps.localId),
     }),
-    dispatch => ({})
+    () => ({})
 )(PublicationFieldReadOnly);
 
 ConnectedPublicationFieldReadOnly.propTypes = {

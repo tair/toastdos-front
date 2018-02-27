@@ -9,7 +9,7 @@ const ConnectedSingleGeneReadOnly = connect(
     (state, ownProps) => ({
         gene: geneSelector(state, ownProps.localId),
     }),
-    dispatch => ({})
+    () => ({})
 )(SingleGeneReadOnly);
 
 ConnectedSingleGeneReadOnly.propTypes = {

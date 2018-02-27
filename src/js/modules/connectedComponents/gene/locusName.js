@@ -17,7 +17,7 @@ const ConnectedGeneLocusName = connect(
     (state,ownProps) => ({
         geneLocusName: state.domain.gene.byLocalId[ownProps.localId].finalizedLocusName,
     }),
-    dipatch => ({})
+    () => ({})
 )((GeneLocusName));
 
 ConnectedGeneLocusName.propTypes = {

@@ -7,7 +7,6 @@ import * as publicationActions from 'domain/publication/actions';
 import * as geneActions from 'domain/gene/actions';
 import * as annotationActions from 'domain/annotation/actions';
 import {
-    submissionSelector,
     submissionBodySelector,
     publicationLocalId,
     annotationOrder,
@@ -15,7 +14,7 @@ import {
 } from './selectors';
 
 export function initialize() {
-    return (dispatch, getState) => {
+    return dispatch => {
         // Create publication for submission
         let newPub = publicationActions.addNew();
         dispatch(newPub);
@@ -29,7 +28,7 @@ export function initialize() {
 }
 
 export function addGene() {
-    return (dispatch, getState) => {
+    return dispatch => {
         // Create the new gene
         let newGene = geneActions.addNew();
         dispatch(newGene);
@@ -40,7 +39,7 @@ export function addGene() {
 }
 
 export function removeGene(geneLocalId) {
-    return (dispatch, getState) => {
+    return dispatch => {
         // Delete the gene
         dispatch(geneActions.removeGene(geneLocalId));
 
@@ -74,7 +73,7 @@ export function addAnnotation() {
 }
 
 export function removeAnnotation(annotationLocalId) {
-    return (dispatch, getState) => {
+    return dispatch => {
         // Delete the annotation
         dispatch(annotationActions.remove(annotationLocalId));
 
@@ -142,7 +141,6 @@ export function attemptSubmit() {
 export function resetSubmission() {
     return (dispatch, getState) => {
         const currState = getState();
-        const submission = submissionSelector(currState);
 
         // Delete the publication
         dispatch(publicationActions.remove(publicationLocalId(currState)));

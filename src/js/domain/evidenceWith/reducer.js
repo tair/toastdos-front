@@ -2,11 +2,6 @@
 
 import * as actions from './actionTypes';
 import validation from 'lib/validation';
-import {
-    annotationTypes,
-    annotationTypeData,
-    annotationFormats,
-} from 'domain/annotation/constants';
 
 function getDefaultEvidenceWithState() {
     return {
@@ -21,6 +16,7 @@ const defaultState = {
 };
 
 function evidenceWithIndexReducer(state = defaultState.byLocalId, action) {
+    let newState;
     switch (action.type) {
     case actions.ADD:
         return {
@@ -39,7 +35,7 @@ function evidenceWithIndexReducer(state = defaultState.byLocalId, action) {
             }
         };
     case actions.REMOVE:
-        let newState = {...state};
+        newState = {...state};
 
         delete newState[action.evidenceWithId];
 

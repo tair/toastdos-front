@@ -18,7 +18,7 @@ function successExportsList(data) {
 }
 
 export function requestExportsList() {
-    return (dispatch, getState) => {
+    return dispatch => {
 
         dispatch({
             type: actions.REQUEST_EXPORTS_LIST,

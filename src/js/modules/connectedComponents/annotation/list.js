@@ -4,18 +4,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import AnnotationList from 'ui/annotation/list';
 import {
-    annotationFormats,
-    annotationTypes,
-    annotationTypeData,
-} from 'domain/annotation/constants';
-import {
     changeAnnotationType,
     updateAnnotationData,
     addEvidenceWith,
 } from 'domain/annotation/actions';
 
 const ConnectedAnnotationList = connect(
-    (state, ownProps) => ({}),
+    () => ({}),
     (dispatch, ownProps) => ({
         onAnnotationAddClick: () => ownProps.addAnnotation(),
         removeAnnotation: localId => ownProps.removeAnnotation(localId),

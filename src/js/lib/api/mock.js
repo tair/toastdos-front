@@ -86,5 +86,6 @@ export function validateGene(locusName, jwt, callback) {
 export function submitSubmission(submissionData, jwt, callback) {
     return setTimeout(() => {
         // todo
+        callback();
     }, LATENCY);
 }

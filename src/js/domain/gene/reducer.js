@@ -19,6 +19,7 @@ const defaultState = {
 };
 
 function geneIndexReducer(state = defaultState.byLocalId, action) {
+    let newState;
     switch (action.type) {
     case actions.ADD_NEW:
         return {
@@ -29,7 +30,7 @@ function geneIndexReducer(state = defaultState.byLocalId, action) {
             }
         };
     case actions.REMOVE_GENE:
-        let newState = {...state};
+        newState = {...state};
 
         delete newState[action.localId];
 

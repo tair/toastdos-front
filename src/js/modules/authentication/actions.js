@@ -47,7 +47,7 @@ function loginSuccess(logindata) {
     }
     catch (e)
     {
-        console.error("Authentication token isn't written to sessionStorage");
+        alert("Browser is not supported: Authentication token isn't written to sessionStorage");
     }
 
     let decoded = jwtDecode(logindata.jwt);

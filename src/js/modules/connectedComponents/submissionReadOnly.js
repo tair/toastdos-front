@@ -15,7 +15,7 @@ const ConnectedSubmissionReadOnly = connect(
         geneOrder,
         annotationOrder,
     }),
-    dispatch => ({})
+    () => ({})
 )(SubmissionReadOnly);
 
 export default ConnectedSubmissionReadOnly;

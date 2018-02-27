@@ -10,7 +10,7 @@ const ConnectedCurationAnnotationListReadOnly = connect(
         pendingAnnotations: pendingListSelector(state, ownProps.annotationOrder),
         reviewedAnnotations: reviewedListSelector(state, ownProps.annotationOrder),
     }),
-    (dispatch, ownProps) => ({})
+    () => ({})
 )(AnnotationListReadOnly);
 
 ConnectedCurationAnnotationListReadOnly.propTypes = {

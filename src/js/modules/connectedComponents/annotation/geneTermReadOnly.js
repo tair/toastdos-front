@@ -13,7 +13,7 @@ const ConnectedGeneTermAnnotationReadOnly = connect(
         geneTermAnnotation: geneTermAnnotationSelector(state, ownProps.localId),
         needsEvidenceWith: needsEvidenceWithSelector(state, ownProps.localId),
     }),
-    dispatch  => ({})
+    ()  => ({})
 )(GeneTermAnnotationReadOnly);
 
 ConnectedGeneTermAnnotationReadOnly.propTypes = {

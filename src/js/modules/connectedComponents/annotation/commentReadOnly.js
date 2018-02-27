@@ -8,7 +8,7 @@ const ConnectedCommentAnnotationReadOnly = connect(
     (state, ownProps) => ({
         commentAnnotation: state.domain.commentAnnotation.byLocalId[ownProps.localId],
     }),
-    dispatch => ({})
+    () => ({})
 )(CommentAnnotationReadOnly);
 
 ConnectedCommentAnnotationReadOnly.propTypes = {

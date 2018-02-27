@@ -9,7 +9,7 @@ const ConnectedGeneGeneAnnotationReadOnly = connect(
     (state, ownProps) => ({
         geneGeneAnnotation: geneGeneAnnotationSelector(state, ownProps.localId),
     }),
-    dispatch => ({})
+    () => ({})
 )(GeneGeneAnnotationReadOnly);
 
 ConnectedGeneGeneAnnotationReadOnly.propTypes = {

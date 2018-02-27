@@ -6,7 +6,6 @@ import * as geneGeneActions from 'domain/geneGeneAnnotation/actions';
 import * as commentActions from 'domain/commentAnnotation/actions';
 import {
     annotationFormats,
-    annotationTypes,
     annotationTypeData,
     annotationStatusFormats
 } from './constants';
@@ -14,7 +13,7 @@ import { annotationSelector, annotationListSelector } from './selectors';
 import generateId from 'lib/idGenerator';
 
 export function addNew(localId, annotationData = {}) {
-    return (dispatch, getState) => {
+    return dispatch => {
         let toAdd;
         let format = annotationData.annotationType ?
             annotationTypeData[annotationData.annotationType].format : "";

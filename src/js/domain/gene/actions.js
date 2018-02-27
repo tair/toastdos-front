@@ -5,9 +5,7 @@ import { validateGene } from 'lib/api';
 import { AsyncAction } from 'lib/asyncActionManager';
 import generateId from 'lib/idGenerator';
 import * as actions from './actionTypes';
-import { name } from './constants';
 import { geneSelector } from './selectors';
-import * as submissionActions from 'modules/submission/actions';
 
 export function addNew(localId) {
     return {
@@ -74,7 +72,7 @@ export class AttemptValidateGeneAsync extends AsyncAction {
         }
 
         if (this.locusName.length > 0) {
-            this.request = validateGene(this.locusName, token, (err, data) => {
+            this.request = validateGene(this.locusName, token, err => {
                 if(err) {
                     if(err.error === 'NOT_FOUND') {
                         return dispatch(validateGeneFail(this.localId, "Locus Not Found"));

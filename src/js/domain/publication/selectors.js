@@ -1,6 +1,5 @@
 "use strict";
 
-import { createSelector } from 'reselect';
 import { name } from './constants';
 import { validationStates } from 'lib/validation';
 
