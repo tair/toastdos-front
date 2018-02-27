@@ -64,7 +64,6 @@ class GeneTermAnnotation extends React.Component {
 
     render() {
         let typeData = annotationTypeData[this.props.geneTermAnnotation.annotationType];
-
         return (
             <div>
                 <LabelInputRow title="Gene">

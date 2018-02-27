@@ -11,6 +11,7 @@ import * as actions from './actionTypes';
 import * as pubActions from 'domain/publication/actions';
 import * as geneActions from 'domain/gene/actions';
 import * as annotationActions from 'domain/annotation/actions';
+import * as geneTermActions from 'domain/geneTermAnnotation/actions';
 import * as evidenceWithActions from 'domain/evidenceWith/actions';
 import {
     annotationFormats,
@@ -238,7 +239,10 @@ export function loadSubmission(submission) {
                 case annotationFormats.GENE_TERM:
 
                     let ewOrder = [];
+                    let ewRelation = "";
+
                     if (annotation.data.evidenceWith) {
+                        
                         // Create each evidence with and record the localId
                         for (let ew of annotation.data.evidenceWith) {
                             let newEw = evidenceWithActions.addNew();
@@ -259,6 +263,17 @@ export function loadSubmission(submission) {
                             // add id to order
                             ewOrder.push(newEw.evidenceWithId);
                         }
+
+                        if (annotation.data.isEvidenceWithOr == true) {
+                            ewRelation = "OR";
+                        } else if (annotation.data.isEvidenceWithOr == false) {
+                            ewRelation = "AND";
+                        }
+
+                        // update Evidence With Relation on annotation
+                        dispatch(
+                            geneTermActions.updateEvidenceWithRelation(localId, ewRelation)
+                        );
                     }
 
                     annotationFormatData = {
@@ -271,6 +286,7 @@ export function loadSubmission(submission) {
                         methodExternalId: annotation.data.method.externalId || "",
                         methodEvidenceCode: annotation.data.method.evidenceCode || null,
                         evidenceWithOrder: ewOrder,
+                        evidenceWithRelation: ewRelation,
                     };
                     break;
                 case annotationFormats.GENE_GENE:

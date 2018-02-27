@@ -71,6 +71,11 @@ class GeneTermAnnotationReadOnly extends React.Component {
                             <Label className="align-center">
                                 Evidence With:
                             </Label>
+                                {this.props.geneTermAnnotation.evidenceWithOrder.length >= 2 ? (
+                                    <Label>
+                                        Relation: {this.props.geneTermAnnotation.evidenceWithRelation}
+                                    </Label>
+                                ) : (<span />)}
                         </Col>
                         <Col>
                             <ListGroup>

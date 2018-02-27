@@ -15,7 +15,7 @@ class LabelDropdownInputRow extends React.Component {
             dropdownOpen: false,
         };
 
-        this.props.onClick(this.props.items[0]);
+        this.props.onClick(this.props.value);
     }
 
     toggle() {
