@@ -127,11 +127,19 @@ export function submissionBodySelector(state) {
             annotation.data = {
                 locusName: geneSelector(state, gt.geneLocalId).finalizedLocusName,
                 method: (gt.methodId !== null ? {id: gt.methodId} : {name: gt.methodName}),
-                keyword: (gt.keywordId !== null ? {id: gt.keywordId} : {name: gt.keywordName})
+                keyword: (gt.keywordId !== null ? {id: gt.keywordId} : {name: gt.keywordName}),
+                isEvidenceWithOr: true,
             };
             evidenceWith = evidenceWithValidListSelector(state, gt.evidenceWithOrder).map(ew => ew.locusName);
             if (evidenceWith.length > 0) {
                 annotation.data.evidenceWith = evidenceWith;
+                if (evidenceWith.length > 1) {
+                    if (gt.evidenceWithRelation == "OR") {
+                        annotation.data.isEvidenceWithOr = true;
+                    } else {
+                        annotation.data.isEvidenceWithOr = false;
+                    }
+                }
             }
             break;
         case annotationFormats.GENE_GENE:

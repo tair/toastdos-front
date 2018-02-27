@@ -84,6 +84,14 @@ export function addEvidenceWith(localId) {
     };
 }
 
+export function updateEvidenceWithRelation(localId, relation) {
+    return {
+        type: actions.UPDATE_EVIDENCE_WITH_RELATION,
+        localId: localId,
+        relation: relation,
+    };
+}
+
 export function removeEvidenceWith(localId, evidenceWithId) {
     return dispatch => {
         // Delete the evidenceWith

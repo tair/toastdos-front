@@ -10,6 +10,7 @@ import * as actions from './actionTypes';
 import * as pubActions from 'domain/publication/actions';
 import * as geneActions from 'domain/gene/actions';
 import * as annotationActions from 'domain/annotation/actions';
+import * as geneTermActions from 'domain/geneTermAnnotation/actions';
 import * as evidenceWithActions from 'domain/evidenceWith/actions';
 import {
     annotationFormats,
@@ -229,32 +230,43 @@ export function loadSubmission(submission) {
         for (let annotation of submission.annotations) {
             let localId = "remote_annotation_" + annotation.id;
 
-            let annotationFormatData, ewOrder;
+            let annotationFormatData, ewOrder, ewRelation;
             switch(annotationTypeData[annotation.type].format) {
             case annotationFormats.GENE_TERM:
-
                 ewOrder = [];
+                ewRelation = "";
                 if (annotation.data.evidenceWith) {
-                        // Create each evidence with and record the localId
+                    // Create each evidence with and record the localId
                     for (let ew of annotation.data.evidenceWith) {
                         let newEw = evidenceWithActions.addNew();
 
-                            // create an evidence with
+                        // create an evidence with
                         dispatch(newEw);
 
-                            // update its data
+                        // update its data
                         dispatch(
-                                evidenceWithActions.updateEvidenceWith(
-                                    newEw.evidenceWithId, {
-                                        ...validation.getValid(),
-                                        locusName: ew,
-                                    }
-                                )
-                            );
+                            evidenceWithActions.updateEvidenceWith(
+                                newEw.evidenceWithId, {
+                                    ...validation.getValid(),
+                                    locusName: ew,
+                                }
+                            )
+                        );
 
-                            // add id to order
+                        // add id to order
                         ewOrder.push(newEw.evidenceWithId);
                     }
+
+                    if (annotation.data.isEvidenceWithOr == true) {
+                        ewRelation = "OR";
+                    } else if (annotation.data.isEvidenceWithOr == false) {
+                        ewRelation = "AND";
+                    }
+
+                    // update Evidence With Relation on annotation
+                    dispatch(
+                        geneTermActions.updateEvidenceWithRelation(localId, ewRelation)
+                    );
                 }
 
                 annotationFormatData = {
@@ -267,6 +279,7 @@ export function loadSubmission(submission) {
                     methodExternalId: annotation.data.method.externalId || "",
                     methodEvidenceCode: annotation.data.method.evidenceCode || null,
                     evidenceWithOrder: ewOrder,
+                    evidenceWithRelation: ewRelation,
                 };
                 break;
             case annotationFormats.GENE_GENE:
