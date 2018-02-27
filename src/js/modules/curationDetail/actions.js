@@ -3,7 +3,6 @@
 import AuthModule from 'modules/authentication';
 import {
     getSubmission,
-    submitSubmission,
     submitCurationSubmission,
 } from 'lib/api';
 import * as validation from 'lib/validation';
@@ -15,11 +14,9 @@ import * as geneTermActions from 'domain/geneTermAnnotation/actions';
 import * as evidenceWithActions from 'domain/evidenceWith/actions';
 import {
     annotationFormats,
-    annotationType,
     annotationTypeData,
 } from 'domain/annotation/constants';
 import {
-    submissionSelector,
     submissionBodySelector,
     submissionId,
     publicationLocalId,
@@ -28,7 +25,7 @@ import {
 } from './selectors';
 
 export function addGene(geneLocalId, geneData) {
-    return (dispatch, getState) => {
+    return dispatch => {
         // Create the new gene
         let newGene = geneActions.addNew(geneLocalId);
         dispatch(newGene);
@@ -37,17 +34,17 @@ export function addGene(geneLocalId, geneData) {
             dispatch(geneActions.updateGeneData(newGene.localId, geneData));
         }
         // Link the newly created gene to the submission
-        dispatch(addToGeneOrder(newGene.localId))
+        dispatch(addToGeneOrder(newGene.localId));
     };
 }
 
 export function removeGene(geneLocalId) {
-    return (dispatch, getState) => {
+    return dispatch => {
         // Delete the gene
         dispatch(geneActions.removeGene(geneLocalId));
 
         // Remove the link to the gene
-        dispatch(removeFromGeneOrder(geneLocalId))
+        dispatch(removeFromGeneOrder(geneLocalId));
     };
 }
 
@@ -71,28 +68,28 @@ export function addAnnotation(annotationLocalId, annotationData) {
         // Create the new annotation
         let newAnnotation = annotationActions.addNew(
             annotationLocalId,
-            annotationData,
+            annotationData
         )(dispatch, getState);
 
         if (annotationData) {
             dispatch(annotationActions.updateAnnotationData(
                 newAnnotation.localId,
-                annotationData.annotationFormatData,
+                annotationData.annotationFormatData
             ));
         }
 
         // Link the newly created annotation to the submission
-        dispatch(addToAnnotationOrder(newAnnotation.localId))
+        dispatch(addToAnnotationOrder(newAnnotation.localId));
     };
 }
 
 export function removeAnnotation(annotationLocalId) {
-    return (dispatch, getState) => {
+    return dispatch => {
         // Delete the annotation
         dispatch(annotationActions.remove(annotationLocalId));
 
         // Remove the link to the annotation
-        dispatch(removeFromAnnotationOrder(annotationLocalId))
+        dispatch(removeFromAnnotationOrder(annotationLocalId));
     };
 }
 
@@ -158,7 +155,6 @@ export function attemptSubmit() {
 export function resetSubmission() {
     return (dispatch, getState) => {
         const currState = getState();
-        const submission = submissionSelector(currState);
 
         // Delete the publication
         dispatch(pubActions.remove(publicationLocalId(currState)));
@@ -189,7 +185,7 @@ export function edit() {
 }
 
 export function loadSubmission(submission) {
-    return (dispatch, getState) => {
+    return dispatch => {
         let loaded = dispatch({
             type: actions.LOAD_SUBMISSION,
             submission,
@@ -209,10 +205,10 @@ export function loadSubmission(submission) {
         dispatch(newPub);
 
         // Link the newly created publication to the submission
-        dispatch(setPublication(newPub.localId))
+        dispatch(setPublication(newPub.localId));
 
         // Set the publication id value
-        dispatch(pubActions.update(newPub.localId, submission.publicationId))
+        dispatch(pubActions.update(newPub.localId, submission.publicationId));
 
         let locusMap = {};
 
@@ -234,77 +230,74 @@ export function loadSubmission(submission) {
         for (let annotation of submission.annotations) {
             let localId = "remote_annotation_" + annotation.id;
 
-            let annotationFormatData;
+            let annotationFormatData, ewOrder, ewRelation;
             switch(annotationTypeData[annotation.type].format) {
-                case annotationFormats.GENE_TERM:
+            case annotationFormats.GENE_TERM:
+                ewOrder = [];
+                ewRelation = "";
+                if (annotation.data.evidenceWith) {
+                    // Create each evidence with and record the localId
+                    for (let ew of annotation.data.evidenceWith) {
+                        let newEw = evidenceWithActions.addNew();
 
-                    let ewOrder = [];
-                    let ewRelation = "";
+                        // create an evidence with
+                        dispatch(newEw);
 
-                    if (annotation.data.evidenceWith) {
-                        
-                        // Create each evidence with and record the localId
-                        for (let ew of annotation.data.evidenceWith) {
-                            let newEw = evidenceWithActions.addNew();
-
-                            // create an evidence with
-                            dispatch(newEw);
-
-                            // update its data
-                            dispatch(
-                                evidenceWithActions.updateEvidenceWith(
-                                    newEw.evidenceWithId, {
-                                        ...validation.getValid(),
-                                        locusName: ew,
-                                    }
-                                )
-                            );
-
-                            // add id to order
-                            ewOrder.push(newEw.evidenceWithId);
-                        }
-
-                        if (annotation.data.isEvidenceWithOr == true) {
-                            ewRelation = "OR";
-                        } else if (annotation.data.isEvidenceWithOr == false) {
-                            ewRelation = "AND";
-                        }
-
-                        // update Evidence With Relation on annotation
+                        // update its data
                         dispatch(
-                            geneTermActions.updateEvidenceWithRelation(localId, ewRelation)
+                            evidenceWithActions.updateEvidenceWith(
+                                newEw.evidenceWithId, {
+                                    ...validation.getValid(),
+                                    locusName: ew,
+                                }
+                            )
                         );
+
+                        // add id to order
+                        ewOrder.push(newEw.evidenceWithId);
                     }
 
-                    annotationFormatData = {
-                        geneLocalId: locusMap[annotation.data.locusName],
-                        keywordName: annotation.data.keyword.name,
-                        keywordId: annotation.data.keyword.id,
-                        keywordExternalId: annotation.data.keyword.externalId || "",
-                        methodName: annotation.data.method.name,
-                        methodId: annotation.data.method.id,
-                        methodExternalId: annotation.data.method.externalId || "",
-                        methodEvidenceCode: annotation.data.method.evidenceCode || null,
-                        evidenceWithOrder: ewOrder,
-                        evidenceWithRelation: ewRelation,
-                    };
-                    break;
-                case annotationFormats.GENE_GENE:
-                    annotationFormatData = {
-                        gene1LocalId: locusMap[annotation.data.locusName],
-                        gene2LocalId: locusMap[annotation.data.locusName2],
-                        methodName: annotation.data.method.name,
-                        methodId: annotation.data.method.id,
-                        methodExternalId: annotation.data.method.externalId || "",
-                        methodEvidenceCode: annotation.data.method.evidenceCode || null
-                    };
-                    break;
-                case annotationFormats.COMMENT:
-                    annotationFormatData = {
-                        geneLocalId: locusMap[annotation.data.locusName],
-                        comment: annotation.data.text
-                    };
-                    break;
+                    if (annotation.data.isEvidenceWithOr == true) {
+                        ewRelation = "OR";
+                    } else if (annotation.data.isEvidenceWithOr == false) {
+                        ewRelation = "AND";
+                    }
+
+                    // update Evidence With Relation on annotation
+                    dispatch(
+                        geneTermActions.updateEvidenceWithRelation(localId, ewRelation)
+                    );
+                }
+
+                annotationFormatData = {
+                    geneLocalId: locusMap[annotation.data.locusName],
+                    keywordName: annotation.data.keyword.name,
+                    keywordId: annotation.data.keyword.id,
+                    keywordExternalId: annotation.data.keyword.externalId || "",
+                    methodName: annotation.data.method.name,
+                    methodId: annotation.data.method.id,
+                    methodExternalId: annotation.data.method.externalId || "",
+                    methodEvidenceCode: annotation.data.method.evidenceCode || null,
+                    evidenceWithOrder: ewOrder,
+                    evidenceWithRelation: ewRelation,
+                };
+                break;
+            case annotationFormats.GENE_GENE:
+                annotationFormatData = {
+                    gene1LocalId: locusMap[annotation.data.locusName],
+                    gene2LocalId: locusMap[annotation.data.locusName2],
+                    methodName: annotation.data.method.name,
+                    methodId: annotation.data.method.id,
+                    methodExternalId: annotation.data.method.externalId || "",
+                    methodEvidenceCode: annotation.data.method.evidenceCode || null
+                };
+                break;
+            case annotationFormats.COMMENT:
+                annotationFormatData = {
+                    geneLocalId: locusMap[annotation.data.locusName],
+                    comment: annotation.data.text
+                };
+                break;
             }
 
             let annotationData = {

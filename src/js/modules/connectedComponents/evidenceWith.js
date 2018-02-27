@@ -4,7 +4,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import EvidenceWith from 'ui/evidenceWith/listItem';
 import {
-    updateEvidenceWith,
     attemptValidateEvidenceWith,
 } from 'domain/evidenceWith/actions';
 import { evidenceWithSelector } from 'domain/evidenceWith/selectors';

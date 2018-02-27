@@ -34,7 +34,7 @@ export function login(orcidCode, callback) {
 }
 
 /**
- * Mock request for user info. 
+ * Mock request for user info.
  * Returns the mock user object above.
  * @param  {int}   id       - the id of the user
  * @param  {String}   jwt      - the JWT
@@ -86,5 +86,6 @@ export function validateGene(locusName, jwt, callback) {
 export function submitSubmission(submissionData, jwt, callback) {
     return setTimeout(() => {
         // todo
+        callback();
     }, LATENCY);
 }

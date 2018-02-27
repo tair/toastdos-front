@@ -9,7 +9,7 @@ const ConnectedAnnotationEntryReadOnly = connect(
     (state, ownProps) => ({
         annotation: annotationSelector(state, ownProps.localId),
     }),
-    dispatch => ({})
+    () => ({})
 )(AnnotationEntryReadOnly);
 
 ConnectedAnnotationEntryReadOnly.propTypes = {

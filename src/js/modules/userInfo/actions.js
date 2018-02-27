@@ -81,7 +81,7 @@ export function refreshUserInfo() {
 /**
  * Create new REQUEST_UPDATE_USER_INFO action.
  * Attempts to update user info.
- *    
+ *
  * @param  {Object} newUserInfo - the new user info
  */
 export function requestUpdateUserInfo(newUserInfo) {

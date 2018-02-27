@@ -15,6 +15,7 @@ const defaultState = {
 };
 
 function commentAnnotationIndexReducer(state = defaultState.byLocalId, action) {
+    let newState;
     switch (action.type) {
     case actions.ADD_NEW:
         return {
@@ -25,7 +26,7 @@ function commentAnnotationIndexReducer(state = defaultState.byLocalId, action) {
             }
         };
     case actions.REMOVE:
-        let newState = {...state};
+        newState = {...state};
 
         delete newState[action.localId];
 

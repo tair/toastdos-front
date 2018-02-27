@@ -1,7 +1,6 @@
 "use strict";
 
 import * as actions from './actionTypes';
-import { annotationTypes } from 'domain/annotation/constants';
 
 function getDefaultGeneTermAnnotationState() {
     return {
@@ -25,6 +24,7 @@ const defaultState = {
 };
 
 function geneTermAnnotationIndexReducer(state = defaultState.byLocalId, action) {
+    let newState, geneTermAnnotation;
     switch (action.type) {
     case actions.ADD_NEW:
         return {
@@ -37,7 +37,7 @@ function geneTermAnnotationIndexReducer(state = defaultState.byLocalId, action) 
             }
         };
     case actions.REMOVE:
-        let newState = {...state};
+        newState = {...state};
 
         delete newState[action.localId];
 
@@ -59,7 +59,7 @@ function geneTermAnnotationIndexReducer(state = defaultState.byLocalId, action) 
             }
         };
     case actions.ADD_EVIDENCE_WITH:
-        let geneTermAnnotation = state[action.localId];
+        geneTermAnnotation = state[action.localId];
         return {
             ...state,
             [action.localId]: {

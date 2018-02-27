@@ -10,7 +10,7 @@ export function addNew() {
     return {
         type: actions.ADD_NEW,
         localId: '' + generateId(),
-    }
+    };
 }
 
 export function update(localId, publicationId) {

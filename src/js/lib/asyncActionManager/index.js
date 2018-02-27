@@ -4,4 +4,4 @@ import asyncActionMiddleware from './asyncActionMiddleware';
 export {
     AsyncAction,
     asyncActionMiddleware
-}
+};

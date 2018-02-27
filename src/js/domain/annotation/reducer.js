@@ -1,7 +1,7 @@
 "use strict";
 
 import * as actions from './actionTypes';
-import { annotationTypes, annotationStatusFormats } from './constants';
+import { annotationTypes } from './constants';
 
 function getDefaultAnnotationState() {
     return {
@@ -18,6 +18,7 @@ const defaultState = {
 };
 
 function annotationIndexReducer(state = defaultState.byLocalId, action) {
+    let newState;
     switch (action.type) {
     case actions.ADD_NEW:
         return {
@@ -32,7 +33,7 @@ function annotationIndexReducer(state = defaultState.byLocalId, action) {
             }
         };
     case actions.REMOVE:
-        let newState = {...state};
+        newState = {...state};
 
         delete newState[action.localId];
 

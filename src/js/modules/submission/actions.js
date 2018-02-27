@@ -7,7 +7,6 @@ import * as publicationActions from 'domain/publication/actions';
 import * as geneActions from 'domain/gene/actions';
 import * as annotationActions from 'domain/annotation/actions';
 import {
-    submissionSelector,
     submissionBodySelector,
     publicationLocalId,
     annotationOrder,
@@ -15,37 +14,37 @@ import {
 } from './selectors';
 
 export function initialize() {
-    return (dispatch, getState) => {
+    return dispatch => {
         // Create publication for submission
         let newPub = publicationActions.addNew();
         dispatch(newPub);
 
         // Link the newly created publication to the submission
-        dispatch(setPublication(newPub.localId))
+        dispatch(setPublication(newPub.localId));
 
         // Create gene for submission
-        dispatch(addGene())
+        dispatch(addGene());
     };
 }
 
 export function addGene() {
-    return (dispatch, getState) => {
+    return dispatch => {
         // Create the new gene
         let newGene = geneActions.addNew();
         dispatch(newGene);
 
         // Link the newly created gene to the submission
-        dispatch(addToGeneOrder(newGene.localId))
+        dispatch(addToGeneOrder(newGene.localId));
     };
 }
 
 export function removeGene(geneLocalId) {
-    return (dispatch, getState) => {
+    return dispatch => {
         // Delete the gene
         dispatch(geneActions.removeGene(geneLocalId));
 
         // Remove the link to the gene
-        dispatch(removeFromGeneOrder(geneLocalId))
+        dispatch(removeFromGeneOrder(geneLocalId));
     };
 }
 
@@ -69,17 +68,17 @@ export function addAnnotation() {
         let newAnnotation = annotationActions.addNew()(dispatch, getState);
 
         // Link the newly created annotation to the submission
-        dispatch(addToAnnotationOrder(newAnnotation.localId))
+        dispatch(addToAnnotationOrder(newAnnotation.localId));
     };
 }
 
 export function removeAnnotation(annotationLocalId) {
-    return (dispatch, getState) => {
+    return dispatch => {
         // Delete the annotation
         dispatch(annotationActions.remove(annotationLocalId));
 
         // Remove the link to the annotation
-        dispatch(removeFromAnnotationOrder(annotationLocalId))
+        dispatch(removeFromAnnotationOrder(annotationLocalId));
     };
 }
 
@@ -142,7 +141,6 @@ export function attemptSubmit() {
 export function resetSubmission() {
     return (dispatch, getState) => {
         const currState = getState();
-        const submission = submissionSelector(currState);
 
         // Delete the publication
         dispatch(publicationActions.remove(publicationLocalId(currState)));
@@ -179,5 +177,5 @@ export function loadSubmission(submission) {
     return {
         type: actions.LOAD_SUBMISSION,
         submission,
-    }
+    };
 }

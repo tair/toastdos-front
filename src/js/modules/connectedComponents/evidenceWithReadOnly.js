@@ -10,7 +10,7 @@ const ConnectedEvidenceWithReadOnly = connect(
         evidenceWith: evidenceWithSelector(state, ownProps.localId),
         evidenceWithId: ownProps.localId,
     }),
-    dispatch => ({})
+    () => ({})
 )(EvidenceWithReadOnly);
 
 ConnectedEvidenceWithReadOnly.propTypes = {

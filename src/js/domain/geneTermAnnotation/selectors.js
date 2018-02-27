@@ -2,7 +2,6 @@
 
 import { createSelector } from 'reselect';
 import { name } from './constants';
-import { validationStates } from 'lib/validation';
 import { evidenceWithValidSelector } from 'domain/evidenceWith/selectors';
 
 export const geneTermAnnotationSelector =

@@ -70,7 +70,7 @@ export function update(localId, data) {
 }
 
 export function addEvidenceWith(localId) {
-    return (dispatch, getState) => {
+    return dispatch => {
         // Create the new evidenceWith
         let newEvidenceWith = evidenceWithActions.addNew();
         dispatch(newEvidenceWith);
@@ -93,7 +93,7 @@ export function updateEvidenceWithRelation(localId, relation) {
 }
 
 export function removeEvidenceWith(localId, evidenceWithId) {
-    return (dispatch, getState) => {
+    return dispatch => {
         // Delete the evidenceWith
         let toRemove = evidenceWithActions.remove(evidenceWithId);
         dispatch(toRemove);
@@ -108,7 +108,7 @@ export function removeEvidenceWith(localId, evidenceWithId) {
 }
 
 export function clearEvidenceWith(localId, evidenceWithId) {
-    return (dispatch, getState) => {
+    return dispatch => {
         let toClear = evidenceWithActions.clearEvidenceWith(evidenceWithId);
         return dispatch(toClear);
     };

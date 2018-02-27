@@ -6,8 +6,8 @@ import AnnotationEntry from 'ui/annotation/entry';
 import { annotationSelector } from 'domain/annotation/selectors';
 import {
     changeAnnotationType,
-    addEvidenceWith,
-    removeEvidenceWith,
+    addAnnotation,
+    removeAnnotation,
     changeAnnotationStatus,
 } from 'domain/annotation/actions';
 

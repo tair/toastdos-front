@@ -47,9 +47,9 @@ function loginSuccess(logindata) {
     }
     catch (e)
     {
-        console.error("Authentication token isn't written to sessionStorage");
+        alert("Browser is not supported: Authentication token isn't written to sessionStorage");
     }
-    
+
     let decoded = jwtDecode(logindata.jwt);
 
     return dispatch => {
@@ -57,7 +57,7 @@ function loginSuccess(logindata) {
             type: actions.SUCCESS_LOGIN,
             jwt: logindata.jwt
         });
-        
+
         return dispatch(userInfoModule.actions.requestUserInfo(decoded.user_id));
     };
 }
@@ -83,7 +83,7 @@ export function initialize() {
     return dispatch => {
         let jwt = sessionStorage.getItem('account_jwt');
         if(jwt) {
-            
+
             let decoded = jwtDecode(jwt);
             const expired = decoded.exp <= Math.floor(Date.now() / 1000);
             if(!expired) {

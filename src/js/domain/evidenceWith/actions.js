@@ -27,7 +27,7 @@ export class AttemptValidateEvidenceWithAsync extends AsyncAction {
         });
 
         if (this.locusName.length > 0) {
-            this.request = validateGene(this.locusName, token, (err, data) => {
+            this.request = validateGene(this.locusName, token, err => {
                 if(err) {
                     if(err.error === 'NOT_FOUND') {
                         return dispatch(validateEvidenceWithFail(this.evidenceWithId, "Locus Not Found"));

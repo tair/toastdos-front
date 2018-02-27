@@ -14,7 +14,6 @@ const defaultState = {
 };
 
 function submissionReducer(state = defaultState, action) {
-    let newState = {};
     switch (action.type) {
     case actions.SET_ID:
         return {
