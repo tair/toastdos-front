@@ -8,6 +8,7 @@ env:
 script:
   - mkdir -p $RESOURCEROOT
   - node ./scripts/generateOrcidFile.js
+  - npm run eslint
   - npm run build
 before_deploy:
   - zip -r $TRAVIS_COMMIT appspec.yml bin server-scripts
