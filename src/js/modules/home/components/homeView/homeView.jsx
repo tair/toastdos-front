@@ -11,7 +11,7 @@ import {Card, CardImg, CardText, CardHeader,
 class HomeView extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             // set initial state
         };
@@ -84,14 +84,14 @@ class HomeView extends React.Component {
                         </Col>
                     </Row>
                 </Container>
-            </div>  
+            </div>
         );
     }
 }
 
 
 HomeView.propTypes = {
-    
+
 };
 
 export default HomeView;

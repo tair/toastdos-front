@@ -20,7 +20,7 @@ import DefaultLoadingAnimation from 'lib/components/loadingAnimations/defaultLoa
 import Store from './store';
 
 // Only load the dev tools in development
-let DevTools = (process.env.NODE_ENV === 'development') ? 
+let DevTools = (process.env.NODE_ENV === 'development') ?
 require('lib/components/devTools').default : f => f;
 
 let history = syncHistoryWithStore(browserHistory, Store);

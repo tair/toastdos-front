@@ -6,7 +6,7 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
 import  {Link} from 'react-router';
 import orcidInfo from 'resources/orcid_public_info';
 import userInfoModule from 'modules/userInfo';
-import goatLogo from 'img/goat.svg'
+import goatLogo from 'img/goat.svg';
 
 const AUTH_URL = orcidInfo.authUrl;
 

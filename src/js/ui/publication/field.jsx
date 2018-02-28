@@ -47,7 +47,7 @@ class PublicationField extends React.Component {
                                 <Input value={this.props.title} disabled></Input>
                             </LabelInputRow>
                             ,
-                            <LabelInputRow key="Author" title="Author">
+                                <LabelInputRow key="Author" title="Author">
                                 <Input value={this.props.author} disabled></Input>
                             </LabelInputRow>
                             ])}

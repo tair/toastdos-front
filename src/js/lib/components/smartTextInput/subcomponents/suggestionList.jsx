@@ -28,7 +28,7 @@ class SuggestionList extends React.Component {
                         {suggestion.external_id}
                     </Badge>
                     {suggestion.name}
-                    {suggestion.synonym ? 
+                    {suggestion.synonym ?
                     <Badge color="warning">
                         Synonym: {suggestion.synonym}
                     </Badge>: null}

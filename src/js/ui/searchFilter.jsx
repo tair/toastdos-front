@@ -18,7 +18,7 @@ class SearchFilter extends React.Component {
         this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
         this.handleReviewedChange = this.handleReviewedChange.bind(this);
         this.handlePendingChange = this.handlePendingChange.bind(this);
-        
+
     }
 
     handleSearchValueChange(event) {

@@ -16,7 +16,7 @@ class AnnotationEntryReadOnly extends React.Component {
     }
 
     render() {
-        let annotationType = annotationTypeData[this.props.annotation.annotationType]
+        let annotationType = annotationTypeData[this.props.annotation.annotationType];
         switch(annotationType.format) {
         case annotationFormats.COMMENT:
             return (

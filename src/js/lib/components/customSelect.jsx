@@ -7,7 +7,7 @@ import { Input } from 'reactstrap';
 class CustomSelect extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             focused: false,
             value: props.value
@@ -22,7 +22,7 @@ class CustomSelect extends React.Component {
         this.setState({
             focused: true
         });
-    } 
+    }
 
     handleBlur(event) {
         this.setState({

@@ -7,7 +7,7 @@ import 'css/customTextArea.scss';
 class CustomTextArea extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             focused: false
         };

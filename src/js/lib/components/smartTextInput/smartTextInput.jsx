@@ -40,7 +40,7 @@ class SmartTextInput extends React.Component {
 
         this.setState(newState);
     }
-    
+
     handleInputChange(event) {
         this.setState({
             value: event.target.value,
