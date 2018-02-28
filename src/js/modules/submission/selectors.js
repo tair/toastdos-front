@@ -139,7 +139,7 @@ export function submissionBodySelector(state) {
                     } else {
                         annotation.data.isEvidenceWithOr = false;
                     }
-                } 
+                }
             }
             break;
         case annotationFormats.GENE_GENE:
