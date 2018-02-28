@@ -10,39 +10,39 @@ class AnnotationStatusReadOnly extends React.Component {
 
     getTitleText(status){
         switch (status) {
-            case annotationStatusFormats.ACCEPTED:
-                return (
+        case annotationStatusFormats.ACCEPTED:
+            return (
                     <span>
                         <span className="fa fa-fw fa-check" /> Accepted
                     </span>
-                );
-            case annotationStatusFormats.REJECTED:
-                return (
+            );
+        case annotationStatusFormats.REJECTED:
+            return (
                     <span>
                         <span className="fa fa-fw fa-trash" /> Rejected
                     </span>
-                );
-            case annotationStatusFormats.PENDING:
-                return (
+            );
+        case annotationStatusFormats.PENDING:
+            return (
                     <span>
                         <span className="fa fa-fw fa-pencil-square-o" /> Pending
                     </span>
-                );
-            default:
-                return null;
+            );
+        default:
+            return null;
         }
     }
 
     getColor(status) {
         switch (status) {
-            case annotationStatusFormats.ACCEPTED:
-                return "success";
-            case annotationStatusFormats.REJECTED:
-                return "danger";
-            case annotationStatusFormats.PENDING:
-                return "warning";
-            default:
-                return "";
+        case annotationStatusFormats.ACCEPTED:
+            return "success";
+        case annotationStatusFormats.REJECTED:
+            return "danger";
+        case annotationStatusFormats.PENDING:
+            return "warning";
+        default:
+            return "";
         }
     }
 

@@ -1,9 +1,8 @@
 "use strict";
 
 import React from 'react';
-import { Alert, Label, Row, Col,
-    Card, CardHeader, CardBody, Input,
-    InputGroup, InputGroupAddon, Button } from 'reactstrap';
+import { Alert, Row, Col,
+    Card, CardHeader, CardBody, Input } from 'reactstrap';
 import { validationStates } from 'lib/validation';
 import ValidationInput from 'ui/validationInput';
 import LabelInputRow from 'ui/labelInputRow';
@@ -47,7 +46,7 @@ class PublicationField extends React.Component {
                                 <Input value={this.props.title} disabled></Input>
                             </LabelInputRow>
                             ,
-                            <LabelInputRow key="Author" title="Author">
+                                <LabelInputRow key="Author" title="Author">
                                 <Input value={this.props.author} disabled></Input>
                             </LabelInputRow>
                             ])}

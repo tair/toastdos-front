@@ -40,7 +40,7 @@ class SmartTextInput extends React.Component {
 
         this.setState(newState);
     }
-    
+
     handleInputChange(event) {
         this.setState({
             value: event.target.value,
@@ -98,7 +98,7 @@ class SmartTextInput extends React.Component {
         });
     }
 
-    handleClick(event) {
+    handleClick() {
         if(this.state.focused) {
             this.setState({
                 showSuggestions: true

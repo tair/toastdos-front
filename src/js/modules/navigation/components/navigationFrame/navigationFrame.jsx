@@ -37,7 +37,7 @@ class NavigationFrame extends React.Component {
                 <div>
                     {this.props.children}
                 </div>
-            </div>  
+            </div>
         );
     }
 }

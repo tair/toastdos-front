@@ -52,9 +52,9 @@ class EditableLabel extends React.Component {
             this.props.onSubmit(this.state.value);
             this.setState({
                 editing: false
-            });    
+            });
         }
-        
+
     }
 
     componentDidUpdate() {

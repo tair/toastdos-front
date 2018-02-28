@@ -7,7 +7,7 @@ import 'css/customTextInput.scss';
 class CustomTextInput extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             focused: false
         };
@@ -79,7 +79,6 @@ CustomTextInput.propTypes = {
 CustomTextInput.defaultProps = {
     disabled: false,
     readOnly: "",
-    required: "",
     onChange: () => {},
     value: "",
     placeholder: "",

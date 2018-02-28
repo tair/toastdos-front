@@ -7,7 +7,7 @@ import config from '../../../config';
 class ExportsView extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
 
         };
@@ -52,7 +52,7 @@ class ExportsView extends React.Component {
                                 <span className="fa fa-file" /> Exports
                             </CardHeader>
                             <CardBody className="p-0">
-                                {this.props.loadingExportsList ? this.renderLoading(): 
+                                {this.props.loadingExportsList ? this.renderLoading():
                                     this.renderExportList()}
                             </CardBody>
                         </Card>

@@ -1,16 +1,13 @@
 "use strict";
 
 import React from 'react';
-import { Card, CardHeader, CardBody,
-    Input, InputGroup, InputGroupAddon, Label,
-    Form, FormGroup, Row, Col, Button, ButtonGroup,
-} from 'reactstrap';
+import { Card, CardHeader, CardBody, InputGroup,
+    InputGroupAddon, Row, Col, Button } from 'reactstrap';
 import CustomSelect from 'lib/components/customSelect';
 import {
     annotationTypes,
     annotationTypeData,
     annotationFormats,
-    annotationStatusFormats,
 } from 'domain/annotation/constants';
 import CommentAnnotation from 'modules/connectedComponents/annotation/comment';
 import GeneTermAnnotation from 'modules/connectedComponents/annotation/geneTerm';

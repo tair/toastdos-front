@@ -5,8 +5,6 @@ import { Button, ButtonGroup, ButtonDropdown,
     DropdownItem, DropdownMenu, DropdownToggle,
 } from 'reactstrap';
 import { annotationStatusFormats } from 'domain/annotation/constants';
-import { hasValidGene } from '../../modules/submission/selectors';
-import { name } from '../../modules/curationDetail/constants';
 
 class AnnotationStatusButton extends React.Component {
     constructor(props) {
@@ -26,35 +24,35 @@ class AnnotationStatusButton extends React.Component {
 
     getTitleText(status){
         switch (status) {
-            case annotationStatusFormats.ACCEPTED:
-                return (
+        case annotationStatusFormats.ACCEPTED:
+            return (
                     <span>
                         <span className="fa fa-fw fa-check" /> Accepted
                     </span>
-                );
-            case annotationStatusFormats.REJECTED:
-                return (
+            );
+        case annotationStatusFormats.REJECTED:
+            return (
                     <span>
                         <span className="fa fa-fw fa-trash" /> Rejected
                     </span>
-                );
-            case annotationStatusFormats.PENDING:
-                return (
+            );
+        case annotationStatusFormats.PENDING:
+            return (
                     <span>
                         <span className="fa fa-fw fa-pencil-square-o" /> Pending
                     </span>
-                );
+            );
         }
     }
 
     getColor(status) {
         switch (status) {
-            case annotationStatusFormats.ACCEPTED:
-                return "success";
-            case annotationStatusFormats.REJECTED:
-                return "danger";
-            case annotationStatusFormats.PENDING:
-                return "warning";
+        case annotationStatusFormats.ACCEPTED:
+            return "success";
+        case annotationStatusFormats.REJECTED:
+            return "danger";
+        case annotationStatusFormats.PENDING:
+            return "warning";
         }
     }
 

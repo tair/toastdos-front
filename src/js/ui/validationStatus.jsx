@@ -13,26 +13,26 @@ class ValidationStatus extends React.Component {
 
     getEWColor() {
         switch (this.props.validationState) {
-            case validationStates.VALID:
-                return "green";
-            case validationStates.INVALID:
-                return "red";
-            default:
-                return "black";
+        case validationStates.VALID:
+            return "green";
+        case validationStates.INVALID:
+            return "red";
+        default:
+            return "black";
         }
     }
 
     getEWStatus() {
         let className = "fa fa-fw ";
         switch (this.props.validationState) {
-            case validationStates.VALIDATING:
-                return className + "fa-spin fa-refresh";
-            case validationStates.VALID:
-                return className + "fa-check";
-            case validationStates.INVALID:
-                return className + "fa-exclamation-circle";
-            default:
-                return className + "fa-chain";
+        case validationStates.VALIDATING:
+            return className + "fa-spin fa-refresh";
+        case validationStates.VALID:
+            return className + "fa-check";
+        case validationStates.INVALID:
+            return className + "fa-exclamation-circle";
+        default:
+            return className + "fa-chain";
         }
     }
 

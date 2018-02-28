@@ -1,7 +1,6 @@
 "use strict";
 
 import React from 'react';
-import { validationStates } from 'lib/validation';
 import CustomSelect from 'lib/components/customSelect';
 
 class GenePicker extends React.Component {
@@ -37,7 +36,7 @@ class GenePicker extends React.Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         // Set the default gene again if the type changes
         // or if the gene is no longer in the gene list
         if ( prevProps.typeLocalId != this.props.typeLocalId

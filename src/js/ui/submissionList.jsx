@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router';
-import { Alert, Button, Progress, ListGroup, ListGroupItem, Container, Row, Col } from 'reactstrap';
+import { Alert, Progress, ListGroup, ListGroupItem, Row, Col } from 'reactstrap';
 
 class SubmissionList extends React.Component {
     constructor(props) {
@@ -51,7 +51,7 @@ class SubmissionList extends React.Component {
                 <ListGroupItem className="pt-3 pb-4 border-0 border-right-0 border-top-0">
                     <h4>In Progress</h4>
                     <ListGroup className="mt-3">
-                    {this.props.inProgressSubmissions.map((val,ind,arr) => this.renderSubmission(val))}
+                    {this.props.inProgressSubmissions.map(val => this.renderSubmission(val))}
                     </ListGroup>
                 </ListGroupItem>
                 : null}
@@ -59,7 +59,7 @@ class SubmissionList extends React.Component {
                     <h4>Needs Review</h4>
                     <ListGroup className="mt-3">
                     {this.props.needsReviewSubmissions.length > 0 ?
-                        this.props.needsReviewSubmissions.map((val,ind,arr) => this.renderSubmission(val))
+                        this.props.needsReviewSubmissions.map(val => this.renderSubmission(val))
                     :
                     <Alert color="secondary">
                         <span className="fa fa-info-circle" /> No submissions need review.
@@ -70,7 +70,7 @@ class SubmissionList extends React.Component {
                     <h4>Reviewed</h4>
                     <ListGroup className="mt-3">
                     {this.props.reviewedSubmissions.length > 0 ?
-                        this.props.reviewedSubmissions.map((val,ind,arr) => this.renderSubmission(val))
+                        this.props.reviewedSubmissions.map(val => this.renderSubmission(val))
                     :
                     <Alert color="secondary">
                         <span className="fa fa-info-circle" /> No reviewed submissions.

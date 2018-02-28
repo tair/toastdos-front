@@ -3,13 +3,12 @@
 import React from 'react';
 import {Container, Row, Col, Card, CardHeader, CardBody} from 'reactstrap';
 import "css/curationView.scss";
-import SearchFilter from 'ui/searchFilter';
 import SubmissionList from 'ui/submissionList';
 
 class CurationOverviewView extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
 
         };

@@ -1,21 +1,14 @@
 "use strict";
 
 import React from 'react';
-import { ListGroup, ListGroupItem, InputGroup, InputGroupAddon,
-    Label, Button, Row, Col } from 'reactstrap';
+import { ListGroup, Button, Row, Col } from 'reactstrap';
 import GenePicker from 'modules/connectedComponents/gene/picker';
 import EvidenceWith from 'modules/connectedComponents/evidenceWith';
 import { annotationTypeData } from 'domain/annotation/constants';
 import KeywordTextInput from 'modules/connectedComponents/keywordTextInput';
-import CustomTextArea from 'lib/components/customTextArea';
-import ValidationInput from 'ui/validationInput';
 import LabelInputRow from 'ui/labelInputRow';
 import LabelDropdownInputRow from 'ui/labelDropdownInputRow';
 
-const inputContainerStyle = {
-    display: "inline-block",
-    padding: "10px"
-};
 
 class GeneTermAnnotation extends React.Component {
     constructor(props) {

@@ -1,12 +1,11 @@
 "use strict";
 
 import React from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
-    Dropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap';
+import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import  {Link} from 'react-router';
 import orcidInfo from 'resources/orcid_public_info';
 import userInfoModule from 'modules/userInfo';
-import goatLogo from 'img/goat.svg'
+import goatLogo from 'img/goat.svg';
 
 const AUTH_URL = orcidInfo.authUrl;
 

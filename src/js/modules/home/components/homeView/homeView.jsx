@@ -4,14 +4,13 @@ import React from 'react';
 import atImg from 'img/at.jpg';
 import phoenixLogo from 'img/phoenixLogo.png';
 import githubLogo from 'img/githubLogo.png';
-import {Card, CardImg, CardText, CardHeader,
-    CardBody, CardTitle, CardSubtitle, Button,
-    Container, Row, Col} from 'reactstrap';
+import { Card, CardImg, CardText, CardHeader,
+    CardBody, Button, Container, Row, Col } from 'reactstrap';
 
 class HomeView extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             // set initial state
         };
@@ -84,14 +83,14 @@ class HomeView extends React.Component {
                         </Col>
                     </Row>
                 </Container>
-            </div>  
+            </div>
         );
     }
 }
 
 
 HomeView.propTypes = {
-    
+
 };
 
 export default HomeView;

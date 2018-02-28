@@ -1,8 +1,7 @@
 "use strict";
 
 import React from 'react';
-import {Alert, Row, Col, ListGroup, Form,
-    ListGroupItem, ListGroupItemHeading } from 'reactstrap';
+import { Row, Col, ListGroup, Form, ListGroupItem } from 'reactstrap';
 import 'css/submissionView.scss';
 import PublicationField from 'modules/connectedComponents/publication/field';
 import GeneList from 'modules/connectedComponents/gene/list';
