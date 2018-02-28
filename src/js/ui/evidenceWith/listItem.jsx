@@ -1,14 +1,9 @@
 "use strict";
 
 import React from 'react';
-import { ListGroupItem, InputGroup, InputGroupAddon, Row, Col, Button } from 'reactstrap';
+import { ListGroupItem, Row, Col, Button } from 'reactstrap';
 import ValidationInput from 'ui/validationInput';
-import CustomTextInput from 'lib/components/customTextInput';
 
-const inputContainerStyle = {
-    display: "inline-block",
-    padding: "10px"
-};
 
 class EvidenceWith extends React.Component {
     constructor(props) {

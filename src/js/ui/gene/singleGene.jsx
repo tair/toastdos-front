@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { Card, CardHeader, CardBody,
-    Label, FormGroup, InputGroup, InputGroupAddon,
-    Button, ButtonGroup, Col, Row } from 'reactstrap';
+    Button, Col, Row } from 'reactstrap';
 import CustomTextInput from 'lib/components/customTextInput';
 import { validationStates } from 'lib/validation';
 import ValidationInput from 'ui/validationInput';

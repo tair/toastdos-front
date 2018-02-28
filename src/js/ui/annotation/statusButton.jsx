@@ -5,8 +5,6 @@ import { Button, ButtonGroup, ButtonDropdown,
     DropdownItem, DropdownMenu, DropdownToggle,
 } from 'reactstrap';
 import { annotationStatusFormats } from 'domain/annotation/constants';
-import { hasValidGene } from '../../modules/submission/selectors';
-import { name } from '../../modules/curationDetail/constants';
 
 class AnnotationStatusButton extends React.Component {
     constructor(props) {

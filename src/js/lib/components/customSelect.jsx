@@ -18,13 +18,13 @@ class CustomSelect extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleFocus(event) {
+    handleFocus() {
         this.setState({
             focused: true
         });
     }
 
-    handleBlur(event) {
+    handleBlur() {
         this.setState({
             focused: false
         });

@@ -4,9 +4,8 @@ import React from 'react';
 import atImg from 'img/at.jpg';
 import phoenixLogo from 'img/phoenixLogo.png';
 import githubLogo from 'img/githubLogo.png';
-import {Card, CardImg, CardText, CardHeader,
-    CardBody, CardTitle, CardSubtitle, Button,
-    Container, Row, Col} from 'reactstrap';
+import { Card, CardImg, CardText, CardHeader,
+    CardBody, Button, Container, Row, Col } from 'reactstrap';
 
 class HomeView extends React.Component {
     constructor(props) {

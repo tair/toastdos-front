@@ -79,7 +79,6 @@ CustomTextInput.propTypes = {
 CustomTextInput.defaultProps = {
     disabled: false,
     readOnly: "",
-    required: "",
     onChange: () => {},
     value: "",
     placeholder: "",

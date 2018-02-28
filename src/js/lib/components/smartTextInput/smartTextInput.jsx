@@ -98,7 +98,7 @@ class SmartTextInput extends React.Component {
         });
     }
 
-    handleClick(event) {
+    handleClick() {
         if(this.state.focused) {
             this.setState({
                 showSuggestions: true

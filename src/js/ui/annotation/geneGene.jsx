@@ -1,7 +1,6 @@
 "use strict";
 
 import React from 'react';
-import { Label, Button, Row, Col } from 'reactstrap';
 import GenePicker from 'modules/connectedComponents/gene/picker';
 import KeywordTextInput from 'modules/connectedComponents/keywordTextInput';
 import LabelInputRow from 'ui/labelInputRow';

@@ -1,8 +1,7 @@
 "use strict";
 
 import React from 'react';
-import { ListGroup, ListGroupItem, InputGroup, InputGroupAddon,
-    Card, CardHeader, CardBody, Label, Button, Row, Col } from 'reactstrap';
+import { ListGroup, Card, CardHeader, CardBody, Label, Row, Col } from 'reactstrap';
 import { annotationTypeData } from 'domain/annotation/constants';
 import EvidenceWithReadOnly from 'modules/connectedComponents/evidenceWithReadOnly';
 import ExternalIdBadge from 'ui/externalIdBadge';
