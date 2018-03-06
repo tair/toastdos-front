@@ -32,7 +32,9 @@ class CurationView extends React.Component {
         const header = (
             <Row className="align-items-center" >
                 <Col>
-                    <span className="fa fa-file-text" /> Curate Submission
+                    <span className="fa fa-file-text" /> Curate Submission from&nbsp;
+                    {this.props.submitter ? this.props.submitter.name : "..."} at&nbsp;
+                    {this.props.submittedAt ? new Date(this.props.submittedAt).toLocaleString() : "..."}
                 </Col>
             </Row>
         );

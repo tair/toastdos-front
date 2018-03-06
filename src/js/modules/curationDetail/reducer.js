@@ -11,6 +11,8 @@ const defaultState = {
     submitted: false,
     previewing: false,
     submissionError: "",
+    submitter: null,
+    submittedAt: null,
 };
 
 function submissionReducer(state = defaultState, action) {
@@ -75,6 +77,16 @@ function submissionReducer(state = defaultState, action) {
         return {
             ...state,
             previewing: false
+        };
+    case actions.SET_SUBMITTER:
+        return {
+            ...state,
+            submitter: action.submitter,
+        };
+    case actions.SET_SUBMITTED_AT:
+        return {
+            ...state,
+            submittedAt: action.submittedAt,
         };
     default:
         return state;

@@ -194,10 +194,20 @@ export function loadSubmission(submission) {
         // Reset the curation submission
         dispatch(resetSubmission());
 
-        // Record submisison ID
+        // Record static submisison info
         dispatch({
             type: actions.SET_ID,
             submissionId: submission.id,
+        });
+
+        dispatch({
+            type: actions.SET_SUBMITTER,
+            submitter: submission.submitter
+        });
+
+        dispatch({
+            type: actions.SET_SUBMITTED_AT,
+            submittedAt: submission.submitted_at
         });
 
         // Create publication for submission

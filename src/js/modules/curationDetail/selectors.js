@@ -36,6 +36,8 @@ export const submitting = state => state[name].submitting;
 export const submitted = state => state[name].submitted;
 export const previewing = state => state[name].previewing;
 export const errorMessage = state => `${state[name].submissionError}`;
+export const submitter = state => state[name].submitter;
+export const submittedAt = state => state[name].submittedAt;
 
 export const submissionSelector = state => state[name];
 
