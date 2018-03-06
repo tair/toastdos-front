@@ -19,3 +19,6 @@ export const REMOVE_ANNOTATION = `${name}/REMOVE_ANNOTATION`;
 
 export const REQUEST_SUBMISSION = `${name}/REQUEST_SUBMISSION`;
 export const FAIL_SUBMISSION = `${name}/FAIL_SUBMISSION`;
+
+export const SET_SUBMITTER = `${name}/SET_SUBMITTER`;
+export const SET_SUBMITTED_AT = `${name}/SET_SUBMITTED_AT`;

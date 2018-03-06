@@ -23,7 +23,7 @@ class NavigationFrame extends React.Component {
             },
             {
                 to: '/exports',
-                name: 'Exports',
+                name: 'Download Data',
                 show: () => true
             }
         ];
