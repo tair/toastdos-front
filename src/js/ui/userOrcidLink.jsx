@@ -11,7 +11,7 @@ class UserOrcidLink extends React.Component {
     render() {
         return (
             <a target="_blank" href={`https://orcid.org/${this.props.user.orcid_id}`}>{this.props.user.name} <span className="fa fa-external-link" /></a>
-        )
+        );
     }
 }
 
