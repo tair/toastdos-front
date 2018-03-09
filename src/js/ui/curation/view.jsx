@@ -10,6 +10,7 @@ import CurationReadOnly from 'ui/curation/viewReadOnly';
 import SubmissionInfoPanel from 'ui/submission/infoPanel';
 import CurationFooter from 'ui/curation/footer';
 import SubmissionStructure from 'ui/submission/structure';
+import UserOrcidLink from 'ui/userOrcidLink';
 
 class CurationView extends React.Component {
     constructor(props) {
@@ -33,7 +34,7 @@ class CurationView extends React.Component {
             <Row className="align-items-center" >
                 <Col>
                     <span className="fa fa-file-text" /> Curate Submission from&nbsp;
-                    {this.props.submitter ? this.props.submitter.name : "..."} at&nbsp;
+                    {this.props.submitter ? <UserOrcidLink user={this.props.submitter} /> : "..."} at&nbsp;
                     {this.props.submittedAt ? new Date(this.props.submittedAt).toLocaleString() : "..."}
                 </Col>
             </Row>
