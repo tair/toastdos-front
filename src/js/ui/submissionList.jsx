@@ -3,6 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { Alert, Progress, ListGroup, ListGroupItem, Row, Col } from 'reactstrap';
+import UserOrcidLink from 'ui/userOrcidLink';
 
 class SubmissionList extends React.Component {
     constructor(props) {
@@ -18,15 +19,22 @@ class SubmissionList extends React.Component {
         return (
             <ListGroupItem key={`lgi-sub-${submission.id}`}>
                 <Row className="align-items-center d-flex">
-                    <Col sm="auto">
-                        Publication ID:
-                        <br />
-                        Submitted:
+                    <Col xs="5">
+                        <Row>
+                            <Col sm="auto">
+                                Publication ID:
+                                <br />
+                                Submitted:
+                            </Col>
+                            <Col sm="auto" className="mr-auto text-sm-left text-nowrap font-italic">
+                                {submission.document}
+                                <br/>
+                                {`${new Date(submission.submission_date).toLocaleString()}`}
+                            </Col>
+                        </Row>
                     </Col>
-                    <Col sm="auto" className="mr-auto text-sm-left text-nowrap font-italic">
-                        {submission.document}
-                        <br/>
-                        {`${new Date(submission.submission_date).toLocaleString()}`}
+                    <Col sm="auto">
+                        <UserOrcidLink user={submission.submitter} />
                     </Col>
                     <Col sm="auto" className="ml-auto">
                         <div className="text-center">{submission.total - submission.pending}/{submission.total} Annotations Reviewed</div>
