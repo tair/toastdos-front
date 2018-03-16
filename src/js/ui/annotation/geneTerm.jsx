@@ -114,6 +114,8 @@ class GeneTermAnnotation extends React.Component {
                         placeholder="e.g. Enzyme Assay"
                         value={this.props.geneTermAnnotation.methodName}
                         searchScope="eco"
+                        minSuggestLength={0}
+                        annotationType={this.props.geneTermAnnotation.annotationType}
                         required={true}
                     />
                 </LabelInputRow>

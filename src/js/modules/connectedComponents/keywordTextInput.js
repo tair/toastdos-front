@@ -20,7 +20,7 @@ const ConnectedKeywordTextInput = connect(
         fetchingSuggestions: fetchingSuggestionsSelector
     }),
     dispatch => ({
-        performSearch: (searchTerm, keywordScope) => dispatch(attemptKeywordSearch(searchTerm, keywordScope)),
+        performSearch: (searchTerm, keywordScope, annotationType) => dispatch(attemptKeywordSearch(searchTerm, keywordScope, annotationType)),
         clearSearchData: () => dispatch(clearKeywordSearch())
     })
 )(KeywordTextInput);

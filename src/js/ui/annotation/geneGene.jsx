@@ -4,6 +4,7 @@ import React from 'react';
 import GenePicker from 'modules/connectedComponents/gene/picker';
 import KeywordTextInput from 'modules/connectedComponents/keywordTextInput';
 import LabelInputRow from 'ui/labelInputRow';
+import { annotationTypes } from 'domain/annotation/constants';
 
 class GeneGeneAnnotation extends React.Component {
     constructor(props) {
@@ -50,6 +51,8 @@ class GeneGeneAnnotation extends React.Component {
                         placeholder="e.g. Enzyme Assay"
                         value={this.props.geneGeneAnnotation.methodName}
                         searchScope="eco"
+                        minSuggestLength={0}
+                        annotationType={annotationTypes.PROTEIN_INTERACTION}
                         required={true}
                     />
                 </LabelInputRow>
