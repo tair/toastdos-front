@@ -14,8 +14,8 @@ class KeywordTextInput extends React.Component {
 
     handleInputChange(value) {
         this.props.onChange(value);
-        if(value.name.length >= 3) {
-            this.props.performSearch(value.name, this.props.searchScope);
+        if (value.name.length >= this.props.minSuggestLength) {
+            this.props.performSearch(value.name, this.props.searchScope, this.props.annotationType);
         }
     }
 
@@ -24,8 +24,8 @@ class KeywordTextInput extends React.Component {
     }
 
     handleFocus() {
-        if(this.props.value.length >= 3) {
-            this.props.performSearch(this.props.value, this.props.searchScope);
+        if (this.props.value.length >= this.props.minSuggestLength) {
+            this.props.performSearch(this.props.value, this.props.searchScope, this.props.annotationType);
         }
     }
 
@@ -35,7 +35,7 @@ class KeywordTextInput extends React.Component {
                 onChange={this.handleInputChange}
                 onSelect={this.props.onSelect}
                 value={this.props.value}
-                minSuggestLength={3}
+                minSuggestLength={this.props.minSuggestLength}
                 placeholder={this.props.placeholder}
                 suggestionIndex={this.props.suggestionIndex}
                 suggestionOrder={this.props.suggestionOrder}
@@ -53,6 +53,8 @@ KeywordTextInput.propTypes = {
     onSelect: React.PropTypes.func.isRequired,
     value: React.PropTypes.string.isRequired,
     searchScope: React.PropTypes.string.isRequired,
+    annotationType: React.PropTypes.string,
+    minSuggestLength: React.PropTypes.number,
 
     suggestionIndex: React.PropTypes.object,
     suggestionOrder: React.PropTypes.array,
@@ -60,6 +62,10 @@ KeywordTextInput.propTypes = {
     clearSearchData: React.PropTypes.func.isRequired,
     fetchingSuggestions: React.PropTypes.bool.isRequired,
     placeholder: React.PropTypes.string
+};
+
+KeywordTextInput.defaultProps = {
+    minSuggestLength: 3
 };
 
 export default KeywordTextInput;

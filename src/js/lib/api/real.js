@@ -181,14 +181,15 @@ export function submitSubmission(submissionData, jwt, callback) {
     });
 }
 
-export function searchKeywords(searchTerm, keywordScope, jwt, callback) {
+export function searchKeywords(searchTerm, keywordScope, annotationType, jwt, callback) {
     return request({
         method: 'GET',
         timeout: 15000,
         url: `${BASE_URL}/api/keyword/search`,
         qs: {
             substring: searchTerm,
-            keyword_scope: keywordScope
+            keyword_scope: keywordScope,
+            annotation_type: annotationType
         },
         json: true,
         headers: {

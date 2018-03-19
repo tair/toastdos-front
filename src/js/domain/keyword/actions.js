@@ -18,7 +18,7 @@ function keywordSearchFail(error) {
     };
 }
 
-export function attemptKeywordSearch(searchTerm, keywordScope) {
+export function attemptKeywordSearch(searchTerm, keywordScope, annotationType) {
     return (dispatch, getState) => {
 
         const currState = getState();
@@ -28,7 +28,7 @@ export function attemptKeywordSearch(searchTerm, keywordScope) {
         });
 
         const token = AuthModule.selectors.rawJwtSelector(currState);
-        searchKeywords(searchTerm, keywordScope, token, (err, data) => {
+        searchKeywords(searchTerm, keywordScope, annotationType, token, (err, data) => {
             if(err) {
                 return dispatch(keywordSearchFail(err));
             }
