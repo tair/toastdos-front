@@ -6,6 +6,7 @@ import { Alert, Row, Col,
 import { validationStates } from 'lib/validation';
 import ValidationInput from 'ui/validationInput';
 import LabelInputRow from 'ui/labelInputRow';
+import ValidatedField from 'ui/validatedField';
 
 
 class PublicationField extends React.Component {
@@ -16,6 +17,9 @@ class PublicationField extends React.Component {
 
     render() {
         return (
+        <ValidatedField isValid={!!this.props.validationError}
+            invalidMessage="A valid publication must be provided."
+        >
             <Row>
                 <Col>
                     <h4>1. Publication</h4>
@@ -54,7 +58,7 @@ class PublicationField extends React.Component {
                     </Card>
                 </Col>
             </Row>
-        );
+        </ValidatedField>);
     }
 }
 
