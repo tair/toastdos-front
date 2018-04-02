@@ -1,7 +1,7 @@
 "use strict";
 
 import AuthModule from 'modules/authentication';
-import { submitSubmission } from 'lib/api';
+import { submitSubmission, createDraft, getDraft } from 'lib/api';
 import * as actions from './actionTypes';
 import * as publicationActions from 'domain/publication/actions';
 import * as geneActions from 'domain/gene/actions';
@@ -12,6 +12,38 @@ import {
     annotationOrder,
     geneOrder,
 } from './selectors';
+
+export function saveDraft() {
+    return (dispatch, getState) => {
+
+        const currState = getState();
+
+        const submissionBody = submissionBodySelector(currState);
+        const token = AuthModule.selectors.rawJwtSelector(currState);
+        createDraft(submissionBody, token, (err) => {
+            if (!err) {
+                // TODO: Show a visual indicator saying saved.
+            } else {
+                // TODO: Show a visual indicator with a save error.
+            }
+        });
+    };
+}
+
+export function loadDraft() {
+    return (dispatch, getState) => {
+
+        const currState = getState();
+        const token = AuthModule.selectors.rawJwtSelector(currState);
+        getDraft(token, (err, body) => {
+            if (!err) {
+                // The draft now exists in the body var, load it.
+            } else {
+                // There are no drafts.
+            }
+        });
+    };
+}
 
 export function initialize() {
     return dispatch => {
@@ -24,6 +56,8 @@ export function initialize() {
 
         // Create gene for submission
         dispatch(addGene());
+
+        dispatch(loadDraft());
     };
 }
 

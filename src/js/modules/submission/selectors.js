@@ -16,7 +16,7 @@ import {
     annotationValidSelector,
 } from 'domain/annotation/selectors';
 import {
-    geneSelector,
+    geneFinalizedLocusNameSelector,
     geneListSelector,
     geneValidSelector,
 } from 'domain/gene/selectors';
@@ -118,14 +118,14 @@ export function submissionBodySelector(state) {
         case annotationFormats.COMMENT:
             ca = commentAnnotationSelector(state, a.annotationTypeLocalId);
             annotation.data = {
-                locusName: geneSelector(state, ca.geneLocalId).finalizedLocusName,
+                locusName: geneFinalizedLocusNameSelector(state, ca.geneLocalId),
                 text: ca.comment
             };
             break;
         case annotationFormats.GENE_TERM:
             gt = geneTermAnnotationSelector(state, a.annotationTypeLocalId);
             annotation.data = {
-                locusName: geneSelector(state, gt.geneLocalId).finalizedLocusName,
+                locusName: geneFinalizedLocusNameSelector(state, gt.geneLocalId),
                 method: (gt.methodId !== null ? {id: gt.methodId} : {name: gt.methodName}),
                 keyword: (gt.keywordId !== null ? {id: gt.keywordId} : {name: gt.keywordName}),
                 isEvidenceWithOr: true,
@@ -145,8 +145,8 @@ export function submissionBodySelector(state) {
         case annotationFormats.GENE_GENE:
             gg = geneGeneAnnotationSelector(state, a.annotationTypeLocalId);
             annotation.data = {
-                locusName: geneSelector(state, gg.gene1LocalId).finalizedLocusName,
-                locusName2: geneSelector(state, gg.gene2LocalId).finalizedLocusName,
+                locusName: geneFinalizedLocusNameSelector(state, gg.gene1LocalId),
+                locusName2: geneFinalizedLocusNameSelector(state, gg.gene2LocalId),
                 method: (gg.methodId !== null ? {id: gg.methodId} : {name: gg.methodName})
             };
             break;

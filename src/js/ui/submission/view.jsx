@@ -11,11 +11,26 @@ import SubmissionInfoPanel from 'ui/submission/infoPanel';
 import SubmissionFooter from 'ui/submission/footer';
 import SubmissionStructure from 'ui/submission/structure';
 
+const DRAFT_SAVE_INTERVAL = 25000;
+
 class SubmissionView extends React.Component {
     constructor(props) {
         super(props);
 
         this.props.initialize();
+
+        this.state = {
+            timer: null
+        };
+    }
+
+    componentDidMount() {
+        let timer = setInterval(this.props.saveDraft, DRAFT_SAVE_INTERVAL);
+        this.setState({ timer });
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.timer);
     }
 
     render() {
@@ -115,6 +130,7 @@ SubmissionView.propTypes = {
     addGene: React.PropTypes.func,
     removeGene: React.PropTypes.func,
     hasValidGene: React.PropTypes.bool,
+    saveDraft: React.PropTypes.func,
 };
 
 SubmissionView.defaultProps = {
@@ -130,6 +146,7 @@ SubmissionView.defaultProps = {
     removeAnnotation: () => {},
     addGene: () => {},
     removeGene: () => {},
+    saveDraft: () => {},
     hasValidGene: false,
 };
 
