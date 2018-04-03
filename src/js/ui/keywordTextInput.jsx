@@ -65,6 +65,7 @@ KeywordTextInput.propTypes = {
 };
 
 KeywordTextInput.defaultProps = {
+    value: '',
     minSuggestLength: 3
 };
 

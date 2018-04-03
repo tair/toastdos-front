@@ -11,11 +11,36 @@ import SubmissionInfoPanel from 'ui/submission/infoPanel';
 import SubmissionFooter from 'ui/submission/footer';
 import SubmissionStructure from 'ui/submission/structure';
 
+const DRAFT_SAVE_INTERVAL = 5000;
+
 class SubmissionView extends React.Component {
     constructor(props) {
         super(props);
 
         this.props.initialize();
+
+        this.state = {
+            draftSaveTimer: null,
+            showDraftSaved: false,
+        };
+    }
+
+    componentDidMount() {
+        let draftSaveTimer = setInterval(this.props.saveDraft, DRAFT_SAVE_INTERVAL);
+        this.setState({ draftSaveTimer });
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.draftSaveTimer);
+    }
+
+    componentWillReceiveProps(nextprops) {
+        if (nextprops.draftNumber != this.props.draftNumber) {
+            this.setState({showDraftSaved: true});
+            setTimeout(() => {
+                this.setState({showDraftSaved: false});
+            }, 1000);
+        }
     }
 
     render() {
@@ -90,6 +115,11 @@ class SubmissionView extends React.Component {
                         </ListGroup>
                     }
                 </Form>
+                <div className="saved-status-container">
+                    <div className={(this.state.showDraftSaved? 'show': '') + ' saved-status'}>
+                        <span className="fa fa-check" /> Saved
+                    </div>
+                </div>
             </SubmissionStructure>
         );
     }
@@ -115,6 +145,8 @@ SubmissionView.propTypes = {
     addGene: React.PropTypes.func,
     removeGene: React.PropTypes.func,
     hasValidGene: React.PropTypes.bool,
+    saveDraft: React.PropTypes.func,
+    draftNumber: React.PropTypes.number,
 };
 
 SubmissionView.defaultProps = {
@@ -130,7 +162,9 @@ SubmissionView.defaultProps = {
     removeAnnotation: () => {},
     addGene: () => {},
     removeGene: () => {},
+    saveDraft: () => {},
     hasValidGene: false,
+    draftNumber: 0,
 };
 
 export default SubmissionView;

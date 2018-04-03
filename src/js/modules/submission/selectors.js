@@ -16,7 +16,7 @@ import {
     annotationValidSelector,
 } from 'domain/annotation/selectors';
 import {
-    geneSelector,
+    geneFinalizedLocusNameSelector,
     geneListSelector,
     geneValidSelector,
 } from 'domain/gene/selectors';
@@ -34,6 +34,7 @@ export const annotationOrder = state => state[name].annotationOrder;
 export const submitting = state => state[name].submitting;
 export const submitted = state => state[name].submitted;
 export const previewing = state => state[name].previewing;
+export const draftNumber = state => state[name].draftNumber;
 export const errorMessage = state => `${state[name].submissionError}`;
 
 export const submissionSelector = state => state[name];
@@ -86,7 +87,7 @@ export const canSubmit = createSelector(
     (pValid, gValid, aValid, isSubmitting) => (pValid && gValid && aValid && !isSubmitting)
 );
 
-export function submissionBodySelector(state) {
+export function submissionBodySelector(state, includeKeywordData) {
 
     const geneList = genesSelector(state);
     const annotationList = annotationListSelector(state);
@@ -98,7 +99,7 @@ export function submissionBodySelector(state) {
     };
 
     submissionData.genes = geneList
-        .filter(g => g.validationState === validationStates.VALID) // filter out non-finalized
+        .filter(g => g && g.validationState === validationStates.VALID) // filter out non-finalized
         .map(g => ({  // map the properties
             locusName: g.finalizedLocusName,
             geneSymbol: g.finalizedGeneSymbol,
@@ -118,18 +119,27 @@ export function submissionBodySelector(state) {
         case annotationFormats.COMMENT:
             ca = commentAnnotationSelector(state, a.annotationTypeLocalId);
             annotation.data = {
-                locusName: geneSelector(state, ca.geneLocalId).finalizedLocusName,
+                locusName: geneFinalizedLocusNameSelector(state, ca.geneLocalId),
                 text: ca.comment
             };
             break;
         case annotationFormats.GENE_TERM:
             gt = geneTermAnnotationSelector(state, a.annotationTypeLocalId);
             annotation.data = {
-                locusName: geneSelector(state, gt.geneLocalId).finalizedLocusName,
+                locusName: geneFinalizedLocusNameSelector(state, gt.geneLocalId),
                 method: (gt.methodId !== null ? {id: gt.methodId} : {name: gt.methodName}),
                 keyword: (gt.keywordId !== null ? {id: gt.keywordId} : {name: gt.keywordName}),
                 isEvidenceWithOr: true,
             };
+
+            if (includeKeywordData) {
+                annotation.data.keyword.name =  gt.keywordName;
+                annotation.data.keyword.externalId =  gt.keywordExternalId;
+                annotation.data.method.evidenceCode = gt.methodEvidenceCode;
+                annotation.data.method.externalId = gt.methodExternalId;
+                annotation.data.method.name = gt.methodName;
+            }
+
             evidenceWith = evidenceWithValidListSelector(state, gt.evidenceWithOrder).map(ew => ew.locusName);
             if (evidenceWith.length > 0) {
                 annotation.data.evidenceWith = evidenceWith;
@@ -145,10 +155,15 @@ export function submissionBodySelector(state) {
         case annotationFormats.GENE_GENE:
             gg = geneGeneAnnotationSelector(state, a.annotationTypeLocalId);
             annotation.data = {
-                locusName: geneSelector(state, gg.gene1LocalId).finalizedLocusName,
-                locusName2: geneSelector(state, gg.gene2LocalId).finalizedLocusName,
+                locusName: geneFinalizedLocusNameSelector(state, gg.gene1LocalId),
+                locusName2: geneFinalizedLocusNameSelector(state, gg.gene2LocalId),
                 method: (gg.methodId !== null ? {id: gg.methodId} : {name: gg.methodName})
             };
+
+            if (includeKeywordData) {
+                annotation.data.method.name = gg.methodName;
+                annotation.data.method.externalId = gg.methodExternalId;
+            }
             break;
         }
 

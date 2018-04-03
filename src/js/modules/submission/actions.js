@@ -1,17 +1,184 @@
 "use strict";
 
 import AuthModule from 'modules/authentication';
-import { submitSubmission } from 'lib/api';
+import { submitSubmission, createDraft, getDraft } from 'lib/api';
+import * as validation from 'lib/validation';
 import * as actions from './actionTypes';
 import * as publicationActions from 'domain/publication/actions';
 import * as geneActions from 'domain/gene/actions';
 import * as annotationActions from 'domain/annotation/actions';
+import * as geneTermActions from 'domain/geneTermAnnotation/actions';
+import * as evidenceWithActions from 'domain/evidenceWith/actions';
+import {
+    annotationFormats,
+    annotationTypeData,
+} from 'domain/annotation/constants';
 import {
     submissionBodySelector,
     publicationLocalId,
     annotationOrder,
     geneOrder,
 } from './selectors';
+
+let lastDraft = null;
+
+export function saveDraft() {
+    return (dispatch, getState) => {
+
+        const currState = getState();
+
+        if (currState.submission.submitting || currState.submission.submitted) {
+            return;
+        }
+
+        const newDraft = JSON.stringify({wip_state: submissionBodySelector(currState, true)});
+        if (newDraft == lastDraft) {
+            return;
+        }
+        lastDraft = newDraft;
+        const token = AuthModule.selectors.rawJwtSelector(currState);
+        createDraft(newDraft, token, (err) => {
+            if (!err) {
+                dispatch(draftSaved());
+            }
+        });
+    };
+}
+
+function draftSaved() {
+    return {
+        type: actions.DRAFT_SAVED
+    };
+}
+
+export function loadDraft() {
+    return (dispatch, getState) => {
+
+        const currState = getState();
+        const token = AuthModule.selectors.rawJwtSelector(currState);
+        getDraft(token, (err, body) => {
+            if (!err) {
+                // The draft now exists in the body var, load it.
+
+                let publicationId = publicationLocalId(currState);
+
+                // Set the publication id value
+                dispatch(publicationActions.update(
+                    publicationId, body['publicationId']));
+
+                if (body['genes'].length > 0) {
+                    // Delete the default gene
+                    dispatch(removeGene(geneOrder(currState)[0]));
+                }
+
+                let locusMap = {};
+                for (let i = 0; i < body['genes'].length; i++) {
+                    let gene = body['genes'][i];
+                    let id = "draft_gene_" + gene.locusName;
+                    locusMap[gene.locusName] = id;
+
+                    let geneData = {
+                        finalizedLocusName: gene.locusName,
+                        finalizedGeneSymbol: gene.geneSymbol || "",
+                        finalizedFullName: gene.fullName || "",
+                        ...validation.getValid(),
+                    };
+
+                    // add the remaining genes
+                    dispatch(addGene(id, geneData));
+                }
+
+
+                for (let i = 0; i < body.annotations.length; i++) {
+                    let annotation = body.annotations[i];
+                    let localId = "draft_annotation_" + i;
+
+                    let annotationFormatData, ewOrder, ewRelation;
+                    switch(annotationTypeData[annotation.type].format) {
+                    case annotationFormats.GENE_TERM:
+                        ewOrder = [];
+                        ewRelation = "";
+                        if (annotation.data.evidenceWith) {
+                            // Create each evidence with and record the localId
+                            for (let ew of annotation.data.evidenceWith) {
+                                let newEw = evidenceWithActions.addNew();
+
+                                // create an evidence with
+                                dispatch(newEw);
+
+                                // update its data
+                                dispatch(
+                                    evidenceWithActions.updateEvidenceWith(
+                                        newEw.evidenceWithId, {
+                                            ...validation.getValid(),
+                                            locusName: ew,
+                                        }
+                                    )
+                                );
+
+                                // add id to order
+                                ewOrder.push(newEw.evidenceWithId);
+                            }
+
+                            if (annotation.data.isEvidenceWithOr == true) {
+                                ewRelation = "OR";
+                            } else if (annotation.data.isEvidenceWithOr == false) {
+                                ewRelation = "AND";
+                            }
+
+                            // update Evidence With Relation on annotation
+                            dispatch(
+                                geneTermActions.updateEvidenceWithRelation(localId, ewRelation)
+                            );
+                        }
+
+                        annotationFormatData = {
+                            geneLocalId: locusMap[annotation.data.locusName],
+                            keywordName: annotation.data.keyword.name,
+                            keywordId: annotation.data.keyword.id,
+                            keywordExternalId: annotation.data.keyword.externalId || "",
+                            methodName: annotation.data.method.name,
+                            methodId: annotation.data.method.id,
+                            methodExternalId: annotation.data.method.externalId || "",
+                            methodEvidenceCode: annotation.data.method.evidenceCode || null,
+                            evidenceWithOrder: ewOrder,
+                            evidenceWithRelation: ewRelation,
+                        };
+                        break;
+                    case annotationFormats.GENE_GENE:
+                        annotationFormatData = {
+                            gene1LocalId: locusMap[annotation.data.locusName],
+                            gene2LocalId: locusMap[annotation.data.locusName2],
+                            methodName: annotation.data.method.name,
+                            methodId: annotation.data.method.id,
+                            methodExternalId: annotation.data.method.externalId || "",
+                            methodEvidenceCode: annotation.data.method.evidenceCode || null
+                        };
+                        break;
+                    case annotationFormats.COMMENT:
+                        annotationFormatData = {
+                            geneLocalId: locusMap[annotation.data.locusName],
+                            comment: annotation.data.text
+                        };
+                        break;
+                    }
+
+                    let annotationData = {
+                        annotationId: annotation.id,
+                        annotationStatus: annotation.status,
+                        annotationType: annotation.type,
+                        annotationFormatData: annotationFormatData,
+                    };
+
+                    dispatch(addAnnotation(localId, annotationData));
+                }
+
+            } else {
+                // There are no drafts.
+            }
+        });
+    };
+}
 
 export function initialize() {
     return dispatch => {
@@ -24,14 +191,20 @@ export function initialize() {
 
         // Create gene for submission
         dispatch(addGene());
+
+        dispatch(loadDraft());
     };
 }
 
-export function addGene() {
+export function addGene(geneLocalId, geneData) {
     return dispatch => {
         // Create the new gene
-        let newGene = geneActions.addNew();
+        let newGene = geneActions.addNew(geneLocalId);
         dispatch(newGene);
+
+        if (geneData) {
+            dispatch(geneActions.updateGeneData(newGene.localId, geneData));
+        }
 
         // Link the newly created gene to the submission
         dispatch(addToGeneOrder(newGene.localId));
@@ -40,11 +213,11 @@ export function addGene() {
 
 export function removeGene(geneLocalId) {
     return dispatch => {
-        // Delete the gene
-        dispatch(geneActions.removeGene(geneLocalId));
-
         // Remove the link to the gene
         dispatch(removeFromGeneOrder(geneLocalId));
+
+        // Delete the gene
+        dispatch(geneActions.removeGene(geneLocalId));
     };
 }
 
@@ -62,10 +235,21 @@ export function removeFromGeneOrder(geneLocalId) {
     };
 }
 
-export function addAnnotation() {
+export function addAnnotation(annotationLocalId, annotationData) {
     return (dispatch, getState) => {
+
         // Create the new annotation
-        let newAnnotation = annotationActions.addNew()(dispatch, getState);
+        let newAnnotation = annotationActions.addNew(
+            annotationLocalId,
+            annotationData
+        )(dispatch, getState);
+
+        if (annotationData) {
+            dispatch(annotationActions.updateAnnotationData(
+                newAnnotation.localId,
+                annotationData.annotationFormatData
+            ));
+        }
 
         // Link the newly created annotation to the submission
         dispatch(addToAnnotationOrder(newAnnotation.localId));
@@ -74,11 +258,11 @@ export function addAnnotation() {
 
 export function removeAnnotation(annotationLocalId) {
     return dispatch => {
-        // Delete the annotation
-        dispatch(annotationActions.remove(annotationLocalId));
-
         // Remove the link to the annotation
         dispatch(removeFromAnnotationOrder(annotationLocalId));
+
+        // Delete the annotation
+        dispatch(annotationActions.remove(annotationLocalId));
     };
 }
 
@@ -133,6 +317,7 @@ export function attemptSubmit() {
             if(err) {
                 return dispatch(submitFail(err));
             }
+            lastDraft = null;
             return dispatch(submitSuccess(data));
         });
     };
