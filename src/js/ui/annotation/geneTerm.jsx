@@ -8,7 +8,7 @@ import { annotationTypeData } from 'domain/annotation/constants';
 import KeywordTextInput from 'modules/connectedComponents/keywordTextInput';
 import LabelInputRow from 'ui/labelInputRow';
 import LabelDropdownInputRow from 'ui/labelDropdownInputRow';
-import ValidatedField from 'modules/connectedComponents/validatedField';
+import ValidatedField from 'ui/validatedField';
 
 
 class GeneTermAnnotation extends React.Component {
@@ -79,6 +79,7 @@ class GeneTermAnnotation extends React.Component {
                 </LabelInputRow>
                 <ValidatedField isValid={this.props.keywordValid}
                     invalidMessage="A gene term annotation requires a keyword."
+                    reviewValidated={this.props.reviewValidated}
                 >
                 <LabelInputRow title={typeData.name}>
                     <KeywordTextInput
@@ -105,6 +106,7 @@ class GeneTermAnnotation extends React.Component {
                 </ValidatedField>
                 <ValidatedField isValid={this.props.methodValid}
                     invalidMessage="A gene term annotation requires a method."
+                    reviewValidated={this.props.reviewValidated}
                 >
                 <LabelInputRow title="Method">
                     <KeywordTextInput
@@ -137,6 +139,7 @@ class GeneTermAnnotation extends React.Component {
                 {this.needsEvidenceWith ?
                 <ValidatedField isValid={this.props.ewValid}
                     invalidMessage="All evidence with fields must be valid."
+                    reviewValidated={this.props.reviewValidated}
                 >
                     {(this.props.geneTermAnnotation.evidenceWithOrder.length >= 2 ? (
                         <LabelDropdownInputRow
@@ -205,6 +208,7 @@ GeneTermAnnotation.propTypes = {
     keywordValid: React.PropTypes.bool,
     methodValid: React.PropTypes.bool,
     ewValid: React.PropTypes.bool,
+    reviewValidated: React.PropTypes.number,
 };
 
 GeneTermAnnotation.defaultProps = {
@@ -216,6 +220,10 @@ GeneTermAnnotation.defaultProps = {
     updateEvidenceWithRelation: () => {},
     evidenceWithRelation: "",
     needsEvidenceWith: false,
+    keywordValid: false,
+    methodValid: false,
+    ewValid: false,
+    reviewValidated: 0,
 };
 
 export default GeneTermAnnotation;

@@ -49,11 +49,10 @@ class CurationFooter extends React.Component {
                             Review Changes <span className="fa fa-chevron-right"></span>
                         </Button>
                     :
-                        <div>
-                            <span className="fa fa-info-circle" /> {
-                                "Please ensure there is at least a publication, 1 gene, and 1 annotation"
-                            }
-                        </div>
+                        <Button color="warning"
+                            onClick={this.props.reviewValidatedFields}>
+                            Review Submission <span className="fa fa-chevron-right"></span>
+                        </Button>
                     }
                     </Col>
                 </Row>
@@ -72,6 +71,7 @@ CurationFooter.propTypes = {
     preview: React.PropTypes.func,
     edit: React.PropTypes.func,
     resetSubmission: React.PropTypes.func,
+    reviewValidatedFields: React.PropTypes.func,
 };
 
 CurationFooter.defaultProps = {
@@ -84,6 +84,7 @@ CurationFooter.defaultProps = {
     preview: () => {},
     edit: () => {},
     resetSubmission: () => {},
+    reviewValidatedFields: () => {},
 };
 
 export default CurationFooter;

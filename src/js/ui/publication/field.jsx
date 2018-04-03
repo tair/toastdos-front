@@ -6,7 +6,7 @@ import { Alert, Row, Col,
 import { validationStates } from 'lib/validation';
 import ValidationInput from 'ui/validationInput';
 import LabelInputRow from 'ui/labelInputRow';
-import ValidatedField from 'modules/connectedComponents/validatedField';
+import ValidatedField from 'ui/validatedField';
 
 
 class PublicationField extends React.Component {
@@ -19,6 +19,7 @@ class PublicationField extends React.Component {
         return (
         <ValidatedField isValid={this.props.validationState == validationStates.VALID}
             invalidMessage={(`${this.props.validationState}: A valid publication ID is required`)}
+            reviewValidated={this.props.reviewValidated}
         >
             <Row>
                 <Col>
@@ -71,6 +72,7 @@ PublicationField.propTypes = {
     url: React.PropTypes.string,
     title: React.PropTypes.string,
     attemptValidatePublication: React.PropTypes.func.isRequired,
+    reviewValidated: React.PropTypes.number,
 };
 
 PublicationField.defaultProps = {
@@ -81,7 +83,8 @@ PublicationField.defaultProps = {
     author: '',
     url: '',
     title: '',
-    attemptValidatePublication: () => {}
+    attemptValidatePublication: () => {},
+    reviewValidated: 0,
 };
 
 export default PublicationField;

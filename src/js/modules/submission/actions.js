@@ -20,7 +20,7 @@ import {
     geneOrder,
 } from './selectors';
 
-export function reviewValidated() {
+export function reviewValidatedFields() {
     return {
         type: actions.SET_REVIEW_VALIDATED,
     };

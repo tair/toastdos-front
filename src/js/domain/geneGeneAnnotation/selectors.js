@@ -8,5 +8,5 @@ export const geneGeneAnnotationSelector =
 
 export const geneGeneAnnotationValidSelector = createSelector(
     geneGeneAnnotationSelector,
-    gga => (gga && gga.methodName && gga.methodName.trim() !== '')
+    gga => !!(gga && gga.methodName && gga.methodName.trim() !== '')
 );

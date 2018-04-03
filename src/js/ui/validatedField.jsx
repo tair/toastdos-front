@@ -75,13 +75,13 @@ class ValidatedField extends React.Component {
 
 ValidatedField.propTypes = {
     isValid: React.PropTypes.bool,
-    reviewValidated: React.PropTypes.bool,
+    reviewValidated: React.PropTypes.number,
     invalidMessage: React.PropTypes.string,
 };
 
 ValidatedField.defaultProps = {
     isValid: false,
-    reviewValidated: false,
+    reviewValidated: 0,
     invalidMessage: 'This field is not valid.',
 };
 
