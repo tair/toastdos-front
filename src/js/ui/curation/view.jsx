@@ -49,7 +49,6 @@ class CurationView extends React.Component {
                 preview={this.props.preview}
                 edit={this.props.edit}
                 hasPendingAnnotations={this.props.hasPendingAnnotations}
-                reviewValidatedFields={this.props.reviewValidatedFields}
             />
         );
 
@@ -70,8 +69,7 @@ class CurationView extends React.Component {
                     :
                         <ListGroup>
                             <ListGroupItem className="border-left-0 border-right-0 border-top-0">
-                                <PublicationField localId={this.props.publicationLocalId}
-                                    reviewValidated={this.props.reviewValidated}/>
+                                <PublicationField localId={this.props.publicationLocalId}/>
                             </ListGroupItem>
                             <ListGroupItem className="border-left-0 border-right-0">
                                 <GeneList
@@ -80,7 +78,6 @@ class CurationView extends React.Component {
                                     addGene={this.props.addGene}
                                     removeGene={this.props.removeGene}
                                     curating={true}
-                                    reviewValidated={this.props.reviewValidated}
                                 />
                             </ListGroupItem>
                             <ListGroupItem className="border-left-0 border-right-0 border-bottom-0">
@@ -91,7 +88,6 @@ class CurationView extends React.Component {
                                     removeAnnotation={this.props.removeAnnotation}
                                     hasValidGene={this.props.hasValidGene}
                                     curating={true}
-                                    reviewValidated={this.props.reviewValidated}
                                 />
                             </ListGroupItem>
                         </ListGroup>
@@ -124,8 +120,6 @@ CurationView.propTypes = {
     addGene: React.PropTypes.func,
     removeGene: React.PropTypes.func,
     hasValidGene: React.PropTypes.bool,
-    reviewValidated: React.PropTypes.number,
-    reviewValidatedFields: React.PropTypes.func,
     hasPendingAnnotations: React.PropTypes.bool,
 };
 
@@ -140,8 +134,6 @@ CurationView.defaultProps = {
     removeAnnotation: () => {},
     addGene: () => {},
     removeGene: () => {},
-    reviewValidated: 0,
-    reviewValidatedFields: () => {},
     hasValidGene: false,
     hasPendingAnnotations: false,
 };

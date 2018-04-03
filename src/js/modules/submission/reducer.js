@@ -9,7 +9,6 @@ const defaultState = {
     submitting: false,
     submitted: false,
     previewing: false,
-    reviewValidated: 0,
     draftNumber: 0,
     submissionError: "",
 };
@@ -76,11 +75,6 @@ function submissionReducer(state = defaultState, action) {
         return {
             ...state,
             draftNumber: state.draftNumber + 1
-        };
-    case actions.SET_REVIEW_VALIDATED:
-        return {
-            ...state,
-            reviewValidated: state.reviewValidated + 1,
         };
     default:
         return state;

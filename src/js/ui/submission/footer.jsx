@@ -59,10 +59,11 @@ class SubmissionFooter extends React.Component {
                             Review Submission <span className="fa fa-chevron-right"></span>
                         </Button>
                     :
-                        <Button color="warning"
-                            onClick={this.props.reviewValidatedFields}>
-                            Review Submission <span className="fa fa-chevron-right"></span>
-                        </Button>
+                        <div>
+                            <span className="fa fa-info-circle" /> {
+                                "Please ensure there is at least a publication, 1 gene, and 1 annotation"
+                            }
+                        </div>
                     }
                     </Col>
                 </Row>
@@ -80,7 +81,6 @@ SubmissionFooter.propTypes = {
     preview: React.PropTypes.func,
     edit: React.PropTypes.func,
     resetSubmission: React.PropTypes.func,
-    reviewValidatedFields: React.PropTypes.func,
 };
 
 SubmissionFooter.defaultProps = {
@@ -92,7 +92,6 @@ SubmissionFooter.defaultProps = {
     preview: () => {},
     edit: () => {},
     resetSubmission: () => {},
-    reviewValidatedFields: () => {},
 };
 
 export default SubmissionFooter;

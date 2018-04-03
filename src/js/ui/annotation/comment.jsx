@@ -4,7 +4,6 @@ import React from 'react';
 import GenePicker from 'modules/connectedComponents/gene/picker';
 import CustomTextArea from 'lib/components/customTextArea';
 import LabelInputRow from 'ui/labelInputRow';
-import ValidatedField from 'ui/validatedField';
 
 class CommentAnnotation extends React.Component {
     constructor(props) {
@@ -26,10 +25,6 @@ class CommentAnnotation extends React.Component {
                         value={this.props.commentAnnotation.geneLocalId}
                     />
                 </LabelInputRow>
-                <ValidatedField isValid={!!this.props.commentAnnotation.comment}
-                    invalidMessage="A comment annotation requires a comment."
-                    reviewValidated={this.props.reviewValidated}
-                >
                 <LabelInputRow title="Comment">
                     <CustomTextArea name="comment"
                         onChange={event => this.props.onDataChange(
@@ -44,7 +39,6 @@ class CommentAnnotation extends React.Component {
                     >
                     </CustomTextArea>
                 </LabelInputRow>
-                </ValidatedField>
             </div>
         );
     }
@@ -52,7 +46,6 @@ class CommentAnnotation extends React.Component {
 
 CommentAnnotation.propTypes = {
     commentAnnotation: React.PropTypes.object,
-    reviewValidated: React.PropTypes.number,
     geneOrder: React.PropTypes.array,
     onDataChange: React.PropTypes.func,
 };

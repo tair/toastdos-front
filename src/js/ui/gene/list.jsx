@@ -29,7 +29,6 @@ class GeneList extends React.Component {
                 fullName={geneData.finalizedFullName}
                 validationError={geneData.validationError}
                 validationState={geneData.validationState}
-                reviewValidated={this.props.reviewValidated}
             />
         );
     }
@@ -78,7 +77,6 @@ GeneList.propTypes = {
     removeGene: React.PropTypes.func,
     clearGene: React.PropTypes.func,
     validateGeneData: React.PropTypes.func,
-    reviewValidated: React.PropTypes.number,
     curating: React.PropTypes.bool
 };
 
@@ -89,7 +87,6 @@ GeneList.defaultProps = {
     removeGene: () => {},
     clearGene: () => {},
     validateGeneData: () => {},
-    reviewValidated: 0,
     curating: false,
 };
 

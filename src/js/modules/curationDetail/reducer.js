@@ -13,7 +13,6 @@ const defaultState = {
     submissionError: "",
     submitter: null,
     submittedAt: null,
-    reviewValidated: 0,
 };
 
 function submissionReducer(state = defaultState, action) {
@@ -88,11 +87,6 @@ function submissionReducer(state = defaultState, action) {
         return {
             ...state,
             submittedAt: action.submittedAt,
-        };
-    case actions.SET_REVIEW_VALIDATED:
-        return {
-            ...state,
-            reviewValidated: state.reviewValidated + 1,
         };
     default:
         return state;

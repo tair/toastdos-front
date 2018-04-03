@@ -10,7 +10,6 @@ export const PREVIEW = `${name}/PREVIEW`;
 export const EDIT = `${name}/EDIT`;
 export const LOAD_SUBMISSION = `${name}/LOAD_SUBMISSION`;
 
-export const SET_REVIEW_VALIDATED = `${name}/SET_REVIEW_VALIDATED`;
 export const SET_ID = `${name}/SET_ID`;
 export const SET_PUBLICATION = `${name}/SET_PUBLICATION`;
 export const ADD_GENE = `${name}/ADD_GENE`;
