@@ -2,7 +2,6 @@
 
 import React from 'react';
 import {Container, Row, Col, Card, CardHeader, CardBody} from 'reactstrap';
-import "css/curationView.scss";
 import SubmissionList from 'ui/submissionList';
 
 class CurationOverviewView extends React.Component {

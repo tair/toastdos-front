@@ -1,5 +1,4 @@
 import React from 'react';
-import "css/customCheckboxInput.scss";
 
 class CustomCheckboxInput extends React.Component {
     constructor(props) {
