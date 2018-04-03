@@ -86,7 +86,7 @@ export const canSubmit = createSelector(
     (pValid, gValid, aValid, isSubmitting) => (pValid && gValid && aValid && !isSubmitting)
 );
 
-export function submissionBodySelector(state, includeKeywordName) {
+export function submissionBodySelector(state, includeKeywordData) {
 
     const geneList = genesSelector(state);
     const annotationList = annotationListSelector(state);
@@ -131,9 +131,11 @@ export function submissionBodySelector(state, includeKeywordName) {
                 isEvidenceWithOr: true,
             };
 
-            if (includeKeywordName) {
-                annotation.data.method.evidenceCode = gt.methodEvidenceCode;
+            if (includeKeywordData) {
                 annotation.data.keyword.name =  gt.keywordName;
+                annotation.data.keyword.externalId =  gt.keywordExternalId;
+                annotation.data.method.evidenceCode = gt.methodEvidenceCode;
+                annotation.data.method.externalId = gt.methodExternalId;
                 annotation.data.method.name = gt.methodName;
             }
 
@@ -157,8 +159,9 @@ export function submissionBodySelector(state, includeKeywordName) {
                 method: (gg.methodId !== null ? {id: gg.methodId} : {name: gg.methodName})
             };
 
-            if (includeKeywordName) {
+            if (includeKeywordData) {
                 annotation.data.method.name = gg.methodName;
+                annotation.data.method.externalId = gg.methodExternalId;
             }
             break;
         }

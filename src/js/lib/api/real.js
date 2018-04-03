@@ -279,7 +279,7 @@ export function createDraft(draft, jwt, callback) {
         headers: {
             'Authorization': `Bearer ${jwt}`
         },
-        body: JSON.stringify({wip_state: draft})
+        body: draft
     }, (err, res, body) => {
         if(err) {
             return callback(err);

@@ -20,14 +20,24 @@ import {
     geneOrder,
 } from './selectors';
 
+let lastDraft = null;
+
 export function saveDraft() {
     return (dispatch, getState) => {
 
         const currState = getState();
 
-        const submissionBody = submissionBodySelector(currState, true);
+        if (currState.submission.submitting || currState.submission.submitted) {
+            return;
+        }
+
+        const newDraft = JSON.stringify({wip_state: submissionBodySelector(currState, true)});
+        if (newDraft == lastDraft) {
+            return;
+        }
+        lastDraft = newDraft;
         const token = AuthModule.selectors.rawJwtSelector(currState);
-        createDraft(submissionBody, token, (err) => {
+        createDraft(newDraft, token, (err) => {
             if (!err) {
                 // TODO: Show a visual indicator saying saved.
             } else {
@@ -60,7 +70,7 @@ export function loadDraft() {
                 let locusMap = {};
                 for (let i = 0; i < body['genes'].length; i++) {
                     let gene = body['genes'][i];
-                    let id = "draft_gene_" + gene.id;
+                    let id = "draft_gene_" + gene.locusName;
                     locusMap[gene.locusName] = id;
 
                     let geneData = {
@@ -74,8 +84,10 @@ export function loadDraft() {
                     dispatch(addGene(id, geneData));
                 }
 
-                for (let annotation of body['annotations']) {
-                    let localId = "draft_annotation_" + annotation.id;
+
+                for (let i = 0; i < body.annotations.length; i++) {
+                    let annotation = body.annotations[i];
+                    let localId = "draft_annotation_" + i;
 
                     let annotationFormatData, ewOrder, ewRelation;
                     switch(annotationTypeData[annotation.type].format) {
@@ -301,6 +313,7 @@ export function attemptSubmit() {
             if(err) {
                 return dispatch(submitFail(err));
             }
+            lastDraft = null;
             return dispatch(submitSuccess(data));
         });
     };
