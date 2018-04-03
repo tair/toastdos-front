@@ -269,3 +269,44 @@ export function listExports(callback) {
         return callback(null, body);
     });
 }
+
+export function createDraft(draft, jwt, callback) {
+    return request({
+        method: 'POST',
+        timeout: 15000,
+        url: `${BASE_URL}/api/draft/`,
+        json: true,
+        headers: {
+            'Authorization': `Bearer ${jwt}`
+        },
+        body: draft
+    }, (err, res, body) => {
+        if(err) {
+            return callback(err);
+        }
+        if(res.status < 200 || res.status >= 300) {
+            return callback(err);
+        }
+        return callback(null, body);
+    });
+}
+
+export function getDraft(jwt, callback) {
+    return request({
+        method: 'GET',
+        timeout: 15000,
+        url: `${BASE_URL}/api/draft/`,
+        json: true,
+        headers: {
+            'Authorization': `Bearer ${jwt}`
+        },
+    }, (err, res, body) => {
+        if(err) {
+            return callback(err);
+        }
+        if(res.status < 200 || res.status >= 300) {
+            return callback(err);
+        }
+        return callback(null, body);
+    });
+}

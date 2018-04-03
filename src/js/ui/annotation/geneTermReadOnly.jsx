@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { ListGroup, Card, CardHeader, CardBody, Label, Row, Col } from 'reactstrap';
-import { annotationTypeData } from 'domain/annotation/constants';
+import { annotationTypeData, goEvidenceCodeNameMap } from 'domain/annotation/constants';
 import EvidenceWithReadOnly from 'modules/connectedComponents/evidenceWithReadOnly';
 import ExternalIdBadge from 'ui/externalIdBadge';
 import GeneLocusName from 'modules/connectedComponents/gene/locusName';
@@ -16,6 +16,63 @@ class GeneTermAnnotationReadOnly extends React.Component {
     }
 
     render() {
+        return this.props.compact? this.renderCompact() : this.renderLarge();
+    }
+
+    renderCompact() {
+        let typeData = annotationTypeData[this.geneTermAnnotation.annotationType];
+        let showEvidenceWith = this.geneTermAnnotation.methodEvidenceCode == 'IPI' ||
+            this.geneTermAnnotation.methodEvidenceCode == 'IGI';
+        let locusName = (
+            <GeneLocusName
+                localId={this.props.geneTermAnnotation.geneLocalId}
+            />
+        );
+
+        let evidenceCodeName = this.geneTermAnnotation.methodEvidenceCode ?
+            (
+                goEvidenceCodeNameMap[this.geneTermAnnotation.methodEvidenceCode] +
+                ' (' +
+                this.geneTermAnnotation.methodEvidenceCode +
+                '), '
+            ): '';
+
+        let typeName = <em>{typeData.descriptor}</em>;
+
+        let evidenceWithText = null;
+        if (showEvidenceWith) {
+            const EWjoin = " " + this.props.geneTermAnnotation.evidenceWithRelation.toLowerCase() + " ";
+            evidenceWithText = (
+                <span>
+                    &nbsp;with&nbsp;
+                    {this.geneTermAnnotation.evidenceWithOrder.map(
+                        evidenceWithLocalId =>
+                            <EvidenceWithReadOnly
+                                key={evidenceWithLocalId}
+                                localId={evidenceWithLocalId}
+                                isListGroupItem={false}
+                            />
+                    ).reduce((prev, curr) => [prev, EWjoin, curr])}
+                </span>
+            );
+        }
+
+        return (
+            <div>
+                {locusName}&nbsp;
+                {typeName}&nbsp;
+                {this.geneTermAnnotation.keywordName}&nbsp;
+                <ExternalIdBadge externalId={this.geneTermAnnotation.keywordExternalId} />,&nbsp;
+                {evidenceCodeName}
+                {this.geneTermAnnotation.methodName}&nbsp;
+                <ExternalIdBadge externalId={this.geneTermAnnotation.methodExternalId} />
+                {evidenceWithText}.&nbsp;
+                <AnnotationStatusReadOnly annotationStatus={this.props.annotationStatus} />
+            </div>
+        );
+    }
+
+    renderLarge() {
         let typeData = annotationTypeData[this.geneTermAnnotation.annotationType];
         let showEvidenceWith = this.geneTermAnnotation.methodEvidenceCode == 'IPI' ||
             this.geneTermAnnotation.methodEvidenceCode == 'IGI';
@@ -100,6 +157,7 @@ GeneTermAnnotationReadOnly.propTypes = {
     localId: React.PropTypes.string,
     needsEvidenceWith: React.PropTypes.bool,
     annotationTypeName: React.PropTypes.string,
+    compact: React.PropTypes.bool,
 };
 
 GeneTermAnnotationReadOnly.defaultProps = {

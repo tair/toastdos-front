@@ -9,22 +9,32 @@ class EvidenceWithReadOnly extends React.Component {
     }
 
     render() {
-        return (
-            <ListGroupItem key={`evidence_with_${this.props.evidenceWithId}`}>
-                {this.props.evidenceWith.locusName}
-            </ListGroupItem>
-        );
+        if (this.props.isListGroupItem) {
+            return (
+                <ListGroupItem key={`evidence_with_${this.props.evidenceWithId}`}>
+                    {this.props.evidenceWith.locusName}
+                </ListGroupItem>
+            );
+        } else {
+            return (
+                <span key={`evidence_with_${this.props.evidenceWithId}`}>
+                    {this.props.evidenceWith.locusName}
+                </span>
+            );
+        }
     }
 }
 
 EvidenceWithReadOnly.propTypes = {
     evidenceWith: React.PropTypes.object,
     evidenceWithId: React.PropTypes.string,
+    isListGroupItem: React.PropTypes.bool,
 };
 
 EvidenceWithReadOnly.defaultProps = {
     evidenceWith: null,
     evidenceWithId: null,
+    isListGroupItem: true,
 };
 
 export default EvidenceWithReadOnly;

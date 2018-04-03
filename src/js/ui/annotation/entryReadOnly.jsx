@@ -24,6 +24,7 @@ class AnnotationEntryReadOnly extends React.Component {
                     localId={this.props.annotation.annotationTypeLocalId}
                     annotationTypeName={annotationType.name}
                     annotationStatus={this.props.annotation.annotationStatus}
+                    compact={this.props.compact}
                 />
             );
         case annotationFormats.GENE_TERM:
@@ -32,6 +33,7 @@ class AnnotationEntryReadOnly extends React.Component {
                     localId={this.props.annotation.annotationTypeLocalId}
                     annotationTypeName={annotationType.name}
                     annotationStatus={this.props.annotation.annotationStatus}
+                    compact={this.props.compact}
                 />
             );
         case annotationFormats.GENE_GENE:
@@ -40,6 +42,7 @@ class AnnotationEntryReadOnly extends React.Component {
                     localId={this.props.annotation.annotationTypeLocalId}
                     annotationTypeName={annotationType.name}
                     annotationStatus={this.props.annotation.annotationStatus}
+                    compact={this.props.compact}
                 />
             );
         default:
@@ -58,10 +61,12 @@ AnnotationEntryReadOnly.propTypes = {
         annotationType: React.PropTypes.oneOf(Object.keys(annotationTypes)),
         annotationTypeLocalId: React.PropTypes.string,
     }).isRequired,
+    compact: React.PropTypes.bool,
 };
 
 AnnotationEntryReadOnly.defaultProps = {
     annotation: null,
+    compact: true,
 };
 
 

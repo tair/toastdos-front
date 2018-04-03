@@ -11,6 +11,21 @@ class CommentAnnotationReadOnly extends React.Component {
     }
 
     render() {
+        return this.props.compact? this.renderCompact() : this.renderLarge();
+    }
+
+    renderCompact() {
+        return (
+            <div>
+                <GeneLocusName localId={this.props.commentAnnotation.geneLocalId} />&nbsp;
+                <em>has the following comment:</em>&nbsp;
+                {this.props.commentAnnotation.comment}.&nbsp;
+                <AnnotationStatusReadOnly annotationStatus={this.props.annotationStatus} />
+            </div>
+        );
+    }
+
+    renderLarge() {
         return (
             <Card className="mb-3">
                 <CardHeader>
@@ -38,6 +53,7 @@ CommentAnnotationReadOnly.propTypes = {
     commentAnnotation: React.PropTypes.object,
     annotationStatus: React.PropTypes.string,
     annotationTypeName: React.PropTypes.string,
+    compact: React.PropTypes.bool,
 };
 
 export default CommentAnnotationReadOnly;

@@ -16,7 +16,8 @@ class AnnotationCurationListReadOnly extends React.Component {
             annotation =>
                 <AnnotationEntryReadOnly
                     key={annotation.localId}
-                    annotation={annotation} />
+                    annotation={annotation}
+                    compact={this.props.compact} />
         );
     }
 

@@ -15,3 +15,4 @@ export const ADD_GENE = `${name}/ADD_GENE`;
 export const REMOVE_GENE = `${name}/REMOVE_GENE`;
 export const ADD_ANNOTATION = `${name}/ADD_ANNOTATION`;
 export const REMOVE_ANNOTATION = `${name}/REMOVE_ANNOTATION`;
+export const DRAFT_SAVED = `${name}/DRAFT_SAVED`;

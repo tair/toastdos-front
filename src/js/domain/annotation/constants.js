@@ -28,27 +28,32 @@ export const annotationTypeData = {
     [annotationTypes.MOLECULAR_FUNCTION]: {
         name: "Molecular Function (GO Function)",
         format: annotationFormats.GENE_TERM,
-        keywordScope: "molecular_function"
+        keywordScope: "molecular_function",
+        descriptor: "functions in"
     },
     [annotationTypes.BIOLOGICAL_PROCESS]: {
         name: "Biological Process (GO Process)",
         format: annotationFormats.GENE_TERM,
-        keywordScope: "biological_process"
+        keywordScope: "biological_process",
+        descriptor: "involved in (biological process)"
     },
     [annotationTypes.SUBCELLULAR_LOCATION]: {
         name: "Subcellular Location (GO Component)",
         format: annotationFormats.GENE_TERM,
-        keywordScope: "cellular_component"
+        keywordScope: "cellular_component",
+        descriptor: "located in"
     },
     [annotationTypes.ANATOMICAL_LOCATION]: {
         name: "Anatomical Location (PO Anatomy)",
         format: annotationFormats.GENE_TERM,
-        keywordScope: "plant_anatomy"
+        keywordScope: "plant_anatomy",
+        descriptor: "anatomically located in"
     },
     [annotationTypes.TEMPORAL_EXPRESSION]: {
         name: "Temporal Expression (PO Dev. Stage)",
         format: annotationFormats.GENE_TERM,
-        keywordScope: "plant_structure_development_stage"
+        keywordScope: "plant_structure_development_stage",
+        descriptor: "expressed in"
     },
     [annotationTypes.PROTEIN_INTERACTION]: {
         name: "Protein Interaction",
@@ -58,4 +63,33 @@ export const annotationTypeData = {
         name: "Comment",
         format: annotationFormats.COMMENT
     }
+};
+
+export const goEvidenceCodeNameMap = {
+    "EXP": "inferred from experiment",
+    "IDA": "inferred from direct assay",
+    "IPI": "inferred from physical interaction",
+    "IMP": "inferred from mutant phenotype",
+    "IGI": "inferred from genetic interaction",
+    "IEP": "inferred from expression pattern",
+    "HTP": "inferred from high throughput experiment",
+    "HDA": "inferred from high throughput direct assay",
+    "HMP": "inferred from high throughput mutant phenotype",
+    "HGI": "inferred from high throughput genetic interaction",
+    "HEP": "inferred from high throughput expression pattern",
+    "ISS": "inferred from sequence or structural similarity",
+    "ISO": "inferred from sequence orthology",
+    "ISA": "inferred from sequence alignment",
+    "ISM": "inferred from sequence model",
+    "IGC": "inferred from genomic context",
+    "IBA": "inferred from biological aspect of ancestor",
+    "IBD": "inferred from biological aspect of descendant",
+    "IKR": "inferred from key residues",
+    "IRD": "inferred from rapid divergence",
+    "RCA": "inferred from reviewed computational analysis",
+    "TAS": "traceable author statement",
+    "NAS": "non-traceable author statement",
+    "IC": "inferred by curator",
+    "ND": "no biological data available",
+    "IEA": "inferred from electronic annotation",
 };

@@ -16,6 +16,7 @@ class GeneTermAnnotation extends React.Component {
 
         this.generateEvidenceWith = this.generateEvidenceWith.bind(this);
         this.needsEvidenceWith = this.props.needsEvidenceWith;
+        this.checkEvidenceWith(this.props);
     }
 
     attemptValidate(evidenceWithId, locusName){
@@ -36,17 +37,21 @@ class GeneTermAnnotation extends React.Component {
     }
 
     componentWillReceiveProps(nextprops) {
+        this.checkEvidenceWith(nextprops);
+    }
+
+    checkEvidenceWith(propsToCheck) {
 
         // Checks for methodId to be null
         // methodId should only be null if there is no data, or a search is currently unresolved
         // If methodId is null, removeEvidenceWith is called on all evidenceWith in the annotation
-        if (nextprops.geneTermAnnotation.methodId === null) {
+        if (propsToCheck.geneTermAnnotation.methodId === null) {
             this.props.geneTermAnnotation.evidenceWithOrder.map(this.props.removeEvidenceWith);
         }
 
-        if (nextprops.geneTermAnnotation.methodEvidenceCode === 'IGI' || nextprops.geneTermAnnotation.methodEvidenceCode === 'IPI') {
-            if (nextprops.geneTermAnnotation.evidenceWithOrder.length == 0) {
-                nextprops.onEvidenceWithAddClick();
+        if (propsToCheck.geneTermAnnotation.methodEvidenceCode === 'IGI' || propsToCheck.geneTermAnnotation.methodEvidenceCode === 'IPI') {
+            if (propsToCheck.geneTermAnnotation.evidenceWithOrder.length == 0) {
+                propsToCheck.onEvidenceWithAddClick();
             }
             this.needsEvidenceWith = true;
         }
