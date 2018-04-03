@@ -14,6 +14,7 @@ import {
     canSubmit,
     errorMessage,
     draftNumber,
+    reviewValidated,
 } from 'modules/submission/selectors';
 import {
     initialize,
@@ -25,7 +26,8 @@ import {
     removeAnnotation,
     addGene,
     removeGene,
-    saveDraft
+    saveDraft,
+    reviewValidatedFields,
 } from 'modules/submission/actions';
 
 const ConnectedSubmissionView = connect(
@@ -40,6 +42,7 @@ const ConnectedSubmissionView = connect(
         canSubmit,
         errorMessage,
         hasValidGene,
+        reviewValidated,
     }),
     dispatch => ({
         initialize: () => dispatch(initialize()),
@@ -52,6 +55,7 @@ const ConnectedSubmissionView = connect(
         addGene: () => dispatch(addGene()),
         saveDraft: () => dispatch(saveDraft()),
         removeGene: (localId) => dispatch(removeGene(localId)),
+        reviewValidatedFields: () => dispatch(reviewValidatedFields()),
     })
 )(SubmissionView);
 

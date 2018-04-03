@@ -8,11 +8,18 @@ import {
     updateGene1,
     updateGene2,
 } from 'domain/geneGeneAnnotation/actions';
-import { geneGeneAnnotationSelector } from 'domain/geneGeneAnnotation/selectors';
+import {
+    geneGeneAnnotationSelector,
+    geneGeneAnnotationValidSelector,
+    geneGeneAnnotationValidIdSelector,
+} from 'domain/geneGeneAnnotation/selectors';
 
 const ConnectedGeneGeneAnnotation = connect(
     (state, ownProps) => ({
         geneGeneAnnotation: geneGeneAnnotationSelector(state, ownProps.localId),
+        isValid: ownProps.curating ?
+            geneGeneAnnotationValidIdSelector(state, ownProps.localId) :
+            geneGeneAnnotationValidSelector(state, ownProps.localId),
     }),
     (dispatch, ownProps) => ({
         onDataChange: (data) => dispatch(update(ownProps.localId, data)),
@@ -23,6 +30,7 @@ const ConnectedGeneGeneAnnotation = connect(
 
 ConnectedGeneGeneAnnotation.propTypes = {
     localId: React.PropTypes.string,
+    curating: React.PropTypes.bool,
 };
 
 export default ConnectedGeneGeneAnnotation;
