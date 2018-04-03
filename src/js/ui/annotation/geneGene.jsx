@@ -5,6 +5,7 @@ import GenePicker from 'modules/connectedComponents/gene/picker';
 import KeywordTextInput from 'modules/connectedComponents/keywordTextInput';
 import LabelInputRow from 'ui/labelInputRow';
 import { annotationTypes } from 'domain/annotation/constants';
+import ValidatedField from 'modules/connectedComponents/validatedField';
 
 class GeneGeneAnnotation extends React.Component {
     constructor(props) {
@@ -30,6 +31,9 @@ class GeneGeneAnnotation extends React.Component {
                         value={this.props.geneGeneAnnotation.gene2LocalId}
                     />
                 </LabelInputRow>
+                <ValidatedField isValid={this.props.isValid}
+                    invalidMessage="A gene gene annotation requires a method."
+                >
                 <LabelInputRow title="Method">
                     <KeywordTextInput
                         onChange={value => this.props.onDataChange(
@@ -56,6 +60,7 @@ class GeneGeneAnnotation extends React.Component {
                         required={true}
                     />
                 </LabelInputRow>
+                </ValidatedField>
             </div>
         );
     }
@@ -64,6 +69,7 @@ class GeneGeneAnnotation extends React.Component {
 GeneGeneAnnotation.propTypes = {
     geneGeneAnnotation: React.PropTypes.object,
     geneOrder: React.PropTypes.array,
+    isValid: React.PropTypes.bool,
     onDataChange: React.PropTypes.func,
     updateGene1: React.PropTypes.func,
     updateGene2: React.PropTypes.func,

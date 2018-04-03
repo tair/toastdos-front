@@ -8,11 +8,15 @@ import {
     updateGene1,
     updateGene2,
 } from 'domain/geneGeneAnnotation/actions';
-import { geneGeneAnnotationSelector } from 'domain/geneGeneAnnotation/selectors';
+import {
+    geneGeneAnnotationSelector,
+    geneGeneAnnotationValidSelector
+} from 'domain/geneGeneAnnotation/selectors';
 
 const ConnectedGeneGeneAnnotation = connect(
     (state, ownProps) => ({
         geneGeneAnnotation: geneGeneAnnotationSelector(state, ownProps.localId),
+        isValid: geneGeneAnnotationValidSelector(state, ownProps.localId),
     }),
     (dispatch, ownProps) => ({
         onDataChange: (data) => dispatch(update(ownProps.localId, data)),
