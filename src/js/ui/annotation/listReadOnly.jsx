@@ -16,7 +16,8 @@ class AnnotationListReadOnly extends React.Component {
             localId =>
                 <AnnotationEntryReadOnly
                     key={localId}
-                    localId={localId} />
+                    localId={localId}
+                    compact={this.props.compact} />
         );
     }
 
@@ -43,10 +44,12 @@ class AnnotationListReadOnly extends React.Component {
 
 AnnotationListReadOnly.propTypes = {
     annotationOrder: React.PropTypes.arrayOf(React.PropTypes.string),
+    compact: React.PropTypes.bool,
 };
 
 AnnotationListReadOnly.defaultProps = {
     annotationOrder: [],
+    compact: true,
 };
 
 export default AnnotationListReadOnly;
