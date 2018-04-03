@@ -9,6 +9,7 @@ const defaultState = {
     submitting: false,
     submitted: false,
     previewing: false,
+    draftNumber: 0,
     submissionError: "",
 };
 
@@ -69,6 +70,11 @@ function submissionReducer(state = defaultState, action) {
         return {
             ...state,
             previewing: false
+        };
+    case actions.DRAFT_SAVED:
+        return {
+            ...state,
+            draftNumber: state.draftNumber + 1
         };
     default:
         return state;

@@ -20,17 +20,27 @@ class SubmissionView extends React.Component {
         this.props.initialize();
 
         this.state = {
-            timer: null
+            draftSaveTimer: null,
+            showDraftSaved: false,
         };
     }
 
     componentDidMount() {
-        let timer = setInterval(this.props.saveDraft, DRAFT_SAVE_INTERVAL);
-        this.setState({ timer });
+        let draftSaveTimer = setInterval(this.props.saveDraft, DRAFT_SAVE_INTERVAL);
+        this.setState({ draftSaveTimer });
     }
 
     componentWillUnmount() {
-        clearInterval(this.state.timer);
+        clearInterval(this.state.draftSaveTimer);
+    }
+
+    componentWillReceiveProps(nextprops) {
+        if (nextprops.draftNumber != this.props.draftNumber) {
+            this.setState({showDraftSaved: true});
+            setTimeout(() => {
+                this.setState({showDraftSaved: false});
+            }, 1000);
+        }
     }
 
     render() {
@@ -105,6 +115,11 @@ class SubmissionView extends React.Component {
                         </ListGroup>
                     }
                 </Form>
+                <div className="saved-status-container">
+                    <div className={(this.state.showDraftSaved? 'show': '') + ' saved-status'}>
+                        <span className="fa fa-check" /> Saved
+                    </div>
+                </div>
             </SubmissionStructure>
         );
     }
@@ -131,6 +146,7 @@ SubmissionView.propTypes = {
     removeGene: React.PropTypes.func,
     hasValidGene: React.PropTypes.bool,
     saveDraft: React.PropTypes.func,
+    draftNumber: React.PropTypes.number,
 };
 
 SubmissionView.defaultProps = {
@@ -148,6 +164,7 @@ SubmissionView.defaultProps = {
     removeGene: () => {},
     saveDraft: () => {},
     hasValidGene: false,
+    draftNumber: 0,
 };
 
 export default SubmissionView;

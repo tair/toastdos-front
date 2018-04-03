@@ -39,11 +39,15 @@ export function saveDraft() {
         const token = AuthModule.selectors.rawJwtSelector(currState);
         createDraft(newDraft, token, (err) => {
             if (!err) {
-                // TODO: Show a visual indicator saying saved.
-            } else {
-                // TODO: Show a visual indicator with a save error.
+                dispatch(draftSaved());
             }
         });
+    };
+}
+
+function draftSaved() {
+    return {
+        type: actions.DRAFT_SAVED
     };
 }
 

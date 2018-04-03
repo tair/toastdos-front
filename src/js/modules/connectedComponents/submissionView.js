@@ -13,6 +13,7 @@ import {
     previewing,
     canSubmit,
     errorMessage,
+    draftNumber,
 } from 'modules/submission/selectors';
 import {
     initialize,
@@ -35,6 +36,7 @@ const ConnectedSubmissionView = connect(
         submitting,
         submitted,
         previewing,
+        draftNumber,
         canSubmit,
         errorMessage,
         hasValidGene,
