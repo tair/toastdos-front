@@ -6,6 +6,7 @@ import { Card, CardHeader, CardBody,
 import CustomTextInput from 'lib/components/customTextInput';
 import { validationStates } from 'lib/validation';
 import ValidationInput from 'ui/validationInput';
+import ValidatedField from 'modules/connectedComponents/validatedField';
 import LabelInputRow from 'ui/labelInputRow';
 
 class SingleGene extends React.Component {
@@ -33,6 +34,9 @@ class SingleGene extends React.Component {
         );
 
         return (
+        <ValidatedField isValid={this.props.validationState == validationStates.VALID}
+            invalidMessage={(`${this.props.validationState}: A valid locus is required.`)}
+        >
             <Card className="single-gene mt-3">
                 <CardHeader>
                     <Row>
@@ -65,6 +69,7 @@ class SingleGene extends React.Component {
                     </LabelInputRow>
                 </CardBody>
             </Card>
+        </ValidatedField>
         );
     }
 }

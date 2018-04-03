@@ -73,6 +73,7 @@ class SubmissionView extends React.Component {
                 preview={this.props.preview}
                 edit={this.props.edit}
                 resetSubmission={this.props.resetSubmission}
+                reviewValidatedFields={() => this.props.setReviewValidated(true)}
             />
         );
 
@@ -146,6 +147,7 @@ SubmissionView.propTypes = {
     removeGene: React.PropTypes.func,
     hasValidGene: React.PropTypes.bool,
     saveDraft: React.PropTypes.func,
+    setReviewValidated: React.PropTypes.func,
     draftNumber: React.PropTypes.number,
 };
 
@@ -163,6 +165,7 @@ SubmissionView.defaultProps = {
     addGene: () => {},
     removeGene: () => {},
     saveDraft: () => {},
+    setReviewValidated: () => {},
     hasValidGene: false,
     draftNumber: 0,
 };

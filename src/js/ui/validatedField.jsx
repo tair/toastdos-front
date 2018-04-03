@@ -12,23 +12,17 @@ class ValidatedField extends React.Component {
         this.validationId = 'validated_field_' + generateId();
 
         this.state = {
-            valid: this.props.isValid,
             loaded: false,
         };
-        this.toggle = this.toggle.bind(this);
         this.shouldDisplay = this.shouldDisplay.bind(this);
     }
 
-    toggle() {
-        this.setState(s => {
-            return {
-                valid: !s.valid,
-            };
-        });
-    }
-
     shouldDisplay() {
-        return this.state.loaded && !this.state.valid;
+        return (
+            this.state.loaded &&
+            this.props.reviewValidated &&
+            !this.props.isValid
+        );
     }
 
     componentDidMount() {
@@ -61,11 +55,13 @@ class ValidatedField extends React.Component {
 
 ValidatedField.propTypes = {
     isValid: React.PropTypes.bool,
+    reviewValidated: React.PropTypes.bool,
     invalidMessage: React.PropTypes.string,
 };
 
 ValidatedField.defaultProps = {
     isValid: false,
+    reviewValidated: false,
     invalidMessage: 'This field is not valid.',
 };
 

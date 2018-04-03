@@ -20,6 +20,13 @@ import {
     geneOrder,
 } from './selectors';
 
+export function setReviewValidated(value) {
+    return {
+        type: actions.SET_REVIEW_VALIDATED,
+        reviewValidated: value,
+    };
+}
+
 let lastDraft = null;
 
 export function saveDraft() {

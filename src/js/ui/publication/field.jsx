@@ -6,7 +6,7 @@ import { Alert, Row, Col,
 import { validationStates } from 'lib/validation';
 import ValidationInput from 'ui/validationInput';
 import LabelInputRow from 'ui/labelInputRow';
-import ValidatedField from 'ui/validatedField';
+import ValidatedField from 'modules/connectedComponents/validatedField';
 
 
 class PublicationField extends React.Component {
@@ -17,8 +17,8 @@ class PublicationField extends React.Component {
 
     render() {
         return (
-        <ValidatedField isValid={!!this.props.validationError}
-            invalidMessage="A valid publication must be provided."
+        <ValidatedField isValid={this.props.validationState == validationStates.VALID}
+            invalidMessage={(`${this.props.validationState}: A valid publication ID is required`)}
         >
             <Row>
                 <Col>
@@ -66,6 +66,7 @@ PublicationField.propTypes = {
     idValue: React.PropTypes.string,
     validationState: React.PropTypes.string,
     validationError: React.PropTypes.string,
+    isValid: React.PropTypes.bool,
     author: React.PropTypes.string,
     url: React.PropTypes.string,
     title: React.PropTypes.string,
@@ -75,6 +76,7 @@ PublicationField.propTypes = {
 PublicationField.defaultProps = {
     idValue: "",
     validationState: validationStates.NOT_VALIDATED,
+    isValid: false,
     validationError: "",
     author: '',
     url: '',

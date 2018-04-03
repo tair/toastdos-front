@@ -24,6 +24,16 @@ export const allEvidenceWithValidSelector = createSelector(
         ))
 );
 
+export const keywordValidSelector = createSelector(
+    geneTermAnnotationSelector,
+    gta => (gta && gta.keywordName && gta.keywordName.trim() !== '')
+);
+
+export const methodValidSelector = createSelector(
+    geneTermAnnotationSelector,
+    gta => (gta.methodName && gta.methodName.trim() !== '')
+);
+
 export const geneTermAnnotationValidSelector = createSelector(
     geneTermAnnotationSelector,
     allEvidenceWithValidSelector,
