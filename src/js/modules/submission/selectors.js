@@ -86,7 +86,7 @@ export const canSubmit = createSelector(
     (pValid, gValid, aValid, isSubmitting) => (pValid && gValid && aValid && !isSubmitting)
 );
 
-export function submissionBodySelector(state) {
+export function submissionBodySelector(state, includeKeywordName) {
 
     const geneList = genesSelector(state);
     const annotationList = annotationListSelector(state);
@@ -98,7 +98,7 @@ export function submissionBodySelector(state) {
     };
 
     submissionData.genes = geneList
-        .filter(g => g.validationState === validationStates.VALID) // filter out non-finalized
+        .filter(g => g && g.validationState === validationStates.VALID) // filter out non-finalized
         .map(g => ({  // map the properties
             locusName: g.finalizedLocusName,
             geneSymbol: g.finalizedGeneSymbol,
@@ -130,6 +130,13 @@ export function submissionBodySelector(state) {
                 keyword: (gt.keywordId !== null ? {id: gt.keywordId} : {name: gt.keywordName}),
                 isEvidenceWithOr: true,
             };
+
+            if (includeKeywordName) {
+                annotation.data.method.evidenceCode = gt.methodEvidenceCode;
+                annotation.data.keyword.name =  gt.keywordName;
+                annotation.data.method.name = gt.methodName;
+            }
+
             evidenceWith = evidenceWithValidListSelector(state, gt.evidenceWithOrder).map(ew => ew.locusName);
             if (evidenceWith.length > 0) {
                 annotation.data.evidenceWith = evidenceWith;
@@ -149,6 +156,10 @@ export function submissionBodySelector(state) {
                 locusName2: geneFinalizedLocusNameSelector(state, gg.gene2LocalId),
                 method: (gg.methodId !== null ? {id: gg.methodId} : {name: gg.methodName})
             };
+
+            if (includeKeywordName) {
+                annotation.data.method.name = gg.methodName;
+            }
             break;
         }
 

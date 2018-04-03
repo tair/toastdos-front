@@ -11,7 +11,7 @@ import SubmissionInfoPanel from 'ui/submission/infoPanel';
 import SubmissionFooter from 'ui/submission/footer';
 import SubmissionStructure from 'ui/submission/structure';
 
-const DRAFT_SAVE_INTERVAL = 25000;
+const DRAFT_SAVE_INTERVAL = 5000;
 
 class SubmissionView extends React.Component {
     constructor(props) {
