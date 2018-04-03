@@ -13,13 +13,26 @@ class ValidatedField extends React.Component {
 
         this.state = {
             loaded: false,
+            display: false,
         };
+
         this.shouldDisplay = this.shouldDisplay.bind(this);
+        this.show = this.show.bind(this);
+        this.hide = this.hide.bind(this);
+    }
+
+    show() {
+        this.setState({display: true});
+    }
+
+    hide() {
+        this.setState({display: false});
     }
 
     shouldDisplay() {
         return (
             this.state.loaded &&
+            this.state.display &&
             this.props.reviewValidated &&
             !this.props.isValid
         );
@@ -27,6 +40,12 @@ class ValidatedField extends React.Component {
 
     componentDidMount() {
         this.setState({loaded: true});
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.reviewValidated != nextProps.reviewValidated) {
+            this.setState({display: true});
+        }
     }
 
     componentDidUpdate() {
@@ -42,7 +61,8 @@ class ValidatedField extends React.Component {
                     {this.props.children}
                 </span>
                 <Popover placement="top" isOpen={this.shouldDisplay()}
-                    target={this.validationId}>
+                    target={this.validationId}
+                    onClick={this.hide}>
                     <PopoverBody className="text-danger">
                         <strong>{this.props.invalidMessage}</strong>
                     </PopoverBody>

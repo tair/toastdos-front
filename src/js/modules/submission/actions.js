@@ -20,10 +20,9 @@ import {
     geneOrder,
 } from './selectors';
 
-export function setReviewValidated(value) {
+export function reviewValidated() {
     return {
         type: actions.SET_REVIEW_VALIDATED,
-        reviewValidated: value,
     };
 }
 

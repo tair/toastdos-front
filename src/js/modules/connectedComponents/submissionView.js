@@ -26,7 +26,7 @@ import {
     addGene,
     removeGene,
     saveDraft,
-    setReviewValidated,
+    reviewValidated,
 } from 'modules/submission/actions';
 
 const ConnectedSubmissionView = connect(
@@ -53,7 +53,7 @@ const ConnectedSubmissionView = connect(
         addGene: () => dispatch(addGene()),
         saveDraft: () => dispatch(saveDraft()),
         removeGene: (localId) => dispatch(removeGene(localId)),
-        setReviewValidated: (value) => dispatch(setReviewValidated(value)),
+        reviewValidated: () => dispatch(reviewValidated()),
     })
 )(SubmissionView);
 
