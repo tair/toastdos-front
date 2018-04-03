@@ -23,6 +23,8 @@ deploy:
     region: $AWS_REGION
     local-dir: $DDIR
     upload-dir: "front/$TRAVIS_BRANCH"
+    on:
+      all_branches: true
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
@@ -32,4 +34,6 @@ deploy:
     bucket: $AWS_BUCKET
     key: "front/$TRAVIS_BRANCH/$TRAVIS_COMMIT.zip"
     wait-until-deployed: true
+    on:
+      all_branches: true
 
