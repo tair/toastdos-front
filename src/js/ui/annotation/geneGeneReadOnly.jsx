@@ -12,6 +12,31 @@ class GeneGeneAnnotationReadOnly extends React.Component {
     }
 
     render() {
+        return this.props.compact? this.renderCompact() : this.renderLarge();
+    }
+
+    renderCompact() {
+        let locus1 = (
+            <GeneLocusName
+                localId={this.props.geneGeneAnnotation.gene1LocalId}
+            />
+        );
+
+        let locus2 = (
+            <GeneLocusName
+                localId={this.props.geneGeneAnnotation.gene2LocalId}
+            />
+        );
+        return (
+            <div>
+                {locus1} <em>interacts with</em> {locus2}, {this.props.geneGeneAnnotation.methodName}&nbsp;
+                <ExternalIdBadge externalId={this.props.geneGeneAnnotation.methodExternalId} />.&nbsp;
+                <AnnotationStatusReadOnly annotationStatus={this.props.annotationStatus} />
+            </div>
+        );
+    }
+
+    renderLarge() {
         let locus1 = (
             <GeneLocusName
                 localId={this.props.geneGeneAnnotation.gene1LocalId}
@@ -60,6 +85,7 @@ class GeneGeneAnnotationReadOnly extends React.Component {
 GeneGeneAnnotationReadOnly.propTypes = {
     geneGeneAnnotation: React.PropTypes.object,
     annotationTypeName: React.PropTypes.string,
+    compact: React.PropTypes.bool,
 };
 
 export default GeneGeneAnnotationReadOnly;

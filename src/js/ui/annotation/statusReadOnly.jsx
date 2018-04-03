@@ -12,19 +12,19 @@ class AnnotationStatusReadOnly extends React.Component {
         switch (status) {
         case annotationStatusFormats.ACCEPTED:
             return (
-                    <span>
+                    <span className="text-nowrap">
                         <span className="fa fa-fw fa-check" /> Accepted
                     </span>
             );
         case annotationStatusFormats.REJECTED:
             return (
-                    <span>
+                    <span className="text-nowrap">
                         <span className="fa fa-fw fa-trash" /> Rejected
                     </span>
             );
         case annotationStatusFormats.PENDING:
             return (
-                    <span>
+                    <span className="text-nowrap">
                         <span className="fa fa-fw fa-pencil-square-o" /> Pending
                     </span>
             );
