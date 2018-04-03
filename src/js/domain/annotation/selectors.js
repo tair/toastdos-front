@@ -8,14 +8,8 @@ import {
     annotationStatusFormats
 } from './constants';
 import { commentAnnotationValidSelector } from 'domain/commentAnnotation/selectors';
-import {
-    geneTermAnnotationValidSelector,
-    geneTermAnnotationValidIdSelector,
-} from 'domain/geneTermAnnotation/selectors';
-import {
-    geneGeneAnnotationValidSelector,
-    geneGeneAnnotationValidIdSelector,
-} from 'domain/geneGeneAnnotation/selectors';
+import { geneTermAnnotationValidSelector } from 'domain/geneTermAnnotation/selectors';
+import { geneGeneAnnotationValidSelector } from 'domain/geneGeneAnnotation/selectors';
 
 export const annotationSelector = (state, localId) => state.domain[name].byLocalId[localId];
 
@@ -55,25 +49,18 @@ export const reviewedListSelector = (state, annotations) =>
             annotation.annotationStatus != annotationStatusFormats.PENDING)
     );
 
-export const isCuration = (state, localId, curating) => curating;
-
 export const annotationTypeValidSelector = createSelector(
     state => state,
     annotationSelector,
     annotationTypeSelector,
-    isCuration,
-    (state, a, type, c) => {
+    (state, a, type) => {
         switch(annotationTypeData[type].format) {
         case annotationFormats.COMMENT:
             return commentAnnotationValidSelector(state, a.annotationTypeLocalId);
         case annotationFormats.GENE_TERM:
-            return c ?
-                geneTermAnnotationValidIdSelector(state, a.annotationTypeLocalId) :
-                geneTermAnnotationValidSelector(state, a.annotationTypeLocalId);
+            return geneTermAnnotationValidSelector(state, a.annotationTypeLocalId);
         case annotationFormats.GENE_GENE:
-            return c ?
-                geneGeneAnnotationValidIdSelector(state, a.annotationTypeLocalId) :
-                geneGeneAnnotationValidSelector(state, a.annotationTypeLocalId);
+            return geneGeneAnnotationValidSelector(state, a.annotationTypeLocalId);
         default:
             return false;
         }

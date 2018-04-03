@@ -16,7 +16,6 @@ import {
     hasPendingAnnotations,
     submitter,
     submittedAt,
-    reviewValidated,
 } from 'modules/curationDetail/selectors';
 import {
     attemptSubmit,
@@ -28,7 +27,6 @@ import {
     addGene,
     removeGene,
     requestSubmission,
-    reviewValidatedFields,
 } from 'modules/curationDetail/actions';
 
 const ConnectedCurationView = connect(
@@ -45,7 +43,6 @@ const ConnectedCurationView = connect(
         hasPendingAnnotations,
         submitter,
         submittedAt,
-        reviewValidated,
     }),
     dispatch => ({
         preview: () => dispatch(preview()),
@@ -57,7 +54,6 @@ const ConnectedCurationView = connect(
         addGene: () => dispatch(addGene()),
         removeGene: (localId) => dispatch(removeGene(localId)),
         requestSubmission: (submissionId) => dispatch(requestSubmission(submissionId)),
-        reviewValidatedFields: () => dispatch(reviewValidatedFields()),
     })
 )(CurationView);
 

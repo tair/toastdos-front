@@ -14,25 +14,13 @@ import {
     geneTermAnnotationSelector,
     needsEvidenceWithSelector,
     evidenceWithRelationSelector,
-    allEvidenceWithValidSelector,
-    keywordValidSelector,
-    methodValidSelector,
-    keywordValidIdSelector,
-    methodValidIdSelector,
 } from 'domain/geneTermAnnotation/selectors';
 
 const ConnectedGeneTermAnnotation = connect(
     (state, ownProps) => ({
         geneTermAnnotation: geneTermAnnotationSelector(state, ownProps.localId),
         needsEvidenceWith: needsEvidenceWithSelector(state, ownProps.localId),
-        evidenceWithRelation: evidenceWithRelationSelector(state, ownProps.localId),
-        keywordValid: ownProps.curating ?
-            keywordValidIdSelector(state, ownProps.localId) :
-            keywordValidSelector(state, ownProps.localId) ,
-        methodValid: ownProps.curating ?
-            methodValidIdSelector(state, ownProps.localId) :
-            methodValidSelector(state, ownProps.localId),
-        ewValid: allEvidenceWithValidSelector(state, ownProps.localId),
+        evidenceWithRelation: evidenceWithRelationSelector(state, ownProps.localId)
     }),
     (dispatch, ownProps) => ({
         onDataChange: (data) => dispatch(update(ownProps.localId, data)),
@@ -51,7 +39,6 @@ const ConnectedGeneTermAnnotation = connect(
 
 ConnectedGeneTermAnnotation.propTypes = {
     localId: React.PropTypes.string,
-    curating: React.PropTypes.bool,
 };
 
 export default ConnectedGeneTermAnnotation;

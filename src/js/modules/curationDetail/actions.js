@@ -24,13 +24,6 @@ import {
     geneOrder,
 } from './selectors';
 
-
-export function reviewValidatedFields() {
-    return {
-        type: actions.SET_REVIEW_VALIDATED,
-    };
-}
-
 export function addGene(geneLocalId, geneData) {
     return dispatch => {
         // Create the new gene
