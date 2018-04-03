@@ -14,8 +14,7 @@ export const geneValidSelector =
         localId != '' &&
         geneSelector(s, localId) != undefined &&
         geneSelector(s, localId).validationState == validationStates.VALID
-    )
-    ;
+    );
 
 export const geneListSelector = (state, genes) =>
     genes.map(localId => geneSelector(state, localId));
