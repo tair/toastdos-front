@@ -57,7 +57,6 @@ module.exports = {
                 NODE_ENV: JSON.stringify('production'),
             },
         }),
-        /*
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false,
@@ -66,7 +65,6 @@ module.exports = {
                 comments: false,
             },
         }),
-        */
         new HtmlWebpackPlugin({
             title: ProjectPackage.name,
             template: './src/index.ejs',
