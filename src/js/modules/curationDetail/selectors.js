@@ -55,7 +55,7 @@ export const annotationListValidSelector = createSelector(
     // Return true if all annotations are valid
     (state, annotations) =>
         annotations.length > 0 &&
-        !annotations.find(localId => !annotationValidSelector(state, localId))
+        !annotations.find(localId => !annotationValidSelector(state, localId, true))
 );
 
 export const hasPendingAnnotations = (state) =>

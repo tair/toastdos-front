@@ -57,6 +57,7 @@ class AnnotationEntry extends React.Component {
                     localId={this.props.annotation.annotationTypeLocalId}
                     geneOrder={this.props.geneOrder}
                     reviewValidated={this.props.reviewValidated}
+                    curating={this.props.curating}
                 />
             );
         case annotationFormats.GENE_GENE:
@@ -65,6 +66,7 @@ class AnnotationEntry extends React.Component {
                     localId={this.props.annotation.annotationTypeLocalId}
                     geneOrder={this.props.geneOrder}
                     reviewValidated={this.props.reviewValidated}
+                    curating={this.props.curating}
                 />
             );
         default:
