@@ -1,21 +1,21 @@
 @import "globals";
-
 /*
-input[type=text] {
+
+textarea {
     -webkit-appearance: none;
     border: none;
     border-radius: 0;
-    background: none;
+    background-color: #FFFFFF;
     outline: none;
 }
 
-.custom-text-input {
+.custom-text-area {
     display: inline-block;
     background-color: $fgColorActive2;
     border-radius: 3px;
+    padding: 3px;
     position: relative;
     transition: background-color $focusTransitionTime ease-in-out;
-    box-sizing: border-box;
     &::after {
         content: '';
         position: absolute;
@@ -30,15 +30,17 @@ input[type=text] {
         transition: opacity $focusTransitionTimeSlow ease-in-out;
     }
 
-    & input[type=text] {
+    & textarea {
         position: relative;
         z-index: 200;
         display: inline-block;
         height: 100%;
+        width: 100%;
         background: none;
         padding: 5px;
         font-size: 1.1em;
         color: $empTextColor;
+        resize: none;
         box-sizing: border-box;
     }
 
@@ -50,44 +52,8 @@ input[type=text] {
     }
 
 }
-*/
 
-.smart-text-input-suggestions {
-    position: absolute;
-    background-color: #FFFFFF;
-    width: 100%;
-    max-height: 150px;
-    overflow-y: scroll;
-    border: 1px solid #80bdff;
-    margin-top: -5px;
-    border-radius: 0px 0px 5px 5px;
-    & ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        & > li {
-            padding: 7px 5px;
-            word-break: break-all;
-            overflow: hidden;
-            cursor: pointer;
-            text-overflow: ellipsis;
-            &.selected {
-                background-color: $lightGreen;
-            }
 
-            & .badge {
-                margin-right: 0.25em;
-                max-width: 100%;
-            }
-        }
-    }
+// .custom-text-area {
 
-    & > span {
-        text-align: center;
-        width: 100%;
-        margin: 0 auto;
-        display: inline-block;
-        padding: 12px 0px;
-    }
-
-}
+// }*/

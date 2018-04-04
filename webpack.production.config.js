@@ -5,8 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 if(!process.env.RESOURCEROOT) {
-    console.error('No environment variable RESOURCEROOT found.');
-    process.exit(1);
+	console.error('No environment variable RESOURCEROOT found.');
+	process.exit(1);
 }
 
 
@@ -28,7 +28,7 @@ module.exports = {
                     plugins: ['transform-react-jsx', 'transform-object-rest-spread'],
                 },
             },
-            {
+            { 
                 test: /\.(json)$/,
                 loader: 'json-loader'
             },
@@ -41,7 +41,7 @@ module.exports = {
                 test: /\.(css|scss)$/,
                 loader: ExtractTextPlugin.extract('style', 'css!sass'),
             },
-            {
+            { 
                 test: /\.(png|jpg|eot|svg|ttf|woff(2)?)(\?v=\d+\.\d+\.\d+)?/,
                 loader: 'url-loader?limit=8192'
             },
@@ -57,7 +57,6 @@ module.exports = {
                 NODE_ENV: JSON.stringify('production'),
             },
         }),
-        /*
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false,
@@ -66,7 +65,6 @@ module.exports = {
                 comments: false,
             },
         }),
-        */
         new HtmlWebpackPlugin({
             title: ProjectPackage.name,
             template: './src/index.ejs',

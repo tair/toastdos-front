@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import 'css/customTextArea.scss';
 
 
 class CustomTextArea extends React.Component {
