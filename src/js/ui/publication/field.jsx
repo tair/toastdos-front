@@ -46,12 +46,10 @@ class PublicationField extends React.Component {
                                     <a target="_blank" href={this.props.url}>{this.props.url}</a>
                                 </div>
                             </LabelInputRow>
-                            ):(
-                            [<LabelInputRow key="Title" title="Title">
+                            ):([<LabelInputRow key="Title" title="Title">
                                 <Input value={this.props.title} disabled></Input>
                             </LabelInputRow>
-                            ,
-                                <LabelInputRow key="Author" title="Author">
+                            ,<LabelInputRow key="Author" title="Author">
                                 <Input value={this.props.author} disabled></Input>
                             </LabelInputRow>
                             ])}
