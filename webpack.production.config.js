@@ -24,7 +24,7 @@ module.exports = {
                 exclude: /(node_modules|bower_components)/,
                 loader: 'babel-loader',
                 query: {
-                    presets: ['env'],
+                    presets: ['es2015'],
                     plugins: ['transform-react-jsx', 'transform-object-rest-spread'],
                 },
             },
