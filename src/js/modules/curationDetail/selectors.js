@@ -38,6 +38,7 @@ export const previewing = state => state[name].previewing;
 export const errorMessage = state => `${state[name].submissionError}`;
 export const submitter = state => state[name].submitter;
 export const submittedAt = state => state[name].submittedAt;
+export const reviewValidated = state =>state[name].reviewValidated;
 
 export const submissionSelector = state => state[name];
 
@@ -54,7 +55,7 @@ export const annotationListValidSelector = createSelector(
     // Return true if all annotations are valid
     (state, annotations) =>
         annotations.length > 0 &&
-        !annotations.find(localId => !annotationValidSelector(state, localId))
+        !annotations.find(localId => !annotationValidSelector(state, localId, true))
 );
 
 export const hasPendingAnnotations = (state) =>

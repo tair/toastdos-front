@@ -73,6 +73,7 @@ class SubmissionView extends React.Component {
                 preview={this.props.preview}
                 edit={this.props.edit}
                 resetSubmission={this.props.resetSubmission}
+                reviewValidatedFields={this.props.reviewValidatedFields}
             />
         );
 
@@ -92,7 +93,8 @@ class SubmissionView extends React.Component {
                     :
                         <ListGroup>
                             <ListGroupItem className="border-left-0 border-right-0 border-top-0">
-                                <PublicationField localId={this.props.publicationLocalId}/>
+                                <PublicationField localId={this.props.publicationLocalId}
+                                    reviewValidated={this.props.reviewValidated}/>
                             </ListGroupItem>
                             <ListGroupItem className="border-left-0 border-right-0">
                                 <GeneList
@@ -101,6 +103,7 @@ class SubmissionView extends React.Component {
                                     addAnnotation={this.props.addAnnotation}
                                     addGene={this.props.addGene}
                                     removeGene={this.props.removeGene}
+                                    reviewValidated={this.props.reviewValidated}
                                 />
                             </ListGroupItem>
                             <ListGroupItem className="border-left-0 border-right-0 border-bottom-0">
@@ -110,6 +113,7 @@ class SubmissionView extends React.Component {
                                     addAnnotation={this.props.addAnnotation}
                                     removeAnnotation={this.props.removeAnnotation}
                                     hasValidGene={this.props.hasValidGene}
+                                    reviewValidated={this.props.reviewValidated}
                                 />
                             </ListGroupItem>
                         </ListGroup>
@@ -146,6 +150,8 @@ SubmissionView.propTypes = {
     removeGene: React.PropTypes.func,
     hasValidGene: React.PropTypes.bool,
     saveDraft: React.PropTypes.func,
+    reviewValidated: React.PropTypes.number,
+    reviewValidatedFields: React.PropTypes.func,
     draftNumber: React.PropTypes.number,
 };
 
@@ -163,6 +169,8 @@ SubmissionView.defaultProps = {
     addGene: () => {},
     removeGene: () => {},
     saveDraft: () => {},
+    reviewValidated: 0,
+    reviewValidatedFields: () => {},
     hasValidGene: false,
     draftNumber: 0,
 };

@@ -6,6 +6,7 @@ import { Alert, Row, Col,
 import { validationStates } from 'lib/validation';
 import ValidationInput from 'ui/validationInput';
 import LabelInputRow from 'ui/labelInputRow';
+import ValidatedField from 'ui/validatedField';
 
 
 class PublicationField extends React.Component {
@@ -16,6 +17,10 @@ class PublicationField extends React.Component {
 
     render() {
         return (
+        <ValidatedField isValid={this.props.validationState == validationStates.VALID}
+            invalidMessage={(`${this.props.validationState}: A valid publication ID is required`)}
+            reviewValidated={this.props.reviewValidated}
+        >
             <Row>
                 <Col>
                     <h4>1. Publication</h4>
@@ -41,12 +46,10 @@ class PublicationField extends React.Component {
                                     <a target="_blank" href={this.props.url}>{this.props.url}</a>
                                 </div>
                             </LabelInputRow>
-                            ):(
-                            [<LabelInputRow key="Title" title="Title">
+                            ):([<LabelInputRow key="Title" title="Title">
                                 <Input value={this.props.title} disabled></Input>
                             </LabelInputRow>
-                            ,
-                                <LabelInputRow key="Author" title="Author">
+                            ,<LabelInputRow key="Author" title="Author">
                                 <Input value={this.props.author} disabled></Input>
                             </LabelInputRow>
                             ])}
@@ -54,7 +57,7 @@ class PublicationField extends React.Component {
                     </Card>
                 </Col>
             </Row>
-        );
+        </ValidatedField>);
     }
 }
 
@@ -62,20 +65,24 @@ PublicationField.propTypes = {
     idValue: React.PropTypes.string,
     validationState: React.PropTypes.string,
     validationError: React.PropTypes.string,
+    isValid: React.PropTypes.bool,
     author: React.PropTypes.string,
     url: React.PropTypes.string,
     title: React.PropTypes.string,
     attemptValidatePublication: React.PropTypes.func.isRequired,
+    reviewValidated: React.PropTypes.number,
 };
 
 PublicationField.defaultProps = {
     idValue: "",
     validationState: validationStates.NOT_VALIDATED,
+    isValid: false,
     validationError: "",
     author: '',
     url: '',
     title: '',
-    attemptValidatePublication: () => {}
+    attemptValidatePublication: () => {},
+    reviewValidated: 0,
 };
 
 export default PublicationField;
