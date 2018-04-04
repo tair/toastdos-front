@@ -48,6 +48,7 @@ class AnnotationEntry extends React.Component {
                 <CommentAnnotation
                     localId={this.props.annotation.annotationTypeLocalId}
                     geneOrder={this.props.geneOrder}
+                    reviewValidated={this.props.reviewValidated}
                 />
             );
         case annotationFormats.GENE_TERM:
@@ -55,6 +56,8 @@ class AnnotationEntry extends React.Component {
                 <GeneTermAnnotation
                     localId={this.props.annotation.annotationTypeLocalId}
                     geneOrder={this.props.geneOrder}
+                    reviewValidated={this.props.reviewValidated}
+                    curating={this.props.curating}
                 />
             );
         case annotationFormats.GENE_GENE:
@@ -62,6 +65,8 @@ class AnnotationEntry extends React.Component {
                 <GeneGeneAnnotation
                     localId={this.props.annotation.annotationTypeLocalId}
                     geneOrder={this.props.geneOrder}
+                    reviewValidated={this.props.reviewValidated}
+                    curating={this.props.curating}
                 />
             );
         default:
@@ -133,7 +138,8 @@ AnnotationEntry.propTypes = {
     onTypeChange: React.PropTypes.func,
     onDeleteClick: React.PropTypes.func,
     onStatusChange: React.PropTypes.func,
-    curating: React.PropTypes.bool
+    curating: React.PropTypes.bool,
+    reviewValidated: React.PropTypes.number,
 };
 
 AnnotationEntry.defaultProps = {
@@ -144,6 +150,7 @@ AnnotationEntry.defaultProps = {
     onStatusChange: () => {},
     onDeleteClick: () => {},
     curating: false,
+    reviewValidated: 0,
 };
 
 

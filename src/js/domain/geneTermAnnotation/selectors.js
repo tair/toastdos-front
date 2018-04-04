@@ -24,13 +24,47 @@ export const allEvidenceWithValidSelector = createSelector(
         ))
 );
 
+export const keywordValidSelector = createSelector(
+    geneTermAnnotationSelector,
+    gta => !!(gta && gta.keywordName && gta.keywordName.trim() !== '')
+);
+
+export const keywordValidIdSelector = createSelector(
+    geneTermAnnotationSelector,
+    keywordValidSelector,
+    (gta, kwv) => !!(gta && kwv && gta.keywordExternalId &&
+        gta.keywordExternalId.trim() !== '')
+);
+
+export const methodValidSelector = createSelector(
+    geneTermAnnotationSelector,
+    gta => !!(gta.methodName && gta.methodName.trim() !== '')
+);
+
+export const methodValidIdSelector = createSelector(
+    geneTermAnnotationSelector,
+    methodValidSelector,
+    (gta, mv) => !!(gta && mv && gta.methodExternalId &&
+        gta.methodExternalId.trim() !== '')
+);
+
 export const geneTermAnnotationValidSelector = createSelector(
     geneTermAnnotationSelector,
+    keywordValidSelector,
+    methodValidSelector,
     allEvidenceWithValidSelector,
-    (gta, allEWValid) => (
-        gta && gta.keywordName && gta.keywordName.trim() !== '' &&
-        gta.methodName && gta.methodName.trim() !== '' &&
-        allEWValid
+    (gta, kwv, mv, allEWValid) => (
+        gta && kwv && mv && allEWValid
+    )
+);
+
+export const geneTermAnnotationValidIdSelector = createSelector(
+    geneTermAnnotationSelector,
+    keywordValidIdSelector,
+    methodValidIdSelector,
+    allEvidenceWithValidSelector,
+    (gta, kwv, mv, allEWValid) => (
+        gta && kwv && mv && allEWValid
     )
 );
 

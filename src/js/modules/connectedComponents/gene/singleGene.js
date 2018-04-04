@@ -64,6 +64,7 @@ class SingleGeneContainer extends React.Component {
             title: this.props.title,
             validationError: this.props.validationError,
             validationState: this.props.validationState,
+            reviewValidated: this.props.reviewValidated,
         });
     }
 }
@@ -78,6 +79,7 @@ SingleGeneContainer.propTypes = {
     updateGeneData: React.PropTypes.func,
     validationError: React.PropTypes.string,
     validationState: React.PropTypes.string,
+    reviewValidated: React.PropTypes.number,
 };
 
 SingleGeneContainer.defaultProps = {
@@ -90,6 +92,7 @@ SingleGeneContainer.defaultProps = {
     updateGeneData: () => {},
     validationError: "",
     validationState: validationStates.NOT_VALIDATED,
+    reviewValidated: 0,
 };
 
 export default SingleGeneContainer;

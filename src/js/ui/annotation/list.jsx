@@ -20,6 +20,7 @@ class AnnotationList extends React.Component {
                 localId={annotationId}
                 curating={this.props.curating}
                 geneOrder={this.props.geneOrder}
+                reviewValidated={this.props.reviewValidated}
             />
         );
     }
@@ -77,6 +78,7 @@ AnnotationList.propTypes = {
     removeAnnotation: React.PropTypes.func,
     hasValidGene: React.PropTypes.bool,
     curating: React.PropTypes.bool,
+    reviewValidated: React.PropTypes.number,
 };
 
 AnnotationList.defaultProps = {
@@ -86,6 +88,7 @@ AnnotationList.defaultProps = {
     removeAnnotation: () => {},
     hasValidGene: false,
     curating: false,
+    reviewValidated: 0,
 };
 
 export default AnnotationList;

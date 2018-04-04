@@ -20,6 +20,12 @@ import {
     geneOrder,
 } from './selectors';
 
+export function reviewValidatedFields() {
+    return {
+        type: actions.SET_REVIEW_VALIDATED,
+    };
+}
+
 let lastDraft = null;
 
 export function saveDraft() {

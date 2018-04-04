@@ -8,6 +8,7 @@ import { annotationTypeData } from 'domain/annotation/constants';
 import KeywordTextInput from 'modules/connectedComponents/keywordTextInput';
 import LabelInputRow from 'ui/labelInputRow';
 import LabelDropdownInputRow from 'ui/labelDropdownInputRow';
+import ValidatedField from 'ui/validatedField';
 
 
 class GeneTermAnnotation extends React.Component {
@@ -76,6 +77,10 @@ class GeneTermAnnotation extends React.Component {
                         value={this.props.geneTermAnnotation.geneLocalId}
                     />
                 </LabelInputRow>
+                <ValidatedField isValid={this.props.keywordValid}
+                    invalidMessage="A gene term annotation requires a keyword."
+                    reviewValidated={this.props.reviewValidated}
+                >
                 <LabelInputRow title={typeData.name}>
                     <KeywordTextInput
                         onChange={value => this.props.onDataChange(
@@ -98,6 +103,11 @@ class GeneTermAnnotation extends React.Component {
                         required={true}
                     />
                 </LabelInputRow>
+                </ValidatedField>
+                <ValidatedField isValid={this.props.methodValid}
+                    invalidMessage="A gene term annotation requires a method."
+                    reviewValidated={this.props.reviewValidated}
+                >
                 <LabelInputRow title="Method">
                     <KeywordTextInput
                         onChange={value => this.props.onDataChange(
@@ -124,9 +134,14 @@ class GeneTermAnnotation extends React.Component {
                         required={true}
                     />
                 </LabelInputRow>
+                </ValidatedField>
 
-                {this.needsEvidenceWith ? (
-                    this.props.geneTermAnnotation.evidenceWithOrder.length >= 2 ? (
+                {this.needsEvidenceWith ?
+                <ValidatedField isValid={this.props.ewValid}
+                    invalidMessage="All evidence with fields must be valid."
+                    reviewValidated={this.props.reviewValidated}
+                >
+                    {(this.props.geneTermAnnotation.evidenceWithOrder.length >= 2 ? (
                         <LabelDropdownInputRow
                             title="Evidence With"
                             align="align-items-start"
@@ -171,7 +186,8 @@ class GeneTermAnnotation extends React.Component {
                                 </Col>
                             </Row>
                         </LabelInputRow>
-                    )):(<span />)}
+                    ))}
+                </ValidatedField>:(<span />)}
             </div>
         );
     }
@@ -189,6 +205,10 @@ GeneTermAnnotation.propTypes = {
     updateEvidenceWithRelation: React.PropTypes.func,
     evidenceWithRelation: React.PropTypes.string,
     needsEvidenceWith: React.PropTypes.bool,
+    keywordValid: React.PropTypes.bool,
+    methodValid: React.PropTypes.bool,
+    ewValid: React.PropTypes.bool,
+    reviewValidated: React.PropTypes.number,
 };
 
 GeneTermAnnotation.defaultProps = {
@@ -200,6 +220,10 @@ GeneTermAnnotation.defaultProps = {
     updateEvidenceWithRelation: () => {},
     evidenceWithRelation: "",
     needsEvidenceWith: false,
+    keywordValid: false,
+    methodValid: false,
+    ewValid: false,
+    reviewValidated: 0,
 };
 
 export default GeneTermAnnotation;
