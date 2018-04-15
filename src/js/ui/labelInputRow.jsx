@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col, Label } from 'reactstrap';
 
 class LabelInputRow extends React.Component {
@@ -25,8 +26,8 @@ class LabelInputRow extends React.Component {
 }
 
 LabelInputRow.propTypes = {
-    title: React.PropTypes.string,
-    align: React.PropTypes.string,
+    title: PropTypes.string,
+    align: PropTypes.string,
 };
 
 LabelInputRow.defaultProps = {

@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Alert, Button, Row, Col } from 'reactstrap';
 import SingleGene from 'modules/connectedComponents/gene/singleGene';
 
@@ -72,14 +73,14 @@ class GeneList extends React.Component {
 }
 
 GeneList.propTypes = {
-    geneIndex: React.PropTypes.object,
-    geneOrder: React.PropTypes.arrayOf(React.PropTypes.string),
-    onGeneAddClick: React.PropTypes.func,
-    removeGene: React.PropTypes.func,
-    clearGene: React.PropTypes.func,
-    validateGeneData: React.PropTypes.func,
-    reviewValidated: React.PropTypes.number,
-    curating: React.PropTypes.bool
+    geneIndex: PropTypes.object,
+    geneOrder: PropTypes.arrayOf(PropTypes.string),
+    onGeneAddClick: PropTypes.func,
+    removeGene: PropTypes.func,
+    clearGene: PropTypes.func,
+    validateGeneData: PropTypes.func,
+    reviewValidated: PropTypes.number,
+    curating: PropTypes.bool
 };
 
 GeneList.defaultProps = {

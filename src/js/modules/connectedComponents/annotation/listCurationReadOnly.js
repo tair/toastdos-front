@@ -1,6 +1,6 @@
 "use strict";
 
-import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AnnotationListReadOnly from 'ui/annotation/listCurationReadOnly';
 import { pendingListSelector, reviewedListSelector } from 'domain/annotation/selectors';
@@ -14,7 +14,7 @@ const ConnectedCurationAnnotationListReadOnly = connect(
 )(AnnotationListReadOnly);
 
 ConnectedCurationAnnotationListReadOnly.propTypes = {
-    annotationOrder: React.PropTypes.arrayOf(React.PropTypes.string),
+    annotationOrder: PropTypes.arrayOf(PropTypes.string),
 };
 
 ConnectedCurationAnnotationListReadOnly.defaultProps = {

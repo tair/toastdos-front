@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col, ListGroup, ListGroupItem } from 'reactstrap';
 import 'css/submissionView.scss';
 import PublicationFieldReadOnly from 'modules/connectedComponents/publication/fieldReadOnly';
@@ -68,9 +69,9 @@ class SubmissionReadOnly extends React.Component {
 }
 
 SubmissionReadOnly.propTypes = {
-    publicationLocalId: React.PropTypes.string,
-    geneOrder: React.PropTypes.array,
-    annotationOrder: React.PropTypes.array,
+    publicationLocalId: PropTypes.string,
+    geneOrder: PropTypes.array,
+    annotationOrder: PropTypes.array,
 };
 
 export default SubmissionReadOnly;

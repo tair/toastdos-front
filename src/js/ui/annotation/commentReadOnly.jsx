@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col, Card, CardHeader, CardBody } from 'reactstrap';
 import GeneLocusName from 'modules/connectedComponents/gene/locusName';
 import AnnotationStatusReadOnly from 'ui/annotation/statusReadOnly';
@@ -50,10 +51,10 @@ class CommentAnnotationReadOnly extends React.Component {
 }
 
 CommentAnnotationReadOnly.propTypes = {
-    commentAnnotation: React.PropTypes.object,
-    annotationStatus: React.PropTypes.string,
-    annotationTypeName: React.PropTypes.string,
-    compact: React.PropTypes.bool,
+    commentAnnotation: PropTypes.object,
+    annotationStatus: PropTypes.string,
+    annotationTypeName: PropTypes.string,
+    compact: PropTypes.bool,
 };
 
 export default CommentAnnotationReadOnly;

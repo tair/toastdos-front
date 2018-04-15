@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { ListGroup, Card, CardHeader, CardBody, Label, Row, Col } from 'reactstrap';
 import { annotationTypeData, goEvidenceCodeNameMap } from 'domain/annotation/constants';
 import EvidenceWithReadOnly from 'modules/connectedComponents/evidenceWithReadOnly';
@@ -153,11 +154,11 @@ class GeneTermAnnotationReadOnly extends React.Component {
 }
 
 GeneTermAnnotationReadOnly.propTypes = {
-    geneTermAnnotation: React.PropTypes.object,
-    localId: React.PropTypes.string,
-    needsEvidenceWith: React.PropTypes.bool,
-    annotationTypeName: React.PropTypes.string,
-    compact: React.PropTypes.bool,
+    geneTermAnnotation: PropTypes.object,
+    localId: PropTypes.string,
+    needsEvidenceWith: PropTypes.bool,
+    annotationTypeName: PropTypes.string,
+    compact: PropTypes.bool,
 };
 
 GeneTermAnnotationReadOnly.defaultProps = {

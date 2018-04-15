@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Alert, Row, Col,
     Card, CardHeader, CardBody, Input } from 'reactstrap';
 import { validationStates } from 'lib/validation';
@@ -62,15 +63,15 @@ class PublicationField extends React.Component {
 }
 
 PublicationField.propTypes = {
-    idValue: React.PropTypes.string,
-    validationState: React.PropTypes.string,
-    validationError: React.PropTypes.string,
-    isValid: React.PropTypes.bool,
-    author: React.PropTypes.string,
-    url: React.PropTypes.string,
-    title: React.PropTypes.string,
-    attemptValidatePublication: React.PropTypes.func.isRequired,
-    reviewValidated: React.PropTypes.number,
+    idValue: PropTypes.string,
+    validationState: PropTypes.string,
+    validationError: PropTypes.string,
+    isValid: PropTypes.bool,
+    author: PropTypes.string,
+    url: PropTypes.string,
+    title: PropTypes.string,
+    attemptValidatePublication: PropTypes.func.isRequired,
+    reviewValidated: PropTypes.number,
 };
 
 PublicationField.defaultProps = {

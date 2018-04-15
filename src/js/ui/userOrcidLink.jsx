@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class UserOrcidLink extends React.Component {
 
@@ -16,9 +17,9 @@ class UserOrcidLink extends React.Component {
 }
 
 UserOrcidLink.propTypes = {
-    user: React.PropTypes.shape({
-        name: React.PropTypes.string,
-        orcid_id: React.PropTypes.string
+    user: PropTypes.shape({
+        name: PropTypes.string,
+        orcid_id: PropTypes.string
     }).isRequired
 };
 

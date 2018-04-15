@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { ListGroupItem } from 'reactstrap';
 
 class EvidenceWithReadOnly extends React.Component {
@@ -26,9 +27,9 @@ class EvidenceWithReadOnly extends React.Component {
 }
 
 EvidenceWithReadOnly.propTypes = {
-    evidenceWith: React.PropTypes.object,
-    evidenceWithId: React.PropTypes.string,
-    isListGroupItem: React.PropTypes.bool,
+    evidenceWith: PropTypes.object,
+    evidenceWithId: PropTypes.string,
+    isListGroupItem: PropTypes.bool,
 };
 
 EvidenceWithReadOnly.defaultProps = {

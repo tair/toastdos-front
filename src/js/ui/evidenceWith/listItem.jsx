@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { ListGroupItem, Row, Col, Button } from 'reactstrap';
 import ValidationInput from 'ui/validationInput';
 
@@ -40,10 +41,10 @@ class EvidenceWith extends React.Component {
 }
 
 EvidenceWith.propTypes = {
-    evidenceWith: React.PropTypes.object,
-    evidenceWithId: React.PropTypes.any,
-    attemptValidate: React.PropTypes.func,
-    onRemove: React.PropTypes.func,
+    evidenceWith: PropTypes.object,
+    evidenceWithId: PropTypes.any,
+    attemptValidate: PropTypes.func,
+    onRemove: PropTypes.func,
 };
 
 EvidenceWith.defaultProps = {

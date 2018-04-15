@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import GenePicker from 'modules/connectedComponents/gene/picker';
 import KeywordTextInput from 'modules/connectedComponents/keywordTextInput';
 import LabelInputRow from 'ui/labelInputRow';
@@ -68,13 +69,13 @@ class GeneGeneAnnotation extends React.Component {
 }
 
 GeneGeneAnnotation.propTypes = {
-    geneGeneAnnotation: React.PropTypes.object,
-    geneOrder: React.PropTypes.array,
-    isValid: React.PropTypes.bool,
-    reviewValidated: React.PropTypes.number,
-    onDataChange: React.PropTypes.func,
-    updateGene1: React.PropTypes.func,
-    updateGene2: React.PropTypes.func,
+    geneGeneAnnotation: PropTypes.object,
+    geneOrder: PropTypes.array,
+    isValid: PropTypes.bool,
+    reviewValidated: PropTypes.number,
+    onDataChange: PropTypes.func,
+    updateGene1: PropTypes.func,
+    updateGene2: PropTypes.func,
 };
 
 export default GeneGeneAnnotation;

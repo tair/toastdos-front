@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import  {Link} from 'react-router';
 import orcidInfo from 'resources/orcid_public_info';
@@ -53,8 +54,8 @@ class NavigationBar extends React.Component {
 }
 
 NavigationBar.propTypes = {
-    isAuthenticated: React.PropTypes.bool,
-    links: React.PropTypes.arrayOf(React.PropTypes.object)
+    isAuthenticated: PropTypes.bool,
+    links: PropTypes.arrayOf(PropTypes.object)
 };
 
 NavigationBar.defaultProps = {

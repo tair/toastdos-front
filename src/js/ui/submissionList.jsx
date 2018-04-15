@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { Alert, Progress, ListGroup, ListGroupItem, Row, Col } from 'reactstrap';
 import UserOrcidLink from 'ui/userOrcidLink';
@@ -91,14 +92,14 @@ class SubmissionList extends React.Component {
 }
 
 SubmissionList.propTypes = {
-    inProgressSubmissions: React.PropTypes.arrayOf(React.PropTypes.object),
-    needsReviewSubmissions: React.PropTypes.arrayOf(React.PropTypes.object),
-    reviewedSubmissions: React.PropTypes.arrayOf(React.PropTypes.object),
-    loadSubmissions: React.PropTypes.func,
+    inProgressSubmissions: PropTypes.arrayOf(PropTypes.object),
+    needsReviewSubmissions: PropTypes.arrayOf(PropTypes.object),
+    reviewedSubmissions: PropTypes.arrayOf(PropTypes.object),
+    loadSubmissions: PropTypes.func,
     // todo handle pagination
-    totalPages: React.PropTypes.number,
-    pageSize: React.PropTypes.number,
-    currentPage: React.PropTypes.number,
+    totalPages: PropTypes.number,
+    pageSize: PropTypes.number,
+    currentPage: PropTypes.number,
 };
 
 SubmissionList.defaultProps = {

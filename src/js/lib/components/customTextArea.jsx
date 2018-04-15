@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import 'css/customTextArea.scss';
 
 
@@ -61,17 +62,17 @@ class CustomTextArea extends React.Component {
 }
 
 CustomTextArea.propTypes = {
-    name: React.PropTypes.string,
-    id: React.PropTypes.string,
-    value: React.PropTypes.string,
-    onChange: React.PropTypes.func,
-    placeholder: React.PropTypes.string,
-    onFocus: React.PropTypes.func,
-    onBlur: React.PropTypes.func,
-    containerStyle: React.PropTypes.object,
-    textAreaStyle: React.PropTypes.object,
-    className: React.PropTypes.string,
-    required: React.PropTypes.bool,
+    name: PropTypes.string,
+    id: PropTypes.string,
+    value: PropTypes.string,
+    onChange: PropTypes.func,
+    placeholder: PropTypes.string,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
+    containerStyle: PropTypes.object,
+    textAreaStyle: PropTypes.object,
+    className: PropTypes.string,
+    required: PropTypes.bool,
 };
 
 CustomTextArea.defaultProps = {

@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import SingleGene from 'ui/gene/singleGene';
 import { validationStates } from 'lib/validation';
 
@@ -70,16 +71,16 @@ class SingleGeneContainer extends React.Component {
 }
 
 SingleGeneContainer.propTypes = {
-    title: React.PropTypes.string,
-    locusName: React.PropTypes.string,
-    geneSymbol: React.PropTypes.string,
-    fullName: React.PropTypes.string,
-    onRemoveClick: React.PropTypes.func,
-    validateGeneData: React.PropTypes.func,
-    updateGeneData: React.PropTypes.func,
-    validationError: React.PropTypes.string,
-    validationState: React.PropTypes.string,
-    reviewValidated: React.PropTypes.number,
+    title: PropTypes.string,
+    locusName: PropTypes.string,
+    geneSymbol: PropTypes.string,
+    fullName: PropTypes.string,
+    onRemoveClick: PropTypes.func,
+    validateGeneData: PropTypes.func,
+    updateGeneData: PropTypes.func,
+    validationError: PropTypes.string,
+    validationState: PropTypes.string,
+    reviewValidated: PropTypes.number,
 };
 
 SingleGeneContainer.defaultProps = {

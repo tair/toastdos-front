@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Card, CardHeader, CardBody, Row, Col, Label } from 'reactstrap';
 import GeneLocusName from 'modules/connectedComponents/gene/locusName';
 import ExternalIdBadge from 'ui/externalIdBadge';
@@ -83,9 +84,9 @@ class GeneGeneAnnotationReadOnly extends React.Component {
 }
 
 GeneGeneAnnotationReadOnly.propTypes = {
-    geneGeneAnnotation: React.PropTypes.object,
-    annotationTypeName: React.PropTypes.string,
-    compact: React.PropTypes.bool,
+    geneGeneAnnotation: PropTypes.object,
+    annotationTypeName: PropTypes.string,
+    compact: PropTypes.bool,
 };
 
 export default GeneGeneAnnotationReadOnly;

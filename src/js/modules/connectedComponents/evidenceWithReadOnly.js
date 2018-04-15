@@ -1,6 +1,6 @@
 "use strict";
 
-import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import EvidenceWithReadOnly from 'ui/evidenceWith/listItemReadOnly';
 import { evidenceWithSelector } from 'domain/evidenceWith/selectors';
@@ -14,7 +14,7 @@ const ConnectedEvidenceWithReadOnly = connect(
 )(EvidenceWithReadOnly);
 
 ConnectedEvidenceWithReadOnly.propTypes = {
-    localId: React.PropTypes.string,
+    localId: PropTypes.string,
 };
 
 export default ConnectedEvidenceWithReadOnly;

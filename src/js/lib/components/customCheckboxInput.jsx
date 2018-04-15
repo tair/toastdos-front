@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import "css/customCheckboxInput.scss";
 
 class CustomCheckboxInput extends React.Component {
@@ -51,13 +52,13 @@ class CustomCheckboxInput extends React.Component {
 }
 
 CustomCheckboxInput.propTypes = {
-    checked: React.PropTypes.bool,
-    value: React.PropTypes.string,
-    onChange: React.PropTypes.func,
-    inputId: React.PropTypes.string,
-    className: React.PropTypes.string,
-    onFocus: React.PropTypes.func,
-    onBlur: React.PropTypes.func
+    checked: PropTypes.bool,
+    value: PropTypes.string,
+    onChange: PropTypes.func,
+    inputId: PropTypes.string,
+    className: PropTypes.string,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func
 };
 
 CustomCheckboxInput.defaultProps = {

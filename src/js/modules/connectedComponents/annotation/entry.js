@@ -1,6 +1,6 @@
 "use strict";
 
-import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AnnotationEntry from 'ui/annotation/entry';
 import { annotationSelector } from 'domain/annotation/selectors';
@@ -28,7 +28,7 @@ const ConnectedAnnotationEntry = connect(
 )(AnnotationEntry);
 
 ConnectedAnnotationEntry.propTypes = {
-    localId: React.PropTypes.string,
+    localId: PropTypes.string,
 };
 
 export default ConnectedAnnotationEntry;

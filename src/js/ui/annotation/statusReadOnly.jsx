@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { annotationStatusFormats } from 'domain/annotation/constants';
 
 class AnnotationStatusReadOnly extends React.Component {
@@ -57,7 +58,7 @@ class AnnotationStatusReadOnly extends React.Component {
 }
 
 AnnotationStatusReadOnly.propTypes = {
-    annotationStatus: React.PropTypes.string.isRequired,
+    annotationStatus: PropTypes.string.isRequired,
 };
 
 AnnotationStatusReadOnly.defaultProps = {

@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Popover, PopoverBody } from 'reactstrap';
 import generateId from 'lib/idGenerator';
 import { validationStates } from 'lib/validation';
@@ -54,8 +55,8 @@ class ValidationStatus extends React.Component {
 }
 
 ValidationStatus.propTypes = {
-    validationState: React.PropTypes.string,
-    validationError: React.PropTypes.string
+    validationState: PropTypes.string,
+    validationError: PropTypes.string
 };
 
 ValidationStatus.defaultProps = {

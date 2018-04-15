@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col, Label } from 'reactstrap';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
@@ -58,11 +59,11 @@ class LabelDropdownInputRow extends React.Component {
 }
 
 LabelDropdownInputRow.propTypes = {
-    title: React.PropTypes.string,
-    align: React.PropTypes.string,
-    value: React.PropTypes.string,
-    items: React.PropTypes.array.isRequired,
-    onClick: React.PropTypes.func,
+    title: PropTypes.string,
+    align: PropTypes.string,
+    value: PropTypes.string,
+    items: PropTypes.array.isRequired,
+    onClick: PropTypes.func,
 };
 
 LabelDropdownInputRow.defaultProps = {

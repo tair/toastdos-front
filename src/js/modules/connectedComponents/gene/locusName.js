@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class GeneLocusName extends React.Component {
@@ -21,7 +22,7 @@ const ConnectedGeneLocusName = connect(
 )((GeneLocusName));
 
 ConnectedGeneLocusName.propTypes = {
-    localId: React.PropTypes.string,
+    localId: PropTypes.string,
 };
 
 export default ConnectedGeneLocusName;

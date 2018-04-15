@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class EditableLabel extends React.Component {
 
@@ -140,15 +141,15 @@ class EditableLabel extends React.Component {
 }
 
 EditableLabel.propTypes = {
-    validate: React.PropTypes.func,
-    placeholder: React.PropTypes.string,
-    onSubmit: React.PropTypes.func,
-    onChange: React.PropTypes.func,
-    value: React.PropTypes.string,
+    validate: PropTypes.func,
+    placeholder: PropTypes.string,
+    onSubmit: PropTypes.func,
+    onChange: PropTypes.func,
+    value: PropTypes.string,
     // style Properties
-    className: React.PropTypes.string,
-    editingClassName: React.PropTypes.string,
-    inputType: React.PropTypes.string
+    className: PropTypes.string,
+    editingClassName: PropTypes.string,
+    inputType: PropTypes.string
 };
 
 EditableLabel.defaultProps = {

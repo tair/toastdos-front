@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { InputGroup, InputGroupAddon } from 'reactstrap';
 import CustomTextInput from 'lib/components/customTextInput';
 import ValidationStatus from 'ui/validationStatus';
@@ -89,16 +90,16 @@ class ValidationInput extends React.Component {
 }
 
 ValidationInput.propTypes = {
-    title: React.PropTypes.string,
-    hasValidationStatus: React.PropTypes.bool,
-    isSmartTextInput: React.PropTypes.bool,
-    placeholder: React.PropTypes.string,
-    value: React.PropTypes.string,
-    attemptValidate: React.PropTypes.func,
-    validationError: React.PropTypes.string,
-    upperCaseOnly: React.PropTypes.bool,
-    required: React.PropTypes.bool,
-    validationState: React.PropTypes.string,
+    title: PropTypes.string,
+    hasValidationStatus: PropTypes.bool,
+    isSmartTextInput: PropTypes.bool,
+    placeholder: PropTypes.string,
+    value: PropTypes.string,
+    attemptValidate: PropTypes.func,
+    validationError: PropTypes.string,
+    upperCaseOnly: PropTypes.bool,
+    required: PropTypes.bool,
+    validationState: PropTypes.string,
 };
 
 ValidationInput.defaultProps = {

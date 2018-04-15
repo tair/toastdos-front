@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Alert } from 'reactstrap';
 
 class SubmissionInfoPanel extends React.Component {
@@ -33,9 +34,9 @@ class SubmissionInfoPanel extends React.Component {
 }
 
 SubmissionInfoPanel.propTypes = {
-    submitting: React.PropTypes.bool,
-    submitted: React.PropTypes.bool,
-    errorMessage: React.PropTypes.string,
+    submitting: PropTypes.bool,
+    submitted: PropTypes.bool,
+    errorMessage: PropTypes.string,
 };
 
 SubmissionInfoPanel.defaultProps = {

@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { Popover, PopoverBody } from 'reactstrap';
 import generateId from 'lib/idGenerator';
@@ -74,9 +75,9 @@ class ValidatedField extends React.Component {
 
 
 ValidatedField.propTypes = {
-    isValid: React.PropTypes.bool,
-    reviewValidated: React.PropTypes.number,
-    invalidMessage: React.PropTypes.string,
+    isValid: PropTypes.bool,
+    reviewValidated: PropTypes.number,
+    invalidMessage: PropTypes.string,
 };
 
 ValidatedField.defaultProps = {

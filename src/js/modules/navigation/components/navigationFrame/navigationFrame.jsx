@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import NavigationBar from './subComponents/navigationBar';
 
 class NavigationFrame extends React.Component {
@@ -44,9 +45,9 @@ class NavigationFrame extends React.Component {
 
 
 NavigationFrame.propTypes = {
-    isAuthenticated: React.PropTypes.bool,
-    onLogoutClick: React.PropTypes.func,
-    userRoles: React.PropTypes.arrayOf(React.PropTypes.string),
+    isAuthenticated: PropTypes.bool,
+    onLogoutClick: PropTypes.func,
+    userRoles: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default NavigationFrame;

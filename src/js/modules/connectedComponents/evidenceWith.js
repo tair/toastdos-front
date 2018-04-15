@@ -1,6 +1,6 @@
 "use strict";
 
-import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import EvidenceWith from 'ui/evidenceWith/listItem';
 import {
@@ -22,8 +22,8 @@ const ConnectedEvidenceWith = connect(
 )(EvidenceWith);
 
 ConnectedEvidenceWith.propTypes = {
-    localId: React.PropTypes.string,
-    onRemove: React.PropTypes.func,
+    localId: PropTypes.string,
+    onRemove: PropTypes.func,
 };
 
 export default ConnectedEvidenceWith;

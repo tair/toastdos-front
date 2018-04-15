@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Input } from 'reactstrap';
 import 'css/customTextInput.scss';
 
@@ -57,23 +58,23 @@ class CustomTextInput extends React.Component {
 }
 
 CustomTextInput.propTypes = {
-    onChange: React.PropTypes.func,
-    value: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.number
+    onChange: PropTypes.func,
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
     ]),
-    inputRef: React.PropTypes.func,
-    disabled: React.PropTypes.bool,
-    readOnly: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
-    style: React.PropTypes.object,
-    onBlur: React.PropTypes.func,
-    onFocus: React.PropTypes.func,
-    onKeyDown: React.PropTypes.func,
-    className: React.PropTypes.string,
-    spellCheck: React.PropTypes.bool,
-    inputId: React.PropTypes.string,
-    required: React.PropTypes.bool,
+    inputRef: PropTypes.func,
+    disabled: PropTypes.bool,
+    readOnly: PropTypes.string,
+    placeholder: PropTypes.string,
+    style: PropTypes.object,
+    onBlur: PropTypes.func,
+    onFocus: PropTypes.func,
+    onKeyDown: PropTypes.func,
+    className: PropTypes.string,
+    spellCheck: PropTypes.bool,
+    inputId: PropTypes.string,
+    required: PropTypes.bool,
 };
 
 CustomTextInput.defaultProps = {
