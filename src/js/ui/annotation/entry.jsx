@@ -104,7 +104,8 @@ class AnnotationEntry extends React.Component {
                     <Row>
                         <Col>
                             <InputGroup>
-                                <InputGroupAddon className="bg-light-green text-dark">
+                                <InputGroupAddon className="bg-light-green text-dark"
+                                    addonType='prepend'>
                                     {this.props.title}
                                 </InputGroupAddon>
                                 <CustomSelect name="Annotation Type"
