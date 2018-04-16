@@ -16,7 +16,8 @@ class GeneListReadOnly extends React.Component {
             geneLocalId =>
                 <SingleGeneReadOnly
                     key={geneLocalId}
-                    localId={geneLocalId} />
+                    localId={geneLocalId}
+                    compact={this.props.compact} />
         );
     }
 
@@ -41,12 +42,14 @@ class GeneListReadOnly extends React.Component {
 
 GeneListReadOnly.propTypes = {
     geneOrder: React.PropTypes.arrayOf(React.PropTypes.string),
-    curating: React.PropTypes.bool
+    curating: React.PropTypes.bool,
+    compact: React.PropTypes.bool
 };
 
 GeneListReadOnly.defaultProps = {
     geneOrder: [],
     curating: false,
+    compact: true,
 };
 
 

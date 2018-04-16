@@ -9,6 +9,24 @@ class SingleGeneReadOnly extends React.Component {
     }
 
     render() {
+        return this.props.compact ? this.renderCompact() : this.renderLarge();
+    }
+
+    renderCompact() {
+        const gene = this.props.gene;
+        const textArray = [gene.finalizedLocusName];
+        if (gene.finalizedGeneSymbol) {
+            textArray.push(gene.finalizedGeneSymbol);
+        }
+
+        if (gene.finalizedFullName) {
+            textArray.push(gene.finalizedFullName);
+        }
+
+        return (<div> {textArray.join(", ")} </div>);
+    }
+
+    renderLarge() {
         let gene = this.props.gene;
         return (
             <Card key={gene.localId} className="mb-3">
@@ -52,10 +70,12 @@ SingleGeneReadOnly.propTypes = {
         finalizedGeneSymbol: React.PropTypes.string,
         finalizedFullName: React.PropTypes.string,
     }).isRequired,
+    compact: React.PropTypes.bool
 };
 
 SingleGeneReadOnly.defaultProps = {
     gene: {},
+    compact: true,
 };
 
 
