@@ -43,7 +43,7 @@ class GeneListReadOnly extends React.Component {
 
 GeneListReadOnly.propTypes = {
     geneOrder: PropTypes.arrayOf(PropTypes.string),
-    curating: PropTypes.bool
+    curating: PropTypes.bool,
     compact: PropTypes.bool
 };
 
