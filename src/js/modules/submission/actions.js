@@ -57,30 +57,38 @@ function draftSaved() {
     };
 }
 
-export function loadDraft() {
+// The number of draft loads that have taken place to keep the ids unique
+let loadDraftId = 0;
+
+export function loadDraft(skipDraftIfExists) {
     return (dispatch, getState) => {
 
         const currState = getState();
         const token = AuthModule.selectors.rawJwtSelector(currState);
         getDraft(token, (err, body) => {
-            if (!err) {
+            if (!err && !skipDraftIfExists) {
+                // make sure each draft loading creates new ids.
+                loadDraftId++;
+
                 // The draft now exists in the body var, load it.
 
-                let publicationId = publicationLocalId(currState);
-
                 // Set the publication id value
+                let newPub = publicationActions.addNew();
+                dispatch(newPub);
+                // Link the newly created publication to the submission
+                dispatch(setPublication(newPub.localId));
                 dispatch(publicationActions.update(
-                    publicationId, body['publicationId']));
+                    newPub.localId, body['publicationId']));
 
-                if (body['genes'].length > 0) {
-                    // Delete the default gene
-                    dispatch(removeGene(geneOrder(currState)[0]));
+                if (body['genes'].length == 0) {
+                    // Add a default gene.
+                    dispatch(addGene());
                 }
 
                 let locusMap = {};
                 for (let i = 0; i < body['genes'].length; i++) {
                     let gene = body['genes'][i];
-                    let id = "draft_gene_" + gene.locusName;
+                    let id = "draft_" + loadDraftId + "_gene_" + gene.locusName;
                     locusMap[gene.locusName] = id;
 
                     let geneData = {
@@ -97,7 +105,7 @@ export function loadDraft() {
 
                 for (let i = 0; i < body.annotations.length; i++) {
                     let annotation = body.annotations[i];
-                    let localId = "draft_annotation_" + i;
+                    let localId = "draft_" + loadDraftId + "_annotation_" + i;
 
                     let annotationFormatData, ewOrder, ewRelation;
                     switch(annotationTypeData[annotation.type].format) {
@@ -181,24 +189,24 @@ export function loadDraft() {
 
             } else {
                 // There are no drafts.
+                // Create publication for submission
+                let newPub = publicationActions.addNew();
+                dispatch(newPub);
+
+                // Link the newly created publication to the submission
+                dispatch(setPublication(newPub.localId));
+
+                // Create gene for submission
+                dispatch(addGene());
             }
         });
     };
 }
 
-export function initialize() {
+export function initialize(skipDraft) {
     return dispatch => {
-        // Create publication for submission
-        let newPub = publicationActions.addNew();
-        dispatch(newPub);
-
-        // Link the newly created publication to the submission
-        dispatch(setPublication(newPub.localId));
-
-        // Create gene for submission
-        dispatch(addGene());
-
-        dispatch(loadDraft());
+        dispatch(clearSubmission());
+        dispatch(loadDraft(skipDraft));
     };
 }
 
@@ -329,7 +337,7 @@ export function attemptSubmit() {
     };
 }
 
-export function resetSubmission() {
+function clearSubmission() {
     return (dispatch, getState) => {
         const currState = getState();
 
@@ -347,8 +355,13 @@ export function resetSubmission() {
             type: actions.RESET_SUBMISSION
         });
 
+    };
+}
+
+export function resetSubmission() {
+    return (dispatch) => {
         // Initialize the submission
-        return dispatch(initialize());
+        dispatch(initialize(true));
     };
 }
 
