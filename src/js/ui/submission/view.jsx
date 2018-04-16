@@ -18,8 +18,6 @@ class SubmissionView extends React.Component {
     constructor(props) {
         super(props);
 
-        this.props.initialize();
-
         this.state = {
             draftSaveTimer: null,
             showDraftSaved: false,

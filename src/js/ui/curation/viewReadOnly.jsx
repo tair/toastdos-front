@@ -7,22 +7,20 @@ import 'css/submissionView.scss';
 import PublicationFieldReadOnly from 'modules/connectedComponents/publication/fieldReadOnly';
 import GeneListReadOnly from 'ui/gene/listReadOnly';
 import AnnotationListReadOnly from 'modules/connectedComponents/annotation/listCurationReadOnly';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 class CurationReadOnly extends React.Component {
     constructor(props) {
         super(props);
 
         this.state ={
-            dropdownOpen: false,
             compact: true
         };
-        this.toggleViewMode = this.toggleViewMode.bind(this);
+        this.toggleCompact = this.toggleCompact.bind(this);
     }
 
-    toggleViewMode() {
+    toggleCompact() {
         this.setState({
-            dropdownOpen: !this.state.dropdownOpen
+            compact: !this.state.compact
         });
     }
 
@@ -31,6 +29,11 @@ class CurationReadOnly extends React.Component {
             <ListGroup>
                 <ListGroupItem className="border-left-0 border-right-0 border-top-0">
                     <PublicationFieldReadOnly localId={this.props.publicationLocalId} />
+                    <div className="btn btn-sm btn-secondary compact-view-toggle" onClick={this.toggleCompact}>
+                        <span className={this.state.compact ? "fa fa-search-plus": "fa fa-search-minus"} />
+                        &nbsp;
+                        {this.state.compact ? "Expand View": "Collapse View"}
+                    </div>
                 </ListGroupItem>
                 <ListGroupItem className="border-left-0 border-right-0">
                     <Row className="mt-3">
@@ -40,7 +43,8 @@ class CurationReadOnly extends React.Component {
                         <Col>
                             <GeneListReadOnly
                                 curating={true}
-                                geneOrder={this.props.geneOrder} />
+                                geneOrder={this.props.geneOrder}
+                                compact={this.state.compact} />
                         </Col>
                     </Row>
                 </ListGroupItem>
@@ -48,15 +52,6 @@ class CurationReadOnly extends React.Component {
                     <Row className="mt-3">
                         <Col sm="3">
                             <h5>Annotations</h5>
-                            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleViewMode}>
-                                <DropdownToggle caret color="success">
-                                    View Mode
-                                </DropdownToggle>
-                                <DropdownMenu>
-                                    <DropdownItem onClick={() => this.setState({compact: true})}>Compact</DropdownItem>
-                                    <DropdownItem onClick={() => this.setState({compact: false})}>Expanded</DropdownItem>
-                                </DropdownMenu>
-                            </Dropdown>
                         </Col>
                         <Col>
                             <AnnotationListReadOnly

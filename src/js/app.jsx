@@ -20,6 +20,8 @@ import DefaultLoadingAnimation from 'lib/components/loadingAnimations/defaultLoa
 
 import Store from './store';
 
+import {initialize as initializeSubmission } from 'modules/submission/actions';
+
 // Only load the dev tools in development
 let DevTools = (process.env.NODE_ENV === 'development') ?
 require('lib/components/devTools').default : f => f;
@@ -33,6 +35,8 @@ class App extends React.Component {
         this.state = {
             // set initial state
         };
+
+        this.submissionInit = this.submissionInit.bind(this);
     }
 
     componentDidMount() {
@@ -40,6 +44,10 @@ class App extends React.Component {
         this.props.initialize();
     }
 
+    submissionInit(nextState, replace) {
+        isAuthenticated(nextState, replace);
+        this.props.submissionInit();
+    }
 
     render() {
         const routerComponent = (
@@ -59,7 +67,7 @@ class App extends React.Component {
                     <Route
                         path="submission"
                         component={submissionModule.components.SubmissionView}
-                        onEnter={isAuthenticated}
+                        onEnter={this.submissionInit}
                     />
                     <Route
                         path="curation/detail/:submissionId"
@@ -108,7 +116,8 @@ const AppContainer = connect(
         initializing: (state.authentication.initializing || state.userInfo.initializing)
     }),
     dispatch => ({
-        initialize: () => dispatch(authenticationModule.actions.initialize())
+        initialize: () => dispatch(authenticationModule.actions.initialize()),
+        submissionInit: () => dispatch(initializeSubmission())
     })
 )(App);
 

@@ -10,10 +10,9 @@ import {
 } from 'domain/gene/actions';
 
 const ConnectedGeneList = connect(
-    (state,ownProps) => ({
+    (state) => ({
         // TODO: refactor geneList to select the genes it needs
-        geneIndex: state.domain.gene.byLocalId,
-        geneOrder: ownProps.geneOrder
+        geneIndex: state.domain.gene.byLocalId
     }),
     (dispatch, ownProps) => ({
         onGeneAddClick: () => ownProps.addGene(),
