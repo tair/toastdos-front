@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InputGroup, InputGroupAddon } from 'reactstrap';
+import { InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import CustomTextInput from 'lib/components/customTextInput';
 import ValidationStatus from 'ui/validationStatus';
 import { validationStates } from 'lib/validation';
@@ -67,8 +67,11 @@ class ValidationInput extends React.Component {
         return (
             <InputGroup>
                 {this.props.title !== ''?
-                <InputGroupAddon className="bg-light-green text-dark">
-                    {this.props.title}
+                <InputGroupAddon className="bg-light-green text-dark"
+                    addonType='prepend'>
+                    <InputGroupText>
+                        {this.props.title}
+                    </InputGroupText>
                 </InputGroupAddon>
                 : null }
                 <CustomTextInput
@@ -79,10 +82,12 @@ class ValidationInput extends React.Component {
                     onBlur={this.determineAttemptValidate}
                     onKeyDown={this.onKeyDown}
                 />
-                <InputGroupAddon>
-                    <ValidationStatus
-                        validationState={this.props.validationState}
-                        validationError={this.props.validationError} />
+                <InputGroupAddon addonType='append'>
+                    <InputGroupText>
+                        <ValidationStatus
+                            validationState={this.props.validationState}
+                            validationError={this.props.validationError} />
+                    </InputGroupText>
                 </InputGroupAddon>
             </InputGroup>
         );
