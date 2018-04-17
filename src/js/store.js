@@ -16,6 +16,7 @@ import submission from 'modules/submission';
 import curationDetail from 'modules/curationDetail';
 import curationOverview from 'modules/curationOverview';
 import exportsView from 'modules/exportsView';
+import adminView from 'modules/adminView';
 
 let reducer = combineReducers({
     [home.constants.name]: home.reducer,
@@ -27,6 +28,7 @@ let reducer = combineReducers({
     [curationDetail.constants.name]: curationDetail.reducer,
     [curationOverview.constants.name]: curationOverview.reducer,
     [exportsView.constants.name]: exportsView.reducer,
+    [adminView.constants.name]: adminView.reducer,
     routing: routerReducer
 });
 

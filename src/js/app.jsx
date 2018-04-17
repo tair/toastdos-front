@@ -13,6 +13,7 @@ import navigationModule from 'modules/navigation';
 import curationDetailModule from 'modules/curationDetail';
 import curationOverviewModule from 'modules/curationOverview';
 import exportsView from 'modules/exportsView';
+import adminView from 'modules/adminView';
 
 import { isAuthenticated, redirectIfLoggedIn } from 'lib/routeChecks';
 import DefaultLoadingAnimation from 'lib/components/loadingAnimations/defaultLoadingAnimation';
@@ -81,6 +82,11 @@ class App extends React.Component {
                     <Route
                         path="exports"
                         component={exportsView.components.ExportsView}
+                    />
+                    <Route
+                        path="admin"
+                        component={adminView.components.AdminView}
+                        onEnter={isAuthenticated}
                     />
                 </Route>
             </Router>
