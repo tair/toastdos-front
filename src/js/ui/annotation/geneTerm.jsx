@@ -106,7 +106,7 @@ class GeneTermAnnotation extends React.Component {
                 </LabelInputRow>
                 </ValidatedField>
                 <ValidatedField isValid={this.props.methodValid}
-                    invalidMessage="A gene term annotation requires a method."
+                    invalidMessage="Method is required. Please enter the experimental method that provides evidence to support the annotation."
                     reviewValidated={this.props.reviewValidated}
                 >
                 <LabelInputRow title="Method">
@@ -139,7 +139,7 @@ class GeneTermAnnotation extends React.Component {
 
                 {this.needsEvidenceWith ?
                 <ValidatedField isValid={this.props.ewValid}
-                    invalidMessage="All evidence with fields must be valid."
+                    invalidMessage="This type of annotation requires the ID of the interacting gene or gene product (UniProtID, RNA Central ID, or AGI Locus ID)"
                     reviewValidated={this.props.reviewValidated}
                 >
                     {(this.props.geneTermAnnotation.evidenceWithOrder.length >= 2 ? (
