@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Container, Row, Col, Card, CardHeader, CardBody, ListGroup, ListGroupItem, Button, ButtonGroup} from 'reactstrap';
 import UserOrcidLink from 'ui/userOrcidLink';
 
@@ -100,9 +101,9 @@ class AdminView extends React.Component {
 }
 
 AdminView.propTypes = {
-    loadUsers: React.PropTypes.func,
-    usersList: React.PropTypes.arrayOf(React.PropTypes.object),
-    loadingUsersList: React.PropTypes.bool,
+    loadUsers: PropTypes.func,
+    usersList: PropTypes.arrayOf(React.PropTypes.object),
+    loadingUsersList: PropTypes.bool,
 };
 
 AdminView.defaultProps = {
