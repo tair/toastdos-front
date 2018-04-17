@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Card, CardHeader, CardBody, CardFooter,
     Container, Row, Col} from 'reactstrap';
 import 'css/submissionView.scss';
@@ -35,9 +36,9 @@ class SubmissionStructure extends React.Component {
 }
 
 SubmissionStructure.propTypes = {
-    infoPanel: React.PropTypes.any,
-    header: React.PropTypes.any,
-    footer: React.PropTypes.any,
+    infoPanel: PropTypes.any,
+    header: PropTypes.any,
+    footer: PropTypes.any,
 };
 
 SubmissionStructure.defaultProps = {

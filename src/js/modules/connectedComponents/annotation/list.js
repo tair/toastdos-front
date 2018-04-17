@@ -1,6 +1,6 @@
 "use strict";
 
-import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AnnotationList from 'ui/annotation/list';
 import {
@@ -21,9 +21,9 @@ const ConnectedAnnotationList = connect(
 )(AnnotationList);
 
 ConnectedAnnotationList.propTypes = {
-    addAnnotation: React.PropTypes.func,
-    removeAnnotation: React.PropTypes.func,
-    curating: React.PropTypes.bool,
+    addAnnotation: PropTypes.func,
+    removeAnnotation: PropTypes.func,
+    curating: PropTypes.bool,
 };
 
 ConnectedAnnotationList.defaultProps = {

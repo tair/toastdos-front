@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import Login from '../views/loginView/loginView';
 
 class Authentication extends React.Component {
@@ -20,7 +21,7 @@ class Authentication extends React.Component {
 }
 
 Authentication.propTypes = {
-    isAuthenticated: React.PropTypes.bool
+    isAuthenticated: PropTypes.bool
 };
 
 

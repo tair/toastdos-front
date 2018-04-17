@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Badge } from 'reactstrap';
 
 class ExternalIdBadge extends React.Component {
@@ -62,7 +63,7 @@ class ExternalIdBadge extends React.Component {
 }
 
 ExternalIdBadge.propTypes = {
-    externalId: React.PropTypes.string,
+    externalId: PropTypes.string,
 };
 
 ExternalIdBadge.defaultProps = {

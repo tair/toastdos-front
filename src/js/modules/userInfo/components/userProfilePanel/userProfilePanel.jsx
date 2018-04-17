@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 
 
@@ -36,12 +37,12 @@ class UserProfilePanel extends React.Component {
 }
 
 UserProfilePanel.propTypes = {
-    name: React.PropTypes.string,
-    orcid: React.PropTypes.string,
-    email: React.PropTypes.string,
-    onEmailChange: React.PropTypes.func,
-    onLogoutClick: React.PropTypes.func,
-    className: React.PropTypes.string
+    name: PropTypes.string,
+    orcid: PropTypes.string,
+    email: PropTypes.string,
+    onEmailChange: PropTypes.func,
+    onLogoutClick: PropTypes.func,
+    className: PropTypes.string
 };
 
 UserProfilePanel.defaultProps = {

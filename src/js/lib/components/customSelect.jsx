@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import 'css/customSelect.scss';
 import { Input } from 'reactstrap';
 
@@ -64,13 +65,13 @@ class CustomSelect extends React.Component {
 }
 
 CustomSelect.propTypes = {
-    name: React.PropTypes.string,
-    id: React.PropTypes.string,
-    value: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.number
+    name: PropTypes.string,
+    id: PropTypes.string,
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
     ]),
-    onChange: React.PropTypes.func
+    onChange: PropTypes.func
 };
 
 CustomSelect.defaultProps = {

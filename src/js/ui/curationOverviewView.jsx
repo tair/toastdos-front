@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Container, Row, Col, Card, CardHeader, CardBody} from 'reactstrap';
 import "css/curationView.scss";
 import SubmissionList from 'ui/submissionList';
@@ -40,14 +41,14 @@ class CurationOverviewView extends React.Component {
 }
 
 CurationOverviewView.propTypes = {
-    loading: React.PropTypes.bool.isRequired,
-    loadSubmissions: React.PropTypes.func,
-    inProgressSubmissions: React.PropTypes.arrayOf(React.PropTypes.object),
-    needsReviewSubmissions: React.PropTypes.arrayOf(React.PropTypes.object),
-    reviewedSubmissions: React.PropTypes.arrayOf(React.PropTypes.object),
-    totaPages: React.PropTypes.number,
-    pageSize: React.PropTypes.number,
-    currPage: React.PropTypes.number
+    loading: PropTypes.bool.isRequired,
+    loadSubmissions: PropTypes.func,
+    inProgressSubmissions: PropTypes.arrayOf(PropTypes.object),
+    needsReviewSubmissions: PropTypes.arrayOf(PropTypes.object),
+    reviewedSubmissions: PropTypes.arrayOf(PropTypes.object),
+    totaPages: PropTypes.number,
+    pageSize: PropTypes.number,
+    currPage: PropTypes.number
 };
 
 CurationOverviewView.defaultProps = {

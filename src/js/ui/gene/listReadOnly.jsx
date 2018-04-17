@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Alert } from 'reactstrap';
 import SingleGeneReadOnly from 'modules/connectedComponents/gene/singleGeneReadOnly';
 
@@ -41,9 +42,9 @@ class GeneListReadOnly extends React.Component {
 }
 
 GeneListReadOnly.propTypes = {
-    geneOrder: React.PropTypes.arrayOf(React.PropTypes.string),
-    curating: React.PropTypes.bool,
-    compact: React.PropTypes.bool
+    geneOrder: PropTypes.arrayOf(PropTypes.string),
+    curating: PropTypes.bool,
+    compact: PropTypes.bool
 };
 
 GeneListReadOnly.defaultProps = {

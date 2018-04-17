@@ -1,6 +1,6 @@
 "use strict";
 
-import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SingleGeneReadOnly from 'ui/gene/singleGeneReadOnly';
 import { geneSelector } from 'domain/gene/selectors';
@@ -13,7 +13,7 @@ const ConnectedSingleGeneReadOnly = connect(
 )(SingleGeneReadOnly);
 
 ConnectedSingleGeneReadOnly.propTypes = {
-    localId: React.PropTypes.string,
+    localId: PropTypes.string,
 };
 
 export default ConnectedSingleGeneReadOnly;

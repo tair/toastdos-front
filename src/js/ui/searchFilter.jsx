@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import CustomTextInput from 'lib/components/customTextInput';
 import CustomCheckboxInput from 'lib/components/customCheckboxInput';
 
@@ -86,7 +87,7 @@ class SearchFilter extends React.Component {
 }
 
 SearchFilter.propTypes = {
-    className: React.PropTypes.string
+    className: PropTypes.string
 };
 
 SearchFilter.defaultProps = {

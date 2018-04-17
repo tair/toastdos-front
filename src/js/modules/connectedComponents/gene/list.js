@@ -1,6 +1,6 @@
 "use strict";
 
-import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import GeneList from 'ui/gene/list';
 import {
@@ -27,12 +27,12 @@ const ConnectedGeneList = connect(
 )(GeneList);
 
 ConnectedGeneList.propTypes = {
-    addGene: React.PropTypes.func,
-    removeGene: React.PropTypes.func,
-    geneOrder: React.PropTypes.array,
-    annotationOrder: React.PropTypes.array,
-    addAnnotation: React.PropTypes.func,
-    curating: React.PropTypes.bool,
+    addGene: PropTypes.func,
+    removeGene: PropTypes.func,
+    geneOrder: PropTypes.array,
+    annotationOrder: PropTypes.array,
+    addAnnotation: PropTypes.func,
+    curating: PropTypes.bool,
 };
 
 ConnectedGeneList.defaultProps = {

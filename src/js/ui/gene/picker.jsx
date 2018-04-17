@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import CustomSelect from 'lib/components/customSelect';
 
 class GenePicker extends React.Component {
@@ -61,12 +62,12 @@ class GenePicker extends React.Component {
 }
 
 GenePicker.propTypes = {
-    genes: React.PropTypes.array,
-    typeLocalId: React.PropTypes.string,
-    onChange: React.PropTypes.func,
-    value: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.number
+    genes: PropTypes.array,
+    typeLocalId: PropTypes.string,
+    onChange: PropTypes.func,
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
     ])
 };
 

@@ -1,6 +1,6 @@
 "use strict";
 
-import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CommentAnnotationReadOnly from 'ui/annotation/commentReadOnly';
 
@@ -12,7 +12,7 @@ const ConnectedCommentAnnotationReadOnly = connect(
 )(CommentAnnotationReadOnly);
 
 ConnectedCommentAnnotationReadOnly.propTypes = {
-    localId: React.PropTypes.string,
+    localId: PropTypes.string,
 };
 
 export default ConnectedCommentAnnotationReadOnly;

@@ -1,6 +1,6 @@
 "use strict";
 
-import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import GenePicker from 'ui/gene/picker';
 import { geneValidListSelector } from 'domain/gene/selectors';
@@ -12,7 +12,7 @@ const ConnectedGenePicker = connect(
 )(GenePicker);
 
 ConnectedGenePicker.propTypes = {
-    geneOrder: React.PropTypes.array,
+    geneOrder: PropTypes.array,
 };
 
 export default ConnectedGenePicker;

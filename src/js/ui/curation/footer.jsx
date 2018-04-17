@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col, Button } from 'reactstrap';
 
 class CurationFooter extends React.Component {
@@ -62,16 +63,16 @@ class CurationFooter extends React.Component {
 }
 
 CurationFooter.propTypes = {
-    previewing: React.PropTypes.bool,
-    submitted: React.PropTypes.bool,
-    canSubmit: React.PropTypes.bool,
-    hasPendingAnnotations: React.PropTypes.bool,
+    previewing: PropTypes.bool,
+    submitted: PropTypes.bool,
+    canSubmit: PropTypes.bool,
+    hasPendingAnnotations: PropTypes.bool,
 
-    submit: React.PropTypes.func,
-    preview: React.PropTypes.func,
-    edit: React.PropTypes.func,
-    resetSubmission: React.PropTypes.func,
-    reviewValidatedFields: React.PropTypes.func,
+    submit: PropTypes.func,
+    preview: PropTypes.func,
+    edit: PropTypes.func,
+    resetSubmission: PropTypes.func,
+    reviewValidatedFields: PropTypes.func,
 };
 
 CurationFooter.defaultProps = {

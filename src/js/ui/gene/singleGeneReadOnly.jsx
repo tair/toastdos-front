@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Card, CardHeader, CardBody, Label, Col, Row } from 'reactstrap';
 
 class SingleGeneReadOnly extends React.Component {
@@ -63,12 +64,12 @@ class SingleGeneReadOnly extends React.Component {
 }
 
 SingleGeneReadOnly.propTypes = {
-    gene: React.PropTypes.shape({
-        localId: React.PropTypes.string,
-        geneSymbolId: React.PropTypes.string,
-        finalizedLocusName: React.PropTypes.string,
-        finalizedGeneSymbol: React.PropTypes.string,
-        finalizedFullName: React.PropTypes.string,
+    gene: PropTypes.shape({
+        localId: PropTypes.string,
+        geneSymbolId: PropTypes.string,
+        finalizedLocusName: PropTypes.string,
+        finalizedGeneSymbol: PropTypes.string,
+        finalizedFullName: PropTypes.string,
     }).isRequired,
     compact: React.PropTypes.bool
 };

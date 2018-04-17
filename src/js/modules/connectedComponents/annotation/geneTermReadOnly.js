@@ -1,6 +1,6 @@
 "use strict";
 
-import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import GeneTermAnnotationReadOnly from 'ui/annotation/geneTermReadOnly';
 import {
@@ -17,7 +17,7 @@ const ConnectedGeneTermAnnotationReadOnly = connect(
 )(GeneTermAnnotationReadOnly);
 
 ConnectedGeneTermAnnotationReadOnly.propTypes = {
-    localId: React.PropTypes.string,
+    localId: PropTypes.string,
 };
 
 export default ConnectedGeneTermAnnotationReadOnly;
