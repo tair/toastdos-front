@@ -310,3 +310,71 @@ export function getDraft(jwt, callback) {
         return callback(null, body);
     });
 }
+
+export function listUsers(jwt, callback) {
+    return request({
+        method: 'GET',
+        timeout: 15000,
+        url: `${BASE_URL}/api/user/`,
+        json: true,
+        headers: {
+            'Authorization': `Bearer ${jwt}`
+        },
+    }, (err, res, body) => {
+        if(err) {
+            return callback(err);
+        }
+        if(res.status < 200 || res.status >= 300) {
+            return callback(err);
+        }
+        return callback(null, body);
+    });
+}
+
+
+export function addRole(userId, roleId, jwt, callback) {
+    return request({
+        method: 'PATCH',
+        timeout: 15000,
+        url: `${BASE_URL}/api/user/${userId}/roles`,
+        json: true,
+        headers: {
+            'Authorization': `Bearer ${jwt}`
+        },
+        body: {
+            add: roleId
+        }
+    }, (err, res, body) => {
+        if(err) {
+            return callback(err);
+        }
+        if(res.status < 200 || res.status >= 300) {
+            return callback(err);
+        }
+        return callback(null, body);
+    });
+}
+
+
+export function removeRole(userId, roleId, jwt, callback) {
+    return request({
+        method: 'PATCH',
+        timeout: 15000,
+        url: `${BASE_URL}/api/user/${userId}/roles`,
+        json: true,
+        headers: {
+            'Authorization': `Bearer ${jwt}`
+        },
+        body: {
+            remove: roleId
+        }
+    }, (err, res, body) => {
+        if(err) {
+            return callback(err);
+        }
+        if(res.status < 200 || res.status >= 300) {
+            return callback(err);
+        }
+        return callback(null, body);
+    });
+}

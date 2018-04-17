@@ -26,7 +26,12 @@ class NavigationFrame extends React.Component {
                 to: '/exports',
                 name: 'Download Data',
                 show: () => true
-            }
+            },
+            {
+                to: '/admin',
+                name: 'Admin',
+                show: () => this.props.userRoles.includes('Admin')
+            },
         ];
 
         return (
