@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import GenePicker from 'modules/connectedComponents/gene/picker';
 import CustomTextArea from 'lib/components/customTextArea';
 import LabelInputRow from 'ui/labelInputRow';
@@ -51,10 +52,10 @@ class CommentAnnotation extends React.Component {
 }
 
 CommentAnnotation.propTypes = {
-    commentAnnotation: React.PropTypes.object,
-    reviewValidated: React.PropTypes.number,
-    geneOrder: React.PropTypes.array,
-    onDataChange: React.PropTypes.func,
+    commentAnnotation: PropTypes.object,
+    reviewValidated: PropTypes.number,
+    geneOrder: PropTypes.array,
+    onDataChange: PropTypes.func,
 };
 
 export default CommentAnnotation;

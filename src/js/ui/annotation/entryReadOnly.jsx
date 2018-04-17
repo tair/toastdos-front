@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
     annotationTypes,
     annotationTypeData,
@@ -56,12 +57,12 @@ class AnnotationEntryReadOnly extends React.Component {
  }
 
 AnnotationEntryReadOnly.propTypes = {
-    annotation: React.PropTypes.shape({
-        localId: React.PropTypes.string,
-        annotationType: React.PropTypes.oneOf(Object.keys(annotationTypes)),
-        annotationTypeLocalId: React.PropTypes.string,
+    annotation: PropTypes.shape({
+        localId: PropTypes.string,
+        annotationType: PropTypes.oneOf(Object.keys(annotationTypes)),
+        annotationTypeLocalId: PropTypes.string,
     }).isRequired,
-    compact: React.PropTypes.bool,
+    compact: PropTypes.bool,
 };
 
 AnnotationEntryReadOnly.defaultProps = {

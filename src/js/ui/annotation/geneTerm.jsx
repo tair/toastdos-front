@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { ListGroup, Button, Row, Col } from 'reactstrap';
 import GenePicker from 'modules/connectedComponents/gene/picker';
 import EvidenceWith from 'modules/connectedComponents/evidenceWith';
@@ -194,21 +195,21 @@ class GeneTermAnnotation extends React.Component {
 }
 
 GeneTermAnnotation.propTypes = {
-    geneTermAnnotation: React.PropTypes.object,
-    localId: React.PropTypes.string,
-    geneOrder: React.PropTypes.array,
-    validateEvidenceWith: React.PropTypes.func,
-    onEvidenceWithAddClick: React.PropTypes.func,
-    onDataChange: React.PropTypes.func,
-    clearEvidenceWith: React.PropTypes.func,
-    removeEvidenceWith: React.PropTypes.func,
-    updateEvidenceWithRelation: React.PropTypes.func,
-    evidenceWithRelation: React.PropTypes.string,
-    needsEvidenceWith: React.PropTypes.bool,
-    keywordValid: React.PropTypes.bool,
-    methodValid: React.PropTypes.bool,
-    ewValid: React.PropTypes.bool,
-    reviewValidated: React.PropTypes.number,
+    geneTermAnnotation: PropTypes.object,
+    localId: PropTypes.string,
+    geneOrder: PropTypes.array,
+    validateEvidenceWith: PropTypes.func,
+    onEvidenceWithAddClick: PropTypes.func,
+    onDataChange: PropTypes.func,
+    clearEvidenceWith: PropTypes.func,
+    removeEvidenceWith: PropTypes.func,
+    updateEvidenceWithRelation: PropTypes.func,
+    evidenceWithRelation: PropTypes.string,
+    needsEvidenceWith: PropTypes.bool,
+    keywordValid: PropTypes.bool,
+    methodValid: PropTypes.bool,
+    ewValid: PropTypes.bool,
+    reviewValidated: PropTypes.number,
 };
 
 GeneTermAnnotation.defaultProps = {

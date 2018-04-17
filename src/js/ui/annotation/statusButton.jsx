@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, ButtonGroup, ButtonDropdown,
     DropdownItem, DropdownMenu, DropdownToggle,
 } from 'reactstrap';
@@ -104,8 +105,8 @@ class AnnotationStatusButton extends React.Component {
 }
 
 AnnotationStatusButton.propTypes = {
-    annotationStatus: React.PropTypes.string.isRequired,
-    onStatusChange: React.PropTypes.func,
+    annotationStatus: PropTypes.string.isRequired,
+    onStatusChange: PropTypes.func,
 };
 
 AnnotationStatusButton.defaultProps = {

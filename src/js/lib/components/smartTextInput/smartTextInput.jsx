@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import CustomTextInput from '../customTextInput';
 import SuggestionList from './subcomponents/suggestionList';
 
@@ -186,23 +187,23 @@ class SmartTextInput extends React.Component {
 }
 
 SmartTextInput.propTypes = {
-    suggestionLimit: React.PropTypes.number,
-    fetchingSuggestions: React.PropTypes.bool,
-    suggestionIndex: React.PropTypes.object,
-    suggestionOrder: React.PropTypes.array,
-    value: React.PropTypes.string,
-    valueId: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.number
+    suggestionLimit: PropTypes.number,
+    fetchingSuggestions: PropTypes.bool,
+    suggestionIndex: PropTypes.object,
+    suggestionOrder: PropTypes.array,
+    value: PropTypes.string,
+    valueId: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
     ]),
-    placeholder: React.PropTypes.string,
-    minSuggestLength: React.PropTypes.number,
-    onChange: React.PropTypes.func,
-    onFocus: React.PropTypes.func,
-    onBlur: React.PropTypes.func,
-    onSelect: React.PropTypes.func,
-    className: React.PropTypes.string,
-    required: React.PropTypes.bool,
+    placeholder: PropTypes.string,
+    minSuggestLength: PropTypes.number,
+    onChange: PropTypes.func,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
+    onSelect: PropTypes.func,
+    className: PropTypes.string,
+    required: PropTypes.bool,
 };
 
 SmartTextInput.defaultProps = {

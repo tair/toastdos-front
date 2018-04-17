@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Container, Row, Col, Card, CardHeader, CardBody, ListGroup, ListGroupItem} from 'reactstrap';
 import config from '../../../config';
 
@@ -118,9 +119,9 @@ class ExportsView extends React.Component {
 }
 
 ExportsView.propTypes = {
-    loadExports: React.PropTypes.func,
-    exportsList: React.PropTypes.arrayOf(React.PropTypes.string),
-    loadingExportsList: React.PropTypes.bool,
+    loadExports: PropTypes.func,
+    exportsList: PropTypes.arrayOf(PropTypes.string),
+    loadingExportsList: PropTypes.bool,
 };
 
 ExportsView.defaultProps = {

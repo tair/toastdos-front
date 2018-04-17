@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Badge } from 'reactstrap';
 
 class SuggestionList extends React.Component {
@@ -102,19 +103,19 @@ class SuggestionList extends React.Component {
 }
 
 SuggestionList.propTypes = {
-    suggestionOrder: React.PropTypes.array,
-    suggestionIndex: React.PropTypes.object,
-    hoveredSuggestionId: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.number
+    suggestionOrder: PropTypes.array,
+    suggestionIndex: PropTypes.object,
+    hoveredSuggestionId: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
     ]),
-    fetching: React.PropTypes.bool,
-    inputLength: React.PropTypes.number,
-    minSuggestLength: React.PropTypes.number,
-    onItemSelect: React.PropTypes.func,
-    onItemHover: React.PropTypes.func,
-    dismiss: React.PropTypes.func,
-    className: React.PropTypes.string
+    fetching: PropTypes.bool,
+    inputLength: PropTypes.number,
+    minSuggestLength: PropTypes.number,
+    onItemSelect: PropTypes.func,
+    onItemHover: PropTypes.func,
+    dismiss: PropTypes.func,
+    className: PropTypes.string
 };
 
 SuggestionList.defaultPropa = {

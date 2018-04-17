@@ -1,6 +1,6 @@
 "use strict";
 
-import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PublicationField from 'ui/publication/field';
 import { publicationSelector, publicationValidSelector } from 'domain/publication/selectors';
@@ -19,7 +19,7 @@ const ConnectedPublicationField = connect(
 )(PublicationField);
 
 ConnectedPublicationField.propTypes = {
-    localId: React.PropTypes.string,
+    localId: PropTypes.string,
 };
 
 ConnectedPublicationField.defaultProps = {

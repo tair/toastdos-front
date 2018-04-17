@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col } from 'reactstrap';
 
 class PublicationFieldReadOnly extends React.Component {
@@ -24,10 +25,10 @@ class PublicationFieldReadOnly extends React.Component {
 }
 
 PublicationFieldReadOnly.propTypes = {
-    idValue: React.PropTypes.string,
-    author: React.PropTypes.string,
-    url: React.PropTypes.string,
-    title: React.PropTypes.string,
+    idValue: PropTypes.string,
+    author: PropTypes.string,
+    url: PropTypes.string,
+    title: PropTypes.string,
 };
 
 PublicationFieldReadOnly.defaultProps = {

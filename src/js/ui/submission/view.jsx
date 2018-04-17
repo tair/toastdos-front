@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col, ListGroup, Form, ListGroupItem } from 'reactstrap';
 import 'css/submissionView.scss';
 import PublicationField from 'modules/connectedComponents/publication/field';
@@ -128,29 +129,29 @@ class SubmissionView extends React.Component {
 }
 
 SubmissionView.propTypes = {
-    submit: React.PropTypes.func,
-    preview: React.PropTypes.func,
-    edit: React.PropTypes.func,
-    resetSubmission: React.PropTypes.func,
-    initialize: React.PropTypes.func,
-    submitting: React.PropTypes.bool,
-    submitted: React.PropTypes.bool,
-    previewing: React.PropTypes.bool,
-    canSubmit: React.PropTypes.bool,
-    errorMessage: React.PropTypes.string,
-    curating: React.PropTypes.bool,
-    publicationLocalId: React.PropTypes.string,
-    geneOrder: React.PropTypes.array,
-    annotationOrder: React.PropTypes.array,
-    addAnnotation: React.PropTypes.func,
-    removeAnnotation: React.PropTypes.func,
-    addGene: React.PropTypes.func,
-    removeGene: React.PropTypes.func,
-    hasValidGene: React.PropTypes.bool,
-    saveDraft: React.PropTypes.func,
-    reviewValidated: React.PropTypes.number,
-    reviewValidatedFields: React.PropTypes.func,
-    draftNumber: React.PropTypes.number,
+    submit: PropTypes.func,
+    preview: PropTypes.func,
+    edit: PropTypes.func,
+    resetSubmission: PropTypes.func,
+    initialize: PropTypes.func,
+    submitting: PropTypes.bool,
+    submitted: PropTypes.bool,
+    previewing: PropTypes.bool,
+    canSubmit: PropTypes.bool,
+    errorMessage: PropTypes.string,
+    curating: PropTypes.bool,
+    publicationLocalId: PropTypes.string,
+    geneOrder: PropTypes.array,
+    annotationOrder: PropTypes.array,
+    addAnnotation: PropTypes.func,
+    removeAnnotation: PropTypes.func,
+    addGene: PropTypes.func,
+    removeGene: PropTypes.func,
+    hasValidGene: PropTypes.bool,
+    saveDraft: PropTypes.func,
+    reviewValidated: PropTypes.number,
+    reviewValidatedFields: PropTypes.func,
+    draftNumber: PropTypes.number,
 };
 
 SubmissionView.defaultProps = {

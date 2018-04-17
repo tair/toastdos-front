@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col, ListGroup, Form, ListGroupItem } from 'reactstrap';
 import 'css/submissionView.scss';
 import PublicationField from 'modules/connectedComponents/publication/field';
@@ -103,30 +104,30 @@ class CurationView extends React.Component {
 }
 
 CurationView.propTypes = {
-    routeParams: React.PropTypes.shape({
-        submissionId: React.PropTypes.string
+    routeParams: PropTypes.shape({
+        submissionId: PropTypes.string
     }).isRequired,
-    requestSubmission: React.PropTypes.func,
-    submit: React.PropTypes.func,
-    preview: React.PropTypes.func,
-    edit: React.PropTypes.func,
-    resetSubmission: React.PropTypes.func,
-    submitting: React.PropTypes.bool,
-    submitted: React.PropTypes.bool,
-    previewing: React.PropTypes.bool,
-    canSubmit: React.PropTypes.bool,
-    errorMessage: React.PropTypes.string,
-    publicationLocalId: React.PropTypes.string,
-    geneOrder: React.PropTypes.array,
-    annotationOrder: React.PropTypes.array,
-    addAnnotation: React.PropTypes.func,
-    removeAnnotation: React.PropTypes.func,
-    addGene: React.PropTypes.func,
-    removeGene: React.PropTypes.func,
-    hasValidGene: React.PropTypes.bool,
-    reviewValidated: React.PropTypes.number,
-    reviewValidatedFields: React.PropTypes.func,
-    hasPendingAnnotations: React.PropTypes.bool,
+    requestSubmission: PropTypes.func,
+    submit: PropTypes.func,
+    preview: PropTypes.func,
+    edit: PropTypes.func,
+    resetSubmission: PropTypes.func,
+    submitting: PropTypes.bool,
+    submitted: PropTypes.bool,
+    previewing: PropTypes.bool,
+    canSubmit: PropTypes.bool,
+    errorMessage: PropTypes.string,
+    publicationLocalId: PropTypes.string,
+    geneOrder: PropTypes.array,
+    annotationOrder: PropTypes.array,
+    addAnnotation: PropTypes.func,
+    removeAnnotation: PropTypes.func,
+    addGene: PropTypes.func,
+    removeGene: PropTypes.func,
+    hasValidGene: PropTypes.bool,
+    reviewValidated: PropTypes.number,
+    reviewValidatedFields: PropTypes.func,
+    hasPendingAnnotations: PropTypes.bool,
 };
 
 CurationView.defaultProps = {

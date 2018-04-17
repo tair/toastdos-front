@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Card, CardHeader, CardBody, InputGroup,
     InputGroupAddon, Row, Col, Button } from 'reactstrap';
 import CustomSelect from 'lib/components/customSelect';
@@ -103,7 +104,8 @@ class AnnotationEntry extends React.Component {
                     <Row>
                         <Col>
                             <InputGroup>
-                                <InputGroupAddon className="bg-light-green text-dark">
+                                <InputGroupAddon className="bg-light-green text-dark"
+                                    addonType='prepend'>
                                     {this.props.title}
                                 </InputGroupAddon>
                                 <CustomSelect name="Annotation Type"
@@ -128,18 +130,18 @@ class AnnotationEntry extends React.Component {
  }
 
 AnnotationEntry.propTypes = {
-    annotation: React.PropTypes.shape({
-        localId: React.PropTypes.string,
-        annotationType: React.PropTypes.oneOf(Object.keys(annotationTypes)),
-        annotationTypeLocalId: React.PropTypes.string,
+    annotation: PropTypes.shape({
+        localId: PropTypes.string,
+        annotationType: PropTypes.oneOf(Object.keys(annotationTypes)),
+        annotationTypeLocalId: PropTypes.string,
     }).isRequired,
-    title: React.PropTypes.string,
-    geneOrder: React.PropTypes.array,
-    onTypeChange: React.PropTypes.func,
-    onDeleteClick: React.PropTypes.func,
-    onStatusChange: React.PropTypes.func,
-    curating: React.PropTypes.bool,
-    reviewValidated: React.PropTypes.number,
+    title: PropTypes.string,
+    geneOrder: PropTypes.array,
+    onTypeChange: PropTypes.func,
+    onDeleteClick: PropTypes.func,
+    onStatusChange: PropTypes.func,
+    curating: PropTypes.bool,
+    reviewValidated: PropTypes.number,
 };
 
 AnnotationEntry.defaultProps = {

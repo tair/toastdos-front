@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Alert } from 'reactstrap';
 import AnnotationEntryReadOnly from 'ui/annotation/entryReadOnly';
 
@@ -60,8 +61,8 @@ class AnnotationCurationListReadOnly extends React.Component {
 
 
 AnnotationCurationListReadOnly.propTypes = {
-    pendingAnnotations: React.PropTypes.array,
-    reviewedAnnotations: React.PropTypes.array,
+    pendingAnnotations: PropTypes.array,
+    reviewedAnnotations: PropTypes.array,
 };
 
 AnnotationCurationListReadOnly.defaultProps = {

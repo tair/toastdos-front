@@ -1,6 +1,6 @@
 "use strict";
 
-import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import GeneGeneAnnotation from 'ui/annotation/geneGene';
 import {
@@ -29,8 +29,8 @@ const ConnectedGeneGeneAnnotation = connect(
 )(GeneGeneAnnotation);
 
 ConnectedGeneGeneAnnotation.propTypes = {
-    localId: React.PropTypes.string,
-    curating: React.PropTypes.bool,
+    localId: PropTypes.string,
+    curating: PropTypes.bool,
 };
 
 export default ConnectedGeneGeneAnnotation;

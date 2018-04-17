@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class TokenWatchdog extends React.Component {
     constructor(props) {
@@ -42,8 +43,8 @@ class TokenWatchdog extends React.Component {
 }
 
 TokenWatchdog.propTypes = {
-    expirationTime: React.PropTypes.number,
-    logout: React.PropTypes.func
+    expirationTime: PropTypes.number,
+    logout: PropTypes.func
 
 };
 

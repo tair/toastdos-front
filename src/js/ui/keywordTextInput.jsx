@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import SmartTextInput from 'lib/components/smartTextInput';
 
 class KeywordTextInput extends React.Component {
@@ -49,19 +50,19 @@ class KeywordTextInput extends React.Component {
 }
 
 KeywordTextInput.propTypes = {
-    onChange: React.PropTypes.func.isRequired,
-    onSelect: React.PropTypes.func.isRequired,
-    value: React.PropTypes.string.isRequired,
-    searchScope: React.PropTypes.string.isRequired,
-    annotationType: React.PropTypes.string,
-    minSuggestLength: React.PropTypes.number,
+    onChange: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
+    value: PropTypes.string.isRequired,
+    searchScope: PropTypes.string.isRequired,
+    annotationType: PropTypes.string,
+    minSuggestLength: PropTypes.number,
 
-    suggestionIndex: React.PropTypes.object,
-    suggestionOrder: React.PropTypes.array,
-    performSearch: React.PropTypes.func.isRequired,
-    clearSearchData: React.PropTypes.func.isRequired,
-    fetchingSuggestions: React.PropTypes.bool.isRequired,
-    placeholder: React.PropTypes.string
+    suggestionIndex: PropTypes.object,
+    suggestionOrder: PropTypes.array,
+    performSearch: PropTypes.func.isRequired,
+    clearSearchData: PropTypes.func.isRequired,
+    fetchingSuggestions: PropTypes.bool.isRequired,
+    placeholder: PropTypes.string
 };
 
 KeywordTextInput.defaultProps = {

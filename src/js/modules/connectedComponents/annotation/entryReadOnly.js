@@ -1,6 +1,6 @@
 "use strict";
 
-import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AnnotationEntryReadOnly from 'ui/annotation/entryReadOnly';
 import { annotationSelector } from 'domain/annotation/selectors';
@@ -13,7 +13,7 @@ const ConnectedAnnotationEntryReadOnly = connect(
 )(AnnotationEntryReadOnly);
 
 ConnectedAnnotationEntryReadOnly.propTypes = {
-    localId: React.PropTypes.string,
+    localId: PropTypes.string,
 };
 
 export default ConnectedAnnotationEntryReadOnly;

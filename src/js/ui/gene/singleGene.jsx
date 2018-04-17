@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Card, CardHeader, CardBody,
     Button, Col, Row } from 'reactstrap';
 import CustomTextInput from 'lib/components/customTextInput';
@@ -76,17 +77,17 @@ class SingleGene extends React.Component {
 }
 
 SingleGene.propTypes = {
-    locusNameValue: React.PropTypes.string,
-    geneSymbolValue: React.PropTypes.string,
-    fullNameValue: React.PropTypes.string,
-    onGeneSymbolChange: React.PropTypes.func,
-    onFullNameChange: React.PropTypes.func,
-    validateGeneData: React.PropTypes.func,
-    onRemoveClick: React.PropTypes.func,
-    title: React.PropTypes.string,
-    validationState: React.PropTypes.string,
-    validationError: React.PropTypes.string,
-    reviewValidated: React.PropTypes.number,
+    locusNameValue: PropTypes.string,
+    geneSymbolValue: PropTypes.string,
+    fullNameValue: PropTypes.string,
+    onGeneSymbolChange: PropTypes.func,
+    onFullNameChange: PropTypes.func,
+    validateGeneData: PropTypes.func,
+    onRemoveClick: PropTypes.func,
+    title: PropTypes.string,
+    validationState: PropTypes.string,
+    validationError: PropTypes.string,
+    reviewValidated: PropTypes.number,
 };
 
 SingleGene.defaultProps = {
@@ -100,7 +101,7 @@ SingleGene.defaultProps = {
     title: "",
     validationState: validationStates.NOT_VALIDATED,
     validationError: "",
-    reviewValidated: React.PropTypes.number,
+    reviewValidated: PropTypes.number,
 };
 
 

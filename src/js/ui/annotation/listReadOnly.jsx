@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Alert } from 'reactstrap';
 import AnnotationEntryReadOnly from 'modules/connectedComponents/annotation/entryReadOnly';
 
@@ -43,8 +44,8 @@ class AnnotationListReadOnly extends React.Component {
 
 
 AnnotationListReadOnly.propTypes = {
-    annotationOrder: React.PropTypes.arrayOf(React.PropTypes.string),
-    compact: React.PropTypes.bool,
+    annotationOrder: PropTypes.arrayOf(PropTypes.string),
+    compact: PropTypes.bool,
 };
 
 AnnotationListReadOnly.defaultProps = {

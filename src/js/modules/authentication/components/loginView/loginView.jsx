@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 
 class LoginView extends React.Component {
@@ -47,10 +48,10 @@ class LoginView extends React.Component {
 }
 
 LoginView.propTypes = {
-    attemptLogin: React.PropTypes.func,
-    isAuthenticating: React.PropTypes.bool,
-    isAutheticated: React.PropTypes.bool,
-    loginError: React.PropTypes.object,
+    attemptLogin: PropTypes.func,
+    isAuthenticating: PropTypes.bool,
+    isAutheticated: PropTypes.bool,
+    loginError: PropTypes.object,
 };
 
 
