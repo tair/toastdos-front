@@ -36,6 +36,12 @@ class ValidationInput extends React.Component {
         });
     }
 
+    componentDidMount() {
+        if (this.props.validationState === validationStates.NOT_VALIDATED) {
+            this.props.attemptValidate(this.state.value);
+        }
+    }
+
     componentDidUpdate() {
         if (this.debouncer) {
             clearTimeout(this.debouncer);
@@ -47,7 +53,8 @@ class ValidationInput extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.value !== this.state.value && nextProps.validationState === validationStates.NOT_VALIDATED) {
+        if (nextProps.value !== this.state.value &&
+            nextProps.validationState === validationStates.NOT_VALIDATED) {
             this.setState({
                 value: nextProps.value,
             });
@@ -111,6 +118,7 @@ ValidationInput.defaultProps = {
     title: '',
     hasValidationStatus: false,
     isSmartTextInput: false,
+    value: '',
     children: null,
     validationError: '',
     upperCaseOnly: false,
