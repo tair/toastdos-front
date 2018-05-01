@@ -37,7 +37,8 @@ class ValidationInput extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.validationState === validationStates.NOT_VALIDATED) {
+        if (this.props.validationState === validationStates.NOT_VALIDATED &&
+        !!this.state.value) {
             this.props.attemptValidate(this.state.value);
         }
     }
