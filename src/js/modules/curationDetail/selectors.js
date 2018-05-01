@@ -64,7 +64,6 @@ export const annotationListReviewed = createSelector(
     annotationOrder,
     // Return true if all annotations are reviewed
     (state, annotations) =>
-        annotations.length > 0 &&
         !annotations.find(localId => !annotationReviewed(state, localId))
 );
 

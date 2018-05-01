@@ -146,7 +146,7 @@ CurationView.defaultProps = {
     reviewValidatedFields: () => {},
     hasValidGene: false,
     hasPendingAnnotations: false,
-    annotationListReviewed: false,
+    annotationListReviewed: true,
 };
 
 export default CurationView;
