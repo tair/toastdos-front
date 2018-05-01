@@ -5,10 +5,12 @@ import * as constants from './constants';
 import * as actions from './actions';
 
 import UserProfilePanel from './components/userProfilePanel';
+import AddEmailPanel from './components/addEmailPanel';
 
 export default {
     components: {
-        UserProfilePanel
+        UserProfilePanel,
+        AddEmailPanel
     },
     actions,
     constants,

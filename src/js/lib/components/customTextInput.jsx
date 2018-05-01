@@ -50,6 +50,7 @@ class CustomTextInput extends React.Component {
                     id={this.props.inputId}
                     required={this.props.required ? "required" : ""}
                     style={{textOverflow: "ellipsis"}}
+                    type={this.props.type}
                 >
                     {this.props.children}
                 </Input>
@@ -75,6 +76,7 @@ CustomTextInput.propTypes = {
     spellCheck: PropTypes.bool,
     inputId: PropTypes.string,
     required: PropTypes.bool,
+    type: PropTypes.string,
 };
 
 CustomTextInput.defaultProps = {
@@ -90,6 +92,7 @@ CustomTextInput.defaultProps = {
     className: "custom-text-input",
     inputId: "",
     required: false,
+    type: "text",
 };
 
 export default CustomTextInput;
