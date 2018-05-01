@@ -67,7 +67,6 @@ class CurationView extends React.Component {
                             geneOrder={this.props.geneOrder}
                             annotationOrder={this.props.annotationOrder}
                             curating={true}
-                            reviewed={this.props.annotationListReviewed}
                         />
                     :
                         <ListGroup>

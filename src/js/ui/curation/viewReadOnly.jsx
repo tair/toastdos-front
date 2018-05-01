@@ -69,7 +69,6 @@ CurationReadOnly.propTypes = {
     publicationLocalId: PropTypes.string,
     geneOrder: PropTypes.array,
     annotationOrder: PropTypes.array,
-    reviewed: PropTypes.bool,
 };
 
 export default CurationReadOnly;
