@@ -36,6 +36,11 @@ export const annotationPending = createSelector(
     )
 );
 
+export const annotationReviewed = createSelector(
+    annotationPending,
+    (pending) => !pending
+);
+
 export const orderHasPendingAnnotations = (state, annotations) => (
     annotations.find(
         localId => annotationPending(state, localId)

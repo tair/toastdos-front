@@ -14,6 +14,7 @@ import {
 import {
     annotationSelector,
     annotationValidSelector,
+    annotationReviewed,
     orderHasPendingAnnotations,
 } from 'domain/annotation/selectors';
 import {
@@ -57,6 +58,15 @@ export const annotationListValidSelector = createSelector(
         annotations.length > 0 &&
         !annotations.find(localId => !annotationValidSelector(state, localId, true))
 );
+
+export const annotationListReviewed = createSelector(
+    state => state,
+    annotationOrder,
+    // Return true if all annotations are reviewed
+    (state, annotations) =>
+        !annotations.find(localId => !annotationReviewed(state, localId))
+);
+
 
 export const hasPendingAnnotations = (state) =>
     orderHasPendingAnnotations(state, annotationOrder(state));

@@ -58,15 +58,16 @@ class CurationView extends React.Component {
             <SubmissionStructure
                 infoPanel={infoPanel}
                 header={header}
-                footer={footer}
+                footer={this.props.annotationListReviewed ? null : footer}
             >
                 <Form className="submission-form-container">
-                    {this.props.previewing ?
+                    {this.props.previewing || this.props.annotationListReviewed ?
                         <CurationReadOnly
                             publicationLocalId={this.props.publicationLocalId}
                             geneOrder={this.props.geneOrder}
                             annotationOrder={this.props.annotationOrder}
                             curating={true}
+                            reviewed={this.props.annotationListReviewed}
                         />
                     :
                         <ListGroup>
@@ -128,6 +129,7 @@ CurationView.propTypes = {
     reviewValidated: PropTypes.number,
     reviewValidatedFields: PropTypes.func,
     hasPendingAnnotations: PropTypes.bool,
+    annotationListReviewed: PropTypes.bool,
 };
 
 CurationView.defaultProps = {
@@ -145,6 +147,7 @@ CurationView.defaultProps = {
     reviewValidatedFields: () => {},
     hasValidGene: false,
     hasPendingAnnotations: false,
+    annotationListReviewed: true,
 };
 
 export default CurationView;

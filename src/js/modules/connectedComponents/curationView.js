@@ -17,6 +17,7 @@ import {
     submitter,
     submittedAt,
     reviewValidated,
+    annotationListReviewed,
 } from 'modules/curationDetail/selectors';
 import {
     attemptSubmit,
@@ -46,6 +47,7 @@ const ConnectedCurationView = connect(
         submitter,
         submittedAt,
         reviewValidated,
+        annotationListReviewed,
     }),
     dispatch => ({
         preview: () => dispatch(preview()),
