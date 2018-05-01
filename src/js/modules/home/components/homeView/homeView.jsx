@@ -18,71 +18,68 @@ class HomeView extends React.Component {
 
     render() {
 
-        const bannerStyle = {
-            backgroundImage: `url(${atImg})`,
-        };
-
         return (
             <div className="home">
-                <Row className="banner-image" style={bannerStyle}>
+                <Row className="banner-image">
                     <Col className="align-self-center">
                         <h3 className="goat-text text-light text-center align-self-center">&mdash; the &mdash;</h3>
                         <h1 className="goat-text text-light text-center align-self-center">
                             Generic Online Annotation Tool
                         </h1>
+                        <h5 className="goat-text text-light text-center align-self-center">
+                            Submit gene annotations, protein interactions, and more for all organisms.
+                        </h5>
                     </Col>
                 </Row>
-                <br/>
-                <Container>
-                    <Row>
-                        <Col className="panel-container">
-                            <Card className="text-center bg-light">
-                                <CardHeader className="bg-light">
-                                    <CardImg top src={phoenixLogo}
-                                        alt="phoenix bioinformatics logo"
-                                        height='120px'
-                                        style={{width:'auto'}}
-                                    />
-                                </CardHeader>
-                                <CardBody>
-                                    <CardText>
-                                        GOAT is a service from Phoenix Bioinformatics.
-                                        Visit our website to learn more about us.
-                                    </CardText>
-                                    <Button color='success'
-                                        href="http://phoenixbioinformatics.org"
-                                        target="_blank"
-                                    >
-                                        Visit Us
-                                    </Button>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                        <Col>
-                            <Card className="text-center bg-light">
-                                <CardHeader className="bg-light">
-                                    <CardImg top src={githubLogo}
-                                        alt="github-logo"
-                                        height='120px'
-                                        style={{width:'auto'}}
-                                    />
-                                </CardHeader>
-                                <CardBody>
-                                    <CardText>
-                                        GOAT is open source! Contribute to this and other Tair projects on our GitHub page!
-                                    </CardText>
-                                    <Button
-                                        color="success"
-                                        href="https://github.com/tair"
-                                        target="_blank"
-                                    >
-                                        Check Out Our GitHub
-                                    </Button>
-                                </CardBody>
-                            </Card>
+                <div className="main-page-descriptions">
+                    <Row style={{height:'400px', backgroundColor:'#706C61'}}>
+                        <Container>
+                            <h1 className="text-white">Research</h1>
+                        </Container>
+                    </Row>
+                    <Row style={{height:'400px', backgroundColor:'#B5DDA4'}}>
+                        <Container>
+                            <h1>Submission</h1>
+                        </Container>
+                    </Row>
+                    <Row style={{height:'400px', backgroundColor:'#754668'}}>
+                        <Container>
+                            <h1>Curation</h1>
+                        </Container>
+                    </Row>
+                    <Row style={{height:'400px', backgroundColor:'#899E8B'}}>
+                        <Container>
+                            <h1>Export</h1>
+                        </Container>
+                    </Row>
+                    <Row className="py-5">
+                        <Col className="panel-container text-center">
+                                <img src={phoenixLogo}
+                                    alt="phoenix bioinformatics logo"
+                                    height='50px'
+                                    style={{width:'auto'}}
+                                />
+                                <Button color='link'
+                                    href="http://phoenixbioinformatics.org"
+                                    target="_blank"
+                                >
+                                    Phoenix Bioinformatics
+                                </Button>
+                                <img src={githubLogo}
+                                    alt="github-logo"
+                                    height='50px'
+                                    style={{width:'auto'}}
+                                />
+                                <Button
+                                    color="link"
+                                    href="https://github.com/tair"
+                                    target="_blank"
+                                >
+                                    View Goat on GitHub
+                                </Button>
                         </Col>
                     </Row>
-                </Container>
+                </div>
             </div>
         );
     }
