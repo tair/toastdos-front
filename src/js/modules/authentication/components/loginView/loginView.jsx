@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
+import { Row, Col, Card } from 'reactstrap';
 
 class LoginView extends React.Component {
     constructor(props) {
@@ -26,22 +27,30 @@ class LoginView extends React.Component {
     }
 
     render() {
+        return (
+            <Row className="justify-content-center mt-5">
+                <Col sm="3">
+                    <Card className="text-center py-3">
+                        {this.renderInner()}
+                    </Card>
+                </Col>
+            </Row>
+        );
+    }
+
+    renderInner() {
         if(this.props.location.query.error) {
             return(
                 <div>
-                    <h1>Error</h1>
-                    <h2>{this.props.location.query.error_description}</h2>
+                    <h3>Error</h3>
+                    <span>{this.props.location.query.error_description}</span>
                 </div>);
         }
         return (
             this.props.isAuthenticating ? (
-                <div>
-                    <h1>Authenticating...</h1>
-                </div>
+                <span><span className="fa fa-refresh fa-spin" /> Authenticating... </span>
             ) : (
-                <div>
-                    <h1>Not Authenticated</h1>
-                </div>
+                <span>Not Authenticated</span>
             )
         );
     }

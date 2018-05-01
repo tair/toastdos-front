@@ -86,7 +86,7 @@ class AdminView extends React.Component {
             <Container fluid className="mt-3">
                 <Row className="justify-content-md-center">
                     <Col md="10">
-                        <Card className="submission-view">
+                        <Card className="page-card">
                             <CardHeader>
                                 <span className="fa fa-file" /> Users
                             </CardHeader>
