@@ -15,9 +15,9 @@ class SubmissionStructure extends React.Component {
         return (
             <Container fluid className="mt-3">
                 <Row className="justify-content-md-center">
-                    <Col className="col-md-10 col-offset-4 submission-view-container">
+                    <Col className="col-md-10 col-offset-4 page-card-container">
                         {this.props.infoPanel}
-                        <Card className="submission-view">
+                        <Card className="page-card">
                             <CardHeader>
                                 {this.props.header}
                             </CardHeader>

@@ -1,9 +1,13 @@
 "use strict";
 
 import React from 'react';
-import atImg from 'img/at.jpg';
 import phoenixLogo from 'img/phoenixLogo.png';
 import githubLogo from 'img/githubLogo.png';
+import researchImg from 'img/research.png';
+import submissionImg from 'img/submission.png';
+import curationImg from 'img/curation.png';
+import exportImg from 'img/export.png';
+
 import { Card, CardImg, CardText, CardHeader,
     CardBody, Button, Container, Row, Col } from 'reactstrap';
 
@@ -31,55 +35,103 @@ class HomeView extends React.Component {
                         </h5>
                     </Col>
                 </Row>
-                <div className="main-page-descriptions">
-                    <Row style={{height:'400px', backgroundColor:'#706C61'}}>
+                <Container fluid className="main-page-descriptions">
+                    <Row className="home-step" style={{backgroundColor:'#CFFCD9', overflow: "hidden"}}>
                         <Container>
-                            <h1 className="text-white">Research</h1>
+                            <Row>
+                                <Col>
+                                    <h1>Research</h1>
+                                    <p className="home-step-text">
+                                        A research paper is published with new biological insights. The researcher wants to extract the meaningful relations and knowledge into a common format.
+                                    </p>
+                                </Col>
+                                <Col className="home-step-img-col">
+                                    <img src={researchImg} alt="research" />
+                                </Col>
+                            </Row>
                         </Container>
                     </Row>
-                    <Row style={{height:'400px', backgroundColor:'#B5DDA4'}}>
+                    <Row className="home-step" style={{backgroundColor:'#95C1AC'}}>
                         <Container>
-                            <h1>Submission</h1>
+                            <Row>
+                                <Col>
+                                    <h1>Submission</h1>
+                                    <p className="home-step-text">
+                                    They create a new submission, which consists of a publication id, gene names, and annotations describing gene relations and protein interactions.
+                                    <br />
+                                    Every piece of data is verified against an array of external biological databases.
+                                    </p>
+                                </Col>
+                                <Col className="home-step-img-col">
+                                    <img src={submissionImg} alt="submission" />
+                                </Col>
+                            </Row>
                         </Container>
                     </Row>
-                    <Row style={{height:'400px', backgroundColor:'#754668'}}>
+                    <Row className="home-step"style={{backgroundColor:'#72E08C'}}>
                         <Container>
-                            <h1>Curation</h1>
+                            <Row>
+                                <Col>
+                                    <h1>Curation</h1>
+                                    <p className="home-step-text">
+                                    Curators review the submission and correct any mistakes found, approving or denying annotations individually.
+                                    <br />
+                                    The submission is finalized and added to the database once all annotations have been reviewed.
+                                    </p>
+                                </Col>
+                                <Col className="home-step-img-col">
+                                    <img src={curationImg} alt="curation" />
+                                </Col>
+                            </Row>
                         </Container>
                     </Row>
-                    <Row style={{height:'400px', backgroundColor:'#899E8B'}}>
+                    <Row className="home-step" style={{backgroundColor:'#2EAA6E'}}>
                         <Container>
-                            <h1>Export</h1>
+                            <Row>
+                                <Col>
+                                    <h1>Export</h1>
+                                    <p className="home-step-text">
+                                    All accepted data is compiled into a tab-separated export format accepted by major genetic databases. Comments are also exported in a separate JSON file.
+                                    </p>
+                                </Col>
+                                <Col className="home-step-img-col">
+                                    <img src={exportImg} alt="export" />
+                                </Col>
+                            </Row>
                         </Container>
                     </Row>
-                    <Row className="py-5">
-                        <Col className="panel-container text-center">
-                                <img src={phoenixLogo}
-                                    alt="phoenix bioinformatics logo"
-                                    height='50px'
-                                    style={{width:'auto'}}
-                                />
-                                <Button color='link'
-                                    href="http://phoenixbioinformatics.org"
-                                    target="_blank"
-                                >
-                                    Phoenix Bioinformatics
-                                </Button>
-                                <img src={githubLogo}
-                                    alt="github-logo"
-                                    height='50px'
-                                    style={{width:'auto'}}
-                                />
-                                <Button
-                                    color="link"
-                                    href="https://github.com/tair"
-                                    target="_blank"
-                                >
-                                    View Goat on GitHub
-                                </Button>
-                        </Col>
+                    <Row className="py-5" style={{height:'150px', backgroundColor:'#899E8B'}}>
+                        <Container>
+                            <Row>
+                                <Col>
+                                    <a className="text-white"
+                                            href="http://phoenixbioinformatics.org"
+                                            target="_blank"
+                                    >
+                                        <img src={phoenixLogo}
+                                            alt="phoenix bioinformatics logo"
+                                            height='50px'
+                                            style={{width:'auto'}}
+                                        />
+                                    </a>
+                                </Col>
+                                <Col className="text-right">
+                                    <a
+                                        className="text-white"
+                                        href="https://github.com/tair"
+                                        target="_blank"
+                                    >
+                                        <img src={githubLogo}
+                                            alt="github-logo"
+                                            height='50px'
+                                            style={{width:'auto'}}
+                                        />
+                                    </a>
+                                </Col>
+                            </Row>
+                        </Container>
                     </Row>
-                </div>
+                </Container>
             </div>
         );
     }

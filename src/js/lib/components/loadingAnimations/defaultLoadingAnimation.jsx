@@ -25,7 +25,8 @@ class DefaultLoadingAnimation extends React.Component {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            fontSize: "1.8em"
+            fontSize: "1.8em",
+            color: "white"
         };
 
         return (

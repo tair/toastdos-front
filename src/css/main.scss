@@ -33,7 +33,38 @@
     position: relative;
     z-index: 2;
     top: 350px;
+
+    & h1 {
+        margin-top: 25px;
+    }
 }
+
+.home-step {
+    overflow: hidden;
+    height: 400px;
+
+    & > .container > .row {
+        height: 100%;
+    }
+
+    & .home-step-text {
+        display: flex;
+        align-self: center!important;
+        font-size: 22px;
+    }
+    
+    & .home-step-img-col {
+        height: 100%;
+        text-align: center;
+        padding: 15px 0;
+
+        & > img {
+            height: 100%;
+            width: auto;
+        }
+    }
+}
+
 
 
 .goat-text {
