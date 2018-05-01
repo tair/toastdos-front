@@ -7,6 +7,7 @@ import 'css/submissionView.scss';
 import PublicationFieldReadOnly from 'modules/connectedComponents/publication/fieldReadOnly';
 import AnnotationListReadOnly from 'ui/annotation/listReadOnly';
 import GeneListReadOnly from 'ui/gene/listReadOnly';
+import userInfoModule from 'modules/userInfo';
 
 class SubmissionReadOnly extends React.Component {
     constructor(props) {
@@ -47,7 +48,7 @@ class SubmissionReadOnly extends React.Component {
                         </Col>
                     </Row>
                 </ListGroupItem>
-                <ListGroupItem className="border-left-0 border-right-0 border-bottom-0">
+                <ListGroupItem className="border-left-0 border-right-0">
                     <Row className="mt-3">
                         <Col sm="3">
                             <h5>Annotations</h5>
@@ -56,6 +57,16 @@ class SubmissionReadOnly extends React.Component {
                         <AnnotationListReadOnly
                                 annotationOrder={this.props.annotationOrder}
                                 compact={this.state.compact} />
+                        </Col>
+                    </Row>
+                </ListGroupItem>
+                <ListGroupItem className="border-left-0 border-right-0 border-bottom-0">
+                    <Row className="mt-3">
+                        <Col sm="3">
+                            <h5>Your Email</h5>
+                        </Col>
+                        <Col>
+                            <userInfoModule.components.AddEmailPanel />
                         </Col>
                     </Row>
                 </ListGroupItem>

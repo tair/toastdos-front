@@ -49,7 +49,9 @@ class AdminView extends React.Component {
                         <UserOrcidLink user={item} />
                     </Col>
                     <Col sm={2}>
-                        {item.email ? item.email : <em>No email</em>}
+                        {item.email_address ?
+                            <a href={`mailto:${item.email_address}`}>{item.email_address}</a> :
+                            <em>No email</em>}
                     </Col>
                     <Col className="text-center">
                         <ButtonGroup>
