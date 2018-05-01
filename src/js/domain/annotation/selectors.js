@@ -24,11 +24,15 @@ export const annotationTypeSelector = createSelector(
     annotation => annotation.annotationType
 );
 
-export const annotationPending = createSelector(
+export const annotationStatus = createSelector(
     annotationSelector,
-    (annotation) => (
-        annotation.annotationStatus &&
-        annotation.annotationStatus == annotationStatusFormats.PENDING
+    (annotation) => annotation.annotationStatus
+);
+
+export const annotationPending = createSelector(
+    annotationStatus,
+    (status) => (
+        status && status == annotationStatusFormats.PENDING
     )
 );
 
@@ -61,17 +65,18 @@ export const annotationTypeValidSelector = createSelector(
     state => state,
     annotationSelector,
     annotationTypeSelector,
+    annotationStatus,
     isCuration,
-    (state, a, type, c) => {
+    (state, a, type, status, c) => {
         switch(annotationTypeData[type].format) {
         case annotationFormats.COMMENT:
             return commentAnnotationValidSelector(state, a.annotationTypeLocalId);
         case annotationFormats.GENE_TERM:
-            return c ?
+            return c && status == annotationStatusFormats.ACCEPTED?
                 geneTermAnnotationValidIdSelector(state, a.annotationTypeLocalId) :
                 geneTermAnnotationValidSelector(state, a.annotationTypeLocalId);
         case annotationFormats.GENE_GENE:
-            return c ?
+            return c && status == annotationStatusFormats.ACCEPTED?
                 geneGeneAnnotationValidIdSelector(state, a.annotationTypeLocalId) :
                 geneGeneAnnotationValidSelector(state, a.annotationTypeLocalId);
         default:
