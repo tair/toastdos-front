@@ -3,6 +3,7 @@
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import GeneGeneAnnotation from 'ui/annotation/geneGene';
+import { annotationStatusFormats } from 'domain/annotation/constants';
 import {
     update,
     updateGene1,
@@ -17,7 +18,8 @@ import {
 const ConnectedGeneGeneAnnotation = connect(
     (state, ownProps) => ({
         geneGeneAnnotation: geneGeneAnnotationSelector(state, ownProps.localId),
-        isValid: ownProps.curating ?
+        isValid: ownProps.curating &&
+            ownProps.annotationStatus == annotationStatusFormats.ACCEPTED ?
             geneGeneAnnotationValidIdSelector(state, ownProps.localId) :
             geneGeneAnnotationValidSelector(state, ownProps.localId),
     }),

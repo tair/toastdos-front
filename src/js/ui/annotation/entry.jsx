@@ -58,6 +58,7 @@ class AnnotationEntry extends React.Component {
                     localId={this.props.annotation.annotationTypeLocalId}
                     geneOrder={this.props.geneOrder}
                     reviewValidated={this.props.reviewValidated}
+                    annotationStatus={this.props.annotation.annotationStatus}
                     curating={this.props.curating}
                 />
             );
@@ -67,6 +68,7 @@ class AnnotationEntry extends React.Component {
                     localId={this.props.annotation.annotationTypeLocalId}
                     geneOrder={this.props.geneOrder}
                     reviewValidated={this.props.reviewValidated}
+                    annotationStatus={this.props.annotation.annotationStatus}
                     curating={this.props.curating}
                 />
             );
