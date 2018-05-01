@@ -8,8 +8,7 @@ import submissionImg from 'img/submission.png';
 import curationImg from 'img/curation.png';
 import exportImg from 'img/export.png';
 
-import { Card, CardImg, CardText, CardHeader,
-    CardBody, Button, Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 
 class HomeView extends React.Component {
     constructor(props) {
