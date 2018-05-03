@@ -12,7 +12,7 @@ To start the development server run `npm start`.
 
 The development client expects there to be a backend server instance running locally in port 3000.
 
-Please see the [Getting Started wiki page](https://github.com/tair/toastdos-front/wiki/Getting-Started) for more information.
+Please see the [wiki page](https://github.com/tair/toastdos-back/wiki/Home) for more information.
 
 Project Structure
 ----
