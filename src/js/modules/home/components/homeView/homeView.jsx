@@ -30,7 +30,7 @@ class HomeView extends React.Component {
                             Generic Online Annotation Tool
                         </h1>
                         <h5 className="goat-text text-light text-center align-self-center">
-                            Submit gene annotations, protein interactions, and more for all organisms.
+                            Functional annotation of any gene from any plant from any paper
                         </h5>
                     </Col>
                 </Row>
@@ -39,9 +39,9 @@ class HomeView extends React.Component {
                         <Container>
                             <Row>
                                 <Col>
-                                    <h1>Research</h1>
+                                    <h1>Publish</h1>
                                     <p className="home-step-text">
-                                        A research paper is published with new biological insights. The researcher wants to extract the meaningful relations and knowledge into a common format.
+                                        GOAT is a tool for annotating gene function from published experimental data.  Start by adding the PubMed ID or DOI for the paper you wish to curate.
                                     </p>
                                 </Col>
                                 <Col className="home-step-img-col">
@@ -54,11 +54,9 @@ class HomeView extends React.Component {
                         <Container>
                             <Row>
                                 <Col>
-                                    <h1>Submission</h1>
+                                    <h1>Annotate</h1>
                                     <p className="home-step-text">
-                                    They create a new submission, which consists of a publication id, gene names, and annotations describing gene relations and protein interactions.
-                                    <br />
-                                    Every piece of data is verified against an array of external biological databases.
+                                        Use the simple interface to annotate gene function(s) including Gene Ontology (GO) molecular function, GO biological role, GO subcellular localization, gene expression (using Plant Ontologies) and protein-protein physical interactions.  Add comments, gene names and symbols for any gene.
                                     </p>
                                 </Col>
                                 <Col className="home-step-img-col">
@@ -71,11 +69,9 @@ class HomeView extends React.Component {
                         <Container>
                             <Row>
                                 <Col>
-                                    <h1>Curation</h1>
+                                    <h1>Submit</h1>
                                     <p className="home-step-text">
-                                    Curators review the submission and correct any mistakes found, approving or denying annotations individually.
-                                    <br />
-                                    The submission is finalized and added to the database once all annotations have been reviewed.
+                                        Each submission is reviewed by an expert curator.
                                     </p>
                                 </Col>
                                 <Col className="home-step-img-col">
@@ -88,9 +84,9 @@ class HomeView extends React.Component {
                         <Container>
                             <Row>
                                 <Col>
-                                    <h1>Export</h1>
+                                    <h1>Download</h1>
                                     <p className="home-step-text">
-                                    All accepted data is compiled into a tab-separated export format accepted by major genetic databases. Comments are also exported in a separate JSON file.
+                                    Reviewed submissions are exported in standard exchange formats. Gene Ontology and Plant Ontology annotations are available in a GO Annotation Format (GAF2.0) file. Other comments are exported in JSON format.
                                     </p>
                                 </Col>
                                 <Col className="home-step-img-col">
