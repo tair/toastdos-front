@@ -4,7 +4,7 @@ The front end system for the GOAT community annotation tool
 
 Usage
 ----
-It is assumed that you have **NodeJS v8.0+** and the **corresponding NPM verion** installed.
+It is assumed that you have **NodeJS v8.0+** and the **corresponding NPM version** installed.
 
 When you first clone the repo you will need to do `npm install` to install the dependencies.
 
@@ -53,7 +53,7 @@ There are a number of subdirectories within the application structure.
 		- **modules/**
 			- This directory contains the independent, feature oriented modules. The modules separate various parts of the application.
 			- **myModule/**
-				- A sample module
+				- A sample module which has a structure similar to a domain entity.
 			- **connectedComponents/**
 				- This directory contains redux [container components](https://redux.js.org/basics/usage-with-react#presentational-and-container-components) which read data from the store and render using a presentational component.
 		- **ui/**
