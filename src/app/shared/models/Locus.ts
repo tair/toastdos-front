@@ -1,0 +1,4 @@
+interface Locus
+{
+  locus?: string;
+}

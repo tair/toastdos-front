@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+$fa-font-path: "~font-awesome/fonts";
+@import '~font-awesome/scss/font-awesome';
+
+.goat-text {
+    font-family: 'Montserrat', sans-serif;
+}
+
+body
+{
+  background-color: #28a745 !important;
+}

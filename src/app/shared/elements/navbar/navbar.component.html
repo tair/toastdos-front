@@ -1,0 +1,15 @@
+<nav class="navbar bg-success justify-content-start">
+  <a class="navbar-brand" [routerLink]="['/']">
+    <img src="/assets/goat.svg" width="30" height="30" alt="" class="goat-logo">
+    <span class="brand-text">GOAT</span>
+  </a>
+  <ng-container *ngIf="!(isLoggedIn | async)">
+    <a class="nav-item mr-auto p-2"></a>
+    <a class="nav-item nav-link" (click)="goToOrcId()" href="#">Login to OrcID</a>
+  </ng-container>
+  <ng-container *ngIf="(isLoggedIn | async)">
+      <a class="nav-item nav-link mr-auto p-2" *ngIf="(user | async).roles[0].id==2" [routerLink]="['/submission']">Submission</a>
+      <a class="nav-item nav-link mr-auto p-2" *ngIf="(user | async).roles[0].id==3" [routerLink]="['/curation']">Curation</a>
+      <a class="nav-item nav-link" (click)="logout()">Logout</a>
+  </ng-container>
+</nav>

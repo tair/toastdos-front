@@ -1,5 +1,0 @@
-#!/bin/bash
-# "Replacing toastdos front nginx files"
-sudo rm -rf /usr/share/nginx/toastdos/*
-sudo cp /home/ec2-user/codedeploy-landingpad/front/* /usr/share/nginx/toastdos/
-
