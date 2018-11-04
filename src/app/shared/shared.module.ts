@@ -10,6 +10,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {NgbPopoverModule} from "@ng-bootstrap/ng-bootstrap";
 import { GenesComponent } from './elements/genes/genes.component';
 import { LocusComponent } from './elements/locus/locus.component';
+import { AnnotationComponent } from './elements/annotation/annotation.component';
+import { AnnotationListComponent } from './elements/annotation-list/annotation-list.component';
 
 @NgModule({
   imports: [
@@ -24,7 +26,9 @@ import { LocusComponent } from './elements/locus/locus.component';
     SubmissionComponent,
     PublicationComponent,
     GenesComponent,
-    LocusComponent
+    LocusComponent,
+    AnnotationComponent,
+    AnnotationListComponent
   ],
   exports: [
     HomepageComponent
