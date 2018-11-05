@@ -1,21 +1,22 @@
 <li class="list-group-item">
   <div class="row">
     <div class="col-sm-3">
-      <a target="_blank" href="https://orcid.org/0000-0002-9916-6312">
-        <!-- react-text: 279 -->Ian Montgomery<!-- /react-text --><!-- react-text: 280 --> <!-- /react-text --><span class="fa fa-external-link"></span>
+      <a target="_blank" [href]="'https://orcid.org/' + user.orcid_id">
+        {{user.name}}<span class="fa fa-external-link"></span>
       </a>
     </div>
-    <div class="col-sm-2"><em>No email</em></div>
+    <div *ngIf="user.email_address===null" class="col-sm-2"><em>No email</em></div>
+    <div *ngIf="!(user.email_address===null)" class="col-sm-2"><a [href]="'mailto:' + user.email_address">{{user.email_address}}</a></div>
     <div class="text-center col">
       <div role="group" class="btn-group">
-        <button type="button" class="btn btn-success">
-          <span class="fa fa-check"></span><!-- react-text: 288 --> <!-- /react-text --><!-- react-text: 289 -->Researcher<!-- /react-text -->
+        <button (click)="toggleResearcher(user)" type="button" [ngClass]="[userIsResearcher(user) ? 'btn btn-success':'btn btn-danger']">
+          <span class="fa fa-check"></span>Researcher
         </button>
-        <button type="button" class="btn btn-success">
-          <span class="fa fa-check"></span><!-- react-text: 292 --> <!-- /react-text --><!-- react-text: 293 -->Curator<!-- /react-text -->
+        <button (click)="toggleCurator(user)"  type="button" [ngClass]="[userIsCurator(user) ? 'btn btn-success':'btn btn-danger']">
+          <span class="fa fa-check"></span>Curator
         </button>
-        <button type="button" class="btn btn-success">
-          <span class="fa fa-check"></span><!-- react-text: 296 --> <!-- /react-text --><!-- react-text: 297 -->Admin<!-- /react-text -->
+        <button (click)="toggleAdmin(user)"  type="button" [ngClass]="[userIsAdmin(user) ? 'btn btn-success':'btn btn-danger']">
+          <span class="fa fa-check"></span>Admin
         </button>
       </div>
     </div>

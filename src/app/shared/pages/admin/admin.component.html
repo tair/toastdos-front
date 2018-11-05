@@ -9,7 +9,7 @@
                     </div>
                     <div class="p-0 card-body">
                         <ul class="list-group-flush list-group">
-                            <app-user-admin></app-user-admin>
+                            <app-user-admin *ngFor="let u of users" [user]="u"></app-user-admin>
                         </ul>
                     </div>
                 </div>
