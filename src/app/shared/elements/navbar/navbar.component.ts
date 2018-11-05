@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/accounts/services/authentication.service';
-import {GoatConstants} from "../../utils";
 
 @Component({
   selector: 'app-navbar',
@@ -12,9 +11,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(private authService: AuthenticationService) { }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   logout()
   {
