@@ -7,9 +7,13 @@
     <a class="nav-item mr-auto p-2"></a>
     <a class="nav-item nav-link" (click)="goToOrcId()" href="#">Login to OrcID</a>
   </ng-container>
+
   <ng-container *ngIf="(isLoggedIn | async)">
-      <a class="nav-item nav-link mr-auto p-2" *ngIf="(user | async).roles[0].id==2" [routerLink]="['/submission']">Submission</a>
-      <a class="nav-item nav-link mr-auto p-2" *ngIf="(user | async).roles[0].id==3" [routerLink]="['/curation']">Curation</a>
-      <a class="nav-item nav-link" (click)="logout()">Logout</a>
+      <ng-container *ngFor="let r of userTypes">
+              <a class="nav-item nav-link p-2" *ngIf="r===2" [routerLink]="['/submission']">Submission</a>
+              <a class="nav-item nav-link p-2" *ngIf="r===3" [routerLink]="['/curation']">Curation</a>
+              <a class="nav-item nav-link p-2" *ngIf="r===1" [routerLink]="['/admin']">Admin</a>
+      </ng-container>
+      <a class="nav-item ml-auto nav-link" (click)="logout()">Logout</a>
   </ng-container>
 </nav>

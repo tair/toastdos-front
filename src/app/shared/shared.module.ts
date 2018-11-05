@@ -12,6 +12,7 @@ import { GenesComponent } from './elements/genes/genes.component';
 import { LocusComponent } from './elements/locus/locus.component';
 import { AnnotationComponent } from './elements/annotation/annotation.component';
 import { AnnotationListComponent } from './elements/annotation-list/annotation-list.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { AnnotationListComponent } from './elements/annotation-list/annotation-l
     GenesComponent,
     LocusComponent,
     AnnotationComponent,
-    AnnotationListComponent
+    AnnotationListComponent,
+    AdminComponent
   ],
   exports: [
     HomepageComponent
