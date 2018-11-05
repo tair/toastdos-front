@@ -13,6 +13,7 @@ import { LocusComponent } from './elements/locus/locus.component';
 import { AnnotationComponent } from './elements/annotation/annotation.component';
 import { AnnotationListComponent } from './elements/annotation-list/annotation-list.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { UserAdminComponent } from './elements/user-admin/user-admin.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { AdminComponent } from './pages/admin/admin.component';
     LocusComponent,
     AnnotationComponent,
     AnnotationListComponent,
-    AdminComponent
+    AdminComponent,
+    UserAdminComponent
   ],
   exports: [
     HomepageComponent
