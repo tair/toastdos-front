@@ -11,7 +11,7 @@ import {debounceTime, distinctUntilChanged, tap} from "rxjs/operators";
 export class LocusComponent implements OnInit {
 
   private locusStatus: string;
-  private locusData: any;
+  private _locusData: any;
 
   @Input() number: number;
 
@@ -34,7 +34,7 @@ export class LocusComponent implements OnInit {
   constructor(private geneService: GeneService) { }
 
   ngOnInit() {
-    this.locusStatus = "empty";
+    this.locusStatus = 'empty';
     this.locus.valueChanges
       .pipe(
         debounceTime(400),
@@ -45,11 +45,12 @@ export class LocusComponent implements OnInit {
         })
       ).subscribe((value: string) => {
       this.geneService.checkLocus$(value)
-        .subscribe((response: any)=> {
+        .subscribe((response: any) => {
             this.locusStatus = 'success';
             this.toggleErrorPopover();
-            this.locusData = response;
-            console.log(this.locusData)
+            this._locusData = response;
+            console.log(this.locusData);
+            this.geneService.addEnteredGene(response);
           },
           error => {
             console.log(error);
@@ -74,7 +75,7 @@ export class LocusComponent implements OnInit {
   }
 
   toggleErrorPopover() {
-    if (this.locusStatus=='error') {
+    if (this.locusStatus === 'error') {
       this.popover.open();
     } else {
       this.popover.close();
@@ -101,6 +102,10 @@ export class LocusComponent implements OnInit {
   }
   get full_gene_name() {
     return this.form.get('full_gene_name');
+  }
+
+  get locusData() {
+    return this._locusData;
   }
 
 }

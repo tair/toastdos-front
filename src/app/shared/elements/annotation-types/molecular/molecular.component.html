@@ -1,0 +1,35 @@
+<div class="d-flex p-2 align-items-center row">
+  <div class="text-right col-3">
+    <label class="mb-0">Gene</label>
+  </div>
+  <div class="p-1 col">
+    <select class="form-control">
+      <option *ngFor="let gene of availableGenes | async">{{gene.locus_name}}</option>
+    </select>
+  </div>
+</div>
+<div class="d-flex p-2 align-items-center row">
+  <div class="text-right col-3">
+    <label class="mb-0">Molecular Function</label>
+  </div>
+  <div class="p-1 col">
+    <ng-template #rt let-function="result">
+      <span class="badge badge-success">
+        {{function.external_id}}
+      </span>
+      {{function.name}}
+      <span *ngIf="function.synonym" class="badge badge-warning">
+        {{function.synonym}}
+      </span>
+    </ng-template>
+    <input placeholder="Start Typing..." class="form-control" [formControl]="function" [ngbTypeahead]="goFunctions" [resultTemplate]="rt" [inputFormatter]="goFormatter">
+  </div>
+</div>
+<div class="d-flex p-2 align-items-center row">
+  <div class="text-right col-3">
+    <label class="mb-0">Method</label>
+  </div>
+  <div class="p-1 col">
+    <app-method-dropdown></app-method-dropdown>
+  </div>
+</div>

@@ -7,7 +7,6 @@ import { AuthenticationService } from 'src/app/accounts/services/authentication.
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  // userType:any = GoatConstants.userTypeResearcher;
 
   constructor(private authService: AuthenticationService) { }
 
