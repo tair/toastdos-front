@@ -7,20 +7,23 @@ import { NavbarComponent } from './elements/navbar/navbar.component';
 import { SubmissionComponent } from './pages/submission/submission.component';
 import { PublicationComponent } from './elements/publication/publication.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import {NgbPopoverModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbPopoverModule, NgbProgressbarModule} from "@ng-bootstrap/ng-bootstrap";
 import { GenesComponent } from './elements/genes/genes.component';
 import { LocusComponent } from './elements/locus/locus.component';
 import { AnnotationComponent } from './elements/annotation/annotation.component';
 import { AnnotationListComponent } from './elements/annotation-list/annotation-list.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { UserAdminComponent } from './elements/user-admin/user-admin.component';
+import { CurationComponent } from './pages/curation/curation.component';
+import { SubmissionStatusComponent } from './elements/submission-status/submission-status.component';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedRoutingModule,
     ReactiveFormsModule,
-    NgbPopoverModule
+    NgbPopoverModule,
+    NgbProgressbarModule
   ],
   declarations: [
     HomepageComponent,
@@ -32,7 +35,9 @@ import { UserAdminComponent } from './elements/user-admin/user-admin.component';
     AnnotationComponent,
     AnnotationListComponent,
     AdminComponent,
-    UserAdminComponent
+    UserAdminComponent,
+    CurationComponent,
+    SubmissionStatusComponent
   ],
   exports: [
     HomepageComponent

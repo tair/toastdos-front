@@ -42,11 +42,11 @@ export class UserAdminComponent implements OnInit {
   }
   toggleCurator(user)
   {
-    this.toggleRole(user,2);
+    this.toggleRole(user,2); //tbh these seem to be backwards...
   }
   toggleResearcher(user)
   {
-    this.toggleRole(user,3);
+    this.toggleRole(user,3); //tbh these seem to be backwards...
   }
 
   toggleRole(user,roleId)
