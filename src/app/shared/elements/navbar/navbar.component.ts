@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/accounts/services/authentication.service';
-import {GoatConstants} from "../../utils";
-import {forEach} from "@angular/router/src/utils/collection";
-import {v} from "@angular/core/src/render3";
-import { NgModule } from '@angular/core';
 
 
 @Component({
@@ -16,10 +12,9 @@ export class NavbarComponent implements OnInit {
 
   constructor(private authService: AuthenticationService) { }
 
-  ngOnInit()
-  {
-    this.authService.currentUserInfo$.subscribe((user)=> {
-      this.userTypes = user.roles.map(x=>{
+  ngOnInit() {
+    this.authService.currentUserInfo$.subscribe((user) => {
+      this.userTypes = user.roles.map(x => {
         return x.id;
       });
 
@@ -40,8 +35,7 @@ export class NavbarComponent implements OnInit {
       'redirect_uri=http://localhost:4200/';
   }
 
-  get user()
-  {
+  get user() {
     return this.authService.currentUserInfo$;
   }
 

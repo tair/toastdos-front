@@ -6,12 +6,15 @@ import { HomepageComponent } from './pages/homepage/homepage.component';
 import { NavbarComponent } from './elements/navbar/navbar.component';
 import { SubmissionComponent } from './pages/submission/submission.component';
 import { PublicationComponent } from './elements/publication/publication.component';
-import {ReactiveFormsModule} from "@angular/forms";
-import {NgbPopoverModule, NgbProgressbarModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbPopoverModule ,NgbTypeaheadModule, NgbProgressbarModule} from "@ng-bootstrap/ng-bootstrap";
+import {ReactiveFormsModule} from '@angular/forms';
 import { GenesComponent } from './elements/genes/genes.component';
 import { LocusComponent } from './elements/locus/locus.component';
 import { AnnotationComponent } from './elements/annotation/annotation.component';
 import { AnnotationListComponent } from './elements/annotation-list/annotation-list.component';
+import { BiologicalComponent } from './elements/annotation-types/biological/biological.component';
+import { MolecularComponent } from './elements/annotation-types/molecular/molecular.component';
+import { MethodDropdownComponent } from './elements/method-dropdown/method-dropdown.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { UserAdminComponent } from './elements/user-admin/user-admin.component';
 import { CurationComponent } from './pages/curation/curation.component';
@@ -23,7 +26,9 @@ import { SubmissionStatusComponent } from './elements/submission-status/submissi
     SharedRoutingModule,
     ReactiveFormsModule,
     NgbPopoverModule,
-    NgbProgressbarModule
+    NgbProgressbarModule,
+    NgbTypeaheadModule
+
   ],
   declarations: [
     HomepageComponent,
@@ -34,6 +39,9 @@ import { SubmissionStatusComponent } from './elements/submission-status/submissi
     LocusComponent,
     AnnotationComponent,
     AnnotationListComponent,
+    BiologicalComponent,
+    MolecularComponent,
+    MethodDropdownComponent,
     AdminComponent,
     UserAdminComponent,
     CurationComponent,
