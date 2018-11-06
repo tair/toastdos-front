@@ -15,7 +15,9 @@ export class GenesComponent implements OnInit, AfterViewInit {
 
   constructor(private geneService: GeneService) { }
 
-  ngOnInit() {
+  ngOnInit()
+  {
+
   }
 
   ngAfterViewInit() {

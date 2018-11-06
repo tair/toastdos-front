@@ -15,6 +15,8 @@ import { AnnotationListComponent } from './elements/annotation-list/annotation-l
 import { BiologicalComponent } from './elements/annotation-types/biological/biological.component';
 import { MolecularComponent } from './elements/annotation-types/molecular/molecular.component';
 import { MethodDropdownComponent } from './elements/method-dropdown/method-dropdown.component';
+import { AdminComponent } from './pages/admin/admin.component';
+import { UserAdminComponent } from './elements/user-admin/user-admin.component';
 
 @NgModule({
   imports: [
@@ -35,7 +37,9 @@ import { MethodDropdownComponent } from './elements/method-dropdown/method-dropd
     AnnotationListComponent,
     BiologicalComponent,
     MolecularComponent,
-    MethodDropdownComponent
+    MethodDropdownComponent,
+    AdminComponent,
+    UserAdminComponent
   ],
   exports: [
     HomepageComponent

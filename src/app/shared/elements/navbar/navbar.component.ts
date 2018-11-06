@@ -1,16 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/accounts/services/authentication.service';
 
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  userTypes: number[] = [];
 
   constructor(private authService: AuthenticationService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.authService.currentUserInfo$.subscribe((user) => {
+      this.userTypes = user.roles.map(x => {
+        return x.id;
+      });
+
+    });
+  }
+
 
   logout()
   {
@@ -25,8 +35,7 @@ export class NavbarComponent implements OnInit {
       'redirect_uri=http://localhost:4200/';
   }
 
-  get user()
-  {
+  get user() {
     return this.authService.currentUserInfo$;
   }
 
