@@ -19,6 +19,11 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { UserAdminComponent } from './elements/user-admin/user-admin.component';
 import { CurationComponent } from './pages/curation/curation.component';
 import { SubmissionStatusComponent } from './elements/submission-status/submission-status.component';
+import { SubcellularComponent } from './elements/annotation-types/subcellular/subcellular.component';
+import { AnnatomicalComponent } from './elements/annotation-types/annatomical/annatomical.component';
+import { TemporalComponent } from './elements/annotation-types/temporal/temporal.component';
+import { ProteinInteractionComponent } from './elements/annotation-types/protein-interaction/protein-interaction.component';
+import { CommentComponent } from './elements/annotation-types/comment/comment.component';
 
 @NgModule({
   imports: [
@@ -45,7 +50,12 @@ import { SubmissionStatusComponent } from './elements/submission-status/submissi
     AdminComponent,
     UserAdminComponent,
     CurationComponent,
-    SubmissionStatusComponent
+    SubmissionStatusComponent,
+    SubcellularComponent,
+    AnnatomicalComponent,
+    TemporalComponent,
+    ProteinInteractionComponent,
+    CommentComponent,
   ],
   exports: [
     HomepageComponent

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { GeneService } from 'src/app/shared/services/gene.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { debounceTime, map, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import {MethodDropdownComponent} from "../../method-dropdown/method-dropdown.component";
 
 @Component({
   selector: 'app-molecular',
@@ -12,13 +13,18 @@ import { debounceTime, map, distinctUntilChanged, switchMap } from 'rxjs/operato
 export class MolecularComponent implements OnInit {
 
   form: FormGroup = new FormGroup({
-    function: new FormControl('', [
-      Validators.required
-    ]),
-    method: new FormControl('', [
-      Validators.required
-    ])
+      function: new FormControl('', [
+          Validators.required
+      ]),
+      gene: new FormControl('', [
+          Validators.required
+      ]),
   });
+
+  @Input () annotationData: any;
+  @ViewChild(MethodDropdownComponent) methodComponent: MethodDropdownComponent;
+
+  annotationType: string = "MOLECULAR_FUNCTION";
 
   goFunctions: any;
   goFormatter = (x: any) => x.name;
@@ -32,6 +38,10 @@ export class MolecularComponent implements OnInit {
         distinctUntilChanged(),
         switchMap(term => this.geneService.searchMolecularFunction(term))
       );
+
+    this.form.valueChanges.subscribe(value => {
+        this.getAnnotationData();
+    })
   }
 
   get availableGenes() {
@@ -39,11 +49,21 @@ export class MolecularComponent implements OnInit {
   }
 
   get function() {
-    return this.form.get('function');
+      return this.form.get('function');
   }
 
-  get method() {
-    return this.form.get('method');
+  get genetest() {
+      return this.form.get('gene');
+  }
+
+  getAnnotationData()
+  {
+      //angular is being poopy here, if we only have 1 gene the select form control doesnt really work... ? unclear why
+      this.annotationData.data['gene1'] = this.geneService.allGenes().length == 1 ? this.geneService.allGenes()[0] : this.genetest.value;
+      this.annotationData.data['function'] = this.function.value;
+      this.annotationData.data['method'] = this.methodComponent.method;
+      console.log(this.annotationData.data);
+
   }
 
 }

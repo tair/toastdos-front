@@ -49,11 +49,9 @@ export class LocusComponent implements OnInit {
             this.locusStatus = 'success';
             this.toggleErrorPopover();
             this._locusData = response;
-            console.log(this.locusData);
             this.geneService.addEnteredGene(response);
           },
           error => {
-            console.log(error);
             this.locusStatus = 'error';
             this.toggleErrorPopover();
           });

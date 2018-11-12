@@ -8,10 +8,11 @@
   </span>
 </ng-template>
 <input 
-placeholder="Start Typing..."
+placeholder="e.g. Enzyme Assay"
 class="form-control"
 [ngbTypeahead]="methods"
 [resultTemplate]="rt"
 [inputFormatter]="methodFormatter"
 (selectItem)="selectMethod($event.item)"
+(change)="selectMethod($event.item)"
 >

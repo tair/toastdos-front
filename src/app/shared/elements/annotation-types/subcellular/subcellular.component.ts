@@ -5,11 +5,11 @@ import {Observable} from "rxjs";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 
 @Component({
-  selector: 'app-biological',
-  templateUrl: './biological.component.html',
-  styleUrls: ['./biological.component.scss']
+  selector: 'app-subcellular',
+  templateUrl: './subcellular.component.html',
+  styleUrls: ['./subcellular.component.scss']
 })
-export class BiologicalComponent implements OnInit {
+export class SubcellularComponent implements OnInit {
 
     form: FormGroup = new FormGroup({
         function: new FormControl('', [
@@ -20,7 +20,7 @@ export class BiologicalComponent implements OnInit {
         ])
     });
 
-    annotationType: string = "BIOLOGICAL_PROCESS";
+    annotationType: string = "SUBCELLULAR_LOCATION";
 
     goFunctions: any;
     goFormatter = (x: any) => x.name;
@@ -32,7 +32,7 @@ export class BiologicalComponent implements OnInit {
             text$.pipe(
                 debounceTime(200),
                 distinctUntilChanged(),
-                switchMap(term => this.geneService.searchBiologicalProcess(term))
+                switchMap(term => this.geneService.searchSubcellularLocation(term))
             );
     }
 

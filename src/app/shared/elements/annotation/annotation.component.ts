@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -8,15 +8,20 @@ import { FormControl } from '@angular/forms';
 })
 export class AnnotationComponent implements OnInit {
 
-  @Input() number: number;
+  @Input() annotationModel: any;
+  @Output() deleted: EventEmitter<any> = new EventEmitter();
 
   selectedType: FormControl = new FormControl('Molecular Function');
 
-  genes = ['test', 'testing'];
 
   constructor() { }
 
   ngOnInit() {
+
+  }
+
+  deleteMe() {
+    this.deleted.emit(this.annotationModel);
   }
 
 }

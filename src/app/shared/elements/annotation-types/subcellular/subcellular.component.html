@@ -3,14 +3,14 @@
     <label class="mb-0">Gene</label>
   </div>
   <div class="p-1 col">
-    <select class="form-control" [formControl]="genetest">
+    <select class="form-control">
       <option *ngFor="let gene of availableGenes | async">{{gene.locus_name}}</option>
     </select>
   </div>
 </div>
 <div class="d-flex p-2 align-items-center row">
   <div class="text-right col-3">
-    <label class="mb-0">Molecular Function (GO Function)</label>
+    <label class="mb-0">Subcellular Location (GO Component)</label>
   </div>
   <div class="p-1 col">
     <ng-template #rt let-function="result">

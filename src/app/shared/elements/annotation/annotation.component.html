@@ -4,16 +4,16 @@
       <div class="col">
         <div class="input-group">
           <div class="bg-light-green text-dark input-group-prepend">
-            <span class="input-group-text">Annotation {{number + 1}}</span>
+            <span class="input-group-text">Annotation {{annotationModel.index + 1}}</span>
           </div>
           <select class="form-control" [formControl]="selectedType">
             <option value="Molecular Function">Molecular Function (GO Function)</option>
-            <option>Biological Process (GO Process)</option>
-            <option>SubCellular Location (Go Component)</option>
-            <option>Anotomical Location (PO Anatomy)</option>
-            <option>Temporal Expression (PO Dev. Stage)</option>
-            <option>Protein Interaction</option>
-            <option>Comment</option>
+            <option value="Biological Process">Biological Process (GO Process)</option>
+            <option value="SubCellular Location">SubCellular Location (Go Component)</option>
+            <option value="Anotomical Location">Anotomical Location (PO Anatomy)</option>
+            <option value="Temporal Expression">Temporal Expression (PO Dev. Stage)</option>
+            <option value="Protein Interaction">Protein Interaction</option>
+            <option value="Comment">Comment</option>
           </select>
           <div class="input-group-append">
             <span class="input-group-text">
@@ -35,12 +35,31 @@
         </div>
       </div>
       <div class="text-right col-sm-auto">
-        <button type="button" class="btn btn-danger"><span class="fa fa-close" title="Remove Gene"></span></button>
+        <button type="button" class="btn btn-danger" (click)="deleteMe()"><span class="fa fa-close" title="Remove Annotation"></span></button>
       </div>
     </div>
     <div class="card-body">
       <ng-container *ngIf="selectedType.value === 'Molecular Function'">
-        <app-molecular></app-molecular>
+        <app-molecular [annotationData]="annotationModel"></app-molecular>
+      </ng-container>
+      <ng-container *ngIf="selectedType.value === 'Biological Process'">
+        <app-biological></app-biological>
+      </ng-container>
+      <ng-container *ngIf="selectedType.value === 'SubCellular Location'">
+        <app-subcellular></app-subcellular>
+      </ng-container>
+      <ng-container *ngIf="selectedType.value === 'Anotomical Location'">
+        <app-annatomical></app-annatomical>
+      </ng-container>
+      <ng-container *ngIf="selectedType.value === 'Temporal Expression'">
+        <app-temporal></app-temporal>
+      </ng-container>
+      <ng-container *ngIf="selectedType.value === 'Protein Interaction'">
+        <app-protein-interaction></app-protein-interaction>
+      </ng-container>
+      <ng-container *ngIf="selectedType.value === 'Comment'">
+        <app-comment></app-comment>
       </ng-container>
     </div>
   </div>
+</div>
