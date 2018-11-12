@@ -28,6 +28,7 @@ export class AnnotationListComponent implements OnInit {
         max = x.index;
       }
     }
+    console.log('adding');
     this.annotationModels.push({index:max+1, data:{}});
     console.log(this.annotationModels);
   }
@@ -35,8 +36,8 @@ export class AnnotationListComponent implements OnInit {
   removeAnnotation(annoModelToDelete: any)
   {
     console.log('deleting');
-    console.log(this.annotationModels);
     this.annotationModels.splice(annoModelToDelete.index,1)
+    console.log(this.annotationModels);
   }
 
 

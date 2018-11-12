@@ -3,7 +3,7 @@
     <label class="mb-0">Gene</label>
   </div>
   <div class="p-1 col">
-    <select class="form-control">
+    <select class="form-control" [formControl]="gene">
       <option *ngFor="let gene of availableGenes | async">{{gene.locus_name}}</option>
     </select>
   </div>
@@ -30,6 +30,6 @@
     <label class="mb-0">Method</label>
   </div>
   <div class="p-1 col">
-    <app-method-dropdown [annotationType]="annotationType"></app-method-dropdown>
+    <app-method-dropdown (selectedMethod)="setAnnotationData()" [annotationType]="annotationType"></app-method-dropdown>
   </div>
 </div>

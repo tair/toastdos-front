@@ -43,22 +43,22 @@
         <app-molecular [annotationData]="annotationModel"></app-molecular>
       </ng-container>
       <ng-container *ngIf="selectedType.value === 'Biological Process'">
-        <app-biological></app-biological>
+        <app-biological [annotationData]="annotationModel"></app-biological>
       </ng-container>
       <ng-container *ngIf="selectedType.value === 'SubCellular Location'">
-        <app-subcellular></app-subcellular>
+        <app-subcellular [annotationData]="annotationModel"></app-subcellular>
       </ng-container>
       <ng-container *ngIf="selectedType.value === 'Anotomical Location'">
-        <app-annatomical></app-annatomical>
+        <app-annatomical [annotationData]="annotationModel"></app-annatomical>
       </ng-container>
       <ng-container *ngIf="selectedType.value === 'Temporal Expression'">
-        <app-temporal></app-temporal>
+        <app-temporal [annotationData]="annotationModel"></app-temporal>
       </ng-container>
       <ng-container *ngIf="selectedType.value === 'Protein Interaction'">
-        <app-protein-interaction></app-protein-interaction>
+        <app-protein-interaction [annotationData]="annotationModel"></app-protein-interaction>
       </ng-container>
       <ng-container *ngIf="selectedType.value === 'Comment'">
-        <app-comment></app-comment>
+        <app-comment [annotationData]="annotationModel"></app-comment>
       </ng-container>
     </div>
   </div>

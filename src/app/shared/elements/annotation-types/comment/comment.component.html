@@ -1,3 +1,20 @@
-<p>
-  comment works!
-</p>
+<div class="d-flex p-2 align-items-center row">
+  <div class="text-right col-3">
+    <label class="mb-0">Gene</label>
+  </div>
+  <div class="p-1 col">
+    <select class="form-control" [formControl]="gene">
+      <option *ngFor="let gene of availableGenes | async">{{gene.locus_name}}</option>
+    </select>
+  </div>
+</div>
+
+<div class="d-flex p-2 align-items-center row">
+  <div class="text-right col-3">
+    <label class="mb-0">Comment</label>
+  </div>
+  <div class="p-1 col">
+    <textarea class="form-control" [formControl]="comment" (change)="setAnnotationData()">
+    </textarea>
+  </div>
+</div>

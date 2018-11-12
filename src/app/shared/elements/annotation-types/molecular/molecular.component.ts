@@ -40,7 +40,7 @@ export class MolecularComponent implements OnInit {
       );
 
     this.form.valueChanges.subscribe(value => {
-        this.getAnnotationData();
+        this.setAnnotationData();
     })
   }
 
@@ -52,18 +52,15 @@ export class MolecularComponent implements OnInit {
       return this.form.get('function');
   }
 
-  get genetest() {
+  get gene() {
       return this.form.get('gene');
   }
 
-  getAnnotationData()
+  setAnnotationData()
   {
-      //angular is being poopy here, if we only have 1 gene the select form control doesnt really work... ? unclear why
-      this.annotationData.data['gene1'] = this.geneService.allGenes().length == 1 ? this.geneService.allGenes()[0] : this.genetest.value;
+      this.annotationData.data['gene1'] = this.geneService.allGenes().length == 1 ? this.geneService.allGenes()[0] : this.gene.value;
       this.annotationData.data['function'] = this.function.value;
       this.annotationData.data['method'] = this.methodComponent.method;
-      console.log(this.annotationData.data);
-
   }
 
 }

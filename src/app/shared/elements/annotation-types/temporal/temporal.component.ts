@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {GeneService} from "../../../services/gene.service";
 import {Observable} from "rxjs";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
+import {MethodDropdownComponent} from "../../method-dropdown/method-dropdown.component";
 
 @Component({
   selector: 'app-temporal',
@@ -15,10 +16,13 @@ export class TemporalComponent implements OnInit {
         function: new FormControl('', [
             Validators.required
         ]),
-        method: new FormControl('', [
+        gene: new FormControl('', [
             Validators.required
-        ])
+        ]),
     });
+
+    @Input () annotationData: any;
+    @ViewChild(MethodDropdownComponent) methodComponent: MethodDropdownComponent;
 
     annotationType: string = "TEMPORAL_EXPRESSION";
 
@@ -34,6 +38,9 @@ export class TemporalComponent implements OnInit {
                 distinctUntilChanged(),
                 switchMap(term => this.geneService.searchTemporalExpression(term))
             );
+        this.form.valueChanges.subscribe(value => {
+            this.setAnnotationData()
+        })
     }
 
     get availableGenes() {
@@ -44,8 +51,15 @@ export class TemporalComponent implements OnInit {
         return this.form.get('function');
     }
 
-    get method() {
-        return this.form.get('method');
+    get gene() {
+        return this.form.get('gene');
+    }
+
+    setAnnotationData()
+    {
+        this.annotationData.data['gene1'] = this.geneService.allGenes().length == 1 ? this.geneService.allGenes()[0] : this.gene.value;
+        this.annotationData.data['function'] = this.function.value;
+        this.annotationData.data['method'] = this.methodComponent.method;
     }
 
 }

@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {MethodDropdownComponent} from "../../method-dropdown/method-dropdown.component";
+import {GeneService} from "../../../services/gene.service";
+import {Observable} from "rxjs";
+import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-comment',
@@ -6,10 +11,57 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./comment.component.scss']
 })
 export class CommentComponent implements OnInit {
+    form: FormGroup = new FormGroup({
+        gene: new FormControl('', [
+            Validators.required
+        ]),
+        comment: new FormControl('', [
+            Validators.required
+        ]),
+    });
 
-  constructor() { }
+    @Input () annotationData: any;
+    @ViewChild(MethodDropdownComponent) methodComponent: MethodDropdownComponent;
 
-  ngOnInit() {
-  }
+    annotationType: string = "COMMENT";
+
+    goFunctions: any;
+    goFormatter = (x: any) => x.name;
+
+    constructor(private geneService: GeneService) { }
+
+    ngOnInit() {
+        this.goFunctions = (text$: Observable<string>) =>
+            text$.pipe(
+                debounceTime(200),
+                distinctUntilChanged(),
+                switchMap(term => this.geneService.searchSubcellularLocation(term))
+            );
+        this.form.valueChanges.subscribe(value => {
+            this.setAnnotationData();
+        })
+    }
+
+    get availableGenes() {
+        return this.geneService.enteredGenes$;
+    }
+
+    get gene()
+    {
+        return this.form.get('gene');
+    }
+
+    get comment()
+    {
+        return this.form.get('comment');
+    }
+
+    setAnnotationData()
+    {
+
+        this.annotationData.data['gene1'] = this.geneService.allGenes().length == 1 ? this.geneService.allGenes()[0] : this.gene.value;
+        this.annotationData.data['comment'] = this.comment.value;
+        console.log(this.annotationData.data['comment']);
+    }
 
 }

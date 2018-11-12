@@ -16,8 +16,6 @@ export class MethodDropdownComponent implements OnInit {
   method: any;
 
   @Input() annotationType: string = '';
-
-
   @Output() selectedMethod: EventEmitter<string> = new EventEmitter();
 
   methodFormatter = (x: any) => x.name;
