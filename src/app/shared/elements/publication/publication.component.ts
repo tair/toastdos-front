@@ -3,6 +3,7 @@ import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/form
 import {debounceTime, distinctUntilChanged, switchMap, tap} from "rxjs/operators";
 import {PublicationService} from "../../services/publication.service";
 import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
+import {SubmissionService} from "../../services/submission.service";
 
 @Component({
   selector: 'app-publication',
@@ -14,6 +15,7 @@ export class PublicationComponent implements OnInit {
   private title: string;
   private author: string;
   private pubStatus: string;
+  private submission;
 
   private form: FormGroup = new FormGroup({
     pub_id: new FormControl('', [
@@ -23,12 +25,15 @@ export class PublicationComponent implements OnInit {
 
   @ViewChild('popover') popover;
 
-  constructor(private pubService: PublicationService) {
+  constructor(private pubService: PublicationService, private submissionService: SubmissionService) {
     this.title = "";
     this.author = "";
   }
 
   ngOnInit() {
+    this.submissionService.currentSubmission$.subscribe(nextSub=>{
+          this.submission = nextSub;
+    });
     this.pubStatus = 'empty';
     this.pub_id.valueChanges
       .pipe(
@@ -41,6 +46,9 @@ export class PublicationComponent implements OnInit {
       ).subscribe((value: string) => {
         this.pubService.checkIsValid$(value)
           .subscribe((response: any)=> {
+              let next_submission = this.submission;
+              next_submission.publicationId = this.pub_id.value;
+              this.submissionService.setSubmission(next_submission);
               this.pubStatus = 'success';
               this.toggleErrorPopover();
               this.title = response.title;
