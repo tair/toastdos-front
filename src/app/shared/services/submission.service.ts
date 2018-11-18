@@ -3,11 +3,33 @@ import {BehaviorSubject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 
+export interface Annotation{
+    type: string,
+    data: {}
+}
+
+export interface Gene{
+    locusName: string,
+    geneSymbol: string,
+    fullName: string
+}
+
+export interface Submission {
+    publicationId: string,
+    genes: Array<Gene>,
+    annotations: Array<Annotation>
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class SubmissionService {
     submissions = new BehaviorSubject<any>([]);
+    currentSubmission = new BehaviorSubject<Submission>({
+      publicationId:'',
+      genes : [],
+      annotations : []
+    }); //defualt blank submission
 
     constructor(private http: HttpClient) {
 
@@ -21,7 +43,16 @@ export class SubmissionService {
       },error1 => {
         console.log(error1);
       })
+    }
 
+    get currentSubmission$()
+    {
+      return this.currentSubmission.asObservable();
+    }
+
+    setSubmission(newSubmission: Submission)
+    {
+      this.currentSubmission.next(newSubmission);
     }
 
 }

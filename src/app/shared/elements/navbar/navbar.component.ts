@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
       'client_id=APP-L8ISF5DJNGXMS599&' +
       'response_type=code&' +
       'scope=/authenticate&' +
-      'redirect_uri=http://52.14.163.196:4200/';
+      'redirect_uri=http://0.0.0.0:4200/';
   }
 
   get user() {
