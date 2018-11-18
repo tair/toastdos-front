@@ -24,6 +24,7 @@ import { AnnatomicalComponent } from './elements/annotation-types/annatomical/an
 import { TemporalComponent } from './elements/annotation-types/temporal/temporal.component';
 import { ProteinInteractionComponent } from './elements/annotation-types/protein-interaction/protein-interaction.component';
 import { CommentComponent } from './elements/annotation-types/comment/comment.component';
+import { SearchComponent } from './pages/search/search.component';
 
 @NgModule({
   imports: [
@@ -56,6 +57,7 @@ import { CommentComponent } from './elements/annotation-types/comment/comment.co
     TemporalComponent,
     ProteinInteractionComponent,
     CommentComponent,
+    SearchComponent,
   ],
   exports: [
     HomepageComponent
