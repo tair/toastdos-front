@@ -55,4 +55,10 @@ export class SubmissionService {
       this.currentSubmission.next(newSubmission);
     }
 
+    setGeneAtIndex(newGeneData: Gene, index: number)
+    {
+        this.currentSubmission.value.genes[index] = newGeneData;
+        this.setSubmission(this.currentSubmission.value);
+    }
+
 }

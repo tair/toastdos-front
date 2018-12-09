@@ -13,6 +13,8 @@ export class SubmissionComponent implements OnInit {
 
   ngOnInit() {
       this.submissionService.currentSubmission$.subscribe(submission => {
+          console.log('change from page');
+          console.log(submission);
           this.submission = submission;
       });
   }

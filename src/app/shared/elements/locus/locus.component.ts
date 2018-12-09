@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {GeneService} from "../../services/gene.service";
 import {debounceTime, distinctUntilChanged, tap} from "rxjs/operators";
+import {Gene, SubmissionService} from "../../services/submission.service";
 
 @Component({
   selector: 'app-locus',
@@ -12,8 +13,10 @@ export class LocusComponent implements OnInit {
 
   private locusStatus: string;
   private _locusData: any;
+  private _gene: Gene;
 
   @Input() number: number;
+  @Input() gene: Gene;
 
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
@@ -31,7 +34,7 @@ export class LocusComponent implements OnInit {
     ])
   });
 
-  constructor(private geneService: GeneService) { }
+  constructor(private geneService: GeneService, private submissionService: SubmissionService) { }
 
   ngOnInit() {
     this.locusStatus = 'empty';
@@ -49,13 +52,37 @@ export class LocusComponent implements OnInit {
             this.locusStatus = 'success';
             this.toggleErrorPopover();
             this._locusData = response;
-            this.geneService.addEnteredGene(response);
+            this.saveCurrentGene();
           },
           error => {
             this.locusStatus = 'error';
             this.toggleErrorPopover();
           });
     });
+    this.gene_symbol.valueChanges.pipe(
+        debounceTime(800),
+        distinctUntilChanged(),).subscribe(next =>
+        {
+            this.saveCurrentGene();
+        }
+    );
+    this.full_gene_name.valueChanges.pipe(
+        debounceTime(800),
+        distinctUntilChanged(),).subscribe(next =>
+        {
+            this.saveCurrentGene();
+        }
+    )
+  }
+
+  saveCurrentGene(){
+      let gene = {} as Gene;
+      gene.locusName = this.locus.value;
+      gene.geneSymbol = this.gene_symbol.value;
+      gene.fullName = this.full_gene_name.value;
+      console.log('Saving gene '+ gene);
+      this.submissionService.setGeneAtIndex(gene,this.number);
+
   }
 
   getColor(status)
@@ -102,8 +129,5 @@ export class LocusComponent implements OnInit {
     return this.form.get('full_gene_name');
   }
 
-  get locusData() {
-    return this._locusData;
-  }
 
 }

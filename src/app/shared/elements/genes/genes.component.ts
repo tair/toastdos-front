@@ -1,6 +1,8 @@
 import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {LocusComponent} from '../locus/locus.component';
 import { GeneService } from '../../services/gene.service';
+import {SubmissionService, Submission} from "../../services/submission.service";
+import {Gene} from "../../services/submission.service";
 
 @Component({
   selector: 'app-genes',
@@ -11,30 +13,36 @@ export class GenesComponent implements OnInit, AfterViewInit {
 
 
   @ViewChildren(LocusComponent) locuses: QueryList<LocusComponent>;
-  numLocuses: number[] = [0];
+  submission: Submission;
 
-  constructor(private geneService: GeneService) { }
-
-  ngOnInit()
+  constructor(private geneService: GeneService, private submissionService: SubmissionService)
   {
 
   }
 
+  ngOnInit()
+  {
+    this.submissionService.currentSubmission$.subscribe(nextSubmission=>{
+      this.submission = nextSubmission;
+    });
+  }
+
   ngAfterViewInit() {
-    console.log(this.locuses);
+
   }
 
   addLocus() {
-    if (this.numLocuses.length === 0) {
-      this.numLocuses.push(0);
-    } else {
-      this.numLocuses.push(this.numLocuses.sort()[this.numLocuses.length - 1] + 1);
-    }
+      this.submission.genes.push({
+          locusName: "",
+          geneSymbol: "",
+          fullName: ""
+      } as Gene);
+      this.submissionService.setSubmission(this.submission);
   }
 
   deleteLocus(index: number) {
-    this.geneService.removeEnteredGene(this.locuses.toArray()[index].locusData);
-    this.numLocuses = this.numLocuses.filter((j) => j !== index);
+      this.submission.genes.splice(index, 1);
+      this.submissionService.setSubmission(this.submission);
   }
 
 }

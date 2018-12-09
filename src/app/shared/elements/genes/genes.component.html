@@ -6,8 +6,8 @@
         <div class="alert alert-light fade show" role="alert">Enter genes with a UniProt ID, AGI locus ID, or RNA Central ID. Optionally enter a gene symbol and full name.</div>
       </div>
       <div class="col-sm-9">
-        <ng-container *ngFor="let index of numLocuses">
-          <app-locus [number]="index" (deleted)="deleteLocus($event)"></app-locus>
+        <ng-container *ngFor="let gene of submission.genes; let i = index">
+          <app-locus [gene]="gene" [number]="i" (deleted)="deleteLocus($event)"></app-locus>
         </ng-container>
 
         <div class="justify-content-sm-center mt-3 mb-3 row">
