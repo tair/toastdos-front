@@ -4,6 +4,8 @@ import {debounceTime, distinctUntilChanged, switchMap, tap} from "rxjs/operators
 import {PublicationService} from "../../services/publication.service";
 import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
 import {SubmissionService} from "../../services/submission.service";
+import * as deepEqual from "deep-equal";
+
 
 @Component({
   selector: 'app-publication',
@@ -32,7 +34,24 @@ export class PublicationComponent implements OnInit {
 
   ngOnInit() {
     this.submissionService.currentSubmission$.subscribe(nextSub=>{
-          this.submission = nextSub;
+          let pub = this.pub_id.value;
+          if (!deepEqual(pub, nextSub.publicationId) && nextSub.publicationId) {
+           this.form.setValue({'pub_id': nextSub.publicationId});
+           this.pubService.checkIsValid$(nextSub.publicationId)
+           .subscribe((response: any)=> {
+              this.pubStatus = 'success';
+              this.toggleErrorPopover();
+              this.title = response.title;
+              this.author = response.author;
+              },
+            error => {
+              console.log(error);
+              this.pubStatus = 'error';
+              this.toggleErrorPopover();
+              this.title = "";
+              this.author = "";
+            });
+          }
     });
     this.pubStatus = 'empty';
     this.pub_id.valueChanges
@@ -46,9 +65,7 @@ export class PublicationComponent implements OnInit {
       ).subscribe((value: string) => {
         this.pubService.checkIsValid$(value)
           .subscribe((response: any)=> {
-              let next_submission = this.submission;
-              next_submission.publicationId = this.pub_id.value;
-              this.submissionService.setSubmission(next_submission);
+              this.submissionService.setPublication(this.pub_id.value);
               this.pubStatus = 'success';
               this.toggleErrorPopover();
               this.title = response.title;
@@ -72,7 +89,7 @@ export class PublicationComponent implements OnInit {
       this.popover.close();
     }
   }
-  
+
   getColor(status)
   {
     switch (status) {

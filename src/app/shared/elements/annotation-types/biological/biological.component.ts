@@ -4,6 +4,7 @@ import {GeneService} from "../../../services/gene.service";
 import {Observable} from "rxjs";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 import {MethodDropdownComponent} from "../../method-dropdown/method-dropdown.component";
+import {Annotation, SubmissionService} from "../../../services/submission.service";
 
 @Component({
   selector: 'app-biological',
@@ -29,7 +30,7 @@ export class BiologicalComponent implements OnInit {
     goFunctions: any;
     goFormatter = (x: any) => x.name;
 
-    constructor(private geneService: GeneService) { }
+    constructor(private geneService: GeneService, private submissionService: SubmissionService) { }
 
     ngOnInit() {
         this.goFunctions = (text$: Observable<string>) =>
@@ -41,6 +42,10 @@ export class BiologicalComponent implements OnInit {
         this.form.valueChanges.subscribe(value => {
             this.setAnnotationData();
         })
+    }
+
+    ngAfterViewInit() {
+        //init with data here!
     }
 
     get availableGenes() {
@@ -60,5 +65,9 @@ export class BiologicalComponent implements OnInit {
         this.annotationData.data['gene1'] = this.geneService.allGenes().length == 1 ? this.geneService.allGenes()[0] : this.gene.value;
         this.annotationData.data['function'] = this.function.value;
         this.annotationData.data['method'] = this.methodComponent.method;
+        let anno = {} as Annotation;
+        anno.type = this.annotationType;
+        anno.data = this.annotationData.data;
+        this.submissionService.setAnnotationAtIndex(anno, this.annotationData.index);
     }
 }

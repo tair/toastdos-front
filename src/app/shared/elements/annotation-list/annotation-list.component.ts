@@ -1,6 +1,7 @@
 import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {AnnotationComponent} from "../annotation/annotation.component";
 import {AnnotationService} from "../../services/annotation.service";
+import {SubmissionService} from "../../services/submission.service";
 
 @Component({
   selector: 'app-annotation-list',
@@ -13,10 +14,16 @@ export class AnnotationListComponent implements OnInit {
   annotationModels: any[] = [{index:0,data:{}}];
 
 
-  constructor(private annotationService: AnnotationService) { }
+  constructor(private annotationService: AnnotationService, private submissisonService: SubmissionService) { }
 
   ngOnInit() {
-
+    //load models here when we get them for curation
+    // this.submissisonService.currentSubmission$.subscribe(next => {
+    //   let models = [];
+    //     for (let a of next.annotations) {
+    //
+    //     }
+    // });
   }
 
   addAnnotation() {
@@ -28,16 +35,18 @@ export class AnnotationListComponent implements OnInit {
         max = x.index;
       }
     }
-    console.log('adding');
     this.annotationModels.push({index:max+1, data:{}});
-    console.log(this.annotationModels);
   }
 
   removeAnnotation(annoModelToDelete: any)
   {
-    console.log('deleting');
-    this.annotationModels.splice(annoModelToDelete.index,1)
-    console.log(this.annotationModels);
+    this.annotationModels.splice(annoModelToDelete.index,1);
+    let i = 0;
+    for (let m of this.annotationModels)
+    {
+      m.index = i;
+      i += 1;
+    }
   }
 
 

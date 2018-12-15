@@ -4,6 +4,7 @@ import {MethodDropdownComponent} from "../../method-dropdown/method-dropdown.com
 import {GeneService} from "../../../services/gene.service";
 import {Observable} from "rxjs";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
+import {Annotation, SubmissionService} from "../../../services/submission.service";
 
 @Component({
   selector: 'app-protein-interaction',
@@ -29,7 +30,7 @@ export class ProteinInteractionComponent implements OnInit {
   goFunctions: any;
   goFormatter = (x: any) => x.name;
 
-  constructor(private geneService: GeneService) { }
+  constructor(private geneService: GeneService, private submissionService: SubmissionService) { }
 
   ngOnInit() {
       this.goFunctions = (text$: Observable<string>) =>
@@ -62,6 +63,10 @@ export class ProteinInteractionComponent implements OnInit {
       this.annotationData.data['gene1'] = this.geneService.allGenes().length == 1 ? this.geneService.allGenes()[0] : this.gene1.value;
       this.annotationData.data['gene2'] = this.geneService.allGenes().length == 1 ? this.geneService.allGenes()[0] : this.gene2.value;
       this.annotationData.data['method'] = this.methodComponent.method;
+      let anno = {} as Annotation;
+      anno.type = this.annotationType;
+      anno.data = this.annotationData.data;
+      this.submissionService.setAnnotationAtIndex(anno, this.annotationData.index);
   }
 
 }

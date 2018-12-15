@@ -45,7 +45,7 @@
           <input type="text"
                  placeholder="e.g CLF"
                  [formControl]="gene_symbol"
-                 class="form-control">
+                 class="form-control" (blur)="saveCurrentGene()">
         </div>
       </div>
       <div class="d-flex p-2 align-items-center row">
@@ -56,7 +56,7 @@
           <input type="text"
                  [formControl]="full_gene_name"
                  placeholder="e.g CURLY LEAF"
-                 class="form-control">
+                 class="form-control" (blur)="saveCurrentGene()">
         </div>
       </div>
     </div>

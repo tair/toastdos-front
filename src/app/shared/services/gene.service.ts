@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import { Observable, BehaviorSubject } from 'rxjs';
+import {SubmissionService} from "./submission.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,20 @@ export class GeneService {
 
   private enteredGenes: BehaviorSubject<any[]> = new BehaviorSubject([]);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private submission: SubmissionService) {
+    this.submission.currentSubmission$.subscribe(next => {
+            let geneLocuses = [];
+            for (let g of next.genes)
+            {
+              if (g.locusName.length>1) {
+                  geneLocuses.push(g);
+              }
+
+            }
+            this.enteredGenes.next(geneLocuses);
+        }
+    )
+  }
 
   searchMolecularFunction(function_name: string) {
     return this.http
@@ -58,24 +72,6 @@ export class GeneService {
     return this.http.get(`${environment.base_url}/gene/verify/${locus}`);
   }
 
-  addEnteredGene(gene: any) {
-    console.log(gene);
-    let next = [gene];
-    for (let x of this.enteredGenes.value)
-    {
-      if (x.locus_name !== gene.locus_name)
-      {
-        next.push(x);
-      }
-    }
-    this.enteredGenes.next(next);
-  }
-
-  removeEnteredGene(gene: any) {
-    if (gene != null) {
-        this.enteredGenes.next(this.enteredGenes.value.filter(locus => locus.locus_name !== gene.locus_name));
-    }
-  }
 
   allGenes()
   {

@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {GeneService} from "../../services/gene.service";
 import {debounceTime, distinctUntilChanged, tap} from "rxjs/operators";
 import {Gene, SubmissionService} from "../../services/submission.service";
+import * as deepEqual from "deep-equal";
 
 @Component({
   selector: 'app-locus',
@@ -13,10 +14,8 @@ export class LocusComponent implements OnInit {
 
   private locusStatus: string;
   private _locusData: any;
-  private _gene: Gene;
 
   @Input() number: number;
-  @Input() gene: Gene;
 
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
@@ -38,6 +37,27 @@ export class LocusComponent implements OnInit {
 
   ngOnInit() {
     this.locusStatus = 'empty';
+    //init
+    let gene = this.submissionService.getGeneAtIndex(this.number);
+    if (gene.locusName.length>2)
+    {
+        this.locusStatus = 'success';
+    }
+    this.form.setValue({'locus': gene.locusName,
+                              'gene_symbol': gene.geneSymbol,
+                              'full_gene_name': gene.fullName});
+    //subscribe to futur changes
+    this.submissionService.currentSubmission$.subscribe(next=>{
+       let gene = next.genes[this.number];
+       //if the change was from something  that wasnt us then we update our content
+       if (!deepEqual(gene, this.getGene()) && gene) {
+           this.form.setValue({'locus': gene.locusName,
+                                    'gene_symbol': gene.geneSymbol,
+                                    'full_gene_name': gene.fullName});
+           this.locusStatus = 'success';
+       }
+    });
+
     this.locus.valueChanges
       .pipe(
         debounceTime(400),
@@ -59,28 +79,21 @@ export class LocusComponent implements OnInit {
             this.toggleErrorPopover();
           });
     });
-    this.gene_symbol.valueChanges.pipe(
-        debounceTime(800),
-        distinctUntilChanged(),).subscribe(next =>
-        {
-            this.saveCurrentGene();
-        }
-    );
-    this.full_gene_name.valueChanges.pipe(
-        debounceTime(800),
-        distinctUntilChanged(),).subscribe(next =>
-        {
-            this.saveCurrentGene();
-        }
-    )
   }
 
-  saveCurrentGene(){
+
+
+  getGene()
+  {
       let gene = {} as Gene;
       gene.locusName = this.locus.value;
       gene.geneSymbol = this.gene_symbol.value;
       gene.fullName = this.full_gene_name.value;
-      console.log('Saving gene '+ gene);
+      return gene;
+  }
+
+  saveCurrentGene(){
+      let gene = this.getGene();
       this.submissionService.setGeneAtIndex(gene,this.number);
 
   }

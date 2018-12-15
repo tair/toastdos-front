@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SubmissionService, Submission} from '../../services/submission.service';
+import { SubmissionService, Submission, Gene, Annotation} from '../../services/submission.service';
+import {s} from "@angular/core/src/render3";
 
 @Component({
   selector: 'app-submission',
@@ -10,8 +11,10 @@ export class SubmissionComponent implements OnInit {
 
   constructor(private submissionService: SubmissionService) { }
   submission: Submission;
+  editing: boolean;
 
   ngOnInit() {
+      this.editing = true;
       this.submissionService.currentSubmission$.subscribe(submission => {
           console.log('change from page');
           console.log(submission);
@@ -20,15 +23,19 @@ export class SubmissionComponent implements OnInit {
   }
 
   reviewSubmission() {
-      console.log(this.submission);
+      this.editing = false;
   }
 
   resetSubmission() {
-    console.log(this.submissionService.setSubmission({
-        publicationId:'',
-        genes:[],
-        annotations:[]
-    }));
+    console.log(this.submissionService.resetSubmission());
+  }
+
+  editSubmission() {
+      this.editing = true;
+  }
+
+  submitSubmission(){
+      console.log('submitting');
   }
 
 }

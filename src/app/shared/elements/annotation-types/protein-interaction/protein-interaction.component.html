@@ -4,7 +4,7 @@
   </div>
   <div class="p-1 col">
     <select class="form-control" [formControl]="gene1">
-      <option *ngFor="let gene of availableGenes | async">{{gene.locus_name}}</option>
+      <option *ngFor="let gene of availableGenes | async">{{gene.locusName}}</option>
     </select>
   </div>
 </div>
@@ -14,7 +14,7 @@
   </div>
   <div class="p-1 col">
     <select class="form-control" [formControl]="gene2">
-      <option *ngFor="let gene of availableGenes | async">{{gene.locus_name}}</option>
+      <option *ngFor="let gene of availableGenes | async">{{gene.locusName}}</option>
     </select>
   </div>
 </div>
