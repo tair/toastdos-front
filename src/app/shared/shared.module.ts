@@ -26,6 +26,7 @@ import { ProteinInteractionComponent } from './elements/annotation-types/protein
 import { CommentComponent } from './elements/annotation-types/comment/comment.component';
 import { SearchComponent } from './pages/search/search.component';
 import { SubmissionOverviewComponent } from './elements/submission-overview/submission-overview.component';
+import { CurationDetailComponent } from './pages/curation-detail/curation-detail.component';
 
 @NgModule({
   imports: [
@@ -60,6 +61,7 @@ import { SubmissionOverviewComponent } from './elements/submission-overview/subm
     CommentComponent,
     SearchComponent,
     SubmissionOverviewComponent,
+    CurationDetailComponent,
   ],
   exports: [
     HomepageComponent

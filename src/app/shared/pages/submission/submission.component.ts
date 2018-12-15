@@ -12,12 +12,16 @@ export class SubmissionComponent implements OnInit {
   constructor(private submissionService: SubmissionService) { }
   submission: Submission;
   editing: boolean;
+  saved: boolean;
+  submiting: boolean;
+  error: boolean;
 
   ngOnInit() {
       this.editing = true;
+      this.saved = false;
+      this.submiting = false;
+      this.error = false;
       this.submissionService.currentSubmission$.subscribe(submission => {
-          console.log('change from page');
-          console.log(submission);
           this.submission = submission;
       });
   }
@@ -35,7 +39,26 @@ export class SubmissionComponent implements OnInit {
   }
 
   submitSubmission(){
-      console.log('submitting');
+      this.submiting = true;
+      this.submissionService.postSubmission(resp=> {
+          if (resp===null)
+          {
+              this.submiting = false;
+              this.saved = true;
+          }
+      }, err=> {
+            this.submiting = false;
+            this.error = true;
+      });
+  }
+
+  newSubmission()
+  {
+      this.editing = true;
+      this.saved = false;
+      this.submiting = false;
+      this.error = false;
+      this.submissionService.resetSubmission();
   }
 
 }

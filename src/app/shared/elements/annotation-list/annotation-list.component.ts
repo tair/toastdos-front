@@ -1,4 +1,4 @@
-import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {AnnotationComponent} from "../annotation/annotation.component";
 import {AnnotationService} from "../../services/annotation.service";
 import {SubmissionService} from "../../services/submission.service";
@@ -12,18 +12,19 @@ export class AnnotationListComponent implements OnInit {
 
   @ViewChildren(AnnotationComponent) annotations: QueryList<AnnotationComponent>;
   annotationModels: any[] = [{index:0,data:{}}];
+  @Input() reviewMode: boolean;
 
 
   constructor(private annotationService: AnnotationService, private submissisonService: SubmissionService) { }
 
   ngOnInit() {
     //load models here when we get them for curation
-    // this.submissisonService.currentSubmission$.subscribe(next => {
-    //   let models = [];
-    //     for (let a of next.annotations) {
-    //
-    //     }
-    // });
+    this.submissisonService.currentSubmission$.subscribe(next => {
+      let models = [];
+        for (let a of next.annotations) {
+          console.log(a);
+        }
+    });
   }
 
   addAnnotation() {

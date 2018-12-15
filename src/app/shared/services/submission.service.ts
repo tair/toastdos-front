@@ -35,14 +35,14 @@ export class SubmissionService {
 
     emptySubmission() {
       let gene = {} as Gene;
-      gene.locusName = "AT2G23380";
-      gene.geneSymbol = "CLF";
-      gene.fullName = "CURLY_LEAF";
+      gene.locusName = "";
+      gene.geneSymbol = "";
+      gene.fullName = "";
       let anno = {} as Annotation;
       anno.data = {};
-      anno.type = "Molecular Function";
+      anno.type = "";
       let sub = {} as Submission;
-      sub.publicationId = "2341";
+      sub.publicationId = "";
       sub.genes = [gene];
       sub.annotations = [anno];
       return sub;
@@ -145,6 +145,74 @@ export class SubmissionService {
             }
         }
         return sentance;
+    }
+
+    toJson()
+    {
+        let j = {};
+        let sub = this.currentSubmissionValue();
+        j['publicationId'] = sub.publicationId;
+        j['genes'] = [];
+        for (let g of sub.genes)
+        {
+            let gJson = {};
+            gJson['locusName'] = g.locusName;
+            gJson['geneSymbol'] = g.geneSymbol;
+            gJson['fullName'] = g.fullName;
+            j['genes'].push(gJson);
+        }
+        j['annotations'] = [];
+        for (let a of sub.annotations)
+        {
+            let anno = {};
+            anno['type'] = a.type;
+            anno['data'] = {};
+            anno['data']['locusName'] = a.data['gene1'].locusName;
+            anno['data']['isEvidenceWithOr'] = true;
+            if (a.type==="COMMENT")
+            {
+                anno['data']['text'] = a.data['comment'];
+            } else if (a.type=="PROTEIN_INTERACTION")
+            {
+                anno['data']['locusName2'] = a.data['gene2'].locusName;
+                anno['data']['method'] = {'id': a.data['method'].id};
+
+            } else {
+                anno['data']['keyword'] = {'id': a.data['function'].id};
+                anno['data']['method'] = {'id': a.data['method'].id};
+            }
+            j['annotations'].push(anno);
+
+        }
+        return j;
+
+    }
+
+    fromJson(responce: any)
+    {
+
+    }
+
+    getCurrentSubmissionWithId(id: string)
+    {
+        let url = `${environment.base_url}/submission/${id}`;
+        this.http.get(url).subscribe(next=>{
+           this.setSubmission(next as Submission);
+        },error1 => {
+            console.log(error1);
+        });
+    }
+
+    postSubmission(success :(responce) => void, error: (responce) => void)
+    {
+        let url = `${environment.base_url}/submission/`;
+        let body = this.toJson();
+        console.log(body);
+        this.http.post(url,body).subscribe(next => {
+            success(next);
+        },error1 => {
+            error(error1);
+        })
     }
 
 }
