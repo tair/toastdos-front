@@ -33,18 +33,12 @@ export class GenesComponent implements OnInit, AfterViewInit {
   }
 
   addLocus() {
-      this.submission.genes.push({
-          locusName: "",
-          geneSymbol: "",
-          fullName: ""
-      } as Gene);
 
-      this.submissionService.setSubmission(this.submission);
+      this.submissionService.addBlankGene();
   }
 
   deleteLocus(index: number) {
-      this.submission.genes.splice(index, 1);
-      this.submissionService.setSubmission(this.submission);
+      this.submissionService.removeGeneAtIndex(index);
   }
 
 }

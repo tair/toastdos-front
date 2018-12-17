@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, AfterViewInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {GeneService} from "../../../services/gene.service";
 import {Observable} from "rxjs";
@@ -14,21 +14,27 @@ import {Annotation, SubmissionService} from "../../../services/submission.servic
 export class BiologicalComponent implements OnInit {
 
     form: FormGroup = new FormGroup({
-        function: new FormControl('', [
-            Validators.required
-        ]),
-        gene: new FormControl('', [
-            Validators.required
-        ])
+      function: new FormControl('', [
+          Validators.required
+      ]),
+      gene: new FormControl('', [
+          Validators.required
+      ]),
+      method: new FormControl('', [
+          Validators.required
+      ])
     });
 
-    @Input () annotationData: any;
-    @ViewChild(MethodDropdownComponent) methodComponent: MethodDropdownComponent;
+    @Input () annotation: Annotation;
+    @Input () index: number;
 
     annotationType: string = "BIOLOGICAL_PROCESS";
 
     goFunctions: any;
     goFormatter = (x: any) => x.name;
+    methods: any;
+    methodFormatter = (x: any) => x.name;
+    usable = false;
 
     constructor(private geneService: GeneService, private submissionService: SubmissionService) { }
 
@@ -39,35 +45,53 @@ export class BiologicalComponent implements OnInit {
                 distinctUntilChanged(),
                 switchMap(term => this.geneService.searchBiologicalProcess(term))
             );
+        this.methods = (text$: Observable<string>) =>
+      text$.pipe(
+        debounceTime(200),
+        distinctUntilChanged(),
+        switchMap(term => this.geneService.searchMethods(term, this.annotationType))
+      );
         this.form.valueChanges.subscribe(value => {
             this.setAnnotationData();
         })
     }
 
-    ngAfterViewInit() {
-        //init with data here!
-    }
-
     get availableGenes() {
-        return this.geneService.enteredGenes$;
-    }
+    return this.submissionService.currentGenes$;
+  }
 
-    get function() {
-        return this.form.get('function');
-    }
+  get function() {
+      return this.form.get('function');
+  }
 
-    get gene() {
-        return this.form.get('gene');
-    }
+  get gene() {
+      return this.form.get('gene');
+  }
 
-    setAnnotationData()
-    {
-        this.annotationData.data['gene1'] = this.geneService.allGenes().length == 1 ? this.geneService.allGenes()[0] : this.gene.value;
-        this.annotationData.data['function'] = this.function.value;
-        this.annotationData.data['method'] = this.methodComponent.method;
-        let anno = {} as Annotation;
-        anno.type = this.annotationType;
-        anno.data = this.annotationData.data;
-        this.submissionService.setAnnotationAtIndex(anno, this.annotationData.index);
-    }
+  get method() {
+      return this.form.get('method');
+  }
+
+  setAnnotationData()
+  {
+      if (this.usable) {
+          let locus = this.submissionService.currentSubmissionValue().genes.length == 1 ? this.submissionService.currentSubmissionValue().genes[0] : this.submissionService.getGeneWithLocus(this.gene.value);
+          this.annotation.data.locusName = locus;
+          this.annotation.data.keyword = this.function.value;
+          this.annotation.data.method = this.method.value;
+          this.submissionService.setAnnotationAtIndex(this.annotation, this.index);
+      }
+  }
+
+  ngAfterViewInit() {
+      this.usable=false;
+      setTimeout(() => {
+          if (this.annotation.data) {
+              this.function.setValue(this.annotation.data.keyword);
+              this.gene.setValue(this.annotation.data.locusName.locusName);
+              this.method.setValue(this.annotation.data.method);
+              this.usable = true;
+          }
+      });
+  }
 }

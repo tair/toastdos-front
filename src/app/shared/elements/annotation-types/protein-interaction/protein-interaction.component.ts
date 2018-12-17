@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, AfterViewInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MethodDropdownComponent} from "../../method-dropdown/method-dropdown.component";
 import {GeneService} from "../../../services/gene.service";
@@ -20,53 +20,74 @@ export class ProteinInteractionComponent implements OnInit {
       gene2: new FormControl('', [
           Validators.required
       ]),
+      method: new FormControl('', [
+          Validators.required
+      ])
   });
 
-  @Input () annotationData: any;
+  @Input () annotation: Annotation;
+  @Input () index: number;
   @ViewChild(MethodDropdownComponent) methodComponent: MethodDropdownComponent;
 
   annotationType: string = "PROTEIN_INTERACTION";
 
-  goFunctions: any;
-  goFormatter = (x: any) => x.name;
+  methods: any;
+  methodFormatter = (x: any) => x.name;
+  usable = false;
 
   constructor(private geneService: GeneService, private submissionService: SubmissionService) { }
 
   ngOnInit() {
-      this.goFunctions = (text$: Observable<string>) =>
-          text$.pipe(
-              debounceTime(200),
-              distinctUntilChanged(),
-              switchMap(term => this.geneService.searchSubcellularLocation(term))
-          );
+      this.methods = (text$: Observable<string>) =>
+      text$.pipe(
+        debounceTime(200),
+        distinctUntilChanged(),
+        switchMap(term => this.geneService.searchMethods(term, this.annotationType))
+      );
       this.form.valueChanges.subscribe(value => {
           this.setAnnotationData();
       })
   }
 
   get availableGenes() {
-      return this.geneService.enteredGenes$;
+    return this.submissionService.currentGenes$;
   }
 
-  get gene1()
-  {
-    return this.form.get('gene1');
+
+  get gene1() {
+      return this.form.get('gene1');
   }
 
-  get gene2()
-  {
-    return this.form.get('gene2');
+  get gene2() {
+      return this.form.get('gene2');
+  }
+
+  get method() {
+      return this.form.get('method');
   }
 
   setAnnotationData()
   {
-      this.annotationData.data['gene1'] = this.geneService.allGenes().length == 1 ? this.geneService.allGenes()[0] : this.gene1.value;
-      this.annotationData.data['gene2'] = this.geneService.allGenes().length == 1 ? this.geneService.allGenes()[0] : this.gene2.value;
-      this.annotationData.data['method'] = this.methodComponent.method;
-      let anno = {} as Annotation;
-      anno.type = this.annotationType;
-      anno.data = this.annotationData.data;
-      this.submissionService.setAnnotationAtIndex(anno, this.annotationData.index);
+      if (this.usable) {
+          let locus = this.submissionService.currentSubmissionValue().genes.length == 1 ? this.submissionService.currentSubmissionValue().genes[0] : this.submissionService.getGeneWithLocus(this.gene1.value);
+          let locus2 = this.submissionService.currentSubmissionValue().genes.length == 1 ? this.submissionService.currentSubmissionValue().genes[0] : this.submissionService.getGeneWithLocus(this.gene2.value);
+          this.annotation.data.locusName = locus;
+          this.annotation.data.locusName2 = locus2;
+          this.annotation.data.method = this.method.value;
+          this.submissionService.setAnnotationAtIndex(this.annotation, this.index);
+      }
+  }
+
+  ngAfterViewInit() {
+      this.usable=false;
+      setTimeout(() => {
+          if (this.annotation.data) {
+              this.gene1.setValue(this.annotation.data.locusName.locusName);
+              this.gene2.setValue(this.annotation.data.locusName2.locusName);
+              this.method.setValue(this.annotation.data.method);
+              this.usable = true;
+          }
+      });
   }
 
 }

@@ -1,7 +1,9 @@
 import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {AnnotationComponent} from "../annotation/annotation.component";
 import {AnnotationService} from "../../services/annotation.service";
-import {SubmissionService} from "../../services/submission.service";
+import {Annotation, SubmissionService} from "../../services/submission.service";
+import * as deepEqual from "deep-equal";
+
 
 @Component({
   selector: 'app-annotation-list',
@@ -11,8 +13,7 @@ import {SubmissionService} from "../../services/submission.service";
 export class AnnotationListComponent implements OnInit {
 
   @ViewChildren(AnnotationComponent) annotations: QueryList<AnnotationComponent>;
-  annotationModels: any[] = [{index:0,data:{}}];
-  @Input() reviewMode: boolean;
+  annotationModels: any[] = [{index:0,annotation:{} as Annotation}];
 
 
   constructor(private annotationService: AnnotationService, private submissisonService: SubmissionService) { }
@@ -20,34 +21,29 @@ export class AnnotationListComponent implements OnInit {
   ngOnInit() {
     //load models here when we get them for curation
     this.submissisonService.currentSubmission$.subscribe(next => {
-      let models = [];
-        for (let a of next.annotations) {
-          console.log(a);
-        }
+      let annos = this.annotationModels.map(x=>x.annotation);
+      if (deepEqual(annos, next.annotations))
+      {
+
+      } else {
+          let i = 0;
+          this.annotationModels = [];
+          for (let a of next.annotations) {
+              this.annotationModels.push({index: i, annotation: a});
+              i += 1;
+          }
+      }
+
     });
   }
 
   addAnnotation() {
-    let max = 0;
-    for (let x of this.annotationModels) //lets try to write more this stuff. its just easier on everyone
-    {
-      if(x.index>max)
-      {
-        max = x.index;
-      }
-    }
-    this.annotationModels.push({index:max+1, data:{}});
+    this.submissisonService.addBlankAnnotation();
   }
 
   removeAnnotation(annoModelToDelete: any)
   {
-    this.annotationModels.splice(annoModelToDelete.index,1);
-    let i = 0;
-    for (let m of this.annotationModels)
-    {
-      m.index = i;
-      i += 1;
-    }
+    this.submissisonService.removeAnnotationAtIndex(annoModelToDelete.index);
   }
 
 

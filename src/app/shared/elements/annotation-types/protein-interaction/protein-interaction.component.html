@@ -23,6 +23,6 @@
     <label class="mb-0">Method</label>
   </div>
   <div class="p-1 col">
-    <app-method-dropdown (selectedMethod)="setAnnotationData()" [annotationType]="annotationType"></app-method-dropdown>
+    <input placeholder="Start Typing..." class="form-control" [formControl]="method" [ngbTypeahead]="methods" [resultTemplate]="rt" [inputFormatter]="methodFormatter">
   </div>
 </div>

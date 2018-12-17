@@ -3,16 +3,25 @@ import {BehaviorSubject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 
-export interface Annotation{
-    type: string,
-    data: {}
-}
 
 export interface Gene{
     locusName: string,
     geneSymbol: string,
     fullName: string
 }
+
+export interface Annotation{
+    type: string,
+    data: {
+        locusName: Gene,
+        locusName2?: Gene,
+        text?: string,
+        method?: {},
+        keyword?: {},
+    },
+    id: number,
+}
+
 
 export interface Submission {
     publicationId: string,
@@ -29,18 +38,25 @@ export interface Submission {
 export class SubmissionService {
     submissions = new BehaviorSubject<any>([]);
     currentSubmission = new BehaviorSubject<Submission>(this.emptySubmission()); //defualt blank submission
-    constructor(private http: HttpClient) {
+    currentGenes = new BehaviorSubject<Array<Gene>>([]);
 
+    constructor(private http: HttpClient) {
+        this.setSubmission(this.emptySubmission());
     }
 
     emptySubmission() {
       let gene = {} as Gene;
-      gene.locusName = "";
-      gene.geneSymbol = "";
-      gene.fullName = "";
+      gene.locusName = "AT2G23380";
+      gene.geneSymbol = "CLF";
+      gene.fullName = "CURLYLEAF";
       let anno = {} as Annotation;
-      anno.data = {};
-      anno.type = "";
+      anno.type = "MOLECULAR_FUNCTION";
+      anno.data = {"locusName": gene,
+                    "locusName2" : gene,
+                    "keyword" : {name:""},
+                    "method" : {name:""},
+                    "text" : ""
+      };
       let sub = {} as Submission;
       sub.publicationId = "";
       sub.genes = [gene];
@@ -63,6 +79,11 @@ export class SubmissionService {
         return this.currentSubmission.value;
     }
 
+    get currentGenes$()
+    {
+        return this.currentGenes.asObservable();
+    }
+
     get currentSubmission$()
     {
       return this.currentSubmission.asObservable();
@@ -70,13 +91,15 @@ export class SubmissionService {
 
     resetSubmission()
     {
+        this.currentGenes.next([]);
         this.currentSubmission.next(this.emptySubmission());
     }
 
 
     setSubmission(newSubmission: Submission)
     {
-      this.currentSubmission.next(newSubmission);
+        this.currentGenes.next(newSubmission.genes);
+        this.currentSubmission.next(newSubmission);
     }
 
     setPublication(newPubID: string)
@@ -85,15 +108,16 @@ export class SubmissionService {
         this.setSubmission(this.currentSubmission.value);
     }
 
-    setGeneAtIndex(newGeneData: Gene, index: number)
+
+    addBlankGene()
     {
-        this.currentSubmission.value.genes[index] = newGeneData;
+        this.currentSubmission.value.genes.push({
+            locusName: "",
+            geneSymbol: "",
+            fullName: ""
+            } as Gene);
         this.setSubmission(this.currentSubmission.value);
-    }
-    setAnnotationAtIndex(newAnnotation: Annotation, index: number)
-    {
-        this.currentSubmission.value.annotations[index] = newAnnotation;
-        this.setSubmission(this.currentSubmission.value);
+
     }
 
     getGeneAtIndex(index: number)
@@ -101,22 +125,77 @@ export class SubmissionService {
         return this.currentSubmission.value.genes[index];
     }
 
+    getGeneWithLocus(locus: string)
+    {
+        for (let g of this.currentSubmission.value.genes)
+        {
+            if (g.locusName==locus)
+            {
+                return g;
+            }
+        }
+        return null;
+    }
+
+    removeGeneAtIndex(index: number) {
+        this.currentSubmission.value.genes.splice(index, 1);
+        this.setSubmission(this.currentSubmission.value);
+    }
+
+    setGeneAtIndex(newGeneData: Gene, index: number)
+    {
+        this.currentSubmission.value.genes[index] = newGeneData;
+        this.setSubmission(this.currentSubmission.value);
+    }
+
+    addBlankAnnotation()
+    {
+        let anno = {} as Annotation;
+        let gene = {} as Gene;
+        gene.locusName = "AT2G23380";
+        gene.geneSymbol = "CLF";
+        gene.fullName = "CURLYLEAF";
+        anno.type = "MOLECULAR_FUNCTION";
+        anno.data = {"locusName": gene,
+                    "locusName2" : gene,
+                    "keyword" : {name:""},
+                    "method" : {name:""},
+                    "text" : ""
+        };
+        this.currentSubmission.value.annotations.push(anno);
+        this.setSubmission(this.currentSubmission.value);
+
+    }
+
+    removeAnnotationAtIndex(index: number) {
+        this.currentSubmission.value.annotations.splice(index, 1);
+        this.setSubmission(this.currentSubmission.value);
+    }
+
+    setAnnotationAtIndex(newAnnotation: Annotation, index: number)
+    {
+        this.currentSubmission.value.annotations[index] = newAnnotation;
+        this.setSubmission(this.currentSubmission.value);
+    }
+
+
+
     sentanceForAnnotation(annotation: Annotation)
     {
-        if (!annotation.data['gene1'])
+        if (!annotation.data.locusName)
         {
             return "invalid annotation";
         }
-        var sentance = `${annotation.data['gene1'].locusName}`;
+        var sentance = `${annotation.data.locusName.locusName}`;
         switch (annotation.type){
             case "ANATOMICAL_LOCATION": {
-                sentance += ` anatomically located in ${annotation.data['function'].name}, `;
-                sentance += `inferred from ${annotation.data['method'].name}, `;
+                sentance += ` anatomically located in ${annotation.data.keyword['name']}, `;
+                sentance += `inferred from ${annotation.data.method['name']}, `;
                 break;
             }
             case "BIOLOGICAL_PROCESS": {
-                sentance += ` involved in (biological process) ${annotation.data['function'].name}, `;
-                sentance += `inferred from ${annotation.data['method'].name}, `;
+                sentance += ` involved in (biological process) ${annotation.data.keyword['name']}, `;
+                sentance += `inferred from ${annotation.data.method['name']}, `;
                 break;
             }
             case "COMMENT": {
@@ -124,23 +203,23 @@ export class SubmissionService {
                 break;
             }
             case "MOLECULAR_FUNCTION": {
-                sentance += ` functions in ${annotation.data['function'].name}, `;
-                sentance += `inferred from ${annotation.data['method'].name}, `;
+                sentance += ` functions in ${annotation.data.keyword['name']}, `;
+                sentance += `inferred from ${annotation.data.method['name']}, `;
                 break;
             }
             case "PROTEIN_INTERACTION": {
-                sentance += ` interacts with ${annotation.data['gene2'].locusName}, `;
-                sentance += `inferred from ${annotation.data['method'].name}, `;
+                sentance += ` interacts with ${annotation.data.locusName2.locusName}, `;
+                sentance += `inferred from ${annotation.data.method['name']}, `;
                 break;
             }
             case "SUBCELLULAR_LOCATION": {
-                sentance += ` located in ${annotation.data['function'].name}, `;
-                sentance += `inferred from ${annotation.data['method'].name}, `;
+                sentance += ` located in ${annotation.data.keyword['name']}, `;
+                sentance += `inferred from ${annotation.data.method['name']}, `;
                 break;
             }
             case "TEMPORAL_EXPRESSION": {
-                sentance += ` expressed in ${annotation.data['function'].name}, `;
-                sentance += `inferred from ${annotation.data['method'].name}, `;
+                sentance += ` expressed in ${annotation.data.keyword['name']}, `;
+                sentance += `inferred from ${annotation.data.method['name']}, `;
                 break;
             }
         }
@@ -167,19 +246,19 @@ export class SubmissionService {
             let anno = {};
             anno['type'] = a.type;
             anno['data'] = {};
-            anno['data']['locusName'] = a.data['gene1'].locusName;
+            anno['data']['locusName'] = a.data.locusName.locusName;
             anno['data']['isEvidenceWithOr'] = true;
             if (a.type==="COMMENT")
             {
-                anno['data']['text'] = a.data['comment'];
+                anno['data']['text'] = a.data.text;
             } else if (a.type=="PROTEIN_INTERACTION")
             {
-                anno['data']['locusName2'] = a.data['gene2'].locusName;
-                anno['data']['method'] = {'id': a.data['method'].id};
+                anno['data']['locusName2'] = a.data.locusName2.locusName;
+                anno['data']['method'] = {'id': a.data['method']['id']};
 
             } else {
-                anno['data']['keyword'] = {'id': a.data['function'].id};
-                anno['data']['method'] = {'id': a.data['method'].id};
+                anno['data']['keyword'] = {'id': a.data.keyword['id']};
+                anno['data']['method'] = {'id': a.data.method['id']};
             }
             j['annotations'].push(anno);
 
@@ -188,15 +267,12 @@ export class SubmissionService {
 
     }
 
-    fromJson(responce: any)
-    {
-
-    }
 
     getCurrentSubmissionWithId(id: string)
     {
         let url = `${environment.base_url}/submission/${id}`;
         this.http.get(url).subscribe(next=>{
+            console.log(next);
            this.setSubmission(next as Submission);
         },error1 => {
             console.log(error1);

@@ -13,15 +13,15 @@ export class MethodDropdownComponent implements OnInit {
   constructor(private geneService: GeneService) { }
 
   methods: any;
-  method: any;
+  method = {"name" : ""};
+
 
   @Input() annotationType: string = '';
-  @Output() selectedMethod: EventEmitter<string> = new EventEmitter();
+  @Output() selectedMethod: EventEmitter<any> = new EventEmitter();
 
   methodFormatter = (x: any) => x.name;
 
   ngOnInit() {
-    this.method = '';
     this.methods = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(200),
@@ -31,6 +31,7 @@ export class MethodDropdownComponent implements OnInit {
   }
 
   selectMethod(method: any) {
+    console.log('who the fucl sellected a method?');
     this.method = method;
     this.selectedMethod.emit(method);
   }

@@ -6,14 +6,14 @@
           <div class="bg-light-green text-dark input-group-prepend">
             <span class="input-group-text">Annotation {{annotationModel.index + 1}}</span>
           </div>
-          <select class="form-control" [formControl]="selectedType">
-            <option value="Molecular Function">Molecular Function (GO Function)</option>
-            <option value="Biological Process">Biological Process (GO Process)</option>
-            <option value="SubCellular Location">SubCellular Location (Go Component)</option>
-            <option value="Anotomical Location">Anotomical Location (PO Anatomy)</option>
-            <option value="Temporal Expression">Temporal Expression (PO Dev. Stage)</option>
-            <option value="Protein Interaction">Protein Interaction</option>
-            <option value="Comment">Comment</option>
+          <select class="form-control" [formControl]="selectedType" (change)="typeSelected()">
+            <option value="MOLECULAR_FUNCTION">Molecular Function (GO Function)</option>
+            <option value="BIOLOGICAL_PROCESS">Biological Process (GO Process)</option>
+            <option value="SUBCELLULAR_LOCATION">SubCellular Location (Go Component)</option>
+            <option value="ANATOMICAL_LOCATION">Anotomical Location (PO Anatomy)</option>
+            <option value="TEMPORAL_EXPRESSION">Temporal Expression (PO Dev. Stage)</option>
+            <option value="PROTEIN_INTERACTION">Protein Interaction</option>
+            <option value="COMMENT">Comment</option>
           </select>
           <div class="input-group-append">
             <span class="input-group-text">
@@ -39,26 +39,26 @@
       </div>
     </div>
     <div class="card-body">
-      <ng-container *ngIf="selectedType.value === 'Molecular Function'">
-        <app-molecular [annotationData]="annotationModel"></app-molecular>
+      <ng-container *ngIf="selectedType.value === 'MOLECULAR_FUNCTION'">
+        <app-molecular [annotation]="annotationModel.annotation" [index]="annotationModel.index"></app-molecular>
       </ng-container>
-      <ng-container *ngIf="selectedType.value === 'Biological Process'">
-        <app-biological [annotationData]="annotationModel"></app-biological>
+      <ng-container *ngIf="selectedType.value === 'BIOLOGICAL_PROCESS'">
+        <app-biological [annotation]="annotationModel.annotation" [index]="annotationModel.index"></app-biological>
       </ng-container>
-      <ng-container *ngIf="selectedType.value === 'SubCellular Location'">
-        <app-subcellular [annotationData]="annotationModel"></app-subcellular>
+      <ng-container *ngIf="selectedType.value === 'SUBCELLULAR_LOCATION'">
+        <app-subcellular [annotation]="annotationModel.annotation" [index]="annotationModel.index"></app-subcellular>
       </ng-container>
-      <ng-container *ngIf="selectedType.value === 'Anotomical Location'">
-        <app-annatomical [annotationData]="annotationModel"></app-annatomical>
+      <ng-container *ngIf="selectedType.value === 'ANATOMICAL_LOCATION'">
+        <app-annatomical [annotation]="annotationModel.annotation" [index]="annotationModel.index"></app-annatomical>
       </ng-container>
-      <ng-container *ngIf="selectedType.value === 'Temporal Expression'">
-        <app-temporal [annotationData]="annotationModel"></app-temporal>
+      <ng-container *ngIf="selectedType.value === 'TEMPORAL_EXPRESSION'">
+        <app-temporal [annotation]="annotationModel.annotation" [index]="annotationModel.index"></app-temporal>
       </ng-container>
-      <ng-container *ngIf="selectedType.value === 'Protein Interaction'">
-        <app-protein-interaction [annotationData]="annotationModel"></app-protein-interaction>
+      <ng-container *ngIf="selectedType.value === 'PROTEIN_INTERACTION'">
+        <app-protein-interaction [annotation]="annotationModel.annotation" [index]="annotationModel.index"></app-protein-interaction>
       </ng-container>
-      <ng-container *ngIf="selectedType.value === 'Comment'">
-        <app-comment [annotationData]="annotationModel"></app-comment>
+      <ng-container *ngIf="selectedType.value === 'COMMENT'">
+        <app-comment [annotation]="annotationModel.annotation" [index]="annotationModel.index"></app-comment>
       </ng-container>
     </div>
   </div>

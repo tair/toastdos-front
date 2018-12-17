@@ -9,21 +9,8 @@ import {SubmissionService} from "./submission.service";
 })
 export class GeneService {
 
-  private enteredGenes: BehaviorSubject<any[]> = new BehaviorSubject([]);
-
   constructor(private http: HttpClient, private submission: SubmissionService) {
-    this.submission.currentSubmission$.subscribe(next => {
-            let geneLocuses = [];
-            for (let g of next.genes)
-            {
-              if (g.locusName.length>1) {
-                  geneLocuses.push(g);
-              }
 
-            }
-            this.enteredGenes.next(geneLocuses);
-        }
-    )
   }
 
   searchMolecularFunction(function_name: string) {
@@ -70,16 +57,6 @@ export class GeneService {
 
   checkLocus$(locus: string) {
     return this.http.get(`${environment.base_url}/gene/verify/${locus}`);
-  }
-
-
-  allGenes()
-  {
-    return this.enteredGenes.getValue();
-  }
-
-  get enteredGenes$(): Observable<any[]> {
-    return this.enteredGenes.asObservable();
   }
 
 }
