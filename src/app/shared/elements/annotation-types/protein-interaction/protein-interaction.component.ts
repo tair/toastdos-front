@@ -38,6 +38,9 @@ export class ProteinInteractionComponent implements OnInit {
   constructor(private geneService: GeneService, private submissionService: SubmissionService) { }
 
   ngOnInit() {
+      this.gene1.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName);
+      this.gene2.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName2);
+      this.method.setValue(this.submissionService.currentSubmission.annotations[this.index].data.method);
       this.methods = (text$: Observable<string>) =>
       text$.pipe(
         debounceTime(200),

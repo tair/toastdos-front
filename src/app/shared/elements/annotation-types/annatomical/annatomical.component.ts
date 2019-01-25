@@ -39,9 +39,9 @@ export class AnnatomicalComponent implements OnInit {
     constructor(private geneService: GeneService, private submissionService: SubmissionService) { }
 
     ngOnInit() {
-          this.gene.setValue(this.submissionService.currentSubmission[this.index].data.locusName);
-          this.function.setValue(this.submissionService.currentSubmission[this.index].data.keyword);
-          this.method.setValue(this.submissionService.currentSubmission[this.index].data.method);
+      this.gene.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName);
+      this.function.setValue(this.submissionService.currentSubmission.annotations[this.index].data.keyword);
+      this.method.setValue(this.submissionService.currentSubmission.annotations[this.index].data.method);
           this.goFunctions = (text$: Observable<string>) =>
           text$.pipe(
             debounceTime(200),
@@ -60,7 +60,7 @@ export class AnnatomicalComponent implements OnInit {
     }
 
     get availableGenes() {
-    return this.submissionService.currentSubmission.genes;
+      return this.submissionService.observableGenes;
     }
 
     get function() {

@@ -33,16 +33,13 @@ export class MolecularComponent implements OnInit {
   goFormatter = (x: any) => x.name;
   methods: any;
   methodFormatter = (x: any) => x.name;
-  usable = false;
-
 
   constructor(private geneService: GeneService, private submissionService: SubmissionService) { }
 
   ngOnInit() {
-
-      this.gene.setValue(this.submissionService.currentSubmission[this.index].data.locusName);
-      this.function.setValue(this.submissionService.currentSubmission[this.index].data.keyword);
-      this.method.setValue(this.submissionService.currentSubmission[this.index].data.method);
+    this.gene.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName);
+    this.function.setValue(this.submissionService.currentSubmission.annotations[this.index].data.keyword);
+    this.method.setValue(this.submissionService.currentSubmission.annotations[this.index].data.method);
     this.goFunctions = (text$: Observable<string>) =>
       text$.pipe(
         debounceTime(200),
@@ -57,7 +54,7 @@ export class MolecularComponent implements OnInit {
       );
     this.form.valueChanges.subscribe(value => {
         this.setAnnotationData();
-    })
+    });
   }
 
   get availableGenes() {

@@ -36,17 +36,19 @@ export class SubmissionService {
     submissions = {};
     currentSubmission: Submission; //defualt blank submission
     observableGenes = new BehaviorSubject<Gene[]>([]);
+    observableShouldUpdate = new BehaviorSubject<Boolean>(false);
 
     constructor(private http: HttpClient) {
         this.currentSubmission = this.emptySubmission();
         this.observableGenes.next(this.currentSubmission.genes);
+        this.observableShouldUpdate.next(false);
     }
 
     emptySubmission() {
       let gene = {} as Gene;
-      gene.locusName = "AT2G23380";
-      gene.geneSymbol = "CLF";
-      gene.fullName = "CURLYLEAF";
+      gene.locusName = "";
+      gene.geneSymbol = "";
+      gene.fullName = "";
       let anno = {} as Annotation;
       anno.type = "MOLECULAR_FUNCTION";
       anno.data = {"locusName": gene,
@@ -56,26 +58,22 @@ export class SubmissionService {
                     "text" : ""
       };
       let sub = {} as Submission;
-      sub.publicationId = "123";
-      sub.genes = [gene];
-      sub.annotations = [anno];
+      sub.publicationId = "";
+      sub.genes = [];
+      sub.annotations = [];
       return sub;
     }
 
     getPageOfSubmissions(page,limit) {
       let url = `${environment.base_url}/submission/list?page=${page}&limit=${limit}&sort_by=date&sort_dir=desc`;
-      this.http.get(url).subscribe(next => {
-          console.log(next['inProgress'][0]);
-        this.submissions = next;
-      },error1 => {
-        console.log(error1);
-      });
+      return this.http.get(url);
     }
 
 
     resetSubmission()
     {
         this.currentSubmission = this.emptySubmission();
+        this.observableShouldUpdate.next(true);
     }
 
 
@@ -115,16 +113,20 @@ export class SubmissionService {
     addBlankAnnotation()
     {
         let anno = {} as Annotation;
-        let gene = {} as Gene;
-        gene.locusName = "AT2G23380";
-        gene.geneSymbol = "CLF";
-        gene.fullName = "CURLYLEAF";
+        var gene = {} as Gene;
+        if (this.currentSubmission.genes.length<1) {
+          gene.locusName = "";
+          gene.geneSymbol = "";
+          gene.fullName = "";
+        } else {
+            gene = this.currentSubmission.genes[0]
+        }
         anno.type = "MOLECULAR_FUNCTION";
         anno.data = {"locusName": gene,
-                    "locusName2" : gene,
-                    "keyword" : {name:""},
-                    "method" : {name:""},
-                    "text" : ""
+                     "locusName2" : gene,
+                     "keyword" : {name:""},
+                     "method" : {name:""},
+                     "text" : ""
         };
         this.currentSubmission.annotations.push(anno);
 

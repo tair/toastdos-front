@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { SubmissionService, Submission, Gene, Annotation} from '../../services/submission.service';
 import {s} from "@angular/core/src/render3";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-submission',
@@ -9,7 +10,7 @@ import {s} from "@angular/core/src/render3";
 })
 export class SubmissionComponent implements OnInit {
 
-  constructor(private submissionService: SubmissionService) { }
+  constructor(private submissionService: SubmissionService, private  detector: ChangeDetectorRef) { }
   submission: Submission;
   editing: boolean;
   saved: boolean;
@@ -21,6 +22,7 @@ export class SubmissionComponent implements OnInit {
       this.saved = false;
       this.submiting = false;
       this.error = false;
+
   }
 
   reviewSubmission() {
@@ -28,7 +30,7 @@ export class SubmissionComponent implements OnInit {
   }
 
   resetSubmission() {
-    console.log(this.submissionService.resetSubmission());
+    this.submissionService.resetSubmission();
   }
 
   editSubmission() {

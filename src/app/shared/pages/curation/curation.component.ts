@@ -15,6 +15,7 @@ export class CurationComponent implements OnInit {
 
   ngOnInit()
   {
+    this.submissionService.getPageOfSubmissions(0,100);
 
   }
 

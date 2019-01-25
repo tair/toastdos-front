@@ -18,7 +18,11 @@ export class GenesComponent implements OnInit {
 
   constructor(private geneService: GeneService, private submissionService: SubmissionService)
   {
-
+    this.submissionService.observableShouldUpdate.asObservable().subscribe(shouldUpdate => {
+        if (shouldUpdate) {
+          this.submission = this.submissionService.currentSubmission;
+        }
+      });
   }
 
   ngOnInit()

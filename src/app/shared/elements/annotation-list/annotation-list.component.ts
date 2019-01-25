@@ -16,26 +16,53 @@ export class AnnotationListComponent implements OnInit {
   annotationModels: any[] = [{index:0,annotation:{} as Annotation}];
 
 
-  constructor(private annotationService: AnnotationService, private submissisonService: SubmissionService) { }
+  constructor(private annotationService: AnnotationService, private submissionService: SubmissionService) { }
 
   ngOnInit() {
+      //this is if we want to reset of whatever
+      this.submissionService.observableShouldUpdate.asObservable().subscribe(shouldUpdate => {
+        if (shouldUpdate) {
+          this.annotationModels = [];
+            let i = 0;
+            for (let a of this.submissionService.currentSubmission.annotations) {
+                this.annotationModels.push({index: i, annotation: a});
+                i += 1;
+            }
+        }
+      });
       //load models here when we get them for curation
       this.annotationModels = [];
       let i = 0;
-      for (let a of this.submissisonService.currentSubmission.annotations) {
+      for (let a of this.submissionService.currentSubmission.annotations) {
           this.annotationModels.push({index: i, annotation: a});
           i += 1;
       }
   }
 
   addAnnotation() {
-    this.submissisonService.addBlankAnnotation();
+    this.submissionService.addBlankAnnotation();
+    let nSubs = this.submissionService.currentSubmission.annotations.length-1;
+    if (this.submissionService.currentSubmission.genes.length>=1) {
+        this.submissionService.currentSubmission.annotations[nSubs].data.locusName = this.submissionService.currentSubmission.genes[0];
+        if (this.submissionService.currentSubmission.genes.length>=2) {
+            this.submissionService.currentSubmission.annotations[nSubs].data.locusName2 = this.submissionService.currentSubmission.genes[1];
+        }
+    }
+    this.annotationModels.push({index: nSubs, annotation: this.submissionService.currentSubmission.annotations[nSubs]});
   }
 
   removeAnnotation(annoModelToDelete: any)
   {
-    this.submissisonService.removeAnnotationAtIndex(annoModelToDelete.index);
+    this.submissionService.removeAnnotationAtIndex(annoModelToDelete.index);
+    this.annotationModels.splice(annoModelToDelete.index, 1);
+    let i = 0;
+    for (let a of this.submissionService.currentSubmission.annotations) {
+          this.annotationModels[i]['index'] = i;
+          this.annotationModels[i]['annotation'] = a;
+          i += 1;
+      }
   }
+
 
 
 }

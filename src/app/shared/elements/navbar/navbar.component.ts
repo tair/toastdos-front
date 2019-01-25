@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
 
   goToOrcId() {
     window.location.href = 'https://orcid.org/oauth/authorize?' +
-      'client_id=APP-L8ISF5DJNGXMS599&' +
+      'client_id=APP-ZWMPV0URGJH6YO7I&' +
       'response_type=code&' +
       'scope=/authenticate&' +
       'redirect_uri=http://0.0.0.0:4200/';

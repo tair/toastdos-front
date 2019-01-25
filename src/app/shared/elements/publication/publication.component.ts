@@ -32,23 +32,17 @@ export class PublicationComponent implements OnInit {
     this.author = "";
   }
 
+
   ngOnInit() {
+    this.submissionService.observableShouldUpdate.asObservable().subscribe(shouldUpdate => {
+        if (shouldUpdate) {
+           this.form.setValue({'pub_id': this.submissionService.currentSubmission.publicationId});
+           this.checkValid();
+        }
+      });
     this.form.setValue({'pub_id': this.submissionService.currentSubmission.publicationId});
     if (this.submissionService.currentSubmission.publicationId.length>=2) {
-            this.pubService.checkIsValid$(this.submissionService.currentSubmission.publicationId)
-                .subscribe((response: any)=> {
-                  this.pubStatus = 'success';
-                  this.toggleErrorPopover();
-                  this.title = response.title;
-                  this.author = response.author;
-                  },
-                error => {
-                  console.log(error);
-                  this.pubStatus = 'error';
-                  this.toggleErrorPopover();
-                  this.title = "";
-                  this.author = "";
-                });
+            this.checkValid();
     }
     this.pub_id.valueChanges
       .pipe(
@@ -76,6 +70,23 @@ export class PublicationComponent implements OnInit {
             });
       });
 
+  }
+
+  checkValid() {
+    this.pubService.checkIsValid$(this.submissionService.currentSubmission.publicationId)
+                .subscribe((response: any)=> {
+                  this.pubStatus = 'success';
+                  this.toggleErrorPopover();
+                  this.title = response.title;
+                  this.author = response.author;
+                  },
+                error => {
+                  console.log(error);
+                  this.pubStatus = 'error';
+                  this.toggleErrorPopover();
+                  this.title = "";
+                  this.author = "";
+                });
   }
 
   toggleErrorPopover() {

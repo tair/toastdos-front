@@ -7,7 +7,7 @@ import {Annotation, Submission, SubmissionService} from "../../services/submissi
   templateUrl: './submission-overview.component.html',
   styleUrls: ['./submission-overview.component.scss']
 })
-export class SubmissionOverviewComponent implements OnInit, AfterViewInit {
+export class SubmissionOverviewComponent implements OnInit {
 
   submission: Submission;
 
@@ -21,14 +21,7 @@ export class SubmissionOverviewComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.submission = this.submissionService.currentSubmissionValue();
-  }
-
-  ngAfterViewInit()
-  {
-    this.submissionService.currentSubmission$.subscribe(next=>{
-      this.submission = next;
-    });
+    this.submission = this.submissionService.currentSubmission;
   }
 
 }
