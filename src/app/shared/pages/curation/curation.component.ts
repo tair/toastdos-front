@@ -15,7 +15,11 @@ export class CurationComponent implements OnInit {
 
   ngOnInit()
   {
-    this.submissionService.getPageOfSubmissions(0,100);
+    this.submissionService.getPageOfSubmissions(0,100).subscribe(submissions => {
+      this.submissionsInReview = submissions['inProgress'];
+      this.submissionsNeedReview = submissions['needsReview'];
+      this.submissionsReviewed = submissions['reviewed'];
+    });
 
   }
 
