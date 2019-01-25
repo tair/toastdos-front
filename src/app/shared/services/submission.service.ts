@@ -235,6 +235,8 @@ export class SubmissionService {
         this.http.get(url).subscribe(next=>{
             console.log(next);
            this.currentSubmission = next as Submission;
+           this.observableShouldUpdate.next(true);
+           this.observableGenes.next(this.currentSubmission.genes);
         },error1 => {
             console.log(error1);
         });
