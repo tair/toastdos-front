@@ -32,16 +32,14 @@ export interface Submission {
 @Injectable({
   providedIn: 'root'
 })
-
-
-
 export class SubmissionService {
-    submissions = new BehaviorSubject<any>([]);
-    currentSubmission = new BehaviorSubject<Submission>(this.emptySubmission()); //defualt blank submission
-    currentGenes = new BehaviorSubject<Array<Gene>>([]);
+    submissions = {};
+    currentSubmission: Submission; //defualt blank submission
+    observableGenes = new BehaviorSubject<Gene[]>([]);
 
     constructor(private http: HttpClient) {
-        this.setSubmission(this.emptySubmission());
+        this.currentSubmission = this.emptySubmission();
+        this.observableGenes.next(this.currentSubmission.genes);
     }
 
     emptySubmission() {
@@ -58,76 +56,42 @@ export class SubmissionService {
                     "text" : ""
       };
       let sub = {} as Submission;
-      sub.publicationId = "";
+      sub.publicationId = "123";
       sub.genes = [gene];
       sub.annotations = [anno];
       return sub;
     }
 
     getPageOfSubmissions(page,limit) {
-      let url = `${environment.base_url}/submission/list?page=${page}&limit=${limit}&sort_by=date&sort_dir=desc`
+      let url = `${environment.base_url}/submission/list?page=${page}&limit=${limit}&sort_by=date&sort_dir=desc`;
       this.http.get(url).subscribe(next => {
           console.log(next['inProgress'][0]);
-        this.submissions.next(next);
+        this.submissions = next;
       },error1 => {
         console.log(error1);
-      })
+      });
     }
 
-    currentSubmissionValue()
-    {
-        return this.currentSubmission.value;
-    }
-
-    get currentGenes$()
-    {
-        return this.currentGenes.asObservable();
-    }
-
-    get currentSubmission$()
-    {
-      return this.currentSubmission.asObservable();
-    }
 
     resetSubmission()
     {
-        this.currentGenes.next([]);
-        this.currentSubmission.next(this.emptySubmission());
-    }
-
-
-    setSubmission(newSubmission: Submission)
-    {
-        this.currentGenes.next(newSubmission.genes);
-        this.currentSubmission.next(newSubmission);
-    }
-
-    setPublication(newPubID: string)
-    {
-        this.currentSubmission.value.publicationId = newPubID;
-        this.setSubmission(this.currentSubmission.value);
+        this.currentSubmission = this.emptySubmission();
     }
 
 
     addBlankGene()
     {
-        this.currentSubmission.value.genes.push({
+        this.currentSubmission.genes.push({
             locusName: "",
             geneSymbol: "",
             fullName: ""
             } as Gene);
-        this.setSubmission(this.currentSubmission.value);
-
-    }
-
-    getGeneAtIndex(index: number)
-    {
-        return this.currentSubmission.value.genes[index];
+        this.observableGenes.next(this.currentSubmission.genes);
     }
 
     getGeneWithLocus(locus: string)
     {
-        for (let g of this.currentSubmission.value.genes)
+        for (let g of this.currentSubmission.genes)
         {
             if (g.locusName==locus)
             {
@@ -138,14 +102,14 @@ export class SubmissionService {
     }
 
     removeGeneAtIndex(index: number) {
-        this.currentSubmission.value.genes.splice(index, 1);
-        this.setSubmission(this.currentSubmission.value);
+        this.currentSubmission.genes.splice(index, 1);
+        this.observableGenes.next(this.currentSubmission.genes);
     }
 
     setGeneAtIndex(newGeneData: Gene, index: number)
     {
-        this.currentSubmission.value.genes[index] = newGeneData;
-        this.setSubmission(this.currentSubmission.value);
+        this.currentSubmission.genes[index] = newGeneData;
+        this.observableGenes.next(this.currentSubmission.genes);
     }
 
     addBlankAnnotation()
@@ -162,23 +126,18 @@ export class SubmissionService {
                     "method" : {name:""},
                     "text" : ""
         };
-        this.currentSubmission.value.annotations.push(anno);
-        this.setSubmission(this.currentSubmission.value);
+        this.currentSubmission.annotations.push(anno);
 
     }
 
     removeAnnotationAtIndex(index: number) {
-        this.currentSubmission.value.annotations.splice(index, 1);
-        this.setSubmission(this.currentSubmission.value);
+        this.currentSubmission.annotations.splice(index, 1);
     }
 
     setAnnotationAtIndex(newAnnotation: Annotation, index: number)
     {
-        this.currentSubmission.value.annotations[index] = newAnnotation;
-        this.setSubmission(this.currentSubmission.value);
+        this.currentSubmission.annotations[index] = newAnnotation;
     }
-
-
 
     sentanceForAnnotation(annotation: Annotation)
     {
@@ -229,7 +188,7 @@ export class SubmissionService {
     toJson()
     {
         let j = {};
-        let sub = this.currentSubmissionValue();
+        let sub = this.currentSubmission;
         j['publicationId'] = sub.publicationId;
         j['genes'] = [];
         for (let g of sub.genes)
@@ -273,7 +232,7 @@ export class SubmissionService {
         let url = `${environment.base_url}/submission/${id}`;
         this.http.get(url).subscribe(next=>{
             console.log(next);
-           this.setSubmission(next as Submission);
+           this.currentSubmission = next as Submission;
         },error1 => {
             console.log(error1);
         });

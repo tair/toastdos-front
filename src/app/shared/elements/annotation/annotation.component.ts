@@ -18,11 +18,10 @@ export class AnnotationComponent implements OnInit {
   constructor(private submissionService: SubmissionService) { }
 
   ngOnInit() {
-
+      this.selectedType.setValue(this.annotationModel.annotation.type)
   }
 
   typeSelected() {
-    console.log(this.selectedType.value);
     this.setAnnotationData();
   }
 
@@ -33,21 +32,8 @@ export class AnnotationComponent implements OnInit {
 
   setAnnotationData()
   {
-      if (this.usable)
-      {
-          this.annotationModel.annotation.type = this.selectedType.value;
-          this.submissionService.setAnnotationAtIndex(this.annotationModel.annotation, this.annotationModel.index);
-      }
-  }
-
-  ngAfterViewInit() {
-      this.usable=false;
-      setTimeout(() => {
-          if (this.annotationModel.annotation.type) {
-              this.selectedType.setValue(this.annotationModel.annotation.type);
-              this.usable = true;
-          }
-      });
+      this.annotationModel.annotation.type = this.selectedType.value;
+      this.submissionService.setAnnotationAtIndex(this.annotationModel.annotation, this.annotationModel.index);
   }
 
 }

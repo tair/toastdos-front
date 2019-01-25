@@ -18,9 +18,6 @@ export class SearchComponent implements OnInit {
   constructor(private submissionService: SubmissionService){ }
 
   ngOnInit() {
-    this.submissionService.submissions.subscribe(searchResults => {
-      console.log(searchResults);
-    });
     this.searchString.valueChanges
       .pipe(
         debounceTime(400),

@@ -38,7 +38,7 @@ export class LocusComponent implements OnInit {
   ngOnInit() {
     this.locusStatus = 'empty';
     //init
-    let gene = this.submissionService.getGeneAtIndex(this.number);
+    let gene = this.submissionService.currentSubmission.genes[this.number];
     if (gene.locusName.length>2)
     {
         this.locusStatus = 'success';
@@ -46,17 +46,6 @@ export class LocusComponent implements OnInit {
     this.form.setValue({'locus': gene.locusName,
                               'gene_symbol': gene.geneSymbol,
                               'full_gene_name': gene.fullName});
-    //subscribe to futur changes
-    this.submissionService.currentSubmission$.subscribe(next=>{
-       let gene = next.genes[this.number];
-       //if the change was from something  that wasnt us then we update our content
-       if (!deepEqual(gene, this.getGene()) && gene) {
-           this.form.setValue({'locus': gene.locusName,
-                                    'gene_symbol': gene.geneSymbol,
-                                    'full_gene_name': gene.fullName});
-           this.locusStatus = 'success';
-       }
-    });
 
     this.locus.valueChanges
       .pipe(
@@ -79,6 +68,7 @@ export class LocusComponent implements OnInit {
             this.toggleErrorPopover();
           });
     });
+
   }
 
 

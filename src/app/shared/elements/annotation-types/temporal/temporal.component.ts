@@ -39,25 +39,28 @@ export class TemporalComponent implements OnInit {
     constructor(private geneService: GeneService, private submissionService: SubmissionService) { }
 
     ngOnInit() {
-        this.goFunctions = (text$: Observable<string>) =>
-            text$.pipe(
-                debounceTime(200),
-                distinctUntilChanged(),
-                switchMap(term => this.geneService.searchTemporalExpression(term))
-            );
+          this.gene.setValue(this.submissionService.currentSubmission[this.index].data.locusName);
+          this.function.setValue(this.submissionService.currentSubmission[this.index].data.keyword);
+          this.method.setValue(this.submissionService.currentSubmission[this.index].data.method);
+          this.goFunctions = (text$: Observable<string>) =>
+          text$.pipe(
+            debounceTime(200),
+            distinctUntilChanged(),
+            switchMap(term => this.geneService.searchMolecularFunction(term))
+          );
         this.methods = (text$: Observable<string>) =>
-      text$.pipe(
-        debounceTime(200),
-        distinctUntilChanged(),
-        switchMap(term => this.geneService.searchMethods(term, this.annotationType))
-      );
+          text$.pipe(
+            debounceTime(200),
+            distinctUntilChanged(),
+            switchMap(term => this.geneService.searchMethods(term, this.annotationType))
+          );
         this.form.valueChanges.subscribe(value => {
-            this.setAnnotationData()
+            this.setAnnotationData();
         })
     }
 
     get availableGenes() {
-        return this.submissionService.currentGenes$;
+        return this.submissionService.observableGenes;
     }
 
     get function() {
@@ -74,25 +77,11 @@ export class TemporalComponent implements OnInit {
 
     setAnnotationData()
     {
-      if (this.usable) {
-          let locus = this.submissionService.currentSubmissionValue().genes.length == 1 ? this.submissionService.currentSubmissionValue().genes[0] : this.submissionService.getGeneWithLocus(this.gene.value);
-          this.annotation.data.locusName = locus;
-          this.annotation.data.keyword = this.function.value;
-          this.annotation.data.method = this.method.value;
-          this.submissionService.setAnnotationAtIndex(this.annotation, this.index);
-      }
+      let locus = this.submissionService.currentSubmission.genes.length == 1 ? this.submissionService.currentSubmission.genes[0] : this.submissionService.getGeneWithLocus(this.gene.value);
+      this.annotation.data.locusName = locus;
+      this.annotation.data.keyword = this.function.value;
+      this.annotation.data.method = this.method.value;
+      this.submissionService.setAnnotationAtIndex(this.annotation, this.index);
     }
-
-      ngAfterViewInit() {
-          this.usable=false;
-          setTimeout(() => {
-              if (this.annotation.data) {
-                  this.function.setValue(this.annotation.data.keyword);
-                  this.gene.setValue(this.annotation.data.locusName.locusName);
-                  this.method.setValue(this.annotation.data.method);
-                  this.usable = true;
-              }
-          });
-      }
 
 }

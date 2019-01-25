@@ -10,7 +10,7 @@ import * as deepEqual from "deep-equal";
   templateUrl: './genes.component.html',
   styleUrls: ['./genes.component.scss']
 })
-export class GenesComponent implements OnInit, AfterViewInit {
+export class GenesComponent implements OnInit {
 
 
   @ViewChildren(LocusComponent) locuses: QueryList<LocusComponent>;
@@ -18,19 +18,14 @@ export class GenesComponent implements OnInit, AfterViewInit {
 
   constructor(private geneService: GeneService, private submissionService: SubmissionService)
   {
-      this.submission = this.submissionService.currentSubmissionValue();
+
   }
 
   ngOnInit()
   {
-
+    this.submission = this.submissionService.currentSubmission;
   }
 
-  ngAfterViewInit() {
-    this.submissionService.currentSubmission$.subscribe(nextSubmission=>{
-          this.submission.genes = nextSubmission.genes;
-    });
-  }
 
   addLocus() {
 

@@ -19,22 +19,13 @@ export class AnnotationListComponent implements OnInit {
   constructor(private annotationService: AnnotationService, private submissisonService: SubmissionService) { }
 
   ngOnInit() {
-    //load models here when we get them for curation
-    this.submissisonService.currentSubmission$.subscribe(next => {
-      let annos = this.annotationModels.map(x=>x.annotation);
-      if (deepEqual(annos, next.annotations))
-      {
-
-      } else {
-          let i = 0;
-          this.annotationModels = [];
-          for (let a of next.annotations) {
-              this.annotationModels.push({index: i, annotation: a});
-              i += 1;
-          }
+      //load models here when we get them for curation
+      this.annotationModels = [];
+      let i = 0;
+      for (let a of this.submissisonService.currentSubmission.annotations) {
+          this.annotationModels.push({index: i, annotation: a});
+          i += 1;
       }
-
-    });
   }
 
   addAnnotation() {

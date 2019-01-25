@@ -21,9 +21,6 @@ export class SubmissionComponent implements OnInit {
       this.saved = false;
       this.submiting = false;
       this.error = false;
-      this.submissionService.currentSubmission$.subscribe(submission => {
-          this.submission = submission;
-      });
   }
 
   reviewSubmission() {

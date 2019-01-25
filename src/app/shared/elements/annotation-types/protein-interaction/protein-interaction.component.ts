@@ -50,7 +50,7 @@ export class ProteinInteractionComponent implements OnInit {
   }
 
   get availableGenes() {
-    return this.submissionService.currentGenes$;
+    return this.submissionService.observableGenes;
   }
 
 
@@ -68,26 +68,13 @@ export class ProteinInteractionComponent implements OnInit {
 
   setAnnotationData()
   {
-      if (this.usable) {
-          let locus = this.submissionService.currentSubmissionValue().genes.length == 1 ? this.submissionService.currentSubmissionValue().genes[0] : this.submissionService.getGeneWithLocus(this.gene1.value);
-          let locus2 = this.submissionService.currentSubmissionValue().genes.length == 1 ? this.submissionService.currentSubmissionValue().genes[0] : this.submissionService.getGeneWithLocus(this.gene2.value);
-          this.annotation.data.locusName = locus;
-          this.annotation.data.locusName2 = locus2;
-          this.annotation.data.method = this.method.value;
-          this.submissionService.setAnnotationAtIndex(this.annotation, this.index);
-      }
+      let locus = this.submissionService.currentSubmission.genes.length == 1 ? this.submissionService.currentSubmission.genes[0] : this.submissionService.getGeneWithLocus(this.gene1.value);
+      let locus2 = this.submissionService.currentSubmission.genes.length == 1 ? this.submissionService.currentSubmission.genes[0] : this.submissionService.getGeneWithLocus(this.gene2.value);
+      this.annotation.data.locusName = locus;
+      this.annotation.data.locusName2 = locus2;
+      this.annotation.data.method = this.method.value;
+      this.submissionService.setAnnotationAtIndex(this.annotation, this.index);
   }
 
-  ngAfterViewInit() {
-      this.usable=false;
-      setTimeout(() => {
-          if (this.annotation.data) {
-              this.gene1.setValue(this.annotation.data.locusName.locusName);
-              this.gene2.setValue(this.annotation.data.locusName2.locusName);
-              this.method.setValue(this.annotation.data.method);
-              this.usable = true;
-          }
-      });
-  }
 
 }

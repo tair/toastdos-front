@@ -34,6 +34,7 @@ export class CommentComponent implements OnInit {
     constructor(private geneService: GeneService, private submissionService: SubmissionService) { }
 
     ngOnInit() {
+        this.comment.setValue(this.submissionService.currentSubmission.annotations[this.index].data.text);
         this.goFunctions = (text$: Observable<string>) =>
             text$.pipe(
                 debounceTime(200),
@@ -46,8 +47,8 @@ export class CommentComponent implements OnInit {
     }
 
     get availableGenes() {
-    return this.submissionService.currentGenes$;
-  }
+    return this.submissionService.observableGenes;
+    }
 
   get comment() {
       return this.form.get('comment');
@@ -60,23 +61,12 @@ export class CommentComponent implements OnInit {
 
   setAnnotationData()
   {
-      if (this.usable) {
-          let locus = this.submissionService.currentSubmissionValue().genes.length == 1 ? this.submissionService.currentSubmissionValue().genes[0] : this.submissionService.getGeneWithLocus(this.gene.value);
-          this.annotation.data.locusName = locus;
-          this.annotation.data.text = this.comment.value;
-          this.submissionService.setAnnotationAtIndex(this.annotation, this.index);
-      }
+      let locus = this.submissionService.currentSubmission.genes.length == 1 ? this.submissionService.currentSubmission.genes[0] : this.submissionService.getGeneWithLocus(this.gene.value);
+      this.annotation.data.locusName = locus;
+      this.annotation.data.text = this.comment.value;
+      this.submissionService.setAnnotationAtIndex(this.annotation, this.index);
   }
 
-  ngAfterViewInit() {
-      this.usable=false;
-      setTimeout(() => {
-          if (this.annotation.data) {
-              this.gene.setValue(this.annotation.data.locusName.locusName);
-              this.comment.setValue(this.annotation.data.text);
-              this.usable = true;
-          }
-      });
-  }
+
 
 }
