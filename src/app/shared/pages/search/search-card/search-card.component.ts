@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import Any = jasmine.Any;
-
+import {Annotation, Gene} from 'src/app/shared/services/submission.service'
+import {t} from "@angular/core/src/render3";
 
 
 @Component({
@@ -12,7 +12,7 @@ export class SearchCardComponent implements OnInit {
   @Input() result: any;
 
   type: string;
-  Gene: Standard;
+  annotation: Annotation;
 
 
 
@@ -26,68 +26,59 @@ export class SearchCardComponent implements OnInit {
 
     this.type = this.result.annotation_format;
 
-    this.Gene = {
-        id: this.result.annotation_id,
-        keyword: this.result.childData.keyword.name,
-        keyword_id: this.result.childData.keyword.id,
-        is_obsolete: this.result.childData.keyword.is_obsolete,
-        taxon: this.result.locus.taxon.name,
-        full_name: this.result.locusSymbol.full_name,
-        symbol: this.result.locusSymbol.symbol,
-        submitter: this.result.submitter.name,
-        method_id: this.result.childData.method.id,
-        method_name: this.result.childData.method.name,
-        specificData: null
+    try {
 
+        let gene: Gene = {
+            locusName: this.result.locusSymbol.full_name,
+            geneSymbol: this.result.locusSymbol.symbol,
+            fullName: this.result.locus.taxon.name
+        };
 
-    };
-    if (this.type == "gene_gene_annotation"){
+        this.annotation = {
+            type: this.result.annotation_format,
+            id: this.result.annotation_id,
+            status: this.result.status_id,
+            data: {
+                locusName: gene
+            }
 
-      let innerData: Gene_Gene = {
-          locust2_id: null,
-          keyword_id: null,
-          method_name: null,
-          method_id: null,
-          is_obsolete: null
+        };
 
-      };
+        if (this.annotation.type == "gene_gene_annotation") {
+            let innerGene: Gene = {
+                locusName: this.result.childData.locus2Symbol.full_name,
+                geneSymbol: this.result.childData.locus2Symbol.symbol,
+                fullName: this.result.childData.locus2.taxon.name
+            };
 
-      this.Gene.specificData = innerData
+            this.annotation.data.locusName2 = innerGene;
+
+        }
+        else{
+            this.annotation.data.keyword = {
+                id: this.result.childData.keyword.extername_id,
+                name: this.result.childData.keyword.name
+
+            }
+        }
+
+        this.annotation.data.method = {
+            id: this.result.childData.method.external_id,
+            name: this.result.childData.method.name
+        };
+
+    }
+    catch (err) {
+        console.log(err)
     }
 
-  }
+       console.log(this.annotation)
 
-}
 
-export class Standard {
-    id: number;
-    keyword: string;
-    taxon: string;
-    full_name: string;
-    symbol: string;
-    submitter: string;
-    specificData: any;
-    is_obsolete: boolean;
-    keyword_id: string;
-    method_id: string;
-    method_name: string;
-
-}
-
-export class Gene_Gene {
-    locust2_id: number;
-    is_obsolete: boolean;
-    keyword_id: string;
-    method_id: string;
-    method_name: string;
+  };
 
 
 }
 
-export class Gene_Term{
-    keyword: this.result.childData.keyword.name,
-    keyword_id: this.result.childData.keyword.id,
-    is_obsolete: this.result.childData.keyword.is_obsolete,
 
-}
 
