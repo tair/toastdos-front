@@ -1,0 +1,49 @@
+<ul class="list-group">
+    <li class="border-left-0 border-right-0 border-top-0 list-group-item">
+        <div class="row">
+            <div class="col-sm-3"><h5>Publication ID</h5></div>
+            <div class="col"><em>{{submission.publicationId}}</em></div>
+        </div>
+    </li>
+    <li class="border-left-0 border-right-0 list-group-item">
+        <div class="mt-3 row">
+            <div class="col-sm-3"><h5>Genes</h5></div>
+            <div class="col">
+                <div class="gene-list-container">
+                    <ng-container *ngFor="let gene of submission.genes; let i = index">
+                        <div class="gene-list">
+                            <div>{{gene.locusName}}, {{gene.geneSymbol}}, {{gene.fullName}}</div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="border-left-0 border-right-0 list-group-item">
+        <div class="mt-3 row">
+            <div class="col-sm-3"><h5>Annotations</h5></div>
+            <div class="col">
+                <div class="annotation-list-container">
+                    <ng-container *ngFor="let anno of submission.annotations; let i = index">
+                        <div class="annotation-list">
+                            <div>{{sentanceForAnnotation(anno)}}</div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="border-left-0 border-right-0 border-bottom-0 list-group-item">
+        <div class="mt-3 row">
+            <div class="col-sm-3"><h5>Your Email</h5></div>
+            <div class="col">
+                <div><input type="email" placeholder="Email Address (optional)" id=""
+                            class="form-control form-control" style="text-overflow: ellipsis;"><br>
+                    <div class="alert alert-info fade show" role="alert"><span class="fa fa-info-circle"></span>
+                        We wil only use your email to contact you about updates to your submissions.</div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+

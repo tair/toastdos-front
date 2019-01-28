@@ -20,7 +20,7 @@
       <ngb-progressbar type="success" [value]="submission.total-submission.pending" [striped]="true" [max]="submission.total"></ngb-progressbar>
     </div>
     <div class="text-right col-sm-auto">
-      <a class="btn btn-warning" [routerLink]="['/curation', 'detail', submission.id]">
+      <a class="btn btn-warning" (click)="reviewClick()">
         <span class="fa fa-edit"></span> Review
       </a>
     </div>

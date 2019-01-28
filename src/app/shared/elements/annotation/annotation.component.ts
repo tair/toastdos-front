@@ -13,12 +13,16 @@ export class AnnotationComponent implements OnInit {
   @Output() deleted: EventEmitter<any> = new EventEmitter();
 
   selectedType: FormControl = new FormControl('MOLECULAR_FUNCTION');
-  usable = false;
+  inCurationMode = false;
 
   constructor(private submissionService: SubmissionService) { }
 
   ngOnInit() {
-      this.selectedType.setValue(this.annotationModel.annotation.type)
+    this.inCurationMode = this.submissionService.inCurationMode;
+    this.selectedType.setValue(this.annotationModel.annotation.type);
+    if (this.inCurationMode) {
+      console.log(this.annotationModel.annotation.status);
+    }
   }
 
   typeSelected() {
@@ -27,6 +31,21 @@ export class AnnotationComponent implements OnInit {
 
   deleteMe() {
     this.deleted.emit(this.annotationModel);
+  }
+
+  setPending() {
+    this.annotationModel.annotation.status = 'pending';
+    this.submissionService.setAnnotationAtIndex(this.annotationModel.annotation, this.annotationModel.index);
+  }
+
+  setAccepted() {
+    this.annotationModel.annotation.status = 'accepted';
+    this.submissionService.setAnnotationAtIndex(this.annotationModel.annotation, this.annotationModel.index);
+  }
+
+  setRejected() {
+    this.annotationModel.annotation.status = 'rejected';
+    this.submissionService.setAnnotationAtIndex(this.annotationModel.annotation, this.annotationModel.index);
   }
 
 

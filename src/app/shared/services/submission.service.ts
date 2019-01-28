@@ -20,25 +20,34 @@ export interface Annotation{
         keyword?: {},
     },
     id: number,
+    status?: string
 }
 
 
 export interface Submission {
     publicationId: string,
     genes: Array<Gene>,
-    annotations: Array<Annotation>
+    annotations: Array<Annotation>,
+    id?: number,
+    submitted_at?: string,
+    submitter?: {
+      email_address: string,
+      name: string,
+      orcid_id: string
+    }
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubmissionService {
-    submissions = {};
     currentSubmission: Submission; //defualt blank submission
     observableGenes = new BehaviorSubject<Gene[]>([]);
     observableShouldUpdate = new BehaviorSubject<Boolean>(false);
+    inCurationMode: boolean;
 
     constructor(private http: HttpClient) {
+        this.inCurationMode = false;
         this.currentSubmission = this.emptySubmission();
         this.observableGenes.next(this.currentSubmission.genes);
         this.observableShouldUpdate.next(false);
@@ -122,6 +131,7 @@ export class SubmissionService {
             gene = this.currentSubmission.genes[0]
         }
         anno.type = "MOLECULAR_FUNCTION";
+        anno.status = "pending";
         anno.data = {"locusName": gene,
                      "locusName2" : gene,
                      "keyword" : {name:""},
@@ -145,7 +155,7 @@ export class SubmissionService {
     {
         if (!annotation.data.locusName)
         {
-            return "invalid annotation";
+            return "invalid annotation (no locus name)";
         }
         var sentance = `${annotation.data.locusName.locusName}`;
         switch (annotation.type){
@@ -184,6 +194,9 @@ export class SubmissionService {
                 break;
             }
         }
+        if ('status' in annotation) {
+          sentance += `. Curation Status: ${annotation.status}`;
+        }
         return sentance;
     }
 
@@ -207,19 +220,25 @@ export class SubmissionService {
             let anno = {};
             anno['type'] = a.type;
             anno['data'] = {};
-            anno['data']['locusName'] = a.data.locusName.locusName;
+            anno['data']['locusName'] = a.data.locusName;
             anno['data']['isEvidenceWithOr'] = true;
             if (a.type==="COMMENT")
             {
                 anno['data']['text'] = a.data.text;
             } else if (a.type=="PROTEIN_INTERACTION")
             {
-                anno['data']['locusName2'] = a.data.locusName2.locusName;
+                anno['data']['locusName2'] = a.data.locusName2;
                 anno['data']['method'] = {'id': a.data['method']['id']};
 
             } else {
                 anno['data']['keyword'] = {'id': a.data.keyword['id']};
                 anno['data']['method'] = {'id': a.data.method['id']};
+            }
+            if ('status' in a) {
+              anno['status'] = a.status;
+            }
+            if ('id' in a){
+              anno['id'] = a.id;
             }
             j['annotations'].push(anno);
 
@@ -229,7 +248,7 @@ export class SubmissionService {
     }
 
 
-    getCurrentSubmissionWithId(id: string)
+    getCurrentSubmissionWithId(id: string, success :() => void)
     {
         let url = `${environment.base_url}/submission/${id}`;
         this.http.get(url).subscribe(next=>{
@@ -237,6 +256,7 @@ export class SubmissionService {
            this.currentSubmission = next as Submission;
            this.observableShouldUpdate.next(true);
            this.observableGenes.next(this.currentSubmission.genes);
+           success();
         },error1 => {
             console.log(error1);
         });
@@ -245,6 +265,18 @@ export class SubmissionService {
     postSubmission(success :(responce) => void, error: (responce) => void)
     {
         let url = `${environment.base_url}/submission/`;
+        let body = this.toJson();
+        console.log(body);
+        this.http.post(url,body).subscribe(next => {
+            success(next);
+        },error1 => {
+            error(error1);
+        })
+    }
+
+    saveCuration(success :(responce) => void, error: (responce) => void)
+    {
+        let url = `${environment.base_url}/submission/${this.currentSubmission.id}/curate`;
         let body = this.toJson();
         console.log(body);
         this.http.post(url,body).subscribe(next => {

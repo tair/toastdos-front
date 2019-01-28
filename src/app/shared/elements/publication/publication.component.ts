@@ -37,12 +37,12 @@ export class PublicationComponent implements OnInit {
     this.submissionService.observableShouldUpdate.asObservable().subscribe(shouldUpdate => {
         if (shouldUpdate) {
            this.form.setValue({'pub_id': this.submissionService.currentSubmission.publicationId});
-           this.checkValid();
+           this.pubStatus = 'success';
         }
       });
     this.form.setValue({'pub_id': this.submissionService.currentSubmission.publicationId});
     if (this.submissionService.currentSubmission.publicationId.length>=2) {
-            this.checkValid();
+        this.pubStatus = 'success';
     }
     this.pub_id.valueChanges
       .pipe(
