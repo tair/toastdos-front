@@ -33,7 +33,6 @@ export class ProteinInteractionComponent implements OnInit {
 
   methods: any;
   methodFormatter = (x: any) => x.name;
-  usable = false;
 
   constructor(private geneService: GeneService, private submissionService: SubmissionService) { }
 
