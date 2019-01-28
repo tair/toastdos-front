@@ -8,6 +8,9 @@
             <span class="fa fa-search"></span> Search
             <input class="form-control" type="text" [formControl]="searchString">
           </div>
+          <li *ngFor="let item of this.searchResults">
+            <app-search-card [result]="item"></app-search-card>
+          </li>
         </div>
       </div>
     </div>

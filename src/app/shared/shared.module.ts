@@ -27,6 +27,7 @@ import { CommentComponent } from './elements/annotation-types/comment/comment.co
 import { SearchComponent } from './pages/search/search.component';
 import { SubmissionOverviewComponent } from './elements/submission-overview/submission-overview.component';
 import { CurationDetailComponent } from './pages/curation-detail/curation-detail.component';
+import { SearchCardComponent } from './pages/search/search-card/search-card.component';
 
 @NgModule({
   imports: [
@@ -62,6 +63,7 @@ import { CurationDetailComponent } from './pages/curation-detail/curation-detail
     SearchComponent,
     SubmissionOverviewComponent,
     CurationDetailComponent,
+    SearchCardComponent,
   ],
   exports: [
     HomepageComponent

@@ -24,7 +24,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     JwtModule.forRoot({
       config: {
         tokenGetter: () => localStorage.getItem('token'),
-        whitelistedDomains: ['0.0.0.0:3000', '52.14.163.196:3000','10.0.0.2:3000']
+        whitelistedDomains: ['0.0.0.0:3000', '52.14.163.196:3000','10.0.0.2:3000', 'localhost:3000']
       }
     }),
     AccountsModule,

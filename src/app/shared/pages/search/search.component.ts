@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {debounceTime, distinctUntilChanged} from "rxjs/operators";
 import {FormControl, FormGroup} from "@angular/forms";
-import {SubmissionService} from "../../services/submission.service";
+import {SearchService} from "../../services/search.service";
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -15,7 +15,11 @@ export class SearchComponent implements OnInit {
         ])
     });
 
-  constructor(private submissionService: SubmissionService){ }
+
+    searchResults;
+
+  constructor(private searchService: SearchService){ }
+
 
   ngOnInit() {
     this.searchString.valueChanges
@@ -23,9 +27,14 @@ export class SearchComponent implements OnInit {
         debounceTime(400),
         distinctUntilChanged()
       ).subscribe((value:string) => {
-        this.submissionService.getPageOfSubmissions(0,5)
+          console.log(value);
+          this.searchService.keywordSearch(value).subscribe(
+              data => {this.searchResults = data},
+              err => console.error(err)
+          );
       })
   }
+
 
 
   get searchString(){
