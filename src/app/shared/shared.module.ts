@@ -28,6 +28,7 @@ import { SearchComponent } from './pages/search/search.component';
 import { SubmissionOverviewComponent } from './elements/submission-overview/submission-overview.component';
 import { CurationDetailComponent } from './pages/curation-detail/curation-detail.component';
 import { SearchCardComponent } from './pages/search/search-card/search-card.component';
+import { CurationOverviewComponent } from './elements/curation-overview/curation-overview.component';
 
 @NgModule({
   imports: [
@@ -64,6 +65,7 @@ import { SearchCardComponent } from './pages/search/search-card/search-card.comp
     SubmissionOverviewComponent,
     CurationDetailComponent,
     SearchCardComponent,
+    CurationOverviewComponent,
   ],
   exports: [
     HomepageComponent

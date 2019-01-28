@@ -22,6 +22,7 @@ export class SubmissionComponent implements OnInit {
       this.saved = false;
       this.submiting = false;
       this.error = false;
+      this.submissionService.inCurationMode = false;
 
   }
 

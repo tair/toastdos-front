@@ -24,4 +24,5 @@ export class SubmissionOverviewComponent implements OnInit {
     this.submission = this.submissionService.currentSubmission;
   }
 
+
 }

@@ -14,10 +14,11 @@ import * as deepEqual from "deep-equal";
 })
 export class PublicationComponent implements OnInit {
 
-  private title: string;
-  private author: string;
-  private pubStatus: string;
-  private submission;
+  title: string;
+  author: string;
+  pubStatus: string;
+  isDOI: Boolean;
+  url: string;
 
   private form: FormGroup = new FormGroup({
     pub_id: new FormControl('', [
@@ -30,6 +31,8 @@ export class PublicationComponent implements OnInit {
   constructor(private pubService: PublicationService, private submissionService: SubmissionService) {
     this.title = "";
     this.author = "";
+    this.url = "";
+    this.isDOI = false;
   }
 
 
@@ -37,12 +40,12 @@ export class PublicationComponent implements OnInit {
     this.submissionService.observableShouldUpdate.asObservable().subscribe(shouldUpdate => {
         if (shouldUpdate) {
            this.form.setValue({'pub_id': this.submissionService.currentSubmission.publicationId});
-           this.checkValid();
+           this.pubStatus = 'success';
         }
       });
     this.form.setValue({'pub_id': this.submissionService.currentSubmission.publicationId});
     if (this.submissionService.currentSubmission.publicationId.length>=2) {
-            this.checkValid();
+        this.pubStatus = 'success';
     }
     this.pub_id.valueChanges
       .pipe(
@@ -58,8 +61,15 @@ export class PublicationComponent implements OnInit {
               this.submissionService.currentSubmission.publicationId = this.pub_id.value;
               this.pubStatus = 'success';
               this.toggleErrorPopover();
-              this.title = response.title;
-              this.author = response.author;
+              console.log(response);
+              if (response['type']=='doi') {
+                this.isDOI = true;
+                this.url = response.url
+              } else {
+                this.isDOI = false;
+                this.title = response.title;
+                this.author = response.author;
+              }
             },
             error => {
               console.log(error);
