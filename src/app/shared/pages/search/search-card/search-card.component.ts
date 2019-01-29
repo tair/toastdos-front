@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Annotation, Gene} from 'src/app/shared/services/submission.service'
-import {t} from "@angular/core/src/render3";
 
 
 @Component({
@@ -45,13 +44,12 @@ export class SearchCardComponent implements OnInit {
         };
 
         if (this.annotation.type == "gene_gene_annotation") {
-            let innerGene: Gene = {
+
+            this.annotation.data.locusName2 = {
                 locusName: this.result.childData.locus2Symbol.full_name,
                 geneSymbol: this.result.childData.locus2Symbol.symbol,
                 fullName: this.result.childData.locus2.taxon.name
             };
-
-            this.annotation.data.locusName2 = innerGene;
 
         }
         else{
