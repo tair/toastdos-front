@@ -200,7 +200,7 @@ export class SubmissionService {
         return sentance;
     }
 
-    toJson()
+    toJson(withStatus: boolean)
     {
         let j = {};
         let sub = this.currentSubmission;
@@ -234,7 +234,7 @@ export class SubmissionService {
                 anno['data']['keyword'] = {'id': a.data.keyword['id']};
                 anno['data']['method'] = {'id': a.data.method['id']};
             }
-            if ('status' in a) {
+            if ('status' in a && withStatus) {
               anno['status'] = a.status;
             }
             if ('id' in a){
@@ -265,7 +265,7 @@ export class SubmissionService {
     postSubmission(success :(responce) => void, error: (responce) => void)
     {
         let url = `${environment.base_url}/submission/`;
-        let body = this.toJson();
+        let body = this.toJson(false);
         console.log(body);
         this.http.post(url,body).subscribe(next => {
             success(next);
@@ -277,7 +277,7 @@ export class SubmissionService {
     saveCuration(success :(responce) => void, error: (responce) => void)
     {
         let url = `${environment.base_url}/submission/${this.currentSubmission.id}/curate`;
-        let body = this.toJson();
+        let body = this.toJson(true);
         console.log(body);
         this.http.post(url,body).subscribe(next => {
             success(next);
