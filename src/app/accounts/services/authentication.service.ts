@@ -49,10 +49,21 @@ export class AuthenticationService {
       this.http.get(`${environment.base_url}/user/${this.tokenPayload.user_id}/?withRelated=roles`).subscribe(
         response => {
           this._currentUserInfo.next(response);
-          console.log(this._currentUserInfo.value);
         }
       );
     }
+  }
+
+  get isLoggedIn() {
+    if (localStorage.getItem('token')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  get userID() {
+    return this.tokenPayload.user_id;
   }
 
   get currentUserInfo$(){

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
+import {AuthenticationService} from '../../accounts/services/authentication.service';
+import {st} from '@angular/core/src/render3';
 
 
 export interface Gene{
@@ -46,9 +48,10 @@ export class SubmissionService {
     currentSubmission: Submission; //defualt blank submission
     observableGenes = new BehaviorSubject<Gene[]>([]);
     observableShouldUpdate = new BehaviorSubject<Boolean>(false);
+    observableSavedDraft = new BehaviorSubject<Boolean>(false);
     inCurationMode: boolean;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private authService: AuthenticationService) {
         this.inCurationMode = false;
         this.currentSubmission = this.emptySubmission();
         this.observableGenes.next(this.currentSubmission.genes);
@@ -96,6 +99,7 @@ export class SubmissionService {
             fullName: ""
             } as Gene);
         this.observableGenes.next(this.currentSubmission.genes);
+        this.saveDraft();
     }
 
     getGeneWithLocus(locus: string)
@@ -113,12 +117,14 @@ export class SubmissionService {
     removeGeneAtIndex(index: number) {
         this.currentSubmission.genes.splice(index, 1);
         this.observableGenes.next(this.currentSubmission.genes);
+        this.saveDraft();
     }
 
     setGeneAtIndex(newGeneData: Gene, index: number)
     {
         this.currentSubmission.genes[index] = newGeneData;
         this.observableGenes.next(this.currentSubmission.genes);
+        this.saveDraft();
     }
 
     addBlankAnnotation()
@@ -141,11 +147,13 @@ export class SubmissionService {
                      "text" : ""
         };
         this.currentSubmission.annotations.push(anno);
+        this.saveDraft();
 
     }
 
     removeAnnotationAtIndex(index: number) {
         this.currentSubmission.annotations.splice(index, 1);
+        this.saveDraft();
     }
 
     setAnnotationAtIndex(newAnnotation: Annotation, index: number)
@@ -222,7 +230,7 @@ export class SubmissionService {
             let anno = {};
             anno['type'] = a.type;
             anno['data'] = {};
-            if (!withStatus) {
+            if (!withStatus && a.data.locusName.locusName) {
               anno['data']['locusName'] = a.data.locusName.locusName;
             } else {
                 anno['data']['locusName'] = a.data.locusName;
@@ -236,7 +244,7 @@ export class SubmissionService {
                 anno['data']['text'] = a.data.text;
             } else if (a.type=="PROTEIN_INTERACTION")
             {
-                if (!withStatus) {
+                if (!withStatus && a.data.locusName.locusName) {
                   anno['data']['locusName2'] = a.data.locusName2.locusName;
                 } else {
                     anno['data']['locusName2'] = a.data.locusName2;
@@ -297,6 +305,38 @@ export class SubmissionService {
         },error1 => {
             error(error1);
         })
+    }
+
+    saveDraft()
+    {
+        if (this.authService.isLoggedIn) {
+          let url = `${environment.base_url}/draft/`;
+          let body = {
+            'submitter_id' : this.authService.userID,
+            'wip_state': JSON.stringify(this.currentSubmission)
+          };
+          this.http.post(url, body).subscribe(next => {
+              this.observableSavedDraft.next(true);
+          }, error1 => {
+              console.log(error1);
+              this.observableSavedDraft.next(false);
+          })
+        }
+    }
+
+    attemptToLoadDraft()
+    {
+        if (this.authService.isLoggedIn) {
+          let url = `${environment.base_url}/draft/`;
+          this.http.get(url).subscribe(next => {
+              this.currentSubmission = JSON.parse(next as string) as Submission; //we get a string back lmao
+              console.log(this.currentSubmission);
+              this.observableGenes.next(this.currentSubmission.genes);
+              this.observableShouldUpdate.next(true);
+          }, error1 => {
+              console.log(error1);
+          })
+        }
     }
 
 }
