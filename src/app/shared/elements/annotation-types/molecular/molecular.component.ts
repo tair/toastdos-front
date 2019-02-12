@@ -73,14 +73,24 @@ export class MolecularComponent implements OnInit {
       return this.form.get('method');
   }
 
-  setAnnotationData()
-  {
+    setAnnotationData()
+    {
       let locus = this.submissionService.currentSubmission.genes.length == 1 ? this.submissionService.currentSubmission.genes[0] : this.submissionService.getGeneWithLocus(this.gene.value);
       this.annotation.data.locusName = locus;
       this.annotation.data.keyword = this.function.value;
       this.annotation.data.method = this.method.value;
+      if (this.method.value['evidence_code'] === 'IGI' || this.method.value['evidence_code'] === 'IPI') {
+        if (!this.annotation.data['evidenceWith']) {
+          this.annotation.data.evidenceWith = [];
+          this.annotation.data.isEvidenceWithOr = true;
+        } else {
+          console.log('Updating annotation with evidence already present. gucci');
+        }
+      } else {
+        delete this.annotation.data.evidenceWith;
+      }
       this.submissionService.setAnnotationAtIndex(this.annotation, this.index);
-  }
+    }
 
 
 }

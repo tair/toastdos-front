@@ -33,3 +33,6 @@
     <input placeholder="Start Typing..." class="form-control" [formControl]="method" [ngbTypeahead]="methods" [resultTemplate]="rt" [inputFormatter]="methodFormatter">
   </div>
 </div>
+<ng-container *ngIf="annotation.data.evidenceWith!=undefined">
+  <app-evidence-with-control *ngIf="annotation.data.evidenceWith" [annotation]="annotation" [index]="index"> </app-evidence-with-control>
+</ng-container>

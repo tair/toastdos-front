@@ -1,0 +1,35 @@
+<div class="d-flex p-2 align-items-start row">
+    <div class="text-right col-3">
+        <label class="mb-0 ">Evidence With</label>
+        <button *ngIf="this.relationType==='OR'" class="btn btn-success" (click)="toggleRelation()">Relation: {{relationType}}</button>
+        <button *ngIf="this.relationType==='AND'" class="btn btn-success" (click)="toggleRelation()">Relation: {{relationType}}</button>
+    </div>
+    <div class="p-1 col">
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let loc of this.evidenceWiths; let i = index">
+                <app-evidence-with-locus [number]="i" [locus]="loc" (deleted)="deleteLocus($event)"
+                (verified)="updateAnnotationData()"> </app-evidence-with-locus>
+            </li>
+        </ul>
+        <div class="justify-content-md-center row">
+            <div class="align-self-center col-auto">
+                <button type="button" class="btn-sm btn btn-success"
+                        style="border-top-right-radius: 0px; border-top-left-radius: 0px;" (click)="addLocus()">
+                    <span class="fa fa-plus"> </span> Evidence With</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<div class="dropdown show">-->
+    <!--<button type="button" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle btn btn-success">Relation:-->
+        <!--OR-->
+    <!--</button>-->
+    <!--<div tabindex="-1" role="menu" aria-hidden="false" class="dropdown-menu show"-->
+         <!--style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;"-->
+         <!--data-placement="bottom-start">-->
+        <!--<button type="button" tabindex="0" class="dropdown-item">OR</button>-->
+        <!--<button type="button" tabindex="0" class="dropdown-item">AND</button>-->
+    <!--</div>-->
+<!--</div>-->

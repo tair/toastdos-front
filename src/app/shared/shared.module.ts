@@ -29,6 +29,8 @@ import { SubmissionOverviewComponent } from './elements/submission-overview/subm
 import { CurationDetailComponent } from './pages/curation-detail/curation-detail.component';
 import { SearchCardComponent } from './pages/search/search-card/search-card.component';
 import { CurationOverviewComponent } from './elements/curation-overview/curation-overview.component';
+import { EvidenceWithControlComponent } from './elements/evidence-with-control/evidence-with-control.component';
+import { EvidenceWithLocusComponent } from './elements/evidence-with-locus/evidence-with-locus.component';
 
 @NgModule({
   imports: [
@@ -66,6 +68,8 @@ import { CurationOverviewComponent } from './elements/curation-overview/curation
     CurationDetailComponent,
     SearchCardComponent,
     CurationOverviewComponent,
+    EvidenceWithControlComponent,
+    EvidenceWithLocusComponent,
   ],
   exports: [
     HomepageComponent

@@ -18,6 +18,8 @@ export interface Annotation{
         text?: string,
         method?: {},
         keyword?: {},
+        isEvidenceWithOr?: boolean,
+        evidenceWith?: Array<string>
     },
     id: number,
     status?: string
@@ -220,14 +222,17 @@ export class SubmissionService {
             let anno = {};
             anno['type'] = a.type;
             anno['data'] = {};
-            anno['data']['locusName'] = a.data.locusName;
-            anno['data']['isEvidenceWithOr'] = true;
+            anno['data']['locusName'] = a.data.locusName.locusName;
+            anno['data']['isEvidenceWithOr'] = a.data.isEvidenceWithOr;
+            if (a.data['evidenceWith']) {
+              anno['data']['evidenceWith'] = a.data.evidenceWith;
+            }
             if (a.type==="COMMENT")
             {
                 anno['data']['text'] = a.data.text;
             } else if (a.type=="PROTEIN_INTERACTION")
             {
-                anno['data']['locusName2'] = a.data.locusName2;
+                anno['data']['locusName2'] = a.data.locusName2.locusName;
                 anno['data']['method'] = {'id': a.data['method']['id']};
 
             } else {
