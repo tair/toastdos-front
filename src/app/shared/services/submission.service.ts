@@ -222,7 +222,11 @@ export class SubmissionService {
             let anno = {};
             anno['type'] = a.type;
             anno['data'] = {};
-            anno['data']['locusName'] = a.data.locusName.locusName;
+            if (!withStatus) {
+              anno['data']['locusName'] = a.data.locusName.locusName;
+            } else {
+                anno['data']['locusName'] = a.data.locusName;
+            }
             anno['data']['isEvidenceWithOr'] = a.data.isEvidenceWithOr;
             if (a.data['evidenceWith']) {
               anno['data']['evidenceWith'] = a.data.evidenceWith;
@@ -232,7 +236,11 @@ export class SubmissionService {
                 anno['data']['text'] = a.data.text;
             } else if (a.type=="PROTEIN_INTERACTION")
             {
-                anno['data']['locusName2'] = a.data.locusName2.locusName;
+                if (!withStatus) {
+                  anno['data']['locusName2'] = a.data.locusName2.locusName;
+                } else {
+                    anno['data']['locusName2'] = a.data.locusName2;
+                }
                 anno['data']['method'] = {'id': a.data['method']['id']};
 
             } else {
@@ -257,7 +265,6 @@ export class SubmissionService {
     {
         let url = `${environment.base_url}/submission/${id}`;
         this.http.get(url).subscribe(next=>{
-            console.log(next);
            this.currentSubmission = next as Submission;
            this.observableShouldUpdate.next(true);
            this.observableGenes.next(this.currentSubmission.genes);
@@ -282,6 +289,7 @@ export class SubmissionService {
     saveCuration(success :(responce) => void, error: (responce) => void)
     {
         let url = `${environment.base_url}/submission/${this.currentSubmission.id}/curate`;
+        console.log(this.currentSubmission);
         let body = this.toJson(true);
         console.log(body);
         this.http.post(url,body).subscribe(next => {
