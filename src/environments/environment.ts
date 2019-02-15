@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  base_url: 'http://0.0.0.0:3000/api'
+  base_url: 'http://localhost:3000/api',
+  orcidID: 'https://orcid.org/oauth/authorize?client_id=APP-L8ISF5DJNGXMS599&response_type=code&scope=/authenticate&redirect_uri=http://localhost:4200/login'
 };
 
 /*
