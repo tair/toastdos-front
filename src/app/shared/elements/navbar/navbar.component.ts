@@ -27,14 +27,7 @@ export class NavbarComponent implements OnInit {
   {
     this.authService.logout();
   }
-  //
-  // goToOrcId() {
-  //   window.location.href = 'https://orcid.org/oauth/authorize?' +
-  //     'client_id=APP-L8ISF5DJNGXMS599&' +
-  //     'response_type=code&' +
-  //     'scope=/authenticate&' +
-  //     'redirect_uri=http://0.0.0.0:4200/';
-  // }
+
 
     goToOrcId() {
         window.location.href = environment.orcidID}
