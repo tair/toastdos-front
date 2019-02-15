@@ -10,6 +10,7 @@ import { SharedModule } from './shared/shared.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     }),
     AccountsModule,
     NgbModule,
+    ToastrModule.forRoot(),
     SharedModule
   ],
   providers: [],

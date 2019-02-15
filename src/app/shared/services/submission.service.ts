@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
+import {AuthenticationService} from '../../accounts/services/authentication.service';
+import {st} from '@angular/core/src/render3';
 
 
 export interface Gene{
@@ -18,6 +20,8 @@ export interface Annotation{
         text?: string,
         method?: {},
         keyword?: {},
+        isEvidenceWithOr?: boolean,
+        evidenceWith?: Array<string>
     },
     id: number,
     status?: string
@@ -44,9 +48,10 @@ export class SubmissionService {
     currentSubmission: Submission; //defualt blank submission
     observableGenes = new BehaviorSubject<Gene[]>([]);
     observableShouldUpdate = new BehaviorSubject<Boolean>(false);
+    observableSavedDraft = new BehaviorSubject<Boolean>(false);
     inCurationMode: boolean;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private authService: AuthenticationService) {
         this.inCurationMode = false;
         this.currentSubmission = this.emptySubmission();
         this.observableGenes.next(this.currentSubmission.genes);
@@ -94,6 +99,7 @@ export class SubmissionService {
             fullName: ""
             } as Gene);
         this.observableGenes.next(this.currentSubmission.genes);
+        this.saveDraft();
     }
 
     getGeneWithLocus(locus: string)
@@ -111,12 +117,14 @@ export class SubmissionService {
     removeGeneAtIndex(index: number) {
         this.currentSubmission.genes.splice(index, 1);
         this.observableGenes.next(this.currentSubmission.genes);
+        this.saveDraft();
     }
 
     setGeneAtIndex(newGeneData: Gene, index: number)
     {
         this.currentSubmission.genes[index] = newGeneData;
         this.observableGenes.next(this.currentSubmission.genes);
+        this.saveDraft();
     }
 
     addBlankAnnotation()
@@ -139,11 +147,13 @@ export class SubmissionService {
                      "text" : ""
         };
         this.currentSubmission.annotations.push(anno);
+        this.saveDraft();
 
     }
 
     removeAnnotationAtIndex(index: number) {
         this.currentSubmission.annotations.splice(index, 1);
+        this.saveDraft();
     }
 
     setAnnotationAtIndex(newAnnotation: Annotation, index: number)
@@ -200,7 +210,7 @@ export class SubmissionService {
         return sentance;
     }
 
-    toJson()
+    toJson(withStatus: boolean)
     {
         let j = {};
         let sub = this.currentSubmission;
@@ -220,21 +230,32 @@ export class SubmissionService {
             let anno = {};
             anno['type'] = a.type;
             anno['data'] = {};
-            anno['data']['locusName'] = a.data.locusName;
-            anno['data']['isEvidenceWithOr'] = true;
+            if (!withStatus && a.data.locusName.locusName) {
+              anno['data']['locusName'] = a.data.locusName.locusName;
+            } else {
+                anno['data']['locusName'] = a.data.locusName;
+            }
+            anno['data']['isEvidenceWithOr'] = a.data.isEvidenceWithOr;
+            if (a.data['evidenceWith']) {
+              anno['data']['evidenceWith'] = a.data.evidenceWith;
+            }
             if (a.type==="COMMENT")
             {
                 anno['data']['text'] = a.data.text;
             } else if (a.type=="PROTEIN_INTERACTION")
             {
-                anno['data']['locusName2'] = a.data.locusName2;
+                if (!withStatus && a.data.locusName.locusName) {
+                  anno['data']['locusName2'] = a.data.locusName2.locusName;
+                } else {
+                    anno['data']['locusName2'] = a.data.locusName2;
+                }
                 anno['data']['method'] = {'id': a.data['method']['id']};
 
             } else {
                 anno['data']['keyword'] = {'id': a.data.keyword['id']};
                 anno['data']['method'] = {'id': a.data.method['id']};
             }
-            if ('status' in a) {
+            if ('status' in a && withStatus) {
               anno['status'] = a.status;
             }
             if ('id' in a){
@@ -252,7 +273,6 @@ export class SubmissionService {
     {
         let url = `${environment.base_url}/submission/${id}`;
         this.http.get(url).subscribe(next=>{
-            console.log(next);
            this.currentSubmission = next as Submission;
            this.observableShouldUpdate.next(true);
            this.observableGenes.next(this.currentSubmission.genes);
@@ -265,7 +285,7 @@ export class SubmissionService {
     postSubmission(success :(responce) => void, error: (responce) => void)
     {
         let url = `${environment.base_url}/submission/`;
-        let body = this.toJson();
+        let body = this.toJson(false);
         console.log(body);
         this.http.post(url,body).subscribe(next => {
             success(next);
@@ -277,13 +297,46 @@ export class SubmissionService {
     saveCuration(success :(responce) => void, error: (responce) => void)
     {
         let url = `${environment.base_url}/submission/${this.currentSubmission.id}/curate`;
-        let body = this.toJson();
+        console.log(this.currentSubmission);
+        let body = this.toJson(true);
         console.log(body);
         this.http.post(url,body).subscribe(next => {
             success(next);
         },error1 => {
             error(error1);
         })
+    }
+
+    saveDraft()
+    {
+        if (this.authService.isLoggedIn) {
+          let url = `${environment.base_url}/draft/`;
+          let body = {
+            'submitter_id' : this.authService.userID,
+            'wip_state': JSON.stringify(this.currentSubmission)
+          };
+          this.http.post(url, body).subscribe(next => {
+              this.observableSavedDraft.next(true);
+          }, error1 => {
+              console.log(error1);
+              this.observableSavedDraft.next(false);
+          })
+        }
+    }
+
+    attemptToLoadDraft()
+    {
+        if (this.authService.isLoggedIn) {
+          let url = `${environment.base_url}/draft/`;
+          this.http.get(url).subscribe(next => {
+              this.currentSubmission = JSON.parse(next as string) as Submission; //we get a string back lmao
+              console.log(this.currentSubmission);
+              this.observableGenes.next(this.currentSubmission.genes);
+              this.observableShouldUpdate.next(true);
+          }, error1 => {
+              console.log(error1);
+          })
+        }
     }
 
 }

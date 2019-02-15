@@ -2,6 +2,8 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { SubmissionService, Submission, Gene, Annotation} from '../../services/submission.service';
 import {s} from "@angular/core/src/render3";
 import {Router} from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-submission',
@@ -10,7 +12,7 @@ import {Router} from '@angular/router';
 })
 export class SubmissionComponent implements OnInit {
 
-  constructor(private submissionService: SubmissionService, private  detector: ChangeDetectorRef) { }
+  constructor(private submissionService: SubmissionService, private  detector: ChangeDetectorRef, private toastr: ToastrService) { }
   submission: Submission;
   editing: boolean;
   saved: boolean;
@@ -23,6 +25,16 @@ export class SubmissionComponent implements OnInit {
       this.submiting = false;
       this.error = false;
       this.submissionService.inCurationMode = false;
+      this.submissionService.attemptToLoadDraft();
+      this.submissionService.observableSavedDraft.subscribe(saved => {
+        if (saved) {
+          //lets notify the user
+          this.toastr.success('Saved current draft', 'Draft saved!');
+        } else{
+          //dang
+          //this.toastr.error('Failed to save current draft', 'Draft failed to save');
+        }
+      });
 
   }
 

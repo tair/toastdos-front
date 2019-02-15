@@ -27,10 +27,10 @@ export class NavbarComponent implements OnInit {
   {
     this.authService.logout();
   }
-
-
+  
     goToOrcId() {
         window.location.href = environment.orcidID}
+
 
   get user() {
     return this.authService.currentUserInfo$;
