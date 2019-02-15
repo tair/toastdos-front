@@ -10,6 +10,7 @@ import { SharedModule } from './shared/shared.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {environment} from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     JwtModule.forRoot({
       config: {
         tokenGetter: () => localStorage.getItem('token'),
-        whitelistedDomains: ['0.0.0.0:3000', '52.14.163.196:3000','10.0.0.2:3000']
+        whitelistedDomains: [environment.base_url]
       }
     }),
     AccountsModule,
