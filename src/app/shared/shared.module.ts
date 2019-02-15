@@ -27,6 +27,10 @@ import { CommentComponent } from './elements/annotation-types/comment/comment.co
 import { SearchComponent } from './pages/search/search.component';
 import { SubmissionOverviewComponent } from './elements/submission-overview/submission-overview.component';
 import { CurationDetailComponent } from './pages/curation-detail/curation-detail.component';
+import { SearchCardComponent } from './pages/search/search-card/search-card.component';
+import { CurationOverviewComponent } from './elements/curation-overview/curation-overview.component';
+import { EvidenceWithControlComponent } from './elements/evidence-with-control/evidence-with-control.component';
+import { EvidenceWithLocusComponent } from './elements/evidence-with-locus/evidence-with-locus.component';
 
 @NgModule({
   imports: [
@@ -62,6 +66,10 @@ import { CurationDetailComponent } from './pages/curation-detail/curation-detail
     SearchComponent,
     SubmissionOverviewComponent,
     CurationDetailComponent,
+    SearchCardComponent,
+    CurationOverviewComponent,
+    EvidenceWithControlComponent,
+    EvidenceWithLocusComponent,
   ],
   exports: [
     HomepageComponent

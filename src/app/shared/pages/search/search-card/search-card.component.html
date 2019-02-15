@@ -1,0 +1,131 @@
+<!--<div class="card-group align-content-lg-stretch">-->
+    <!--<div>-->
+        <!--<span class="font-weight-bold">-->
+            <!--Annotation type:-->
+        <!--</span>-->
+        <!--{{this.annotation.type}}-->
+        <!--<span class="-align-right">-->
+            <!--<span class="font-weight-bold">-->
+                <!--Locus ID:-->
+            <!--</span>-->
+             <!--{{this.annotation.id}}-->
+        <!--</span>-->
+
+    <!--</div>-->
+
+
+<!--</div>-->
+    <td>
+        {{this.completeAnnotation.name}}
+    </td>
+    <td>
+        {{this.completeAnnotation.annotation.data.locusName.geneSymbol}} / {{this.completeAnnotation.annotation.data.locusName.locusName}}
+    </td>
+    <td>
+        {{this.completeAnnotation.annotation.data.keyword.external_id}}
+    </td>
+    <td>
+        {{this.completeAnnotation.annotation.data.keyword.type}}
+    </td>
+    <td>
+        {{this.completeAnnotation.annotation.data.method.evidence}}
+    </td>
+    <td>
+        {{this.completeAnnotation.annotation.data.method.id}}
+    </td>
+    <td>
+        Evidence With
+    </td>
+    <td>
+        {{this.completeAnnotation.pub_id}}
+    </td>
+    <td>
+        {{this.completeAnnotation.annotation.data.locusName.fullName}}
+    <td>
+        {{this.completeAnnotation.submitter_name}}
+    </td>
+    <td>
+        {{this.completeAnnotation.date}}
+    </td>
+
+
+
+<!--<div class="card-body">-->
+    <!--<div class="row">-->
+        <!--<div class="col">-->
+            <!--<span class="font-weight-bold text-right card-text">Annotation Type: </span>-->
+            <!--<span class="text-left card-text">{{this.annotation.type}}</span>-->
+        <!--</div>-->
+        <!--<div class="col">-->
+            <!--<span class="font-weight-bold text-right card-text">ID: </span>-->
+            <!--<span class="text-left card-text">{{this.annotation.id}}</span>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row extra-space">-->
+        <!--<div class="col">-->
+            <!--<span class="font-weight-bold text-right card-text">Method ID: </span>-->
+            <!--<span class="text-left card-text">{{this.annotation.data.method.id}}</span>-->
+        <!--</div>-->
+        <!--<div class="col">-->
+            <!--<span class="font-weight-bold text-right card-text">Method Name: </span>-->
+            <!--<span class="text-left card-text">{{this.annotation.data.method.name}}</span>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row extra-space">-->
+        <!--<div class="col">-->
+            <!--<div>-->
+                <!--<span class="font-weight-bold text-right card-text">Locus Name: </span>-->
+                <!--<span class="text-left card-text">{{this.annotation.data.locusName.locusName}}</span>-->
+            <!--</div>-->
+            <!--<div>-->
+                <!--<span class="font-weight-bold text-right card-text">Locus Symbol: </span>-->
+                <!--<span class="text-left card-text">{{this.annotation.data.locusName.geneSymbol}}</span>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="col">-->
+            <!--<span class="font-weight-bold text-right card-text">Taxon Name: </span>-->
+            <!--<span class="text-left card-text">{{this.annotation.data.locusName.fullName}}</span>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row extra-space" *ngIf="this.annotation.type == 'gene_gene_annotation'">-->
+        <!--<div class="col">-->
+            <!--<div>-->
+                <!--<span class="font-weight-bold text-right card-text">Locus 2 Name: </span>-->
+                <!--<span class="text-left card-text">{{this.annotation.data.locusName2.locusName}}</span>-->
+            <!--</div>-->
+            <!--<div>-->
+                <!--<span class="font-weight-bold text-right card-text">Locus 2 Symbol: </span>-->
+                <!--<span class="text-left card-text">{{this.annotation.data.locusName2.geneSymbol}}</span>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="col">-->
+            <!--<span class="font-weight-bold text-right card-text">Taxon 2 Name: </span>-->
+            <!--<span class="text-left card-text">{{this.annotation.data.locusName2.fullName}}</span>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row extra-space" *ngIf="this.annotation.type != 'gene_gene_annotation'">-->
+        <!--<div class="col">-->
+            <!--<span class="font-weight-bold text-right card-text">Keyword ID: </span>-->
+            <!--<span class="text-left card-text">{{this.annotation.data.keyword.id}}</span>-->
+        <!--</div>-->
+        <!--<div class="col">-->
+            <!--<span class="font-weight-bold text-right card-text">Keyword Name: </span>-->
+             <!--<span class="text-left card-text">{{this.annotation.data.keyword.name}}</span>-->
+        <!--</div>-->
+    <!--</div>-->
+
+<!--</div>-->
+
+
+
+
+
+<!--<div class="card-body">-->
+    <!--<div class="d-flex p-2 align-items-center row">-->
+        <!--<div class="text-left">-->
+            <!---->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->

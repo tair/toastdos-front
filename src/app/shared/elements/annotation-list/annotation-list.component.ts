@@ -16,7 +16,7 @@ export class AnnotationListComponent implements OnInit {
   annotationModels: any[] = [{index:0,annotation:{} as Annotation}];
 
 
-  constructor(private annotationService: AnnotationService, private submissionService: SubmissionService) { }
+  constructor(private submissionService: SubmissionService) { }
 
   ngOnInit() {
       //this is if we want to reset of whatever

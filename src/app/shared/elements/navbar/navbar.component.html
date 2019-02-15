@@ -3,11 +3,12 @@
     <img src="/assets/goat.svg" width="30" height="30" alt="" class="goat-logo">
     <span class="brand-text">GOAT</span>
   </a>
+  <a class="nav-item nav-link p-2" [routerLink]="['/search']">Search</a>
+
   <ng-container *ngIf="!(isLoggedIn | async)">
     <a class="nav-item mr-auto p-2"></a>
-    <a class="nav-item nav-link" (click)="goToOrcId()" href="#">Login to OrcID</a>
+    <a class="nav-item nav-link" (click)="goToOrcId()" href="#">Login to ORCID</a>
   </ng-container>
-    <a class="nav-item nav-link p-2" [routerLink]="['/search']">Search</a>
 
     <ng-container *ngIf="(isLoggedIn | async)">
       <ng-container *ngFor="let r of userTypes">

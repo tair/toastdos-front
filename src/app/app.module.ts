@@ -11,6 +11,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {environment} from "../environments/environment";
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {environment} from "../environments/environment";
     }),
     AccountsModule,
     NgbModule,
+    ToastrModule.forRoot(),
     SharedModule
   ],
   providers: [],

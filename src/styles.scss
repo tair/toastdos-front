@@ -2,6 +2,14 @@
 $fa-font-path: "~font-awesome/fonts";
 @import '~font-awesome/scss/font-awesome';
 
+// regular style toast
+@import '~ngx-toastr/toastr.css';
+
+// bootstrap style toast
+// or import a bootstrap 4 alert styled design (SASS ONLY)
+// should be after your bootstrap imports, it uses bs4 variables, mixins, functions
+//@import '~ngx-toastr/toastr-bs4-alert';
+
 .goat-text {
     font-family: 'Montserrat', sans-serif;
 }

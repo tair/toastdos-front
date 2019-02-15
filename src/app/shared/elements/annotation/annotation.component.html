@@ -9,8 +9,8 @@
           <select class="form-control" [formControl]="selectedType" (change)="typeSelected()">
             <option value="MOLECULAR_FUNCTION">Molecular Function (GO Function)</option>
             <option value="BIOLOGICAL_PROCESS">Biological Process (GO Process)</option>
-            <option value="SUBCELLULAR_LOCATION">SubCellular Location (Go Component)</option>
-            <option value="ANATOMICAL_LOCATION">Anotomical Location (PO Anatomy)</option>
+            <option value="SUBCELLULAR_LOCATION">Subcellular Location (GO Component)</option>
+            <option value="ANATOMICAL_LOCATION">Anatomical Location (PO Anatomy)</option>
             <option value="TEMPORAL_EXPRESSION">Temporal Expression (PO Dev. Stage)</option>
             <option value="PROTEIN_INTERACTION">Protein Interaction</option>
             <option value="COMMENT">Comment</option>
@@ -34,9 +34,41 @@
           </div>
         </div>
       </div>
-      <div class="text-right col-sm-auto">
-        <button type="button" class="btn btn-danger" (click)="deleteMe()"><span class="fa fa-close" title="Remove Annotation"></span></button>
-      </div>
+      <ng-container *ngIf="inCurationMode">
+        <ng-container *ngIf="annotationModel.annotation.status == 'pending'">
+          <div role="group" class="btn-group">
+            <button type="button" class="btn btn-success" (click)="setAccepted()">
+              <span class="fa fa-fw fa-check"></span>
+            </button>
+            <button type="button" class="btn btn-danger" (click)="setRejected()">
+              <span class="fa fa-fw fa-trash"></span>
+            </button>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="annotationModel.annotation.status == 'accepted'">
+          <div role="group" class="btn-group">
+            <button type="button" class="btn btn-success" (click)="setPending()">
+              Accepted <span class="fa fa-fw fa-check"></span>
+            </button>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="annotationModel.annotation.status == 'rejected'">
+          <div role="group" class="btn-group">
+            <button type="button" class="btn btn-danger" (click)="setPending()">
+              Rejected <span class="fa fa-fw fa-trash"></span>
+            </button>
+          </div>
+        </ng-container>
+
+
+      </ng-container>
+      <ng-container *ngIf="!inCurationMode">
+        <div class="text-right col-sm-auto">
+          <button type="button" class="btn btn-danger" (click)="deleteMe()"><span class="fa fa-close" title="Remove Annotation"></span></button>
+        </div>
+      </ng-container>
     </div>
     <div class="card-body">
       <ng-container *ngIf="selectedType.value === 'MOLECULAR_FUNCTION'">

@@ -8,6 +8,52 @@
             <span class="fa fa-search"></span> Search
             <input class="form-control" type="text" [formControl]="searchString">
           </div>
+          <div class="card">
+            <table class="table">
+              <thead>
+                <tr>
+                <td scope="col">
+                  Locus Identifier
+                </td>
+                <td scope="col">
+                  Gene Symbol
+                </td>
+                <td scope="col">
+                  Term Id
+                </td>
+                <td scope="col">
+                  Aspect
+                </td>
+                <td scope="col">
+                  GO Evidence
+                </td>
+                <td scope="col">
+                  ECO term:ID
+                </td>
+                <td scope="col">
+                  Evidence With
+                </td>
+                <td scope="col">
+                  Reference
+                </td>
+                <td class="col">
+                  Taxon
+                </td>
+                <td scope="col">
+                  Annotated By
+                </td>
+                <td scope="col">
+                  Date Annotated
+                </td>
+              </tr>
+            </thead>
+
+
+              <tbody *ngFor="let item of this.searchResults">
+                <tr app-search-card [result]="item"></tr>
+            </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
