@@ -32,13 +32,15 @@ export class SubmissionComponent implements OnInit {
           this.toastr.success('Saved current draft', 'Draft saved!');
         } else{
           //dang
-          //this.toastr.error('Failed to save current draft', 'Draft failed to save');
+          this.toastr.error('Failed to save current draft', 'Draft failed to save');
         }
       });
 
   }
 
   reviewSubmission() {
+      console.log(this.submissionService.currentSubmission);
+      this.submissionService.saveDraft();
       this.editing = false;
   }
 
@@ -47,6 +49,7 @@ export class SubmissionComponent implements OnInit {
   }
 
   editSubmission() {
+    console.log(this.submissionService.currentSubmission);
       this.editing = true;
   }
 

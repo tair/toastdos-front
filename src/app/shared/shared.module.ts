@@ -31,6 +31,7 @@ import { SearchCardComponent } from './pages/search/search-card/search-card.comp
 import { CurationOverviewComponent } from './elements/curation-overview/curation-overview.component';
 import { EvidenceWithControlComponent } from './elements/evidence-with-control/evidence-with-control.component';
 import { EvidenceWithLocusComponent } from './elements/evidence-with-locus/evidence-with-locus.component';
+import { DownloadComponent } from './pages/download/download.component';
 
 @NgModule({
   imports: [
@@ -70,6 +71,7 @@ import { EvidenceWithLocusComponent } from './elements/evidence-with-locus/evide
     CurationOverviewComponent,
     EvidenceWithControlComponent,
     EvidenceWithLocusComponent,
+    DownloadComponent,
   ],
   exports: [
     HomepageComponent

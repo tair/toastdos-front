@@ -14,11 +14,15 @@ export class AnnotationListComponent implements OnInit {
 
   @ViewChildren(AnnotationComponent) annotations: QueryList<AnnotationComponent>;
   annotationModels: any[] = [{index:0,annotation:{} as Annotation}];
+  geneList = [];
 
 
   constructor(private submissionService: SubmissionService) { }
 
   ngOnInit() {
+      this.submissionService.observableGenes.asObservable().subscribe(next => {
+        this.geneList = next;
+      });
       //this is if we want to reset of whatever
       this.submissionService.observableShouldUpdate.asObservable().subscribe(shouldUpdate => {
         if (shouldUpdate) {

@@ -73,7 +73,7 @@ export class SubmissionService {
       };
       let sub = {} as Submission;
       sub.publicationId = "";
-      sub.genes = [];
+      sub.genes = [gene];
       sub.annotations = [];
       return sub;
     }
@@ -99,7 +99,6 @@ export class SubmissionService {
             fullName: ""
             } as Gene);
         this.observableGenes.next(this.currentSubmission.genes);
-        this.saveDraft();
     }
 
     getGeneWithLocus(locus: string)
@@ -125,6 +124,11 @@ export class SubmissionService {
         this.currentSubmission.genes[index] = newGeneData;
         this.observableGenes.next(this.currentSubmission.genes);
         this.saveDraft();
+        if (this.currentSubmission.annotations.length==0)
+        {
+          this.addBlankAnnotation();
+          this.observableShouldUpdate.next(true);
+        }
     }
 
     addBlankAnnotation()
@@ -147,7 +151,9 @@ export class SubmissionService {
                      "text" : ""
         };
         this.currentSubmission.annotations.push(anno);
-        this.saveDraft();
+        if (this.currentSubmission.annotations.length==0) {
+           this.observableShouldUpdate.next(true);
+        }
 
     }
 
@@ -235,9 +241,10 @@ export class SubmissionService {
             } else {
                 anno['data']['locusName'] = a.data.locusName;
             }
-            anno['data']['isEvidenceWithOr'] = a.data.isEvidenceWithOr;
+            anno['data']['isEvidenceWithOr'] = true;
             if (a.data['evidenceWith']) {
-              anno['data']['evidenceWith'] = a.data.evidenceWith;
+                anno['data']['isEvidenceWithOr'] = a.data.isEvidenceWithOr;
+                anno['data']['evidenceWith'] = a.data.evidenceWith;
             }
             if (a.type==="COMMENT")
             {

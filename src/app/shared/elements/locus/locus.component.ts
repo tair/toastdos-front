@@ -85,7 +85,6 @@ export class LocusComponent implements OnInit {
   saveCurrentGene(){
       let gene = this.getGene();
       this.submissionService.setGeneAtIndex(gene,this.number);
-
   }
 
   getColor(status)

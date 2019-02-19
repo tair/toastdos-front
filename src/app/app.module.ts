@@ -26,7 +26,7 @@ import { ToastrModule } from 'ngx-toastr';
     JwtModule.forRoot({
       config: {
         tokenGetter: () => localStorage.getItem('token'),
-        whitelistedDomains: [environment.base_url]
+        whitelistedDomains: [environment.base_url, '0.0.0.0:3000', '52.14.163.196:3000','localhost:3000']
       }
     }),
     AccountsModule,

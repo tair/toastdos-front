@@ -20,6 +20,9 @@ export class GenesComponent implements OnInit {
   {
     this.submissionService.observableShouldUpdate.asObservable().subscribe(shouldUpdate => {
         if (shouldUpdate) {
+          if (this.submissionService.currentSubmission.genes.length==0) {
+            this.submissionService.addBlankGene();
+          }
           this.submission = this.submissionService.currentSubmission;
         }
       });
@@ -27,6 +30,9 @@ export class GenesComponent implements OnInit {
 
   ngOnInit()
   {
+    if (this.submissionService.currentSubmission.genes.length==0) {
+      this.submissionService.addBlankGene();
+    }
     this.submission = this.submissionService.currentSubmission;
   }
 

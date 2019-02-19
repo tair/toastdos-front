@@ -56,6 +56,11 @@ export class PublicationComponent implements OnInit {
           this.toggleErrorPopover();
         })
       ).subscribe((value: string) => {
+        if (value.length==0)
+        {
+          this.pubStatus='empty';
+          return;
+        }
         this.pubService.checkIsValid$(value)
           .subscribe((response: any)=> {
               this.submissionService.currentSubmission.publicationId = this.pub_id.value;
