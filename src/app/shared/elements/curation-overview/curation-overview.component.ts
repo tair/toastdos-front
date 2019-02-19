@@ -16,7 +16,7 @@ export class CurationOverviewComponent implements OnInit {
 
   sentanceForAnnotation(anno: Annotation)
   {
-    return this.submissionService.sentanceForAnnotation(anno);
+    return this.submissionService.sentanceForAnnotation(anno, true);
   }
 
   ngOnInit() {

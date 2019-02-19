@@ -66,7 +66,6 @@ export class PublicationComponent implements OnInit {
               this.submissionService.currentSubmission.publicationId = this.pub_id.value;
               this.pubStatus = 'success';
               this.toggleErrorPopover();
-              console.log(response);
               if (response['type']=='doi') {
                 this.isDOI = true;
                 this.url = response.url

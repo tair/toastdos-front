@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, AfterViewInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, AfterViewInit, ViewChild, OnChanges} from '@angular/core';
 import { GeneService } from 'src/app/shared/services/gene.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
@@ -56,6 +56,7 @@ export class MolecularComponent implements OnInit {
         this.setAnnotationData();
     });
   }
+
 
   get availableGenes() {
     return this.submissionService.observableGenes;

@@ -3,7 +3,7 @@ import {BehaviorSubject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {AuthenticationService} from '../../accounts/services/authentication.service';
-import {st} from '@angular/core/src/render3';
+import {a, st} from '@angular/core/src/render3';
 
 
 export interface Gene{
@@ -49,6 +49,7 @@ export class SubmissionService {
     observableGenes = new BehaviorSubject<Gene[]>([]);
     observableShouldUpdate = new BehaviorSubject<Boolean>(false);
     observableSavedDraft = new BehaviorSubject<Boolean>(false);
+    observableShouldValidateForms = new BehaviorSubject<Boolean>(false);
     inCurationMode: boolean;
 
     constructor(private http: HttpClient, private authService: AuthenticationService) {
@@ -56,6 +57,7 @@ export class SubmissionService {
         this.currentSubmission = this.emptySubmission();
         this.observableGenes.next(this.currentSubmission.genes);
         this.observableShouldUpdate.next(false);
+        this.observableShouldValidateForms.next(false);
     }
 
     emptySubmission() {
@@ -167,7 +169,28 @@ export class SubmissionService {
         this.currentSubmission.annotations[index] = newAnnotation;
     }
 
-    sentanceForAnnotation(annotation: Annotation)
+    phraseForCode(code: string){
+        if (code==='EXP') {
+            return 'inferred from experiment (EXP)';
+        }
+        if (code==='IDA') {
+            return 'inferred from direct assay (IDA)';
+        }
+        if (code==='IPI') {
+            return 'Inferred from Physical Interaction (IPI)';
+        }
+        if (code==='IMP') {
+            return 'Inferred from Mutant Phenotype (IMP)';
+        }
+        if (code==='IGI') {
+            return 'Inferred from Genetic Interaction (IGI)';
+        }
+        if (code==='IEP') {
+            return 'Inferred from Expression Pattern (IEP)';
+        }
+    }
+
+    sentanceForAnnotation(annotation: Annotation, show_pending: boolean)
     {
         if (!annotation.data.locusName)
         {
@@ -176,13 +199,19 @@ export class SubmissionService {
         var sentance = `${annotation.data.locusName.locusName}`;
         switch (annotation.type){
             case "ANATOMICAL_LOCATION": {
-                sentance += ` anatomically located in ${annotation.data.keyword['name']}, `;
-                sentance += `inferred from ${annotation.data.method['name']}, `;
+                sentance += ` anatomically located in ${annotation.data.keyword['name']} `;
+                sentance += ` ${annotation.data.keyword['external_id']}, `;
+                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                sentance += `inferred from ${annotation.data.method['name']} `;
+                sentance += ` ${annotation.data.method['external_id']} `;
                 break;
             }
             case "BIOLOGICAL_PROCESS": {
-                sentance += ` involved in (biological process) ${annotation.data.keyword['name']}, `;
-                sentance += `inferred from ${annotation.data.method['name']}, `;
+                sentance += ` involved in (biological process) ${annotation.data.keyword['name']} `;
+                sentance += ` ${annotation.data.keyword['external_id']}, `;
+                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                sentance += `inferred from ${annotation.data.method['name']} `;
+                sentance += ` ${annotation.data.method['external_id']} `;
                 break;
             }
             case "COMMENT": {
@@ -190,28 +219,39 @@ export class SubmissionService {
                 break;
             }
             case "MOLECULAR_FUNCTION": {
-                sentance += ` functions in ${annotation.data.keyword['name']}, `;
-                sentance += `inferred from ${annotation.data.method['name']}, `;
+                sentance += ` functions in ${annotation.data.keyword['name']} `;
+                sentance += ` ${annotation.data.keyword['external_id']}, `;
+                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                sentance += `inferred from ${annotation.data.method['name']} `;
+                sentance += ` ${annotation.data.method['external_id']} `;
                 break;
             }
             case "PROTEIN_INTERACTION": {
                 sentance += ` interacts with ${annotation.data.locusName2.locusName}, `;
-                sentance += `inferred from ${annotation.data.method['name']}, `;
+                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                sentance += `inferred from ${annotation.data.method['name']} `;
+                sentance += ` ${annotation.data.method['external_id']} `;
                 break;
             }
             case "SUBCELLULAR_LOCATION": {
                 sentance += ` located in ${annotation.data.keyword['name']}, `;
-                sentance += `inferred from ${annotation.data.method['name']}, `;
+                sentance += ` ${annotation.data.keyword['external_id']}, `;
+                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                sentance += `inferred from ${annotation.data.method['name']} `;
+                sentance += ` ${annotation.data.method['external_id']} `;
                 break;
             }
             case "TEMPORAL_EXPRESSION": {
                 sentance += ` expressed in ${annotation.data.keyword['name']}, `;
-                sentance += `inferred from ${annotation.data.method['name']}, `;
+                sentance += ` ${annotation.data.keyword['external_id']}, `;
+                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                sentance += `inferred from ${annotation.data.method['name']} `;
+                sentance += ` ${annotation.data.method['external_id']} `;
                 break;
             }
         }
-        if ('status' in annotation) {
-          sentance += `. Curation Status: ${annotation.status}`;
+        if ('status' in annotation && show_pending) {
+          sentance += ` - Curation Status: ${annotation.status}`;
         }
         return sentance;
     }
@@ -337,7 +377,6 @@ export class SubmissionService {
           let url = `${environment.base_url}/draft/`;
           this.http.get(url).subscribe(next => {
               this.currentSubmission = JSON.parse(next as string) as Submission; //we get a string back lmao
-              console.log(this.currentSubmission);
               this.observableGenes.next(this.currentSubmission.genes);
               this.observableShouldUpdate.next(true);
           }, error1 => {

@@ -35,7 +35,7 @@ export class BiologicalComponent implements OnInit {
     methods: any;
     methodFormatter = (x: any) => x.name;
 
-    constructor(private geneService: GeneService, private submissionService: SubmissionService) { }
+    constructor(private geneService: GeneService, public submissionService: SubmissionService) { }
 
     ngOnInit() {
       this.gene.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName);
