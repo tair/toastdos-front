@@ -6,7 +6,9 @@
         <div class="page-card card">
           <div class="card-header">
             <span class="fa fa-search"></span> Search
+
             <input class="form-control" type="text" [formControl]="searchString">
+            <button type="button" class="btn btn-secondary" (click)="export()">Export Search Results</button>
           </div>
           <div class="card">
             <table class="table">
@@ -50,7 +52,7 @@
 
 
               <tbody *ngFor="let item of this.searchResults">
-                <tr app-search-card [result]="item"></tr>
+                <tr *ngIf="isComplete(item)" app-search-card [result]="item"></tr>
             </tbody>
             </table>
           </div>

@@ -20,18 +20,25 @@ export class SearchCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.result);
 
 
     this.type = this.result.annotation_format;
 
-    try {
-
-        let gene: Gene = {
-            locusName: this.result.locusSymbol.full_name,
-            geneSymbol: this.result.locusSymbol.symbol,
-            fullName: this.result.locus.taxon.name
-        };
+        let gene: Gene;
+        if(this.result.locusSymbol) {
+            gene = {
+                locusName: this.result.locusSymbol.full_name,
+                geneSymbol: this.result.locusSymbol.symbol,
+                fullName: this.result.locus.taxon.name
+            };
+        }
+        else{
+            gene = {
+                locusName: '',
+                geneSymbol: '',
+                fullName: ''
+            }
+        }
 
         this.completeAnnotation = {
 
@@ -86,9 +93,10 @@ export class SearchCardComponent implements OnInit {
             };
         }
 
-    }
-    catch (err) {
-    }
+
+
+
+
   };
 
 

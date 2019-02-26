@@ -17,4 +17,10 @@ export class SearchService {
               `${environment.base_url}/search/${keywords}`
           );
   }
+
+  createExportFile(idList: String[]){
+      return this.http.get(`${environment.base_url}/searchexport/${idList}`);
+  }
+
+
 }
