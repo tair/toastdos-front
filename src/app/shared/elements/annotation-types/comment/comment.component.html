@@ -13,8 +13,12 @@
   <div class="text-right col-3">
     <label class="mb-0">Comment</label>
   </div>
+    <ng-template #functionPopContent>
+          <div class="text-danger popover-body"><strong>Comment cannot be blank</strong></div>
+      </ng-template>
   <div class="p-1 col">
-    <textarea class="form-control" [formControl]="comment" (change)="setAnnotationData()">
+    <textarea class="form-control" [formControl]="comment" (change)="setAnnotationData()"
+              [ngbPopover]="functionPopContent" #functionPopover="ngbPopover" triggers="manual">
     </textarea>
   </div>
 </div>

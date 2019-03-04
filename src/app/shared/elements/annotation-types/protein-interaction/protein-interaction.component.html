@@ -32,6 +32,9 @@
         {{function.synonym}}
       </span>
     </ng-template>
-    <input placeholder="Start Typing..." class="form-control" [formControl]="method" [ngbTypeahead]="methods" [resultTemplate]="rt" [inputFormatter]="methodFormatter">
-  </div>
+    <ng-template #methodPopContent>
+          <div class="text-danger popover-body"><strong>{{methodError}}</strong></div>
+      </ng-template>
+    <input placeholder="Start Typing..." class="form-control" [formControl]="method" [ngbTypeahead]="methods" [resultTemplate]="rt" [inputFormatter]="methodFormatter"
+    [ngbPopover]="methodPopContent" #methodPopover="ngbPopover" triggers="manual">  </div>
 </div>

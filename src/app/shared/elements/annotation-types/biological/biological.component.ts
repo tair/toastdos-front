@@ -1,17 +1,18 @@
-import {Component, Input, OnInit, AfterViewInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {GeneService} from "../../../services/gene.service";
 import {Observable} from "rxjs";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 import {MethodDropdownComponent} from "../../method-dropdown/method-dropdown.component";
 import {Annotation, SubmissionService} from "../../../services/submission.service";
+import {ValidationService} from '../../../services/validation.service';
 
 @Component({
   selector: 'app-biological',
   templateUrl: './biological.component.html',
   styleUrls: ['./biological.component.scss']
 })
-export class BiologicalComponent implements OnInit {
+export class BiologicalComponent implements OnInit, OnDestroy {
 
     form: FormGroup = new FormGroup({
       function: new FormControl('', [
@@ -35,27 +36,65 @@ export class BiologicalComponent implements OnInit {
     methods: any;
     methodFormatter = (x: any) => x.name;
 
-    constructor(private geneService: GeneService, public submissionService: SubmissionService) { }
+    private validationObservable$;
+    methodError = '';
+    @ViewChild('methodPopover') methodPopover;
+    functionError = '';
+    @ViewChild('functionPopover') functionPopover;
+
+
+    constructor(private geneService: GeneService, private submissionService: SubmissionService, private validationService: ValidationService) { }
+
 
     ngOnInit() {
       this.gene.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName);
       this.function.setValue(this.submissionService.currentSubmission.annotations[this.index].data.keyword);
       this.method.setValue(this.submissionService.currentSubmission.annotations[this.index].data.method);
-          this.goFunctions = (text$: Observable<string>) =>
-          text$.pipe(
-            debounceTime(200),
-            distinctUntilChanged(),
-            switchMap(term => this.geneService.searchBiologicalProcess(term))
-          );
-        this.methods = (text$: Observable<string>) =>
-          text$.pipe(
-            debounceTime(200),
-            distinctUntilChanged(),
-            switchMap(term => this.geneService.searchMethods(term, this.annotationType))
-          );
-        this.form.valueChanges.subscribe(value => {
-            this.setAnnotationData();
-        });
+      this.goFunctions = (text$: Observable<string>) =>
+      text$.pipe(
+        debounceTime(200),
+        distinctUntilChanged(),
+        switchMap(term => this.geneService.searchBiologicalProcess(term))
+      );
+      this.methods = (text$: Observable<string>) =>
+        text$.pipe(
+          debounceTime(200),
+          distinctUntilChanged(),
+          switchMap(term => this.geneService.searchMethods(term, this.annotationType))
+        );
+      this.form.valueChanges.subscribe(value => {
+        this.setAnnotationData();
+      });
+      this.validationObservable$ = this.validationService.observableShouldValidateForms.asObservable().subscribe( shouldValidate => {
+        if (shouldValidate) {
+          let numErrorsInMe = this.validate();
+          this.validationService.addToErrorList(numErrorsInMe);
+        }
+      });
+
+    }
+
+    ngOnDestroy() {
+      this.validationObservable$.unsubscribe();
+    }
+
+    validate() {
+      let err_count = 0;
+      if (!this.method.value['id'])
+      {
+        this.methodError = 'Method is required. Please enter the experimental method that provides evidence to support the annotation.';
+        this.methodPopover.close();
+        this.methodPopover.open();
+        err_count += 1;
+      }
+      if (!this.function.value['id'])
+      {
+        this.functionError = 'A gene term annotation requires a keyword.';
+        this.functionPopover.close();
+        this.functionPopover.open();
+        err_count += 1;
+      }
+      return err_count;
     }
 
     get availableGenes() {

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, AfterViewInit, ViewChild, OnChanges} from '@angular/core';
+import {Component, Input, OnInit, AfterViewInit, ViewChild, OnDestroy} from '@angular/core';
 import { GeneService } from 'src/app/shared/services/gene.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
@@ -11,7 +11,7 @@ import {ValidationService} from '../../../services/validation.service';
   templateUrl: './molecular.component.html',
   styleUrls: ['./molecular.component.scss']
 })
-export class MolecularComponent implements OnInit {
+export class MolecularComponent implements OnInit, OnDestroy {
 
   form: FormGroup = new FormGroup({
       function: new FormControl(''),
@@ -67,9 +67,12 @@ export class MolecularComponent implements OnInit {
 
   }
 
+  ngOnDestroy() {
+      this.validationObservable$.unsubscribe();
+  }
+
   validate() {
     let err_count = 0;
-    console.log(this.method.value);
     if (!this.method.value['id'])
     {
       this.methodError = 'Method is required. Please enter the experimental method that provides evidence to support the annotation.';
@@ -77,7 +80,6 @@ export class MolecularComponent implements OnInit {
       this.methodPopover.open();
       err_count += 1;
     }
-    console.log(this.function.value);
     if (!this.function.value['id'])
     {
       this.functionError = 'A gene term annotation requires a keyword.';

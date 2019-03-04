@@ -4,7 +4,7 @@
       <div class="col-md-10 col-offset-4 page-card-container col"><!-- react-empty: 184 -->
         <div *ngIf="submiting" class="mb-3 alert fade show" role="alert">Submitting...</div>
         <div *ngIf="saved" class="mb-3 alert alert-success fade show" role="alert"><span class="fa fa-check"></span>Submitted!</div>
-        <div *ngIf="error" class="mb-3 alert alert-danger fade show" role="alert"><span class="fa fa-times"></span>Error</div>
+        <div *ngIf="error" class="mb-3 alert alert-danger fade show" role="alert"><span class="fa fa-times"></span> {{errorMessage}}</div>
         <div class="page-card card">
           <div class="card-header">
             <div class="align-items-center row">

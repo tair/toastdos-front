@@ -22,7 +22,11 @@
         {{function.synonym}}
       </span>
     </ng-template>
-    <input placeholder="Start Typing..." class="form-control" [formControl]="function" [ngbTypeahead]="goFunctions" [resultTemplate]="rt" [inputFormatter]="goFormatter">
+     <ng-template #functionPopContent>
+          <div class="text-danger popover-body"><strong>{{functionError}}</strong></div>
+      </ng-template>
+    <input placeholder="Start Typing..." class="form-control" [formControl]="function" [ngbTypeahead]="goFunctions" [resultTemplate]="rt" [inputFormatter]="goFormatter"
+           [ngbPopover]="functionPopContent" #functionPopover="ngbPopover" triggers="manual">
   </div>
 </div>
 <div class="d-flex p-2 align-items-center row">
@@ -30,7 +34,11 @@
     <label class="mb-0">Method</label>
   </div>
   <div class="p-1 col">
-    <input placeholder="Start Typing..." class="form-control" [formControl]="method" [ngbTypeahead]="methods" [resultTemplate]="rt" [inputFormatter]="methodFormatter">
+      <ng-template #methodPopContent>
+          <div class="text-danger popover-body"><strong>{{methodError}}</strong></div>
+      </ng-template>
+    <input placeholder="Start Typing..." class="form-control" [formControl]="method" [ngbTypeahead]="methods" [resultTemplate]="rt" [inputFormatter]="methodFormatter"
+    [ngbPopover]="methodPopContent" #methodPopover="ngbPopover" triggers="manual">
   </div>
 </div>
 <ng-container *ngIf="annotation.data.evidenceWith!=undefined">

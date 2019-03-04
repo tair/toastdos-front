@@ -218,7 +218,7 @@ export class SubmissionService {
                 break;
             }
             case "COMMENT": {
-                sentance += ` has the following comment ${annotation.data['comment']}`;
+                sentance += ` has the following comment ${annotation.data['text']}`;
                 break;
             }
             case "MOLECULAR_FUNCTION": {
@@ -292,8 +292,10 @@ export class SubmissionService {
             if (a.type==="COMMENT")
             {
                 anno['data']['text'] = a.data.text;
+                delete anno['data']['isEvidenceWithOr'];
             } else if (a.type=="PROTEIN_INTERACTION")
             {
+              delete anno['data']['isEvidenceWithOr'];
                 if (!withStatus && a.data.locusName.locusName) {
                   anno['data']['locusName2'] = a.data.locusName2.locusName;
                 } else {

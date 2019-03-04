@@ -20,12 +20,14 @@ export class SubmissionComponent implements OnInit {
   saved: boolean;
   submiting: boolean;
   error: boolean;
+  errorMessage: string;
 
   ngOnInit() {
       this.editing = true;
       this.saved = false;
       this.submiting = false;
       this.error = false;
+      this.errorMessage = 'Undefined Error';
       this.submissionService.inCurationMode = false;
       this.submissionService.attemptToLoadDraft();
       this.submissionService.observableSavedDraft.subscribe(saved => {
@@ -69,6 +71,8 @@ export class SubmissionComponent implements OnInit {
           }
       }, err=> {
             this.submiting = false;
+            console.log(err);
+            this.errorMessage = err['error'];
             this.error = true;
       });
   }

@@ -1,17 +1,18 @@
-import {Component, Input, OnInit, AfterViewInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MethodDropdownComponent} from "../../method-dropdown/method-dropdown.component";
 import {GeneService} from "../../../services/gene.service";
 import {Observable} from "rxjs";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 import {Annotation, SubmissionService} from "../../../services/submission.service";
+import {ValidationService} from '../../../services/validation.service';
 
 @Component({
   selector: 'app-protein-interaction',
   templateUrl: './protein-interaction.component.html',
   styleUrls: ['./protein-interaction.component.scss']
 })
-export class ProteinInteractionComponent implements OnInit {
+export class ProteinInteractionComponent implements OnInit, OnDestroy {
 
   form: FormGroup = new FormGroup({
       gene1: new FormControl('', [
@@ -34,7 +35,13 @@ export class ProteinInteractionComponent implements OnInit {
   methods: any;
   methodFormatter = (x: any) => x.name;
 
-  constructor(private geneService: GeneService, private submissionService: SubmissionService) { }
+  private validationObservable$;
+  methodError = '';
+  @ViewChild('methodPopover') methodPopover;
+
+
+
+  constructor(private geneService: GeneService, private submissionService: SubmissionService, private validationService: ValidationService) { }
 
   ngOnInit() {
       this.gene1.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName);
@@ -48,7 +55,30 @@ export class ProteinInteractionComponent implements OnInit {
       );
       this.form.valueChanges.subscribe(value => {
           this.setAnnotationData();
-      })
+      });
+
+        this.validationObservable$ = this.validationService.observableShouldValidateForms.asObservable().subscribe( shouldValidate => {
+      if (shouldValidate) {
+        let numErrorsInMe = this.validate();
+        this.validationService.addToErrorList(numErrorsInMe);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+      this.validationObservable$.unsubscribe();
+  }
+
+  validate() {
+    let err_count = 0;
+    if (!this.method.value['id'])
+    {
+      this.methodError = 'Method is required. Please enter the experimental method that provides evidence to support the annotation.';
+      this.methodPopover.close();
+      this.methodPopover.open();
+      err_count += 1;
+    }
+    return err_count;
   }
 
   get availableGenes() {

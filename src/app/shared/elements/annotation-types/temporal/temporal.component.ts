@@ -1,17 +1,18 @@
-import {Component, Input, OnInit, AfterViewInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {GeneService} from "../../../services/gene.service";
 import {Observable} from "rxjs";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 import {MethodDropdownComponent} from "../../method-dropdown/method-dropdown.component";
 import {Annotation, SubmissionService} from "../../../services/submission.service";
+import {ValidationService} from '../../../services/validation.service';
 
 @Component({
   selector: 'app-temporal',
   templateUrl: './temporal.component.html',
   styleUrls: ['./temporal.component.scss']
 })
-export class TemporalComponent implements OnInit {
+export class TemporalComponent implements OnInit, OnDestroy {
 
     form: FormGroup = new FormGroup({
       function: new FormControl('', [
@@ -36,7 +37,13 @@ export class TemporalComponent implements OnInit {
     methodFormatter = (x: any) => x.name;
     usable = false;
 
-    constructor(private geneService: GeneService, private submissionService: SubmissionService) { }
+    private validationObservable$;
+    methodError = '';
+    @ViewChild('methodPopover') methodPopover;
+    functionError = '';
+    @ViewChild('functionPopover') functionPopover;
+
+    constructor(private geneService: GeneService, private submissionService: SubmissionService, private validationService: ValidationService) { }
 
     ngOnInit() {
       this.gene.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName);
@@ -56,7 +63,36 @@ export class TemporalComponent implements OnInit {
           );
         this.form.valueChanges.subscribe(value => {
             this.setAnnotationData();
-        })
+        });
+        this.validationObservable$ = this.validationService.observableShouldValidateForms.asObservable().subscribe( shouldValidate => {
+        if (shouldValidate) {
+          let numErrorsInMe = this.validate();
+          this.validationService.addToErrorList(numErrorsInMe);
+        }
+      });
+    }
+
+    ngOnDestroy() {
+      this.validationObservable$.unsubscribe();
+    }
+
+    validate() {
+      let err_count = 0;
+      if (!this.method.value['id'])
+      {
+        this.methodError = 'Method is required. Please enter the experimental method that provides evidence to support the annotation.';
+        this.methodPopover.close();
+        this.methodPopover.open();
+        err_count += 1;
+      }
+      if (!this.function.value['id'])
+      {
+        this.functionError = 'A gene term annotation requires a keyword.';
+        this.functionPopover.close();
+        this.functionPopover.open();
+        err_count += 1;
+      }
+      return err_count;
     }
 
     get availableGenes() {
