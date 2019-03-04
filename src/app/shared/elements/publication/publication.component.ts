@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {debounceTime, distinctUntilChanged, switchMap, tap} from "rxjs/operators";
 import {PublicationService} from "../../services/publication.service";
 import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
-import {SubmissionService} from "../../services/submission.service";
+import {SubmissionService, Validatable} from '../../services/submission.service';
 import * as deepEqual from "deep-equal";
+import {ValidationService} from '../../services/validation.service';
 
 
 @Component({
@@ -12,29 +13,33 @@ import * as deepEqual from "deep-equal";
   templateUrl: './publication.component.html',
   styleUrls: ['./publication.component.scss']
 })
-export class PublicationComponent implements OnInit {
+export class PublicationComponent implements OnInit, OnDestroy, Validatable {
 
   title: string;
   author: string;
   pubStatus: string;
   isDOI: Boolean;
   url: string;
+  errorReason: string;
+  validationObservable: any;
 
   private form: FormGroup = new FormGroup({
-    pub_id: new FormControl('', [
-      //this.isDoiValid
-    ])
+    pub_id: new FormControl('')
   });
 
   @ViewChild('popover') popover;
 
-  constructor(private pubService: PublicationService, private submissionService: SubmissionService) {
+  constructor(private pubService: PublicationService, private submissionService: SubmissionService, private validationService: ValidationService) {
     this.title = "";
     this.author = "";
     this.url = "";
     this.isDOI = false;
+    this.errorReason = 'Pleas enter a PublicationID';
   }
 
+  ngOnDestroy() {
+    this.validationObservable.unsubscribe();
+  }
 
   ngOnInit() {
     this.submissionService.observableShouldUpdate.asObservable().subscribe(shouldUpdate => {
@@ -43,6 +48,10 @@ export class PublicationComponent implements OnInit {
            this.pubStatus = 'success';
         }
       });
+    this.validationObservable = this.validationService.observableShouldValidateForms.asObservable().subscribe( shouldValidate => {
+      let numErrorsInMe = this.validate();
+      this.validationService.addToErrorList(numErrorsInMe);
+    });
     this.form.setValue({'pub_id': this.submissionService.currentSubmission.publicationId});
     if (this.submissionService.currentSubmission.publicationId.length>=2) {
         this.pubStatus = 'success';
@@ -78,6 +87,7 @@ export class PublicationComponent implements OnInit {
             error => {
               console.log(error);
               this.pubStatus = 'error';
+              this.errorReason = 'Invalid pubMedID or DOI';
               this.toggleErrorPopover();
               this.title = "";
               this.author = "";
@@ -86,21 +96,16 @@ export class PublicationComponent implements OnInit {
 
   }
 
-  checkValid() {
-    this.pubService.checkIsValid$(this.submissionService.currentSubmission.publicationId)
-                .subscribe((response: any)=> {
-                  this.pubStatus = 'success';
-                  this.toggleErrorPopover();
-                  this.title = response.title;
-                  this.author = response.author;
-                  },
-                error => {
-                  console.log(error);
-                  this.pubStatus = 'error';
-                  this.toggleErrorPopover();
-                  this.title = "";
-                  this.author = "";
-                });
+  validate() {
+    if (this.pub_id.value.toString().length<2||this.pubStatus == 'error') {
+      this.errorReason = 'You must enter a valid DOI or PubMedID';
+      this.pubStatus='error';
+      this.popover.close();
+      this.popover.open();
+      return 1;
+    }
+    this.submissionService.currentSubmission.publicationId = this.pub_id.value;
+    return 0;
   }
 
   toggleErrorPopover() {

@@ -3,6 +3,7 @@ import { SubmissionService, Submission, Gene, Annotation} from '../../services/s
 import {s} from "@angular/core/src/render3";
 import {Router} from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import {ValidationService} from '../../services/validation.service';
 
 
 @Component({
@@ -12,7 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SubmissionComponent implements OnInit {
 
-  constructor(private submissionService: SubmissionService, private  detector: ChangeDetectorRef, private toastr: ToastrService) { }
+  constructor(private submissionService: SubmissionService, private  validationService: ValidationService,
+              private toastr: ToastrService) { }
   submission: Submission;
   editing: boolean;
   saved: boolean;
@@ -28,7 +30,6 @@ export class SubmissionComponent implements OnInit {
       this.submissionService.attemptToLoadDraft();
       this.submissionService.observableSavedDraft.subscribe(saved => {
         if (saved) {
-          //lets notify the user
           this.toastr.success('Saved current draft', 'Draft saved!');
         } else{
           //dang
@@ -39,8 +40,14 @@ export class SubmissionComponent implements OnInit {
   }
 
   reviewSubmission() {
-      this.submissionService.saveDraft();
-      this.editing = false;
+    this.validationService.validateForms(numErrors => {
+      console.log('got ' + numErrors + ' errors');
+      if (numErrors<1)
+      {
+        this.submissionService.saveDraft();
+        this.editing = false;
+      }
+    });
   }
 
   resetSubmission() {

@@ -2,9 +2,6 @@
   <div class="align-center card-header">
     <div class="row">
       <div class="col">
-        <small *ngIf="locus.hasError('required')" class="text-muted is-invalid" style="color: red;">
-          You must include a gene locus
-        </small>
         <div class="input-group">
           <div class="bg-light-green text-dark input-group-prepend">
             <span class="input-group-text">Gene {{number + 1}}</span>
@@ -14,8 +11,8 @@
           <div class="input-group-append">
                <span class="input-group-text">
                   <div>
-                     <ng-template #popcontent>
-                        <div class="text-danger popover-body"><strong>Locus Not Found</strong></div>
+                      <ng-template #popcontent>
+                        <div class="text-danger popover-body"><strong>{{errorMessage}}</strong></div>
                      </ng-template>
                      <span
                        id="validation_status_6"

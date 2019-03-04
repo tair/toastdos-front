@@ -1,6 +1,5 @@
-import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, Input, OnInit, QueryList, ViewChildren, ChangeDetectionStrategy} from '@angular/core';
 import {AnnotationComponent} from "../annotation/annotation.component";
-import {AnnotationService} from "../../services/annotation.service";
 import {Annotation, SubmissionService} from "../../services/submission.service";
 import * as deepEqual from "deep-equal";
 
@@ -26,21 +25,23 @@ export class AnnotationListComponent implements OnInit {
       //this is if we want to reset of whatever
       this.submissionService.observableShouldUpdate.asObservable().subscribe(shouldUpdate => {
         if (shouldUpdate) {
-          this.annotationModels = [];
+          let models = [];
             let i = 0;
             for (let a of this.submissionService.currentSubmission.annotations) {
-                this.annotationModels.push({index: i, annotation: a});
+                models.push({index: i, annotation: a});
                 i += 1;
             }
+            this.annotationModels = models;
         }
       });
       //load models here when we get them for curation
-      this.annotationModels = [];
+      let models = [];
       let i = 0;
       for (let a of this.submissionService.currentSubmission.annotations) {
-          this.annotationModels.push({index: i, annotation: a});
+          models.push({index: i, annotation: a});
           i += 1;
       }
+      this.annotationModels = models;
   }
 
   addAnnotation() {
@@ -52,7 +53,6 @@ export class AnnotationListComponent implements OnInit {
             this.submissionService.currentSubmission.annotations[nSubs].data.locusName2 = this.submissionService.currentSubmission.genes[1];
         }
     }
-    this.annotationModels.push({index: nSubs, annotation: this.submissionService.currentSubmission.annotations[nSubs]});
   }
 
   removeAnnotation(annoModelToDelete: any)

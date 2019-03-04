@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { debounceTime, map, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import {Annotation, SubmissionService} from "../../../services/submission.service";
+import {ValidationService} from '../../../services/validation.service';
 
 @Component({
   selector: 'app-molecular',
@@ -13,15 +14,9 @@ import {Annotation, SubmissionService} from "../../../services/submission.servic
 export class MolecularComponent implements OnInit {
 
   form: FormGroup = new FormGroup({
-      function: new FormControl('', [
-          Validators.required
-      ]),
-      gene: new FormControl('', [
-          Validators.required
-      ]),
-      method: new FormControl('', [
-          Validators.required
-      ])
+      function: new FormControl(''),
+      gene: new FormControl(''),
+      method: new FormControl('',)
   });
 
   @Input () annotation: Annotation;
@@ -34,7 +29,14 @@ export class MolecularComponent implements OnInit {
   methods: any;
   methodFormatter = (x: any) => x.name;
 
-  constructor(private geneService: GeneService, private submissionService: SubmissionService) { }
+  private validationObservable$;
+  methodError = '';
+  @ViewChild('methodPopover') methodPopover;
+  functionError = '';
+  @ViewChild('functionPopover') functionPopover;
+
+
+  constructor(private geneService: GeneService, private submissionService: SubmissionService, private validationService: ValidationService) { }
 
   ngOnInit() {
     this.gene.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName);
@@ -55,6 +57,35 @@ export class MolecularComponent implements OnInit {
     this.form.valueChanges.subscribe(value => {
         this.setAnnotationData();
     });
+
+    this.validationObservable$ = this.validationService.observableShouldValidateForms.asObservable().subscribe( shouldValidate => {
+      if (shouldValidate) {
+        let numErrorsInMe = this.validate();
+        this.validationService.addToErrorList(numErrorsInMe);
+      }
+    });
+
+  }
+
+  validate() {
+    let err_count = 0;
+    console.log(this.method.value);
+    if (!this.method.value['id'])
+    {
+      this.methodError = 'Method is required. Please enter the experimental method that provides evidence to support the annotation.';
+      this.methodPopover.close();
+      this.methodPopover.open();
+      err_count += 1;
+    }
+    console.log(this.function.value);
+    if (!this.function.value['id'])
+    {
+      this.functionError = 'A gene term annotation requires a keyword.';
+      this.functionPopover.close();
+      this.functionPopover.open();
+      err_count += 1;
+    }
+    return err_count;
   }
 
 

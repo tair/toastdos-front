@@ -41,6 +41,11 @@ export interface Submission {
     }
 }
 
+//Any component that implements this can get validated
+export interface Validatable {
+  validate(): Number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -49,16 +54,16 @@ export class SubmissionService {
     observableGenes = new BehaviorSubject<Gene[]>([]);
     observableShouldUpdate = new BehaviorSubject<Boolean>(false);
     observableSavedDraft = new BehaviorSubject<Boolean>(false);
-    observableShouldValidateForms = new BehaviorSubject<Boolean>(false);
     inCurationMode: boolean;
+
 
     constructor(private http: HttpClient, private authService: AuthenticationService) {
         this.inCurationMode = false;
         this.currentSubmission = this.emptySubmission();
         this.observableGenes.next(this.currentSubmission.genes);
         this.observableShouldUpdate.next(false);
-        this.observableShouldValidateForms.next(false);
     }
+
 
     emptySubmission() {
       let gene = {} as Gene;
@@ -89,6 +94,7 @@ export class SubmissionService {
     resetSubmission()
     {
         this.currentSubmission = this.emptySubmission();
+        this.saveDraft();
         this.observableShouldUpdate.next(true);
     }
 
@@ -129,7 +135,6 @@ export class SubmissionService {
         if (this.currentSubmission.annotations.length==0)
         {
           this.addBlankAnnotation();
-          this.observableShouldUpdate.next(true);
         }
     }
 
@@ -153,9 +158,7 @@ export class SubmissionService {
                      "text" : ""
         };
         this.currentSubmission.annotations.push(anno);
-        if (this.currentSubmission.annotations.length==0) {
-           this.observableShouldUpdate.next(true);
-        }
+        this.observableShouldUpdate.next(true);
 
     }
 

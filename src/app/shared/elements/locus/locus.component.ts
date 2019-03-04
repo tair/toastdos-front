@@ -1,19 +1,21 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {GeneService} from "../../services/gene.service";
-import {debounceTime, distinctUntilChanged, tap} from "rxjs/operators";
-import {Gene, SubmissionService} from "../../services/submission.service";
-import * as deepEqual from "deep-equal";
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {FormControl, FormGroup} from '@angular/forms';
+import {GeneService} from '../../services/gene.service';
+import {debounceTime, distinctUntilChanged, filter, tap} from 'rxjs/operators';
+import {Gene, SubmissionService} from '../../services/submission.service';
+import {ValidationService} from '../../services/validation.service';
+import {SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'app-locus',
   templateUrl: './locus.component.html',
   styleUrls: ['./locus.component.scss']
 })
-export class LocusComponent implements OnInit {
+export class LocusComponent implements OnInit, OnDestroy {
 
   private locusStatus: string;
   private _locusData: any;
+  errorMessage = "INVALID: A valid gene is required";
 
   @Input() number: number;
 
@@ -22,22 +24,25 @@ export class LocusComponent implements OnInit {
   @ViewChild('popover') popover;
 
   private form: FormGroup = new FormGroup({
-    locus: new FormControl('', [
-
-    ]),
-    gene_symbol: new FormControl('', [
-
-    ]),
-    full_gene_name: new FormControl('', [
-
-    ])
+    locus: new FormControl(''),
+    gene_symbol: new FormControl(''),
+    full_gene_name: new FormControl('')
   });
 
-  constructor(private geneService: GeneService, private submissionService: SubmissionService) { }
+  private validationObservable$;
+
+  constructor(private geneService: GeneService,
+              private submissionService: SubmissionService,
+              private validationService: ValidationService) {
+
+  }
+
+  ngOnDestroy() {
+    this.validationObservable$.unsubscribe();
+  }
 
   ngOnInit() {
     this.locusStatus = 'empty';
-    //init
     let gene = this.submissionService.currentSubmission.genes[this.number];
     if (gene.locusName.length>2)
     {
@@ -51,7 +56,9 @@ export class LocusComponent implements OnInit {
       .pipe(
         debounceTime(400),
         distinctUntilChanged(),
+        filter(x=> x.length>=5),
         tap(value => {
+          console.log('tapped');
           this.locusStatus = 'loading';
           this.toggleErrorPopover();
         })
@@ -65,12 +72,31 @@ export class LocusComponent implements OnInit {
           },
           error => {
             this.locusStatus = 'error';
+            this.errorMessage = "Invalid Gene";
             this.toggleErrorPopover();
           });
     });
 
+    this.validationObservable$ = this.validationService.observableShouldValidateForms.asObservable().subscribe( shouldValidate => {
+      if (shouldValidate) {
+        let numErrorsInMe = this.validate();
+        this.validationService.addToErrorList(numErrorsInMe);
+      }
+    });
+
   }
 
+  validate() {
+    if (this.locusStatus=='error' || this.locus.value.toString().length<2)
+    {
+      this.errorMessage = "INVALID: A valid gene is required";
+      this.locusStatus = 'error';
+      this.popover.close();
+      this.popover.open();
+      return 1;
+    }
+    return 0;
+  }
 
 
   getGene()
@@ -111,14 +137,6 @@ export class LocusComponent implements OnInit {
 
   delete() {
     this.deleted.emit(this.number);
-  }
-
-  get hasErrors(): boolean {
-    return this.form.errors === null;
-  }
-
-  get formValue() {
-    return this.form.getRawValue();
   }
 
   get locus() {
