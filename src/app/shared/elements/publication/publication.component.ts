@@ -68,6 +68,8 @@ export class PublicationComponent implements OnInit, OnDestroy, Validatable {
         if (value.length==0)
         {
           this.pubStatus='empty';
+          this.author='';
+          this.title='';
           return;
         }
         this.pubService.checkIsValid$(value)
