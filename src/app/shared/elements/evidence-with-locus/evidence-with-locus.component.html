@@ -5,8 +5,9 @@
           <div class="input-group-append">
                <span class="input-group-text">
                   <div>
+
                      <ng-template #popcontent>
-                        <div class="text-danger popover-body"><strong>Locus Not Found</strong></div>
+                        <div class="text-danger popover-body"><strong>{{errorMessage}}</strong></div>
                      </ng-template>
                      <span
                        id="validation_status_6"
