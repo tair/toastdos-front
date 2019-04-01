@@ -100,8 +100,8 @@ export class ProteinInteractionComponent implements OnInit, OnDestroy {
 
   setAnnotationData()
   {
-      let locus = this.submissionService.currentSubmission.genes.length == 1 ? this.submissionService.currentSubmission.genes[0] : this.submissionService.getGeneWithLocus(this.gene1.value);
-      let locus2 = this.submissionService.currentSubmission.genes.length == 1 ? this.submissionService.currentSubmission.genes[0] : this.submissionService.getGeneWithLocus(this.gene2.value);
+      let locus = this.gene1.value;
+      let locus2 = this.gene2.value;
       this.annotation.data.locusName = locus;
       this.annotation.data.locusName2 = locus2;
       this.annotation.data.method = this.method.value;

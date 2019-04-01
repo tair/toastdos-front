@@ -39,6 +39,7 @@ export class MolecularComponent implements OnInit, OnDestroy {
   constructor(private geneService: GeneService, private submissionService: SubmissionService, private validationService: ValidationService) { }
 
   ngOnInit() {
+    console.log(this.annotation);
     this.gene.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName);
     this.function.setValue(this.submissionService.currentSubmission.annotations[this.index].data.keyword);
     this.method.setValue(this.submissionService.currentSubmission.annotations[this.index].data.method);
@@ -109,7 +110,7 @@ export class MolecularComponent implements OnInit, OnDestroy {
 
     setAnnotationData()
     {
-      let locus = this.submissionService.currentSubmission.genes.length == 1 ? this.submissionService.currentSubmission.genes[0] : this.submissionService.getGeneWithLocus(this.gene.value);
+      let locus = this.gene.value;
       this.annotation.data.locusName = locus;
       this.annotation.data.keyword = this.function.value;
       this.annotation.data.method = this.method.value;

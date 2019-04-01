@@ -88,7 +88,7 @@ export class CommentComponent implements OnInit, OnDestroy {
 
   setAnnotationData()
   {
-      let locus = this.submissionService.currentSubmission.genes.length == 1 ? this.submissionService.currentSubmission.genes[0] : this.submissionService.getGeneWithLocus(this.gene.value);
+      let locus = this.gene.value;
       this.annotation.data.locusName = locus;
       this.annotation.type = this.annotationType;
       this.annotation.data.text = this.comment.value.toString();

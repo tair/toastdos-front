@@ -140,15 +140,11 @@ export class SubmissionService {
 
     addBlankAnnotation()
     {
-        let anno = {} as Annotation;
-        var gene = {} as Gene;
-        if (this.currentSubmission.genes.length<1) {
-          gene.locusName = "";
-          gene.geneSymbol = "";
-          gene.fullName = "";
-        } else {
-            gene = this.currentSubmission.genes[0]
+      if (this.currentSubmission.genes.length<1) {
+          return;
         }
+        let anno = {} as Annotation;
+        let gene = this.currentSubmission.genes[0];
         anno.type = "MOLECULAR_FUNCTION";
         anno.status = "pending";
         anno.data = {"locusName": gene,

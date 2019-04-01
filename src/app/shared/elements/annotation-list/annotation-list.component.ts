@@ -46,13 +46,6 @@ export class AnnotationListComponent implements OnInit {
 
   addAnnotation() {
     this.submissionService.addBlankAnnotation();
-    let nSubs = this.submissionService.currentSubmission.annotations.length-1;
-    if (this.submissionService.currentSubmission.genes.length>=1) {
-        this.submissionService.currentSubmission.annotations[nSubs].data.locusName = this.submissionService.currentSubmission.genes[0];
-        if (this.submissionService.currentSubmission.genes.length>=2) {
-            this.submissionService.currentSubmission.annotations[nSubs].data.locusName2 = this.submissionService.currentSubmission.genes[1];
-        }
-    }
   }
 
   removeAnnotation(annoModelToDelete: any)
