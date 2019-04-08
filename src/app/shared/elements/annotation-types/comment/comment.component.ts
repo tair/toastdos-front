@@ -40,6 +40,7 @@ export class CommentComponent implements OnInit, OnDestroy {
 
 
     ngOnInit() {
+      this.gene.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName.locusName);
         this.comment.setValue(this.submissionService.currentSubmission.annotations[this.index].data.text);
         this.goFunctions = (text$: Observable<string>) =>
             text$.pipe(
@@ -88,7 +89,7 @@ export class CommentComponent implements OnInit, OnDestroy {
 
   setAnnotationData()
   {
-      let locus = this.gene.value;
+      let locus = this.submissionService.getGeneWithLocus(this.gene.value);
       this.annotation.data.locusName = locus;
       this.annotation.type = this.annotationType;
       this.annotation.data.text = this.comment.value.toString();

@@ -47,7 +47,7 @@ export class SubcellularComponent implements OnInit, OnDestroy {
     constructor(private geneService: GeneService, private submissionService: SubmissionService, private validationService: ValidationService) { }
 
     ngOnInit() {
-      this.gene.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName);
+      this.gene.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName.locusName);
       this.function.setValue(this.submissionService.currentSubmission.annotations[this.index].data.keyword);
       this.method.setValue(this.submissionService.currentSubmission.annotations[this.index].data.method);
           this.goFunctions = (text$: Observable<string>) =>
@@ -114,7 +114,7 @@ export class SubcellularComponent implements OnInit, OnDestroy {
 
     setAnnotationData()
     {
-      let locus = this.gene.value;
+      let locus = this.submissionService.getGeneWithLocus(this.gene.value);
       this.annotation.data.locusName = locus;
       this.annotation.data.keyword = this.function.value;
       this.annotation.data.method = this.method.value;

@@ -44,8 +44,8 @@ export class ProteinInteractionComponent implements OnInit, OnDestroy {
   constructor(private geneService: GeneService, private submissionService: SubmissionService, private validationService: ValidationService) { }
 
   ngOnInit() {
-      this.gene1.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName);
-      this.gene2.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName2);
+      this.gene1.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName.locusName);
+      this.gene2.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName2.locusName);
       this.method.setValue(this.submissionService.currentSubmission.annotations[this.index].data.method);
       this.methods = (text$: Observable<string>) =>
       text$.pipe(
@@ -100,8 +100,8 @@ export class ProteinInteractionComponent implements OnInit, OnDestroy {
 
   setAnnotationData()
   {
-      let locus = this.gene1.value;
-      let locus2 = this.gene2.value;
+      let locus = this.submissionService.getGeneWithLocus(this.gene1.value);
+      let locus2 = this.submissionService.getGeneWithLocus(this.gene2.value);
       this.annotation.data.locusName = locus;
       this.annotation.data.locusName2 = locus2;
       this.annotation.data.method = this.method.value;
