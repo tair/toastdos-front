@@ -20,9 +20,6 @@ export class AnnotationComponent implements OnInit {
   ngOnInit() {
     this.inCurationMode = this.submissionService.inCurationMode;
     this.selectedType.setValue(this.annotationModel.annotation.type);
-    if (this.inCurationMode) {
-      console.log(this.annotationModel.annotation.status);
-    }
   }
 
   typeSelected() {

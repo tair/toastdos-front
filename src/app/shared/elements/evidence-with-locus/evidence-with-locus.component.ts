@@ -78,7 +78,7 @@ export class EvidenceWithLocusComponent implements OnInit, OnDestroy {
   }
 
   validate() {
-    if (this.locusStatus=='error' || this.locusField.toString().length<2)
+    if (this.locusStatus=='error' || this.locusField.toString().length<2 || this.locusStatus=='empty')
     {
       this.errorMessage = "INVALID: A valid gene is required";
       this.locusStatus = 'error';

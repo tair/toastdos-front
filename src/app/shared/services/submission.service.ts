@@ -187,6 +187,7 @@ export class SubmissionService {
         if (code==='IEP') {
             return 'Inferred from Expression Pattern (IEP)';
         }
+        return '';
     }
 
     sentanceForAnnotation(annotation: Annotation, show_pending: boolean)
@@ -195,6 +196,7 @@ export class SubmissionService {
         {
             return "invalid annotation (no locus name)";
         }
+
         var sentance = `${annotation.data.locusName.locusName}`;
         switch (annotation.type){
             case "ANATOMICAL_LOCATION": {
@@ -254,6 +256,77 @@ export class SubmissionService {
         }
         return sentance;
     }
+
+    //believe it or not we need two different functions because the json for these objects has different keys
+    //makes you want to explode in anger as to how the backend cant return the same object with different
+    //names for the same field, mainly external_id vs externalID and locusname.locusname
+    sentanceForAnnotationInReview(annotation: Annotation)
+    {
+        if (!annotation.data.locusName)
+        {
+            return "invalid annotation (no locus name)";
+        }
+
+        var sentance = `${annotation.data.locusName}`;
+        switch (annotation.type){
+            case "ANATOMICAL_LOCATION": {
+                sentance += ` anatomically located in ${annotation.data.keyword['name']} `;
+                sentance += ` ${annotation.data.keyword['externalId']}, `;
+                sentance += ` ${this.phraseForCode(annotation.data.method['evidenceCode'])}, `;
+                sentance += `inferred from ${annotation.data.method['name']} `;
+                sentance += ` ${annotation.data.method['externalId']} `;
+                break;
+            }
+            case "BIOLOGICAL_PROCESS": {
+                sentance += ` involved in (biological process) ${annotation.data.keyword['name']} `;
+                sentance += ` ${annotation.data.keyword['externalId']}, `;
+                sentance += ` ${this.phraseForCode(annotation.data.method['evidenceCode'])}, `;
+                sentance += `inferred from ${annotation.data.method['name']} `;
+                sentance += ` ${annotation.data.method['externalId']} `;
+                break;
+            }
+            case "COMMENT": {
+                sentance += ` has the following comment ${annotation.data['text']}`;
+                break;
+            }
+            case "MOLECULAR_FUNCTION": {
+                sentance += ` functions in ${annotation.data.keyword['name']} `;
+                sentance += ` ${annotation.data.keyword['externalId']}, `;
+                sentance += ` ${this.phraseForCode(annotation.data.method['evidenceCode'])}, `;
+                sentance += `inferred from ${annotation.data.method['name']} `;
+                sentance += ` ${annotation.data.method['externalId']} `;
+                break;
+            }
+            case "PROTEIN_INTERACTION": {
+                sentance += ` interacts with ${annotation.data.locusName2}, `;
+                sentance += ` ${this.phraseForCode(annotation.data.method['evidenceCode'])}, `;
+                sentance += `inferred from ${annotation.data.method['name']} `;
+                sentance += ` ${annotation.data.method['externalId']} `;
+                break;
+            }
+            case "SUBCELLULAR_LOCATION": {
+                sentance += ` located in ${annotation.data.keyword['name']}, `;
+                sentance += ` ${annotation.data.keyword['externalId']}, `;
+                sentance += ` ${this.phraseForCode(annotation.data.method['evidenceCode'])}, `;
+                sentance += `inferred from ${annotation.data.method['name']} `;
+                sentance += ` ${annotation.data.method['externalId']} `;
+                break;
+            }
+            case "TEMPORAL_EXPRESSION": {
+                sentance += ` expressed in ${annotation.data.keyword['name']}, `;
+                sentance += ` ${annotation.data.keyword['externalId']}, `;
+                sentance += ` ${this.phraseForCode(annotation.data.method['evidenceCode'])}, `;
+                sentance += `inferred from ${annotation.data.method['name']} `;
+                sentance += ` ${annotation.data.method['externalId']} `;
+                break;
+            }
+        }
+        if ('status' in annotation) {
+          sentance += ` - Curation Status: ${annotation.status}`;
+        }
+        return sentance;
+    }
+
 
     toJson(withStatus: boolean)
     {

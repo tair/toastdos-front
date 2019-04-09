@@ -17,7 +17,12 @@ export class SubmissionOverviewComponent implements OnInit {
 
   sentanceForAnnotation(anno:Annotation)
   {
-    return this.submissionService.sentanceForAnnotation(anno, false);
+    console.log(anno);
+    if (this.submissionService.inCurationMode)
+    {
+      return this.submissionService.sentanceForAnnotationInReview(anno);
+    }
+    return this.submissionService.sentanceForAnnotation(anno, this.submissionService.inCurationMode);
   }
 
   ngOnInit() {
