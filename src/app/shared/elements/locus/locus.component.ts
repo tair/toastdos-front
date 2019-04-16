@@ -63,18 +63,18 @@ export class LocusComponent implements OnInit, OnDestroy {
         })
       ).subscribe((value: string) => {
         value = value.toUpperCase();
-      this.geneService.checkLocus$(value)
-        .subscribe((response: any) => {
-            this.locusStatus = 'success';
-            this.toggleErrorPopover();
-            this._locusData = response;
-            this.saveCurrentGene();
-          },
-          error => {
-            this.locusStatus = 'error';
-            this.errorMessage = "Invalid Gene";
-            this.toggleErrorPopover();
-          });
+        this.geneService.checkLocus$(value)
+          .subscribe((response: any) => {
+              this.locusStatus = 'success';
+              this.toggleErrorPopover();
+              this._locusData = response;
+              this.saveCurrentGene();
+            },
+            error => {
+              this.locusStatus = 'error';
+              this.errorMessage = "Invalid Gene";
+              this.toggleErrorPopover();
+            });
     });
 
     this.validationObservable$ = this.validationService.observableShouldValidateForms.asObservable().subscribe( shouldValidate => {
@@ -102,7 +102,7 @@ export class LocusComponent implements OnInit, OnDestroy {
   getGene()
   {
       let gene = {} as Gene;
-      gene.locusName = this.locus.value;
+      gene.locusName = this.locus.value.toUpperCase();
       gene.geneSymbol = this.gene_symbol.value;
       gene.fullName = this.full_gene_name.value;
       return gene;
