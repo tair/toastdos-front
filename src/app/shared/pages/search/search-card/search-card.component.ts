@@ -11,7 +11,7 @@ export class SearchCardComponent implements OnInit {
   @Input() result: any;
 
   type: string;
-  completeAnnotation: CompleteAnnotation;
+  completeAnnotation: any;
 
 
 

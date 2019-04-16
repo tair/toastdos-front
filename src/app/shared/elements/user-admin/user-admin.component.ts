@@ -8,7 +8,7 @@ import {AdminService} from "../../services/admin.service";
   styleUrls: ['./user-admin.component.scss']
 })
 export class UserAdminComponent implements OnInit {
-  @Input() user: object;
+  @Input() user: any;
 
   constructor(private adminService: AdminService) { }
 

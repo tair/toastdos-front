@@ -12,7 +12,7 @@ import {ValidationService} from '../../services/validation.service';
 })
 export class EvidenceWithLocusComponent implements OnInit, OnDestroy {
 
-  private locusStatus: string;
+  public locusStatus: string;
   public errorMessage: string;
 
   @Input() number: number;

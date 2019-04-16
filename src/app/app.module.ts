@@ -13,6 +13,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {environment} from "../environments/environment";
 import { ToastrModule } from 'ngx-toastr';
 
+export function jwtTokenGetter() {
+  return localStorage.getItem('token');
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +29,7 @@ import { ToastrModule } from 'ngx-toastr';
     ReactiveFormsModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => localStorage.getItem('token'),
+        tokenGetter: jwtTokenGetter,
         whitelistedDomains: [environment.base_url.replace("http://","").replace("/api",""), '0.0.0.0:3000', '52.14.163.196:3000','localhost:3000']
       }
     }),

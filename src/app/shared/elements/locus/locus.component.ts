@@ -13,8 +13,8 @@ import {SimpleChanges} from '@angular/core';
 })
 export class LocusComponent implements OnInit, OnDestroy {
 
-  private locusStatus: string;
-  private _locusData: any;
+   locusStatus: string;
+   _locusData: any;
   errorMessage = "INVALID: A valid gene is required";
 
   @Input() number: number;
@@ -23,13 +23,13 @@ export class LocusComponent implements OnInit, OnDestroy {
 
   @ViewChild('popover') popover;
 
-  private form: FormGroup = new FormGroup({
+   form: FormGroup = new FormGroup({
     locus: new FormControl(''),
     gene_symbol: new FormControl(''),
     full_gene_name: new FormControl('')
   });
 
-  private validationObservable$;
+   validationObservable$;
 
   constructor(private geneService: GeneService,
               private submissionService: SubmissionService,

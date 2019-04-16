@@ -191,3 +191,5 @@ resources/orcid_app_info.json
 package-lock.json
 
 *.idea*
+
+dist/
