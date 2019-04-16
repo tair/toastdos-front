@@ -58,11 +58,11 @@ export class LocusComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         filter(x=> x.length>=5),
         tap(value => {
-          console.log('tapped');
           this.locusStatus = 'loading';
           this.toggleErrorPopover();
         })
       ).subscribe((value: string) => {
+        value = value.toUpperCase();
       this.geneService.checkLocus$(value)
         .subscribe((response: any) => {
             this.locusStatus = 'success';
