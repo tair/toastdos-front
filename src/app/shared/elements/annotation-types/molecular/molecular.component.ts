@@ -39,7 +39,7 @@ export class MolecularComponent implements OnInit, OnDestroy {
   constructor(private geneService: GeneService, private submissionService: SubmissionService, private validationService: ValidationService) { }
 
   ngOnInit() {
-      this.gene.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName.locusName);
+    this.gene.setValue(this.submissionService.currentSubmission.annotations[this.index].data.locusName.locusName);
     this.function.setValue(this.submissionService.currentSubmission.annotations[this.index].data.keyword);
     this.method.setValue(this.submissionService.currentSubmission.annotations[this.index].data.method);
     this.goFunctions = (text$: Observable<string>) =>

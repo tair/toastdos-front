@@ -4,7 +4,7 @@
   </div>
   <div class="p-1 col">
     <select class="form-control" [formControl]="gene">
-      <option [selected]="gene.locusName===annotation.data.locusName.locusName" *ngFor="let gene of availableGenes | async">{{gene.locusName}}</option>
+      <option [selected]="gene.locusName===annotation.data.locusName.locusName || gene.locusName===annotation.data.locusName" *ngFor="let gene of availableGenes | async">{{gene.locusName}}</option>
     </select>
   </div>
 </div>
