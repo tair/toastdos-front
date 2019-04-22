@@ -261,7 +261,7 @@ export class SubmissionService {
             }
             case "PROTEIN_INTERACTION": {
                 sentance += ` interacts with ${annotation.data.locusName2.locusName}, `;
-                sentance += ` <span class="badge badge-success"> ${this.phraseForCode(annotation.data.method['evidence_code'])},  </span>`;
+                sentance +=  this.makeECOLink(annotation.data.method['evidence_code']);
                 sentance += `inferred from ${annotation.data.method['name']} `;
                 sentance += this.makeECOLink(annotation.data.method['external_id']);
                 break;
@@ -303,18 +303,18 @@ export class SubmissionService {
         switch (annotation.type){
             case "ANATOMICAL_LOCATION": {
                 sentance += ` anatomically located in ${annotation.data.keyword['name']} `;
-                sentance += ` ${annotation.data.keyword['externalId']}, `;
+                sentance += this.makePOLink(annotation.data.keyword['externalId']);
                 sentance += ` ${this.phraseForCode(annotation.data.method['evidenceCode'])}, `;
                 sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += ` ${annotation.data.method['externalId']} `;
+                sentance += this.makeECOLink(annotation.data.method['externalId']);
                 break;
             }
             case "BIOLOGICAL_PROCESS": {
                 sentance += ` involved in (biological process) ${annotation.data.keyword['name']} `;
-                sentance += ` ${annotation.data.keyword['externalId']}, `;
+                sentance += this.makeGOLink(annotation.data.keyword['externalId']);
                 sentance += ` ${this.phraseForCode(annotation.data.method['evidenceCode'])}, `;
                 sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += ` ${annotation.data.method['externalId']} `;
+                sentance += this.makeECOLink(annotation.data.method['externalId']);
                 break;
             }
             case "COMMENT": {
@@ -323,33 +323,33 @@ export class SubmissionService {
             }
             case "MOLECULAR_FUNCTION": {
                 sentance += ` functions in ${annotation.data.keyword['name']} `;
-                sentance += ` ${annotation.data.keyword['externalId']}, `;
+                sentance += this.makeGOLink(annotation.data.keyword['externalId']);
                 sentance += ` ${this.phraseForCode(annotation.data.method['evidenceCode'])}, `;
                 sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += ` ${annotation.data.method['externalId']} `;
+                sentance += this.makeECOLink(annotation.data.method['externalId']);
                 break;
             }
             case "PROTEIN_INTERACTION": {
-                sentance += ` interacts with ${annotation.data.locusName2}, `;
-                sentance += ` ${this.phraseForCode(annotation.data.method['evidenceCode'])}, `;
+                sentance += ` interacts with ${annotation.data.locusName2.locusName}, `;
+                sentance += this.makeECOLink(annotation.data.method['evidenceCode']);
                 sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += ` ${annotation.data.method['externalId']} `;
+                sentance += this.makeECOLink(annotation.data.method['externalId']);
                 break;
             }
             case "SUBCELLULAR_LOCATION": {
                 sentance += ` located in ${annotation.data.keyword['name']}, `;
-                sentance += ` ${annotation.data.keyword['externalId']}, `;
+                sentance += this.makeGOLink(annotation.data.keyword['externalId']);
                 sentance += ` ${this.phraseForCode(annotation.data.method['evidenceCode'])}, `;
                 sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += ` ${annotation.data.method['externalId']} `;
+                sentance += this.makeECOLink(annotation.data.method['externalId']);
                 break;
             }
             case "TEMPORAL_EXPRESSION": {
                 sentance += ` expressed in ${annotation.data.keyword['name']}, `;
-                sentance += ` ${annotation.data.keyword['externalId']}, `;
+                sentance += this.makePOLink(annotation.data.keyword['externalId']);
                 sentance += ` ${this.phraseForCode(annotation.data.method['evidenceCode'])}, `;
                 sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += ` ${annotation.data.method['externalId']} `;
+                sentance += this.makeECOLink(annotation.data.method['externalId']);
                 break;
             }
         }
@@ -369,7 +369,7 @@ export class SubmissionService {
         for (let g of sub.genes)
         {
             let gJson = {};
-            gJson['locusName'] = g.locusName;
+            gJson['locusName'] = g.locusName.toUpperCase();
             gJson['geneSymbol'] = g.geneSymbol;
             gJson['fullName'] = g.fullName;
             j['genes'].push(gJson);
@@ -381,7 +381,7 @@ export class SubmissionService {
             anno['type'] = a.type;
             anno['data'] = {};
             if (!withStatus && a.data.locusName.locusName) {
-              anno['data']['locusName'] = a.data.locusName.locusName;
+              anno['data']['locusName'] = a.data.locusName.locusName.toUpperCase();
             } else {
                 anno['data']['locusName'] = a.data.locusName;
             }
@@ -398,7 +398,7 @@ export class SubmissionService {
             {
               delete anno['data']['isEvidenceWithOr'];
                 if (!withStatus && a.data.locusName.locusName) {
-                  anno['data']['locusName2'] = a.data.locusName2.locusName;
+                  anno['data']['locusName2'] = a.data.locusName2.locusName.toUpperCase();
                 } else {
                     anno['data']['locusName2'] = a.data.locusName2;
                 }
