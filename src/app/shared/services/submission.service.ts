@@ -241,7 +241,7 @@ export class SubmissionService {
             }
             case "BIOLOGICAL_PROCESS": {
                 sentance += ` involved in (biological process) ${annotation.data.keyword['name']} `;
-                sentance += this.makeGOLink(annotation.data.keyword['external_id'];
+                sentance += this.makeGOLink(annotation.data.keyword['external_id']);
                 sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
                 sentance += `inferred from ${annotation.data.method['name']} `;
                 sentance += this.makeECOLink(annotation.data.method['external_id']);
@@ -253,7 +253,7 @@ export class SubmissionService {
             }
             case "MOLECULAR_FUNCTION": {
                 sentance += ` functions in ${annotation.data.keyword['name']} `;
-                sentance += this.makeGOLink(annotation.data.keyword['external_id'];
+                sentance += this.makeGOLink(annotation.data.keyword['external_id']);
                 sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
                 sentance += `inferred from ${annotation.data.method['name']} `;
                 sentance += this.makeECOLink(annotation.data.method['external_id']);
@@ -268,7 +268,7 @@ export class SubmissionService {
             }
             case "SUBCELLULAR_LOCATION": {
                 sentance += ` located in ${annotation.data.keyword['name']}, `;
-                sentance += this.makeGOLink(annotation.data.keyword['external_id'];
+                sentance += this.makeGOLink(annotation.data.keyword['external_id']);
                 sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
                 sentance += `inferred from ${annotation.data.method['name']} `;
                 sentance += this.makeECOLink(annotation.data.method['external_id']);
