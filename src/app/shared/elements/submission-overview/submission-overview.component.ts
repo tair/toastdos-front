@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {Annotation, Submission, SubmissionService} from "../../services/submission.service";
+import {Annotation, Gene, Submission, SubmissionService} from '../../services/submission.service';
 
 
 @Component({
@@ -27,6 +27,21 @@ export class SubmissionOverviewComponent implements OnInit {
 
   ngOnInit() {
     this.submission = this.submissionService.currentSubmission;
+  }
+
+  geneSummary(g :Gene)
+  {
+    let s = g.locusName;
+    if (g.fullName.length>0)
+    {
+      s = s+', '+g.fullName;
+    }
+    if (g.geneSymbol.length>0)
+    {
+      s = s+', '+g.geneSymbol;
+    }
+    return s;
+
   }
 
 

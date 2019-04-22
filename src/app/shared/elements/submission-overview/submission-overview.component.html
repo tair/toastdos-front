@@ -12,8 +12,7 @@
                 <div class="gene-list-container">
                     <ng-container *ngFor="let gene of submission.genes; let i = index">
                         <div class="gene-list">
-                            <div *ngIf="gene.fullName.length==0 || gene.geneSymbol.length==0">{{gene.locusName}}</div>
-                            <div *ngIf="gene.fullName.length>0 && gene.geneSymbol.length>0">{{gene.locusName}}, {{gene.geneSymbol}}, {{gene.fullName}}</div>
+                            <div>{{geneSummary(gene)}}</div>
                         </div>
                     </ng-container>
                 </div>
