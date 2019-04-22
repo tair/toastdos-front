@@ -26,7 +26,7 @@
                 <div class="annotation-list-container">
                     <ng-container *ngFor="let anno of submission.annotations; let i = index">
                         <div class="annotation-list">
-                            <div>{{sentanceForAnnotation(anno)}}</div>
+                            <div [innerHTML]="sentanceForAnnotation(anno)"> </div>
                         </div>
                     </ng-container>
                 </div>

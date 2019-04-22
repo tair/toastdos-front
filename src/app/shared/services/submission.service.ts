@@ -190,6 +190,38 @@ export class SubmissionService {
         return '';
     }
 
+// <span class="badge badge-success">
+//    <a href="http://amigo.geneontology.org/amigo/term/GO:0032542#display-lineage-tab" class="text-light" target="_blank">
+//       <!-- react-text: 3730 -->GO:0032542<!-- /react-text --><!-- react-text: 3731 --> <!-- /react-text --><span class="fa fa-external-link"></span>
+//    </a>
+// </span>
+    makeGOLink(id: string){
+      let l = `<span class="badge badge-success">
+               <a href="http://amigo.geneontology.org/amigo/term/${id}#display-lineage-tab" class="text-light" target="_blank">
+                  ${id}<span class="fa fa-external-link"></span>
+               </a>
+            </span>`;
+      return l;
+    }
+    makeECOLink(id: string){
+      let l = `<span class="badge badge-success">
+                <a href="http://www.evidenceontology.org/browse/#${id}" class="text-light" target="_blank">
+                ${id}
+                <span class="fa fa-external-link">             
+                </span>
+                </a>
+                </span>`;
+      return l;
+
+    }
+    makePOLink(id: string){
+      let l = `<span class="badge badge-success">
+<a href="http://browser.planteome.org/amigo/term/${id}" class="text-light" target="_blank">${id}
+<span class="fa fa-external-link"></span></a></span>`;
+      return l;
+
+    }
+
     sentanceForAnnotation(annotation: Annotation, show_pending: boolean)
     {
         if (!annotation.data.locusName)
@@ -201,18 +233,18 @@ export class SubmissionService {
         switch (annotation.type){
             case "ANATOMICAL_LOCATION": {
                 sentance += ` anatomically located in ${annotation.data.keyword['name']} `;
-                sentance += ` ${annotation.data.keyword['external_id']}, `;
+                sentance += this.makePOLink(annotation.data.keyword['external_id']);
                 sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
                 sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += ` ${annotation.data.method['external_id']} `;
+                sentance += this.makeECOLink(annotation.data.method['external_id']);
                 break;
             }
             case "BIOLOGICAL_PROCESS": {
                 sentance += ` involved in (biological process) ${annotation.data.keyword['name']} `;
-                sentance += ` ${annotation.data.keyword['external_id']}, `;
+                sentance += this.makeGOLink(annotation.data.keyword['external_id'];
                 sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
                 sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += ` ${annotation.data.method['external_id']} `;
+                sentance += this.makeECOLink(annotation.data.method['external_id']);
                 break;
             }
             case "COMMENT": {
@@ -221,33 +253,33 @@ export class SubmissionService {
             }
             case "MOLECULAR_FUNCTION": {
                 sentance += ` functions in ${annotation.data.keyword['name']} `;
-                sentance += ` ${annotation.data.keyword['external_id']}, `;
+                sentance += this.makeGOLink(annotation.data.keyword['external_id'];
                 sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
                 sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += ` ${annotation.data.method['external_id']} `;
+                sentance += this.makeECOLink(annotation.data.method['external_id']);
                 break;
             }
             case "PROTEIN_INTERACTION": {
                 sentance += ` interacts with ${annotation.data.locusName2.locusName}, `;
-                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                sentance += ` <span class="badge badge-success"> ${this.phraseForCode(annotation.data.method['evidence_code'])},  </span>`;
                 sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += ` ${annotation.data.method['external_id']} `;
+                sentance += this.makeECOLink(annotation.data.method['external_id']);
                 break;
             }
             case "SUBCELLULAR_LOCATION": {
                 sentance += ` located in ${annotation.data.keyword['name']}, `;
-                sentance += ` ${annotation.data.keyword['external_id']}, `;
+                sentance += this.makeGOLink(annotation.data.keyword['external_id'];
                 sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
                 sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += ` ${annotation.data.method['external_id']} `;
+                sentance += this.makeECOLink(annotation.data.method['external_id']);
                 break;
             }
             case "TEMPORAL_EXPRESSION": {
                 sentance += ` expressed in ${annotation.data.keyword['name']}, `;
-                sentance += ` ${annotation.data.keyword['external_id']}, `;
+                sentance += this.makePOLink(annotation.data.keyword['external_id']);
                 sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
                 sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += ` ${annotation.data.method['external_id']} `;
+                sentance += this.makeECOLink(annotation.data.method['external_id']);
                 break;
             }
         }
