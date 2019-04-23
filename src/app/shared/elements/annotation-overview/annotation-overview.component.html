@@ -1,0 +1,21 @@
+<li class="list-group-item">
+  <div class="align-items-center d-flex row">
+    <div class="col-sm-auto">
+      <div class="row">
+            <div class="row">
+                <div class="col-sm-auto"> Annotation ID: <br> Annotation Status:
+                </div>
+                <div class="text-nowrap font-italic col-sm-auto">
+                  {{annotation_id}}<br>{{getStatusString(annotation_status)}}
+                </div>
+
+                <div class="col-sm-auto"> Publication ID: <br> Submitted:
+                </div>
+                <div class="text-nowrap font-italic col-sm-auto">
+                  {{annotation_paper}}<br>{{getDate(annotation_date) | date:"short"}}
+                </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</li>

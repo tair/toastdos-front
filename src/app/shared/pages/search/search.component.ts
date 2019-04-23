@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {debounceTime, distinctUntilChanged} from "rxjs/operators";
 import {FormControl, FormGroup} from "@angular/forms";
 import {SearchService} from "../../services/search.service";
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -18,7 +19,9 @@ export class SearchComponent implements OnInit {
 
     searchResults;
 
-  constructor(private searchService: SearchService){ }
+  constructor(private searchService: SearchService){
+    this.searchResults=[];
+  }
 
 
   ngOnInit() {
@@ -29,8 +32,12 @@ export class SearchComponent implements OnInit {
       ).subscribe((value:string) => {
           console.log(value);
           this.searchService.keywordSearch(value).subscribe(
-              data => {this.searchResults = data},
-              err => console.error(err)
+              data => {this.searchResults = data;
+                            console.log(data)},
+              err => {
+                            console.error(err);
+                            this.searchResults = [];
+                            }
           );
       })
   }

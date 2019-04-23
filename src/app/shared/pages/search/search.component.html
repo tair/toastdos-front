@@ -1,4 +1,5 @@
 <app-navbar></app-navbar>
+
 <div>
   <div class="mt-3 container-fluid">
     <div class="justify-content-md-center row">
@@ -8,54 +9,19 @@
             <span class="fa fa-search"></span> Search
             <input class="form-control" type="text" [formControl]="searchString">
           </div>
-          <div class="card">
-            <table class="table">
-              <thead>
-                <tr>
-                <td scope="col">
-                  Locus Identifier
-                </td>
-                <td scope="col">
-                  Gene Symbol
-                </td>
-                <td scope="col">
-                  Term Id
-                </td>
-                <td scope="col">
-                  Aspect
-                </td>
-                <td scope="col">
-                  GO Evidence
-                </td>
-                <td scope="col">
-                  ECO term:ID
-                </td>
-                <td scope="col">
-                  Evidence With
-                </td>
-                <td scope="col">
-                  Reference
-                </td>
-                <td class="col">
-                  Taxon
-                </td>
-                <td scope="col">
-                  Annotated By
-                </td>
-                <td scope="col">
-                  Date Annotated
-                </td>
-              </tr>
-            </thead>
-
-
-              <tbody *ngFor="let item of this.searchResults">
-                <tr app-search-card [result]="item"></tr>
-            </tbody>
-            </table>
+          <div class="p-0 card-body">
+            <ul class="list-group">
+              <li *ngIf="searchResults.length > 0" class="pt-3 pb-4 border-0 border-right-0 border-top-0 list-group-item">
+                <h4>Showing results for "{{searchString.value}}"</h4>
+                <ul class="mt-3 list-group">
+                    <app-annotation-overview *ngFor="let s of searchResults" [annotation]="s"> </app-annotation-overview>
+                </ul>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchCardComponent } from './search-card.component';
+import { AnnotationOverviewComponent } from './annotation-overview.component';
 
-describe('SearchCardComponent', () => {
-  let component: SearchCardComponent;
-  let fixture: ComponentFixture<SearchCardComponent>;
+describe('AnnotationOverviewComponent', () => {
+  let component: AnnotationOverviewComponent;
+  let fixture: ComponentFixture<AnnotationOverviewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchCardComponent ]
+      declarations: [ AnnotationOverviewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchCardComponent);
+    fixture = TestBed.createComponent(AnnotationOverviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
