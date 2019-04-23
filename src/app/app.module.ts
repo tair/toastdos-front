@@ -17,6 +17,8 @@ export function jwtTokenGetter() {
   return localStorage.getItem('token');
 }
 
+export const whitelistedDomains = [new RegExp('[\s\S]*')] as RegExp[];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +32,8 @@ export function jwtTokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: jwtTokenGetter,
-        whitelistedDomains: [environment.base_url.replace("http://","").replace("/api",""), '0.0.0.0:3000', '52.14.163.196:3000','localhost:3000']
+        //whitelistedDomains: [,environment.base_url.replace("http://","").replace("/api",""), '0.0.0.0:3000', '52.14.163.196:3000','localhost:3000']
+        whitelistedDomains: whitelistedDomains,
       }
     }),
     AccountsModule,
