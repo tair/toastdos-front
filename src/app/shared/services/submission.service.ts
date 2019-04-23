@@ -216,10 +216,25 @@ export class SubmissionService {
     }
     makePOLink(id: string){
       let l = `<span class="badge badge-success">
-<a href="http://browser.planteome.org/amigo/term/${id}" class="text-light" target="_blank">${id}
-<span class="fa fa-external-link"></span></a></span>`;
+                <a href="http://browser.planteome.org/amigo/term/${id}" class="text-light" target="_blank">${id}
+                <span class="fa fa-external-link"></span></a></span>`;
       return l;
+    }
 
+    idToLink(id: string)
+    {
+      if (id[0]=='G')
+      {
+        return this.makeGOLink(id);
+      }
+      if (id[0]=='P')
+      {
+        return this.makePOLink(id);
+      }
+      if (id[0]=='E')
+      {
+        return this.makeECOLink(id);
+      }
     }
 
     sentanceForAnnotation(annotation: Annotation, show_pending: boolean)

@@ -1,21 +1,52 @@
-<li class="list-group-item">
-  <div class="align-items-center d-flex row">
-    <div class="col-sm-auto">
-      <div class="row">
-            <div class="row">
-                <div class="col-sm-auto"> Annotation ID: <br> Annotation Status:
-                </div>
-                <div class="text-nowrap font-italic col-sm-auto">
-                  {{annotation_id}}<br>{{getStatusString(annotation_status)}}
-                </div>
-
-                <div class="col-sm-auto"> Publication ID: <br> Submitted:
-                </div>
-                <div class="text-nowrap font-italic col-sm-auto">
-                  {{annotation_paper}}<br>{{getDate(annotation_date) | date:"short"}}
-                </div>
+<li *ngIf="annotation_type==='gene_term_annotation'" class="list-group-item">
+        <div class="row">
+            <div class="col-sm-auto">
+              Annotation ID: {{annotation_id}}<br>Annotation Status: {{getStatusString(annotation_status)}}
             </div>
-      </div>
-    </div>
-  </div>
+
+
+            <div class="col-sm-auto">
+              Publication ID: {{annotation_paper}}<br>Submitted: {{getDate(annotation_date) | date:"short"}}
+            </div>
+
+            <div class="col-sm-auto">
+              Submitter: {{annotation_submitter}}<br>Gene: {{annotation_locus}}
+            </div>
+
+            <div class="col-sm-auto">
+                Keyword: {{annotation_keyword_name}}:<br>Method: {{annotation_method_name}}:
+            </div>
+
+            <div class="col-sm-auto" [innerHTML]="annotation_keyword_id + '<br>' + annotation_method_id">
+            </div>
+        </div>
+</li>
+
+<li *ngIf="annotation_type==='gene_gene_annotation'" class="list-group-item">
+        <div class="row">
+            <div class="col-sm-auto">
+              Annotation ID: {{annotation_id}}<br>Annotation Status: {{getStatusString(annotation_status)}}
+            </div>
+
+
+            <div class="col-sm-auto">
+              Publication ID: {{annotation_paper}}<br>Submitted: {{getDate(annotation_date) | date:"short"}}
+            </div>
+
+            <div class="col-sm-auto">
+              Submitter: {{annotation_submitter}}<br>Gene: {{annotation_locus}}
+            </div>
+
+            <!--<div class="col-md-auto">-->
+              <!--Gene 2: {{annotation_locus2}}<br>Method: {{annotation_method_name}}: {{annotation_method_id}}-->
+            <!--</div>-->
+
+            <div class="col-sm-auto">
+                Gene 2: {{annotation_locus2}}<br>Method: {{annotation_method_name}}:
+            </div>
+
+            <div class="col-sm-auto" [innerHTML]="'<br>' + annotation_method_id">
+            </div>
+
+        </div>
 </li>

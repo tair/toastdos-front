@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {debounceTime, distinctUntilChanged} from "rxjs/operators";
 import {FormControl, FormGroup} from "@angular/forms";
 import {SearchService} from "../../services/search.service";
+import {environment} from '../../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {ResponseContentType} from '@angular/http';
 
 @Component({
   selector: 'app-search',
@@ -19,7 +22,7 @@ export class SearchComponent implements OnInit {
 
     searchResults;
 
-  constructor(private searchService: SearchService){
+  constructor(private searchService: SearchService, private http: HttpClient){
     this.searchResults=[];
   }
 
@@ -30,10 +33,8 @@ export class SearchComponent implements OnInit {
         debounceTime(400),
         distinctUntilChanged()
       ).subscribe((value:string) => {
-          console.log(value);
           this.searchService.keywordSearch(value).subscribe(
-              data => {this.searchResults = data;
-                            console.log(data)},
+              data => {this.searchResults = data;},
               err => {
                             console.error(err);
                             this.searchResults = [];
@@ -42,6 +43,29 @@ export class SearchComponent implements OnInit {
       })
   }
 
+  downloadSearchResults()
+  {
+    let anno_ids = "";
+    for (let x of this.searchResults)
+    {
+      anno_ids = anno_ids+`${x.id},`
+    }
+    anno_ids = anno_ids.substring(0,anno_ids.length-1); //delete the last comma;
+    let url = `${environment.base_url}/searchexport/${anno_ids}`;
+    // this.http.get(url).subscribe(
+    //   value => {
+    //
+    //   }
+    // )
+    this.http.get(url,
+      {responseType:'blob'}).subscribe(blob => {
+              var link = document.createElement('a');
+              link.href = window.URL.createObjectURL(blob);
+              link.download = 'search_export.gaf';
+              link.click();
+      });
+
+  }
 
 
   get searchString(){
