@@ -52,19 +52,14 @@ export class SearchComponent implements OnInit {
     }
     anno_ids = anno_ids.substring(0,anno_ids.length-1); //delete the last comma;
     let url = `${environment.base_url}/searchexport/${anno_ids}`;
-    // this.http.get(url).subscribe(
-    //   value => {
-    //
-    //   }
-    // )
-    this.http.get(url,
-      {responseType:'blob'}).subscribe(blob => {
-              var link = document.createElement('a');
-              link.href = window.URL.createObjectURL(blob);
-              link.download = 'search_export.gaf';
-              link.click();
+    this.http.get(url).subscribe(
+      value => {
+        let dowload_url = `${environment.base_url}/exports/files/${value}`;
+        var link = document.createElement('a');
+        link.href = dowload_url;
+        link.download = 'search_export.gaf';
+        link.click();
       });
-
   }
 
 
