@@ -4,10 +4,10 @@
     <span class="brand-text">GOAT</span>
   </a>
   <a class="nav-item nav-link p-2" [routerLink]="['/download']">Download Data</a>
-  <a class="nav-item nav-link p-2" [routerLink]="['/search']">Search</a>
+  <!-- <a class="nav-item nav-link p-2" [routerLink]="['/search']">Search</a> -->
   <ng-container *ngIf="!(isLoggedIn | async)">
     <a class="nav-item mr-auto p-2"></a>
-    <a class="nav-item nav-link" (click)="goToOrcId()" href="#">Login to ORCID</a>
+    <a class="nav-item nav-link" (click)="goToOrcId();false" href="">Login to ORCID</a>
   </ng-container>
 
     <ng-container *ngIf="(isLoggedIn | async)">
@@ -16,6 +16,6 @@
               <a class="nav-item nav-link p-2" *ngIf="r===2" [routerLink]="['/curation']">Curation</a>
               <a class="nav-item nav-link p-2" *ngIf="r===1" [routerLink]="['/admin']">Admin</a>
       </ng-container>
-      <a class="nav-item ml-auto nav-link" (click)="logout()">Logout</a>
+      <a class="nav-item ml-auto nav-link" (click)="logout();false" href="">Logout</a>
   </ng-container>
 </nav>

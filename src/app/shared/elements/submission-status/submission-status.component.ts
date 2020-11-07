@@ -20,9 +20,7 @@ export class SubmissionStatusComponent implements OnInit {
   }
 
   reviewClick(){
-    this.submissionService.getCurrentSubmissionWithId(this.submission.id, () => {
-          this.router.navigate(['/curation', 'detail', this.submission.id])
-    });
+    this.router.navigate(['/curation', 'detail', this.submission.id]);
   }
 
 }

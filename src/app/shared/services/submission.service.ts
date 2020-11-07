@@ -298,6 +298,13 @@ export class SubmissionService {
                 break;
             }
         }
+        if (annotation.data.evidenceWith){
+            if(annotation.data.isEvidenceWithOr){
+                sentance += ` with ${annotation.data.evidenceWith.join(' | ')}`;
+            }else{
+                sentance += ` with ${annotation.data.evidenceWith.join(', ')}`;
+            }
+        }
         if ('status' in annotation && show_pending) {
           sentance += ` - Curation Status: ${annotation.status}`;
         }
@@ -314,7 +321,7 @@ export class SubmissionService {
             return "invalid annotation (no locus name)";
         }
 
-        var sentance = `${annotation.data.locusName}`;
+        var sentance = `${annotation.data.locusName.locusName}`;
         switch (annotation.type){
             case "ANATOMICAL_LOCATION": {
                 sentance += ` anatomically located in ${annotation.data.keyword['name']} `;
@@ -368,6 +375,13 @@ export class SubmissionService {
                 break;
             }
         }
+        if (annotation.data.evidenceWith){
+            if(annotation.data.isEvidenceWithOr){
+                sentance += ` with ${annotation.data.evidenceWith.join(' | ')}`;
+            }else{
+                sentance += ` with ${annotation.data.evidenceWith.join(', ')}`;
+            }
+        }
         if ('status' in annotation) {
           sentance += ` - Curation Status: ${annotation.status}`;
         }
@@ -384,7 +398,7 @@ export class SubmissionService {
         for (let g of sub.genes)
         {
             let gJson = {};
-            gJson['locusName'] = g.locusName.toUpperCase();
+            gJson['locusName'] = g.locusName.toUpperCase().trim();
             gJson['geneSymbol'] = g.geneSymbol;
             gJson['fullName'] = g.fullName;
             j['genes'].push(gJson);
@@ -395,8 +409,9 @@ export class SubmissionService {
             let anno = {};
             anno['type'] = a.type;
             anno['data'] = {};
+            a.data.locusName.locusName = a.data.locusName.locusName.toUpperCase().trim()
             if (!withStatus && a.data.locusName.locusName) {
-              anno['data']['locusName'] = a.data.locusName.locusName.toUpperCase();
+                anno['data']['locusName'] = a.data.locusName.locusName;
             } else {
                 anno['data']['locusName'] = a.data.locusName;
             }
@@ -412,8 +427,9 @@ export class SubmissionService {
             } else if (a.type=="PROTEIN_INTERACTION")
             {
               delete anno['data']['isEvidenceWithOr'];
+              a.data.locusName2.locusName=a.data.locusName2.locusName.toUpperCase().trim();
                 if (!withStatus && a.data.locusName.locusName) {
-                  anno['data']['locusName2'] = a.data.locusName2.locusName.toUpperCase();
+                    anno['data']['locusName2'] = a.data.locusName2.locusName;
                 } else {
                     anno['data']['locusName2'] = a.data.locusName2;
                 }
@@ -450,11 +466,18 @@ export class SubmissionService {
         });
     }
 
+    getCurrentSubmissionWithData(submissionData: Submission)
+    {
+           this.currentSubmission = submissionData;
+           this.observableShouldUpdate.next(true);
+           this.observableGenes.next(this.currentSubmission.genes);
+    }
+
     postSubmission(success :(responce) => void, error: (responce) => void)
     {
         let url = `${environment.base_url}/submission/`;
         let body = this.toJson(false);
-        console.log(body);
+        console.log('postSubmission body: ',body);
         this.http.post(url,body).subscribe(next => {
             success(next);
         },error1 => {
@@ -477,7 +500,7 @@ export class SubmissionService {
 
     saveDraft()
     {
-        if (this.authService.isLoggedIn) {
+        if (this.authService.isLoggedIn && !this.inCurationMode) {
           let url = `${environment.base_url}/draft/`;
           let body = {
             'submitter_id' : this.authService.userID,

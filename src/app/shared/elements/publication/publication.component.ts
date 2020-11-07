@@ -52,10 +52,13 @@ export class PublicationComponent implements OnInit, OnDestroy, Validatable {
       let numErrorsInMe = this.validate();
       this.validationService.addToErrorList(numErrorsInMe);
     });
-    this.form.setValue({'pub_id': this.submissionService.currentSubmission.publicationId});
+    if (this.submissionService.inCurationMode){
+        this.form.setValue({'pub_id': this.submissionService.currentSubmission.publicationId});
+    }
     if (this.submissionService.currentSubmission.publicationId.length>=2) {
         this.pubStatus = 'success';
     }
+    this.getTitleAuthor(this.pub_id.value);
     this.pub_id.valueChanges
       .pipe(
         debounceTime(400),
@@ -64,15 +67,21 @@ export class PublicationComponent implements OnInit, OnDestroy, Validatable {
           this.pubStatus = 'loading';
           this.toggleErrorPopover();
         })
-      ).subscribe((value: string) => {
-        if (value.length==0)
+      ).subscribe((value: string) => {        
+        this.getTitleAuthor(value);
+      });
+
+  }
+
+  getTitleAuthor(value: string){
+    if (value.length==0)
         {
           this.pubStatus='empty';
           this.author='';
           this.title='';
           return;
         }
-        this.pubService.checkIsValid$(value)
+    this.pubService.checkIsValid$(value)
           .subscribe((response: any)=> {
               this.submissionService.currentSubmission.publicationId = this.pub_id.value;
               this.pubStatus = 'success';
@@ -94,8 +103,6 @@ export class PublicationComponent implements OnInit, OnDestroy, Validatable {
               this.title = "";
               this.author = "";
             });
-      });
-
   }
 
   validate() {

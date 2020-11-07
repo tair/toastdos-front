@@ -62,7 +62,7 @@ export class LocusComponent implements OnInit, OnDestroy {
           this.toggleErrorPopover();
         })
       ).subscribe((value: string) => {
-        value = value.toUpperCase();
+        value = value.toUpperCase().trim();
         this.geneService.checkLocus$(value)
           .subscribe((response: any) => {
               this.locusStatus = 'success';
@@ -102,7 +102,7 @@ export class LocusComponent implements OnInit, OnDestroy {
   getGene()
   {
       let gene = {} as Gene;
-      gene.locusName = this.locus.value.toUpperCase();
+      gene.locusName = this.locus.value.toUpperCase().trim();
       gene.geneSymbol = this.gene_symbol.value;
       gene.fullName = this.full_gene_name.value;
       return gene;

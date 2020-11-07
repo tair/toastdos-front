@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  base_url: 'http://localhost:3000',
-  orcidID: 'https://orcid.org/oauth/authorize?client_id=APP-L8ISF5DJNGXMS599&response_type=code&scope=/authenticate&redirect_uri=http://localhost:4200/login'
+  base_url: 'http://goat.phoenixbioinformatics.org/api',
+  orcidID: 'https://orcid.org/oauth/authorize?client_id=APP-W9TXAY6F3N87W78R&response_type=code&scope=/authenticate&redirect_uri=http://goat.phoenixbioinformatics.org'
 
 };

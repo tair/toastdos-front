@@ -16,6 +16,7 @@ export class CurationDetailComponent implements OnInit {
   saved: boolean;
   submiting: boolean;
   error: boolean;
+  actionType: string;
 
 
   constructor(private route: ActivatedRoute, private submissionService: SubmissionService) {
@@ -23,6 +24,9 @@ export class CurationDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.data.subscribe((data:{submission: Submission}) =>{
+      this.submissionService.getCurrentSubmissionWithData(data.submission);
+    });
     this.editing = true;
     this.saved = false;
     this.submiting = false;

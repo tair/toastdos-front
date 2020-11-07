@@ -14,11 +14,12 @@ export class AnnotationListComponent implements OnInit {
   @ViewChildren(AnnotationComponent) annotations: QueryList<AnnotationComponent>;
   annotationModels: any[] = [{index:0,annotation:{} as Annotation}];
   geneList = [];
-
+  inCurationMode = false;
 
   constructor(private submissionService: SubmissionService) { }
 
   ngOnInit() {
+      this.inCurationMode = this.submissionService.inCurationMode;
       this.submissionService.observableGenes.asObservable().subscribe(next => {
         this.geneList = next;
       });

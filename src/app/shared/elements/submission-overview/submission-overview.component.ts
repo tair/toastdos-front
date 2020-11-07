@@ -32,11 +32,11 @@ export class SubmissionOverviewComponent implements OnInit {
   geneSummary(g :Gene)
   {
     let s = g.locusName;
-    if (g.fullName.length>0)
+    if (g.fullName && g.fullName.length>0)
     {
       s = s+', '+g.fullName;
     }
-    if (g.geneSymbol.length>0)
+    if (g.geneSymbol && g.geneSymbol.length>0)
     {
       s = s+', '+g.geneSymbol;
     }

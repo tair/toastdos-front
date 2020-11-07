@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable } from 'rxjs';
-import {switchMap, tap} from 'rxjs/operators';
+import {switchMap, tap, timeout} from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { GoatConstants} from "../../shared/utils";
 
@@ -55,7 +55,7 @@ export class AuthenticationService {
   }
 
   get isLoggedIn() {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('token') && !this.jwtHelper.isTokenExpired(localStorage.getItem('token'))) {
       return true;
     } else {
       return false;
@@ -79,4 +79,19 @@ export class AuthenticationService {
     return this._loggedIn.asObservable();
   }
 
+}
+
+export class ErrorInterceptor implements HttpInterceptor {
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {    
+        return next.handle(req).pipe(
+            tap(
+                data => {},
+                error => {
+                    if (error.status == 401){
+                        window.location.href = environment.orcidID
+                    }
+                },
+            )
+        )
+    }
 }

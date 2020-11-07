@@ -10,7 +10,7 @@
       <!--</div>-->
       <div *ngIf="geneList.length==0" class="alert alert-secondary fade show" role="alert"><span class="empty-message"><!-- react-text: 501 -->No Annotations.<!-- /react-text --><span class="empty-message"> Please add a valid gene before adding annotations.</span></span></div>
       <app-annotation *ngFor="let x of annotationModels" [annotationModel]="x" (deleted)="removeAnnotation($event)"></app-annotation>
-      <div *ngIf="geneList.length>0" class="justify-content-sm-center mt-3 mb-3 row">
+      <div *ngIf="geneList.length>0 && !inCurationMode" class="justify-content-sm-center mt-3 mb-3 row">
         <div class="justify-content-sm-center col-sm-4">
           <button type="button" class="btn btn-success btn-block" (click)="addAnnotation()">
             <span class="fa fa-plus" title="Add Annotation"></span>Add Another Annotation
