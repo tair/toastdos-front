@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
-import {debounceTime, distinctUntilChanged, switchMap, tap} from "rxjs/operators";
+import {debounceTime, delay, distinctUntilChanged, switchMap, tap} from "rxjs/operators";
 import {PublicationService} from "../../services/publication.service";
 import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
 import {SubmissionService, Validatable} from '../../services/submission.service';
@@ -44,7 +44,7 @@ export class PublicationComponent implements OnInit, OnDestroy, Validatable {
   ngOnInit() {
     this.submissionService.observableShouldUpdate.asObservable().subscribe(shouldUpdate => {
         if (shouldUpdate) {
-           this.form.setValue({'pub_id': this.submissionService.currentSubmission.publicationId});
+           this.form.setValue({'pub_id': this.submissionService.currentSubmission.publicationId},{emitEvent:false});
            this.pubStatus = 'success';
         }
       });
@@ -52,13 +52,10 @@ export class PublicationComponent implements OnInit, OnDestroy, Validatable {
       let numErrorsInMe = this.validate();
       this.validationService.addToErrorList(numErrorsInMe);
     });
-    if (this.submissionService.inCurationMode){
-        this.form.setValue({'pub_id': this.submissionService.currentSubmission.publicationId});
-    }
     if (this.submissionService.currentSubmission.publicationId.length>=2) {
         this.pubStatus = 'success';
     }
-    this.getTitleAuthor(this.pub_id.value);
+    setTimeout(()=>{this.getTitleAuthor(this.pub_id.value);},1000);
     this.pub_id.valueChanges
       .pipe(
         debounceTime(400),
