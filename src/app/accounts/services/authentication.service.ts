@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import {switchMap, tap, timeout} from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { GoatConstants} from "../../shared/utils";
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthenticationService {
   private _gotUserData = false;
   private _currentUserInfo = new BehaviorSubject<any>({roles:[{'id':2}]}); //default value for user type
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     if (localStorage.getItem('token')) {
       this.getUserInfo();
       this._loggedIn.next(true);
@@ -40,6 +41,7 @@ export class AuthenticationService {
   logout() {
     this._loggedIn.next(false);
     localStorage.removeItem('token');
+    this.router.navigate(['']);
   }
 
   getUserInfo()
