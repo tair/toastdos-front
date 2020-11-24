@@ -90,6 +90,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 data => {},
                 error => {
                     if (error.status == 401){
+                        localStorage.removeItem('token');
                         window.location.href = environment.orcidID
                     }
                 },
