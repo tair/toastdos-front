@@ -3,8 +3,12 @@
     <label class="mb-0">Gene</label>
   </div>
   <div class="p-1 col">
-    <select class="form-control" [formControl]="gene">
-      <option [selected]="gene.locusName===annotation.data.locusName.locusName || gene.locusName===annotation.data.locusName" *ngFor="let gene of availableGenes | async">{{gene.locusName}}</option>
+    <ng-template #genePopContent>
+        <div class="text-danger popover-body"><strong>{{geneError}}</strong></div>
+    </ng-template>
+    <select class="form-control" [formControl]="gene" [ngbPopover]="genePopContent" #genePopover="ngbPopover" triggers="manual">
+      <option [ngValue]="''"> ------ select gene ------ </option>
+      <option [ngValue]="geneOption.locusName" *ngFor="let geneOption of availableGenes | async">{{geneOption.locusName}}</option>
     </select>
   </div>
 </div>

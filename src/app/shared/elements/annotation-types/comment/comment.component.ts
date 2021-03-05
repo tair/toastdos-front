@@ -4,7 +4,7 @@ import {MethodDropdownComponent} from "../../method-dropdown/method-dropdown.com
 import {GeneService} from "../../../services/gene.service";
 import {Observable} from "rxjs";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
-import {Annotation, SubmissionService} from "../../../services/submission.service";
+import {Annotation, Gene, SubmissionService} from "../../../services/submission.service";
 import {ValidationService} from '../../../services/validation.service';
 
 @Component({
@@ -34,6 +34,8 @@ export class CommentComponent implements OnInit, OnDestroy {
 
     private validationObservable$;
     @ViewChild('functionPopover') functionPopover;
+    geneError = '';
+    @ViewChild('genePopover') genePopover;
 
 
     constructor(private geneService: GeneService, private submissionService: SubmissionService, private validationService: ValidationService) { }
@@ -64,11 +66,19 @@ export class CommentComponent implements OnInit, OnDestroy {
     }
 
     validate() {
+      this.checkAvailableGenes();
       let err_count = 0;
       if (this.comment.value.toString().length<1)
       {
         this.functionPopover.close();
         this.functionPopover.open();
+        err_count += 1;
+      }
+      if (!this.gene.value)
+      {
+        this.geneError = 'Gene field cannot be empty. Please choose a gene.';
+        this.genePopover.close();
+        this.genePopover.open();
         err_count += 1;
       }
       return err_count;
@@ -89,13 +99,18 @@ export class CommentComponent implements OnInit, OnDestroy {
 
   setAnnotationData()
   {
-      let locus = this.submissionService.getGeneWithLocus(this.gene.value);
+      let emptyGene = {locusName:'',geneSymbol:'',fullName:''} as Gene;
+      let locus = this.gene.value?this.submissionService.getGeneWithLocus(this.gene.value):emptyGene;
       this.annotation.data.locusName = locus;
       this.annotation.type = this.annotationType;
       this.annotation.data.text = this.comment.value.toString();
       this.submissionService.setAnnotationAtIndex(this.annotation, this.index);
   }
 
-
+  checkAvailableGenes() {
+    if (!this.availableGenes.value.map(g => g.locusName).includes(this.gene.value)){
+        this.gene.setValue('');
+    }
+  }
 
 }

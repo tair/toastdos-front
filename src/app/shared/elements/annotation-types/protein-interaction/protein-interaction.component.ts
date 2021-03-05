@@ -4,7 +4,7 @@ import {MethodDropdownComponent} from "../../method-dropdown/method-dropdown.com
 import {GeneService} from "../../../services/gene.service";
 import {Observable} from "rxjs";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
-import {Annotation, SubmissionService} from "../../../services/submission.service";
+import {Annotation, Gene, SubmissionService} from "../../../services/submission.service";
 import {ValidationService} from '../../../services/validation.service';
 
 @Component({
@@ -38,6 +38,10 @@ export class ProteinInteractionComponent implements OnInit, OnDestroy {
   private validationObservable$;
   methodError = '';
   @ViewChild('methodPopover') methodPopover;
+  gene1Error = '';
+  @ViewChild('gene1Popover') gene1Popover;
+  gene2Error = '';
+  @ViewChild('gene2Popover') gene2Popover;
 
 
 
@@ -70,12 +74,27 @@ export class ProteinInteractionComponent implements OnInit, OnDestroy {
   }
 
   validate() {
+    this.checkAvailableGenes();
     let err_count = 0;
     if (!this.method.value['id'])
     {
       this.methodError = 'Method is required. Please enter the experimental method that provides evidence to support the annotation.';
       this.methodPopover.close();
       this.methodPopover.open();
+      err_count += 1;
+    }
+    if (!this.gene1.value)
+    {
+      this.gene1Error = 'Gene field cannot be empty. Please choose a gene.';
+      this.gene1Popover.close();
+      this.gene1Popover.open();
+      err_count += 1;
+    }
+    if (!this.gene2.value)
+    {
+      this.gene2Error = 'Gene field cannot be empty. Please choose a gene.';
+      this.gene2Popover.close();
+      this.gene2Popover.open();
       err_count += 1;
     }
     return err_count;
@@ -100,13 +119,22 @@ export class ProteinInteractionComponent implements OnInit, OnDestroy {
 
   setAnnotationData()
   {
-      let locus = this.submissionService.getGeneWithLocus(this.gene1.value);
-      let locus2 = this.submissionService.getGeneWithLocus(this.gene2.value);
+      let emptyGene = {locusName:'',geneSymbol:'',fullName:''} as Gene;
+      let locus = this.gene1.value?this.submissionService.getGeneWithLocus(this.gene1.value):emptyGene;
+      let locus2 = this.gene2.value?this.submissionService.getGeneWithLocus(this.gene2.value):emptyGene;
       this.annotation.data.locusName = locus;
       this.annotation.data.locusName2 = locus2;
       this.annotation.data.method = this.method.value;
       this.submissionService.setAnnotationAtIndex(this.annotation, this.index);
   }
 
+  checkAvailableGenes() {
+    if (!this.availableGenes.value.map(g => g.locusName).includes(this.gene1.value)){
+      this.gene1.setValue('');
+    }
+    if (!this.availableGenes.value.map(g => g.locusName).includes(this.gene2.value)){
+        this.gene2.setValue('');
+      }
+  }
 
 }
