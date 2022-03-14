@@ -34,12 +34,34 @@
     <label class="mb-0">Method</label>
   </div>
   <div class="p-1 col">
-      <ng-template #methodPopContent>
-          <div class="text-danger popover-body"><strong>{{methodError}}</strong></div>
-      </ng-template>
-    <input placeholder="Start Typing..." class="form-control" [formControl]="method" [ngbTypeahead]="methods" [resultTemplate]="rt" [inputFormatter]="methodFormatter"
-    [ngbPopover]="methodPopContent" #methodPopover="ngbPopover" triggers="manual">
-  </div>
+    <div class="row">
+        <ul class="nav nav-pills text-success">
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="searchTabClass()"
+                    href="" (click)="is_temp_method=false;temp_method_name.setValue('');false">{{searchTabText}}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="addTabClass()" href=""
+                    (click)="is_temp_method=true;method.setValue({});false">{{addTabText}}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row" [hidden]="is_temp_method">
+        <ng-template #methodPopContent>
+            <div class="text-danger popover-body"><strong>{{methodError}}</strong><a href="" (click)="is_temp_method=true;method.setValue({});false">Create one</a></div>
+        </ng-template>
+        <input placeholder="Start Typing..." class="form-control" [formControl]="method" [ngbTypeahead]="methods"
+            [resultTemplate]="rt" [inputFormatter]="methodFormatter" [ngbPopover]="methodPopContent"
+            #methodPopover="ngbPopover" triggers="manual">
+    </div>
+    <div class="row" [hidden]="!is_temp_method">
+        <ng-template #tempMethodPopContent>
+            <div class="text-danger popover-body"><strong>{{tempMethodError}}</strong></div>
+        </ng-template>
+        <input placeholder="Insert Customized Keyword" class="form-control" [formControl]="temp_method_name"
+            [ngbPopover]="tempMethodPopContent" #tempMethodPopover="ngbPopover" triggers="manual">
+    </div>
+</div>
 </div>
 <ng-container *ngIf="annotation.data.evidenceWith!=undefined">
   <app-evidence-with-control *ngIf="annotation.data.evidenceWith" [annotation]="annotation" [index]="index"> </app-evidence-with-control>

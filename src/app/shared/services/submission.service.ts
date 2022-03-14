@@ -19,6 +19,8 @@ export interface Annotation{
         locusName2?: Gene,
         text?: string,
         method?: {},
+        temp_method?: {},
+        is_temp_method?: boolean,
         keyword?: {},
         isEvidenceWithOr?: boolean,
         evidenceWith?: Array<string>
@@ -249,17 +251,25 @@ export class SubmissionService {
             case "ANATOMICAL_LOCATION": {
                 sentance += ` anatomically located in ${annotation.data.keyword['name']} `;
                 sentance += this.makePOLink(annotation.data.keyword['external_id']);
-                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
-                sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += this.makeECOLink(annotation.data.method['external_id']);
+                if (annotation.data.is_temp_method) {
+                    sentance += ` inferred from ${annotation.data.temp_method['name']}`;
+                } else {
+                    sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                    sentance += `inferred from ${annotation.data.method['name']} `;
+                    sentance += this.makeECOLink(annotation.data.method['external_id']);
+                }
                 break;
             }
             case "BIOLOGICAL_PROCESS": {
                 sentance += ` involved in (biological process) ${annotation.data.keyword['name']} `;
                 sentance += this.makeGOLink(annotation.data.keyword['external_id']);
-                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
-                sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += this.makeECOLink(annotation.data.method['external_id']);
+                if (annotation.data.is_temp_method) {
+                    sentance += ` inferred from ${annotation.data.temp_method['name']}`;
+                } else {
+                    sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                    sentance += `inferred from ${annotation.data.method['name']} `;
+                    sentance += this.makeECOLink(annotation.data.method['external_id']);
+                }
                 break;
             }
             case "COMMENT": {
@@ -269,32 +279,48 @@ export class SubmissionService {
             case "MOLECULAR_FUNCTION": {
                 sentance += ` functions in ${annotation.data.keyword['name']} `;
                 sentance += this.makeGOLink(annotation.data.keyword['external_id']);
-                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
-                sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += this.makeECOLink(annotation.data.method['external_id']);
+                if (annotation.data.is_temp_method) {
+                    sentance += ` inferred from ${annotation.data.temp_method['name']}`;
+                } else {
+                    sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                    sentance += `inferred from ${annotation.data.method['name']} `;
+                    sentance += this.makeECOLink(annotation.data.method['external_id']);
+                }
                 break;
             }
             case "PROTEIN_INTERACTION": {
                 sentance += ` interacts with ${annotation.data.locusName2.locusName}, `;
-                sentance +=  this.makeECOLink(annotation.data.method['evidence_code']);
-                sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += this.makeECOLink(annotation.data.method['external_id']);
+                if (annotation.data.is_temp_method) {
+                    sentance += ` inferred from ${annotation.data.temp_method['name']}`;
+                } else {
+                    sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                    sentance += `inferred from ${annotation.data.method['name']} `;
+                    sentance += this.makeECOLink(annotation.data.method['external_id']);
+                }
                 break;
             }
             case "SUBCELLULAR_LOCATION": {
                 sentance += ` located in ${annotation.data.keyword['name']}, `;
                 sentance += this.makeGOLink(annotation.data.keyword['external_id']);
-                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
-                sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += this.makeECOLink(annotation.data.method['external_id']);
+                if (annotation.data.is_temp_method) {
+                    sentance += ` inferred from ${annotation.data.temp_method['name']}`;
+                } else {
+                    sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                    sentance += `inferred from ${annotation.data.method['name']} `;
+                    sentance += this.makeECOLink(annotation.data.method['external_id']);
+                }
                 break;
             }
             case "TEMPORAL_EXPRESSION": {
                 sentance += ` expressed in ${annotation.data.keyword['name']}, `;
                 sentance += this.makePOLink(annotation.data.keyword['external_id']);
-                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
-                sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += this.makeECOLink(annotation.data.method['external_id']);
+                if (annotation.data.is_temp_method) {
+                    sentance += ` inferred from ${annotation.data.temp_method['name']}`;
+                } else {
+                    sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                    sentance += `inferred from ${annotation.data.method['name']} `;
+                    sentance += this.makeECOLink(annotation.data.method['external_id']);
+                }
                 break;
             }
         }
@@ -326,17 +352,25 @@ export class SubmissionService {
             case "ANATOMICAL_LOCATION": {
                 sentance += ` anatomically located in ${annotation.data.keyword['name']} `;
                 sentance += this.makePOLink(annotation.data.keyword['external_id']);
-                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
-                sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += this.makeECOLink(annotation.data.method['external_id']);
+                if (annotation.data.is_temp_method){
+                    sentance += `inferred from ${annotation.data.temp_method['name']}`;
+                } else {
+                    sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                    sentance += `inferred from ${annotation.data.method['name']} `;
+                    sentance += this.makeECOLink(annotation.data.method['external_id']);
+                }
                 break;
             }
             case "BIOLOGICAL_PROCESS": {
                 sentance += ` involved in (biological process) ${annotation.data.keyword['name']} `;
                 sentance += this.makeGOLink(annotation.data.keyword['external_id']);
-                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
-                sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += this.makeECOLink(annotation.data.method['external_id']);
+                if (annotation.data.is_temp_method){
+                    sentance += `inferred from ${annotation.data.temp_method['name']}`;
+                } else {
+                    sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                    sentance += `inferred from ${annotation.data.method['name']} `;
+                    sentance += this.makeECOLink(annotation.data.method['external_id']);
+                }
                 break;
             }
             case "COMMENT": {
@@ -346,32 +380,48 @@ export class SubmissionService {
             case "MOLECULAR_FUNCTION": {
                 sentance += ` functions in ${annotation.data.keyword['name']} `;
                 sentance += this.makeGOLink(annotation.data.keyword['external_id']);
-                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
-                sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += this.makeECOLink(annotation.data.method['external_id']);
+                if (annotation.data.is_temp_method){
+                    sentance += `inferred from ${annotation.data.temp_method['name']}`;
+                } else {
+                    sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                    sentance += `inferred from ${annotation.data.method['name']} `;
+                    sentance += this.makeECOLink(annotation.data.method['external_id']);
+                }
                 break;
             }
             case "PROTEIN_INTERACTION": {
                 sentance += ` interacts with ${annotation.data.locusName2.locusName}, `;
-                sentance += this.makeECOLink(annotation.data.method['evidence_code']);
-                sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += this.makeECOLink(annotation.data.method['external_id']);
+                if (annotation.data.is_temp_method) {
+                    sentance += ` inferred from ${annotation.data.temp_method['name']}`;
+                } else {
+                    sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                    sentance += `inferred from ${annotation.data.method['name']} `;
+                    sentance += this.makeECOLink(annotation.data.method['external_id']);
+                }
                 break;
             }
             case "SUBCELLULAR_LOCATION": {
                 sentance += ` located in ${annotation.data.keyword['name']}, `;
                 sentance += this.makeGOLink(annotation.data.keyword['external_id']);
-                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
-                sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += this.makeECOLink(annotation.data.method['external_id']);
+                if (annotation.data.is_temp_method){
+                    sentance += `inferred from ${annotation.data.temp_method['name']}`;
+                } else {
+                    sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                    sentance += `inferred from ${annotation.data.method['name']} `;
+                    sentance += this.makeECOLink(annotation.data.method['external_id']);
+                }
                 break;
             }
             case "TEMPORAL_EXPRESSION": {
                 sentance += ` expressed in ${annotation.data.keyword['name']}, `;
                 sentance += this.makePOLink(annotation.data.keyword['external_id']);
-                sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
-                sentance += `inferred from ${annotation.data.method['name']} `;
-                sentance += this.makeECOLink(annotation.data.method['external_id']);
+                if (annotation.data.is_temp_method){
+                    sentance += `inferred from ${annotation.data.temp_method['name']}`;
+                } else {
+                    sentance += ` ${this.phraseForCode(annotation.data.method['evidence_code'])}, `;
+                    sentance += `inferred from ${annotation.data.method['name']} `;
+                    sentance += this.makeECOLink(annotation.data.method['external_id']);
+                }
                 break;
             }
         }
@@ -434,10 +484,13 @@ export class SubmissionService {
                     anno['data']['locusName2'] = a.data.locusName2;
                 }
                 anno['data']['method'] = {'id': a.data['method']['id']};
-
+                anno['data']['temp_method'] = a.data['temp_method'];
+                anno['data']['is_temp_method'] = a.data['is_temp_method'];
             } else {
                 anno['data']['keyword'] = {'id': a.data.keyword['id']};
                 anno['data']['method'] = {'id': a.data.method['id']};
+                anno['data']['temp_method'] = a.data.temp_method;
+                anno['data']['is_temp_method'] = a.data.is_temp_method;
             }
             if ('status' in a && withStatus) {
               anno['status'] = a.status;

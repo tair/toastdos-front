@@ -8,6 +8,7 @@ import {CurationDetailComponent} from "./pages/curation-detail/curation-detail.c
 import {DownloadComponent} from './pages/download/download.component';
 import {CurationDetailResolverService} from './services/curation-detail-resolver.service';
 import { AuthGuardService as AuthGuard } from '../accounts/services/auth-guard.service';
+import { KeywordComponent } from './pages/keyword/keyword.component';
 
 const routes: Routes = [
     {path:'submission', component:SubmissionComponent, canActivate:[AuthGuard]},
@@ -15,7 +16,8 @@ const routes: Routes = [
     {path:'curation', component:CurationComponent, canActivate:[AuthGuard]},
     {path:'curation/detail/:id', component:CurationDetailComponent, resolve:{submission:CurationDetailResolverService}, canActivate:[AuthGuard]},
     // {path:'search', component:SearchComponent},
-    {path:'download', component:DownloadComponent}
+    {path:'download', component:DownloadComponent},
+    {path:'keyword', component:KeywordComponent}
 ];
 
 @NgModule({

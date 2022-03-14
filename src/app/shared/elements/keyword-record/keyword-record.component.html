@@ -1,0 +1,84 @@
+<li class="list-group-item">
+    <div class="row">
+        <div class="col">
+            {{keyword.name}}
+        </div>
+        <div class="col">
+            submitter:
+            <a href="" (click)="open(submitterModal);false">
+                {{keyword.submitter.name}}
+            </a>
+        </div>
+        <ng-template #submitterModal let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">{{keyword.submitter.name}}</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-2">
+                        ORCID:
+                    </div>
+                    <div class="col">
+                        <a target="_blank" [href]="'https://orcid.org/' + keyword.submitter.orcid_id">
+                            {{keyword.submitter.orcid_id}}<span class="fa fa-external-link"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        email:
+                    </div>
+                    <div *ngIf="keyword.submitter.email_address===null" class="col"><em>No email</em></div>
+                    <div *ngIf="!(keyword.submitter.email_address===null)" class="col"><a
+                            [href]="'mailto:' + keyword.submitter.email_address">{{keyword.submitter.email_address}}</a>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <div class="col">
+            <a *ngIf="keyword.submissions.length == 1" target="_blank"
+                [href]="'/curation/detail/' + keyword.submissions[0].submission_id">
+                {{keyword.submissions[0].publication_name}}
+            </a>
+            <a *ngIf="keyword.submissions.length > 1" href="" (click)="open(submissionsModal);false">
+                Multiple Submissions
+            </a>
+        </div>
+        <ng-template #submissionsModal let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title">Related Submissions for {{keyword.name}}</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div *ngFor="let submission of keyword.submissions" class="row">
+                        <div class="col">
+                            <a target="_blank"
+                            [href]="'/curation/detail/' + submission.submission_id">
+                            {{submission.publication_name}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+        </ng-template>
+        <!-- improvement: uncomment the following 2 fields -->
+        <!-- <div class="text-center col">
+            <div role="group" class="btn-group">
+                <button (click)="request()" type="button" [ngClass]="requested ? 'btn btn-success':'btn btn-warning'">
+                    <span *ngIf="requested" class="fa fa-check"></span>{{requestText}} ECO
+                </button>
+            </div>
+        </div> -->
+        <!-- <div class="text-center col">
+            <div role="group" class="btn-group">
+                <button (click)="confirm()" type="button" [ngClass]="confirmed ? 'btn btn-success':'btn btn-warning'">
+                    <span *ngIf="confirmed" class="fa fa-check"></span>{{confirmText}}
+                </button>
+            </div>
+        </div> -->
+    </div>
+</li>

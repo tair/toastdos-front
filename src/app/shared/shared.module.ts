@@ -32,6 +32,8 @@ import { EvidenceWithControlComponent } from './elements/evidence-with-control/e
 import { EvidenceWithLocusComponent } from './elements/evidence-with-locus/evidence-with-locus.component';
 import { DownloadComponent } from './pages/download/download.component';
 import { AnnotationOverviewComponent } from './elements/annotation-overview/annotation-overview.component';
+import { KeywordComponent } from './pages/keyword/keyword.component';
+import { KeywordRecordComponent } from './elements/keyword-record/keyword-record.component';
 
 @NgModule({
   imports: [
@@ -72,6 +74,8 @@ import { AnnotationOverviewComponent } from './elements/annotation-overview/anno
     EvidenceWithLocusComponent,
     DownloadComponent,
     AnnotationOverviewComponent,
+    KeywordComponent,
+    KeywordRecordComponent,
   ],
   exports: [
     HomepageComponent
