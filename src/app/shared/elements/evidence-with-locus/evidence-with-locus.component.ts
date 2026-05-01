@@ -39,7 +39,7 @@ export class EvidenceWithLocusComponent implements OnInit, OnDestroy {
     {
         this.locusStatus = 'success';
     }
-    this.form.setValue({'locusField': this.locus});
+    this.form.setValue({'locusField': (this.locus || '').toUpperCase().trim()});
 
     this.locusField.valueChanges
       .pipe(
@@ -50,6 +50,10 @@ export class EvidenceWithLocusComponent implements OnInit, OnDestroy {
           this.toggleErrorPopover();
         })
       ).subscribe((value: string) => {
+      value = (value || '').toUpperCase().trim();
+      if (value !== this.locusField.value) {
+        this.locusField.patchValue(value, {emitEvent: false});
+      }
       this.geneService.checkLocus$(value)
         .subscribe((response: any) => {
             this.locusStatus = 'success';
@@ -78,7 +82,7 @@ export class EvidenceWithLocusComponent implements OnInit, OnDestroy {
   }
 
   validate() {
-    if (this.locusStatus=='error' || this.locusField.toString().length<2 || this.locusStatus=='empty')
+    if (this.locusStatus=='error' || (this.locusField.value || '').toString().length<2 || this.locusStatus=='empty')
     {
       this.errorMessage = "INVALID: A valid gene is required";
       this.locusStatus = 'error';
