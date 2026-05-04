@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { debounceTime, map, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Annotation, Gene, SubmissionService } from "../../../services/submission.service";
 import {ValidationService} from '../../../services/validation.service';
+import {resetGeneControlsIfLocusNotInSubmission} from './annotation-gene-validation';
 
 @Component({
   selector: 'app-molecular',
@@ -74,7 +75,7 @@ export class MolecularComponent implements OnInit, OnDestroy {
   }
 
   validate() {
-    this.checkAvailableGenes();
+    resetGeneControlsIfLocusNotInSubmission(this.availableGenes.value, this.gene);
     let err_count = 0;
     if (!this.method.value['id'])
     {
@@ -135,12 +136,6 @@ export class MolecularComponent implements OnInit, OnDestroy {
       delete this.annotation.data.evidenceWith;
     }
     this.submissionService.setAnnotationAtIndex(this.annotation, this.index);
-  }
-
-  checkAvailableGenes() {
-    if (!this.availableGenes.value.map(g => g.locusName).includes(this.gene.value)){
-      this.gene.setValue('');
-    }
   }
 
 }

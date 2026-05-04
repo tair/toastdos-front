@@ -6,6 +6,7 @@ import {Observable} from "rxjs";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 import {Annotation, Gene, SubmissionService} from "../../../services/submission.service";
 import {ValidationService} from '../../../services/validation.service';
+import {resetGeneControlsIfLocusNotInSubmission} from './annotation-gene-validation';
 
 @Component({
   selector: 'app-comment',
@@ -66,7 +67,7 @@ export class CommentComponent implements OnInit, OnDestroy {
     }
 
     validate() {
-      this.checkAvailableGenes();
+      resetGeneControlsIfLocusNotInSubmission(this.availableGenes.value, this.gene);
       let err_count = 0;
       if (this.comment.value.toString().length<1)
       {
@@ -105,12 +106,6 @@ export class CommentComponent implements OnInit, OnDestroy {
       this.annotation.type = this.annotationType;
       this.annotation.data.text = this.comment.value.toString();
       this.submissionService.setAnnotationAtIndex(this.annotation, this.index);
-  }
-
-  checkAvailableGenes() {
-    if (!this.availableGenes.value.map(g => g.locusName).includes(this.gene.value)){
-        this.gene.setValue('');
-    }
   }
 
 }

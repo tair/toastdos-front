@@ -6,6 +6,7 @@ import {Observable} from "rxjs";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 import {Annotation, Gene, SubmissionService} from "../../../services/submission.service";
 import {ValidationService} from '../../../services/validation.service';
+import {resetGeneControlsIfLocusNotInSubmission} from './annotation-gene-validation';
 
 @Component({
   selector: 'app-protein-interaction',
@@ -74,7 +75,11 @@ export class ProteinInteractionComponent implements OnInit, OnDestroy {
   }
 
   validate() {
-    this.checkAvailableGenes();
+    resetGeneControlsIfLocusNotInSubmission(
+      this.availableGenes.value,
+      this.gene1,
+      this.gene2,
+    );
     let err_count = 0;
     if (!this.method.value['id'])
     {
@@ -126,15 +131,6 @@ export class ProteinInteractionComponent implements OnInit, OnDestroy {
       this.annotation.data.locusName2 = locus2;
       this.annotation.data.method = this.method.value;
       this.submissionService.setAnnotationAtIndex(this.annotation, this.index);
-  }
-
-  checkAvailableGenes() {
-    if (!this.availableGenes.value.map(g => g.locusName).includes(this.gene1.value)){
-      this.gene1.setValue('');
-    }
-    if (!this.availableGenes.value.map(g => g.locusName).includes(this.gene2.value)){
-        this.gene2.setValue('');
-      }
   }
 
 }
