@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {debounceTime, distinctUntilChanged, tap} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, map, tap} from 'rxjs/operators';
 import {Annotation, Gene, SubmissionService} from '../../services/submission.service';
 import {GeneService} from '../../services/gene.service';
 import {ValidationService} from '../../services/validation.service';
@@ -44,16 +44,19 @@ export class EvidenceWithLocusComponent implements OnInit, OnDestroy {
     this.locusField.valueChanges
       .pipe(
         debounceTime(400),
+        map((v: string) => (v || '').toUpperCase().trim()),
+        tap(normalized => {
+          const raw = (this.locusField.value || '').toString();
+          if (raw !== normalized) {
+            this.locusField.patchValue(normalized, {emitEvent: false});
+          }
+        }),
         distinctUntilChanged(),
-        tap(value => {
+        tap(() => {
           this.locusStatus = 'loading';
           this.toggleErrorPopover();
         })
       ).subscribe((value: string) => {
-      value = (value || '').toUpperCase().trim();
-      if (value !== this.locusField.value) {
-        this.locusField.patchValue(value, {emitEvent: false});
-      }
       this.geneService.checkLocus$(value)
         .subscribe((response: any) => {
             this.locusStatus = 'success';
