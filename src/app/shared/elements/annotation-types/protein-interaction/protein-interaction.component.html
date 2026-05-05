@@ -3,8 +3,12 @@
     <label class="mb-0">Gene 1</label>
   </div>
   <div class="p-1 col">
-    <select class="form-control" [formControl]="gene1">
-      <option [selected]="gene.locusName===annotation.data.locusName.locusName || gene.locusName===annotation.data.locusName" *ngFor="let gene of availableGenes | async">{{gene.locusName}}</option>
+    <ng-template #gene1PopContent>
+        <div class="text-danger popover-body"><strong>{{gene1Error}}</strong></div>
+    </ng-template>
+    <select class="form-control" [formControl]="gene1" [ngbPopover]="gene1PopContent" #gene1Popover="ngbPopover" triggers="manual">
+      <option [ngValue]="''"> ------ select gene ------ </option>
+      <option [ngValue]="geneOption.locusName" *ngFor="let geneOption of availableGenes | async">{{geneOption.locusName}}</option>
     </select>
   </div>
 </div>
@@ -13,8 +17,12 @@
     <label class="mb-0">Gene 2</label>
   </div>
   <div class="p-1 col">
-    <select class="form-control" [formControl]="gene2">
-      <option [selected]="gene.locusName===annotation.data.locusName2.locusName || gene.locusName===annotation.data.locusName2" *ngFor="let gene of availableGenes | async">{{gene.locusName}}</option>
+    <ng-template #gene2PopContent>
+        <div class="text-danger popover-body"><strong>{{gene2Error}}</strong></div>
+    </ng-template>
+    <select class="form-control" [formControl]="gene2" [ngbPopover]="gene2PopContent" #gene2Popover="ngbPopover" triggers="manual">
+      <option [ngValue]="''"> ------ select gene ------ </option>
+      <option [ngValue]="geneOption.locusName" *ngFor="let geneOption of availableGenes | async">{{geneOption.locusName}}</option>
     </select>
   </div>
 </div>

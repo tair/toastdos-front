@@ -3,8 +3,9 @@ import { GeneService } from 'src/app/shared/services/gene.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { debounceTime, map, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import {Annotation, SubmissionService} from "../../../services/submission.service";
+import { Annotation, Gene, SubmissionService } from "../../../services/submission.service";
 import {ValidationService} from '../../../services/validation.service';
+import {resetGeneControlsIfLocusNotInSubmission} from './annotation-gene-validation';
 
 @Component({
   selector: 'app-molecular',
@@ -34,6 +35,8 @@ export class MolecularComponent implements OnInit, OnDestroy {
   @ViewChild('methodPopover') methodPopover;
   functionError = '';
   @ViewChild('functionPopover') functionPopover;
+  geneError = '';
+  @ViewChild('genePopover') genePopover;
 
 
   constructor(private geneService: GeneService, private submissionService: SubmissionService, private validationService: ValidationService) { }
@@ -72,6 +75,7 @@ export class MolecularComponent implements OnInit, OnDestroy {
   }
 
   validate() {
+    resetGeneControlsIfLocusNotInSubmission(this.availableGenes.value, this.gene);
     let err_count = 0;
     if (!this.method.value['id'])
     {
@@ -85,6 +89,13 @@ export class MolecularComponent implements OnInit, OnDestroy {
       this.functionError = 'A gene term annotation requires a keyword.';
       this.functionPopover.close();
       this.functionPopover.open();
+      err_count += 1;
+    }
+    if (!this.gene.value)
+    {
+      this.geneError = 'Gene field cannot be empty. Please choose a gene.';
+      this.genePopover.close();
+      this.genePopover.open();
       err_count += 1;
     }
     return err_count;
@@ -109,7 +120,8 @@ export class MolecularComponent implements OnInit, OnDestroy {
 
   setAnnotationData()
   {
-    let locus = this.submissionService.getGeneWithLocus(this.gene.value);
+    let emptyGene = {locusName:'',geneSymbol:'',fullName:''} as Gene;
+    let locus = this.gene.value?this.submissionService.getGeneWithLocus(this.gene.value):emptyGene;
     this.annotation.data.locusName = locus;
     this.annotation.data.keyword = this.function.value;
     this.annotation.data.method = this.method.value;
@@ -125,6 +137,5 @@ export class MolecularComponent implements OnInit, OnDestroy {
     }
     this.submissionService.setAnnotationAtIndex(this.annotation, this.index);
   }
-
 
 }
