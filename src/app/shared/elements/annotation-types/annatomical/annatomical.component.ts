@@ -6,7 +6,7 @@ import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 import {MethodDropdownComponent} from "../../method-dropdown/method-dropdown.component";
 import {Annotation, Gene, SubmissionService} from "../../../services/submission.service";
 import {ValidationService} from '../../../services/validation.service';
-import {resetGeneControlsIfLocusNotInSubmission} from './annotation-gene-validation';
+import {resetGeneControlsIfLocusNotInSubmission} from '../annotation-gene-validation';
 
 @Component({
   selector: 'app-annatomical',

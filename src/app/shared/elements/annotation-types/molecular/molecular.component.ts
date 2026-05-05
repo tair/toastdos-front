@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { debounceTime, map, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Annotation, Gene, SubmissionService } from "../../../services/submission.service";
 import {ValidationService} from '../../../services/validation.service';
-import {resetGeneControlsIfLocusNotInSubmission} from './annotation-gene-validation';
+import {resetGeneControlsIfLocusNotInSubmission} from '../annotation-gene-validation';
 
 @Component({
   selector: 'app-molecular',
