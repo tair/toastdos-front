@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {debounceTime, distinctUntilChanged, tap} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, map, tap} from 'rxjs/operators';
 import {Annotation, Gene, SubmissionService} from '../../services/submission.service';
 import {GeneService} from '../../services/gene.service';
 import {ValidationService} from '../../services/validation.service';
@@ -39,13 +39,20 @@ export class EvidenceWithLocusComponent implements OnInit, OnDestroy {
     {
         this.locusStatus = 'success';
     }
-    this.form.setValue({'locusField': this.locus});
+    this.form.setValue({'locusField': (this.locus || '').toUpperCase().trim()});
 
     this.locusField.valueChanges
       .pipe(
         debounceTime(400),
+        map((v: string) => (v || '').toUpperCase().trim()),
+        tap(normalized => {
+          const raw = (this.locusField.value || '').toString();
+          if (raw !== normalized) {
+            this.locusField.patchValue(normalized, {emitEvent: false});
+          }
+        }),
         distinctUntilChanged(),
-        tap(value => {
+        tap(() => {
           this.locusStatus = 'loading';
           this.toggleErrorPopover();
         })
@@ -78,7 +85,7 @@ export class EvidenceWithLocusComponent implements OnInit, OnDestroy {
   }
 
   validate() {
-    if (this.locusStatus=='error' || this.locusField.toString().length<2 || this.locusStatus=='empty')
+    if (this.locusStatus=='error' || (this.locusField.value || '').toString().length<2 || this.locusStatus=='empty')
     {
       this.errorMessage = "INVALID: A valid gene is required";
       this.locusStatus = 'error';
